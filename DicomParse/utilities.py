@@ -17,3 +17,12 @@ def retrieve_dcm_filenames(directory: str, recursive: bool = True) -> List:
             break
 
     return pfiles
+
+
+def DivisionOrDefault(a: float, b: float) -> float:
+    return a / b if b != 0 else 0.0
+
+
+def LeafTravelMCS(leaf_travel: float, mcs: float) -> float:
+    """Leaf Travel Modulation Complexity Score (LTMCS)"""
+    return ((1000 - leaf_travel) / 1000) * mcs

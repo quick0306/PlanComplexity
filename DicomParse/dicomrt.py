@@ -105,6 +105,13 @@ class RTPlan:
             else:
                 self.plan["machine_id"] = ""
 
+        # get beam type
+        for item in ref_beams:
+            if "BeamType" in ref_beams[item]:
+                self.plan["beam_type"] = ref_beams[item]["BeamType"]
+            else:
+                self.plan["beam_type"] = ""
+
         return self.plan
 
     def get_beams(self, fx: int = 0) -> Dict[IS, Dict[str, str]]:
@@ -155,10 +162,10 @@ class RTPlan:
                     beam["IsocenterPosition"] = cp0.IsocenterPosition if "IsocenterPosition" in cp0 else ""
                     beam["GantryAngle"] = cp0.GantryAngle if "GantryAngle" in cp0 else ""
 
-                    # check VMAT delivery
+                    # check VMAT delivery, but please attention Monaco TPS one beam multiple Arc,
+                    # gantry direction will change, in this situation cp GantryRotationDirection equal "NONE"
                     if "GantryRotationDirection" in cp0:
                         if cp0.GantryRotationDirection != "NONE":
-
                             # VMAT Delivery
                             beam["GantryRotationDirection"] = cp0.GantryRotationDirection \
                                 if "GantryRotationDirection" in cp0 else ""
@@ -168,13 +175,6 @@ class RTPlan:
                                 final_angle = bi.ControlPointSequence[-1].GantryAngle \
                                     if "GantryAngle" in cp0 else ""
                                 beam["GantryFinalAngle"] = final_angle
-
-                            if beam["GantryRotationDirection"] == "CW":
-                                rotation_angle = ((beam["GantryFinalAngle"] - beam["GantryAngle"]) + 360) % 360
-                                beam["GantryRotationAngle"] = rotation_angle
-                            elif beam["GantryRotationDirection"] == "CC":
-                                rotation_angle = (360 - (beam["GantryFinalAngle"] - beam["GantryAngle"])) % 360
-                                beam["GantryRotationAngle"] = rotation_angle
 
                     btmp = cp0.BeamLimitingDeviceAngle if "BeamLimitingDeviceAngle" in cp0 else ""
                     beam["BeamLimitingDeviceAngle"] = btmp
