@@ -12,21 +12,22 @@ from ComplexityMetric.EdgeAreaMetric import EdgeAreaMetric
 from ComplexityMetric.LeafTravel import LeafTravel
 from ComplexityMetric.LeafGap import LeafGap
 from ComplexityMetric.LeafArea import LeafArea
-from ComplexityMetric.MeanFieldArea import  MeanFieldArea
+from ComplexityMetric.MeanFieldArea import MeanFieldArea
 from ComplexityMetric.MeanAsymmetryDistance import MeanAsymmetryDistance
 from ComplexityMetric.ModulationComplexityScore import ModulationComplexityScore
 from ComplexityMetric.PlanModulation import PlanModulation
 from ComplexityMetric.PlanIrregularity import PlanIrregularity
-from ComplexityMetric.ProportionMLCSpeedAcceleration import ProportionMLCSpeedAcceleration
 from ComplexityMetric.SmallApertureScore import SmallApertureScore
+from ComplexityMetric.ProportionMLCSpeedAcceleration import ProportionMLCSpeedAcceleration
+from ComplexityMetric.ModulationIndexScore import ModulationIndexScore
 from ComplexityMetric.StationParameterOptimizedRadiationTherapy import StationParameterOptimizedRadiationTherapy
 
 
 if __name__ == '__main__':
-    pdir = r"D:\RT_Plan\Axesse"
+    pdir = r"D:\RT_Plan\Axesse\Monaco"
     filepaths = retrieve_dcm_filenames(pdir, recursive=True)
 
-    imrt_path = r".\axesse_complexity_analysis1.csv"
+    imrt_path = r".\axesse_monaco.csv"
     with open(imrt_path, 'w') as f:
         writer = csv.writer(f, delimiter=',', lineterminator='\n')
 

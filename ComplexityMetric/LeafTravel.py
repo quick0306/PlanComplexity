@@ -49,9 +49,9 @@ class LeafTravel(ComplexityMetric):
 
         for i in leaf_travel_track_left:
             leaf_travel = np.array(leaf_travel_track_left[i])
-            leaf_travel_distance.append(leaf_travel[0] + np.sum(abs(np.diff(leaf_travel))))
+            leaf_travel_distance.append(np.sum(abs(np.diff(leaf_travel))))
         for j in leaf_travel_track_right:
             leaf_travel = np.array(leaf_travel_track_right[j])
-            leaf_travel_distance.append(leaf_travel[0] + np.sum(abs(np.diff(leaf_travel))))
+            leaf_travel_distance.append(np.sum(abs(np.diff(leaf_travel))))
 
         return leaf_travel_distance
