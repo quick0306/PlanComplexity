@@ -36,13 +36,17 @@ class ModulationComplexityScore(ComplexityMetric):
         """Calculate LSV and AAV，Aperture MCS"""
         pos = [(lp.Left, lp.Right) for lp in aperture.LeafPairs if not lp.IsOutsideJaw()]
         N = len(pos)
-        pos_max = np.max(pos, axis=0) - np.min(pos, axis=0)
-        a = np.sum(pos_max + np.diff(pos, axis=0), axis=0)
-        b = (N * pos_max)
-        tmp = np.divide(a, b, out=np.zeros_like(a), where=b != 0)
-        LSV = np.prod(tmp)
+        aperture_mcs = 0
+        if N > 0:   # 有叶片打开，有计划控制点叶片全关的情况，如E1706020, A7FDMLCa
+            pos_max = np.max(pos, axis=0) - np.min(pos, axis=0)
+            a = np.sum(pos_max + np.diff(pos, axis=0), axis=0)
+            b = (N * pos_max)
+            tmp = np.divide(a, b, out=np.zeros_like(a), where=b != 0)
+            LSV = np.prod(tmp)
 
-        num = sum(([lp.FieldSize() for lp in aperture.LeafPairs if not lp.IsOutsideJaw()]))
-        AAV = DivisionOrDefault(num, aav_norm)
+            num = sum(([lp.FieldSize() for lp in aperture.LeafPairs if not lp.IsOutsideJaw()]))
+            AAV = DivisionOrDefault(num, aav_norm)
 
-        return LSV * AAV
+            aperture_mcs = LSV * AAV
+
+        return aperture_mcs
