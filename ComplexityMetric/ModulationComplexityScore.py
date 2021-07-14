@@ -37,7 +37,9 @@ class ModulationComplexityScore(ComplexityMetric):
         pos = [(lp.Left, lp.Right) for lp in aperture.LeafPairs if not lp.IsOutsideJaw()]
         N = len(pos)
         pos_max = np.max(pos, axis=0) - np.min(pos, axis=0)
-        tmp = np.sum(pos_max + np.diff(pos, axis=0), axis=0) / (N * pos_max)
+        a = np.sum(pos_max + np.diff(pos, axis=0), axis=0)
+        b = (N * pos_max)
+        tmp = np.divide(a, b, out=np.zeros_like(a), where=b != 0)
         LSV = np.prod(tmp)
 
         num = sum(([lp.FieldSize() for lp in aperture.LeafPairs if not lp.IsOutsideJaw()]))

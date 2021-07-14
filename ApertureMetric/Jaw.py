@@ -28,3 +28,9 @@ class Jaw:
     @property
     def Bottom(self):
         return self.jaw_position.Bottom
+
+    def __repr__(self):
+        txt = "Jaw Position: left: %1.1f top: %1.1f right: %1.1f botton: %1.1f" \
+              % (self.Left, self.Top, self.Right, self.Bottom)
+
+        return txt

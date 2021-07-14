@@ -1,9 +1,10 @@
 from ComplexityMetric.LeafTravel import LeafTravel
 from DicomParse.dicomrt import RTPlan
-
+from ComplexityMetric.LeafArea import LeafArea
+from ComplexityMetric.ModulationComplexityScore import ModulationComplexityScore
 
 if __name__ == '__main__':
-    pfile = r"D:\RT_Plan\Axesse\Monaco\1910280C_C5DMLCa-QA1.dcm"
+    pfile = r"D:\RT_Plan\Synergy\Monaco\E2104103_A7IMRTa-QA1.dcm"
     plan_info = RTPlan(filename=pfile)
     plan_dict = plan_info.get_plan()
 
@@ -20,6 +21,10 @@ if __name__ == '__main__':
           ", Calculation_Model: ", calculation_model, ", Prescribed_Dose: ", prescribed_dose, ", MU: ", mu,
           ", Beam_Type: ", beam_type)
 
-    leaf_travel_obj = LeafTravel()
-    leaf_travel = leaf_travel_obj.CalculateForPlan(plan_dict)
-    print("Leaf Travel: ", leaf_travel)
+    leaf_area_obj = LeafArea()
+    leaf_area = leaf_area_obj.CalculateForPlan(plan_dict)
+    print("Mean Leaf Area (MLA): ", leaf_area)
+
+    modulation_complexity_score_obj = ModulationComplexityScore()
+    modulation_complexity_score = modulation_complexity_score_obj.CalculateForPlan(plan_dict)
+    print("Modulation Complexity Score (MCS): ", modulation_complexity_score)

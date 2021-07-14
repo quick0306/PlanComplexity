@@ -24,10 +24,10 @@ from ComplexityMetric.StationParameterOptimizedRadiationTherapy import StationPa
 
 
 if __name__ == '__main__':
-    pdir = r"D:\RT_Plan\Axesse\Monaco"
+    pdir = r"D:\RT_Plan\VersaHD"
     filepaths = retrieve_dcm_filenames(pdir, recursive=True)
 
-    imrt_path = r".\axesse_monaco.csv"
+    imrt_path = r".\versahd_monaco.csv"
     with open(imrt_path, 'w') as f:
         writer = csv.writer(f, delimiter=',', lineterminator='\n')
 
@@ -52,11 +52,13 @@ if __name__ == '__main__':
             calculation_model = plan_dict["calculation_model"]
             prescribed_dose = plan_dict["rxdose"]
             mu = plan_dict["Plan_MU"]
+            beam_type = plan_dict["beam_type"]
             print("ID: ", patient_id, ", Name: ", patient_name, ", PlanID: ", plan_id, ", MachineID: ", machine_id,
-                  ", Calculation_Model: ", calculation_model, ", Prescribed_Dose: ", prescribed_dose, ", MU: ", mu)
+                  ", Calculation_Model: ", calculation_model, ", Prescribed_Dose: ", prescribed_dose, ", MU: ", mu,
+                  ", Beam_Type: ", beam_type)
 
-            matches = ["DMLC", "IMRT", "VMAT"]
-            if any(x in plan_id for x in matches):
+            matches = ["STATIC", "DYNAMIC"]
+            if beam_type in matches:
                 edge_metric_obj = EdgeMetric()
                 edge_metric = edge_metric_obj.CalculateForPlan(plan_dict)
                 print("Edge Metric (EM): ", edge_metric)
