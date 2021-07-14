@@ -4,7 +4,7 @@ from ComplexityMetric.LeafArea import LeafArea
 from ComplexityMetric.ModulationComplexityScore import ModulationComplexityScore
 
 if __name__ == '__main__':
-    pfile = r"D:\RT_Plan\Synergy\Monaco\E2104103_A7IMRTa-QA1.dcm"
+    pfile = r"D:\RT_Plan\EDGE\RP.1.2.246.352.71.5.438107252159.572367.20170613114949.dcm"
     plan_info = RTPlan(filename=pfile)
     plan_dict = plan_info.get_plan()
 
