@@ -167,7 +167,7 @@ if __name__ == '__main__':
                             aperture_x_jaw_distance, aperture_y_jaw_distance, leaf_gap_average, leaf_gap_std,
                             leaf_travel, cam, eam, mis_20, mia_20, mit_20, mis_10, mia_10, mit_10, mis_05, mia_05,
                             mit_05, mis_02, mia_02, mit_02, speed[0], speed[1], speed[2], speed[3], speed[4], speed[5],
-                            acce[0], acce[1], acce[2], acce[3], speed_acc_avg_std[0], speed_acc_avg_std[2],
+                            speed_acc_avg_std[0], speed_acc_avg_std[2], acce[0], acce[1], acce[2], acce[3],
                             speed_acc_avg_std[1], speed_acc_avg_std[3], sport]
 
                     print(info)
