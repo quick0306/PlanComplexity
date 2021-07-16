@@ -30,11 +30,8 @@ class LeafGap(ComplexityMetric):
         """计算Leaf Gap"""
         leaf_gaps = []
         for aperture in apertures:
-            n_pairs = int(len(aperture.LeafPairs))
-            leaf_aperture_gaps = []
-            for i, lp in zip(range(n_pairs), aperture.LeafPairs):
+            for lp in aperture.LeafPairs:
                 if not lp.IsOutsideJaw():
-                    leaf_aperture_gaps.append(float(lp.FieldSize()))
-            leaf_gaps.append(np.mean(leaf_aperture_gaps))
+                    leaf_gaps.append(lp.FieldSize())
 
         return leaf_gaps

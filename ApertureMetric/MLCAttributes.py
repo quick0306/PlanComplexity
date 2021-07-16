@@ -97,25 +97,25 @@ class MLCAttributes:
     def MLCAcc(self) -> pd.DataFrame:
         return self.mlc_acc
 
-    def MLCSpeedAvg(self) -> float:
+    def MLCSpeedAvg(self) -> np.ndarray:
         # 排除MLC速度为0叶片，其显著影响平均值计算
         mlc_speed_nonzero = self.mlc_speed.replace(0, np.NaN)
         mlc_speed_avg = np.mean(mlc_speed_nonzero.mean())
         return mlc_speed_avg
 
-    def MLCSpeedStdAvg(self) -> float:
+    def MLCSpeedStdAvg(self) -> np.ndarray:
         # 排除MLC速度标准差为0叶片，其显著影响平均值计算
         mlc_speed_std_nonzero = self.mlc_speed_std.replace(0, np.NaN)
         mlc_speed_std_avg = np.mean(mlc_speed_std_nonzero.mean())
         return mlc_speed_std_avg
 
-    def MLCAccAvg(self):
+    def MLCAccAvg(self) -> np.ndarray:
         # 排除MLC加速度为0叶片，其显著影响平均值计算
         mlc_acc_nonzero = self.mlc_acc.replace(0, np.NaN)
         mlc_acc_avg = np.mean(mlc_acc_nonzero.mean())
         return mlc_acc_avg
 
-    def MLCAccStdAvg(self) -> float:
+    def MLCAccStdAvg(self) -> np.ndarray:
         # 排除MLC加速度标准差为0叶片，其显著影响平均值计算
         mlc_acc_std_nonzero = self.mlc_acc_std.replace(0, np.NaN)
         mlc_acc_std_avg = np.mean(mlc_acc_std_nonzero.mean())

@@ -37,14 +37,8 @@ class ProportionMLCSpeedAcceleration(ComplexityMetric):
             acc_proportion.append(mlc_acc_proportion)
             speed_acc_avg_std.append(mlc_speed_acc_avg_std)
 
-        # weights = self.GetWeightsPlan(plan)
-        # speed_proportion_weight = self.WeightedSum(weights, speed_proportion)
-        # acc_proportion_weight = self.WeightedSum(weights, acc_proportion)
-        # speed_acc_avg_std_weight
-        print(np.shape(speed_acc_avg_std))
-
-        return np.mean(speed_proportion, axis=0), \
-               np.mean(acc_proportion, axis=0), np.mean(speed_acc_avg_std, axis=0)
+        return np.round(np.mean(speed_proportion, axis=0), 2), \
+               np.round(np.mean(acc_proportion, axis=0), 2), np.round(np.mean(speed_acc_avg_std, axis=0), 2)
 
     def CalculateForBeam(self, beam: Dict[str, str]):
         apertures = AperturesFromBeamCreator().Create(beam)
@@ -74,21 +68,14 @@ class ProportionMLCSpeedAcceleration(ComplexityMetric):
         """计算各档MLC速度所占比例"""
         Ncp = mlc_speed.shape[0] * mlc_speed.shape[1]       # 计算MLC控制点总数
 
-        # MLC速度分为5档（Trilogy），TrueBeam和EDGE为6档
         S_0_4 = np.sum(np.sum(np.logical_and(mlc_speed >= 0, mlc_speed < 4))) / Ncp
         S_4_8 = np.sum(np.sum(np.logical_and(mlc_speed >= 4, mlc_speed < 8))) / Ncp
         S_8_12 = np.sum(np.sum(np.logical_and(mlc_speed >= 8, mlc_speed < 12))) / Ncp
         S_12_16 = np.sum(np.sum(np.logical_and(mlc_speed >= 12, mlc_speed < 16))) / Ncp
         S_16_20 = np.sum(np.sum(np.logical_and(mlc_speed >= 16, mlc_speed < 20))) / Ncp
+        S_20_25 = np.sum(np.sum(np.logical_and(mlc_speed >= 20, mlc_speed < 25))) / Ncp
 
-        if treatment_machine_name == 'TRILOGY-SN5602':
-            return [S_0_4, S_4_8, S_8_12, S_12_16, S_16_20]
-        elif treatment_machine_name == 'TrueBeamSN1352' or treatment_machine_name == 'TrueBeamSN2716':
-            S_20_25 = np.sum(np.sum(np.logical_and(mlc_speed >= 20, mlc_speed < 25))) / Ncp
-            return [S_0_4, S_4_8, S_8_12, S_12_16, S_16_20, S_20_25]
-        else:
-            warnings.warn("当前只有Varian机器可计算控制点时间，"
-                          "Monaco控制点时间计算待确定，无法确定MLC速度和加速度？？？")
+        return [S_0_4, S_4_8, S_8_12, S_12_16, S_16_20, S_20_25]
 
     def CalculateForAccProportion(self, mlc_acceleration) -> List[float]:
         """计算各档MLC加速度所占比例"""

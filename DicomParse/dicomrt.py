@@ -93,7 +93,7 @@ class RTPlan:
 
         # Total number of MU
         total_mu = np.sum([ref_beams[b]["MU"] for b in ref_beams if "MU" in ref_beams[b]])
-        self.plan["Plan_MU"] = total_mu
+        self.plan["Plan_MU"] = round(total_mu, 2)
 
         tmp = self.get_study_info()
         self.plan["description"] = tmp["description"]
@@ -111,6 +111,13 @@ class RTPlan:
                 self.plan["beam_type"] = ref_beams[item]["BeamType"]
             else:
                 self.plan["beam_type"] = ""
+
+        # get rotation direction
+        for item in ref_beams:
+            if "GantryRotationDirection" in ref_beams[item]:
+                self.plan["rotation_direction"] = ref_beams[item]["GantryRotationDirection"]
+            else:
+                self.plan["rotation_direction"] = ""
 
         return self.plan
 
@@ -175,6 +182,14 @@ class RTPlan:
                                 final_angle = bi.ControlPointSequence[-1].GantryAngle \
                                     if "GantryAngle" in cp0 else ""
                                 beam["GantryFinalAngle"] = final_angle
+
+                            if beam['TreatmentMachineName'] in ['TRILOGY-SN5602', 'TrueBeamSN1352', 'TrueBeamSN2716']:
+                                if beam["GantryRotationDirection"] == "CW":
+                                    rotation_angle = ((beam["GantryFinalAngle"] - beam["GantryAngle"]) + 360) % 360
+                                    beam["GantryRotationAngle"] = rotation_angle
+                                elif beam["GantryRotationDirection"] == "CC":
+                                    rotation_angle = (360 - (beam["GantryFinalAngle"] - beam["GantryAngle"])) % 360
+                                    beam["GantryRotationAngle"] = rotation_angle
 
                     btmp = cp0.BeamLimitingDeviceAngle if "BeamLimitingDeviceAngle" in cp0 else ""
                     beam["BeamLimitingDeviceAngle"] = btmp

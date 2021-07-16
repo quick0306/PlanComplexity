@@ -28,7 +28,7 @@ class ModulationIndexScore(ComplexityMetric):
         for tmp in np.array(mi).T:      # 转置后每一行分别代表mis, mia和mit
             mi_weight.append(self.WeightedSum(weights, tmp))
 
-        return mi_weight
+        return np.round(mi_weight, 2)
 
     def CalculateForBeam(self, beam, k=0.02):
         apertures = AperturesFromBeamCreator().Create(beam)

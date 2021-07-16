@@ -24,10 +24,10 @@ from ComplexityMetric.StationParameterOptimizedRadiationTherapy import StationPa
 
 
 if __name__ == '__main__':
-    pdir = r"D:\RT_Plan\VersaHD"
+    pdir = r"D:\RT_Plan\Oncentra"
     filepaths = retrieve_dcm_filenames(pdir, recursive=True)
 
-    imrt_path = r".\versahd_monaco.csv"
+    imrt_path = r".\oncentra.csv"
     with open(imrt_path, 'w') as f:
         writer = csv.writer(f, delimiter=',', lineterminator='\n')
 
