@@ -5,8 +5,10 @@ from ComplexityMetric.ModulationComplexityScore import ModulationComplexityScore
 from ComplexityMetric.LeafGap import LeafGap
 
 if __name__ == '__main__':
-    pfile = r"D:\RT_Plan\TrueBeam\RP.1803005C.A2VMATa.dcm"
+    pfile = r"C:\Users\Administrator\Desktop\PlanComplexity\data\RP.719072.ST-SRS.dcm"
+
     plan_info = RTPlan(filename=pfile)
+
     plan_dict = plan_info.get_plan()
 
     # calculation plan complexity metric
@@ -18,10 +20,11 @@ if __name__ == '__main__':
     prescribed_dose = plan_dict["rxdose"]
     mu = plan_dict["Plan_MU"]
     beam_type = plan_dict["beam_type"]
-    rotation_direction = plan_dict["rotation_direction"]
+    beam_number = plan_dict["beam_number"]
+
     print("ID: ", patient_id, ", Name: ", patient_name, ", PlanID: ", plan_id, ", MachineID: ", machine_id,
           ", Calculation_Model: ", calculation_model, ", Prescribed_Dose: ", prescribed_dose, ", MU: ", mu,
-          ", Beam_Type: ", beam_type, ", Rotation_Direction: ", rotation_direction)
+          ", Beam_Type: ", beam_type, ", Beam_Number: ", beam_number)
 
     leaf_area_obj = LeafArea()
     leaf_area = leaf_area_obj.CalculateForPlan(plan_dict)
