@@ -74,9 +74,9 @@ class RTPlan:
                         self.plan["rxdose"] = item.TargetPrescriptionDose * 100
         if ("FractionGroupSequence" in self.ds) and (self.plan["rxdose"] == 0):
             fg = self.ds.FractionGroupSequence[0]
-            if ("ReferencedBeamSequence" in fg) and ("NumberofFractionsPlanned" in fg):
+            if ("ReferencedBeamSequence" in fg) and ("NumberOfFractionsPlanned" in fg):
                 beams = fg.ReferencedBeamSequence
-                fx = fg.NumberofFractionsPlanned
+                fx = fg.NumberOfFractionsPlanned
                 for beam in beams:
                     if "BeamDose" in beam:
                         self.plan["rxdose"] += beam.BeamDose * fx * 100
@@ -112,12 +112,7 @@ class RTPlan:
             else:
                 self.plan["beam_type"] = ""
 
-        # get rotation direction
-        for item in ref_beams:
-            if "GantryRotationDirection" in ref_beams[item]:
-                self.plan["rotation_direction"] = ref_beams[item]["GantryRotationDirection"]
-            else:
-                self.plan["rotation_direction"] = ""
+        self.plan["beam_number"] = len(ref_beams)
 
         return self.plan
 
@@ -155,6 +150,7 @@ class RTPlan:
                 # adding mlc info from BeamLimitingDeviceSequence
                 beam_limits = bi.BeamLimitingDeviceSequence if "BeamLimitingDeviceSequence" in bi else ""
                 beam["BeamLimitingDeviceSequence"] = beam_limits
+                print(beam_limits)
 
                 # Check control points if exists
                 if "ControlPointSequence" in bi:
