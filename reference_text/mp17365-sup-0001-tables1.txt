@@ -1,0 +1,172 @@
+
+
+===== PAGE 1 =====
+
+Table S1. List of the metrics implemented in the VCoMX extraction engine.  
+Metric acronym  Metric definition Unit of measure Reference(s) 
+MUs Total number of 
+monitor units 
+delivered 
+MU Du et al (doi: 10.1118/1.4861821);  
+Mohan et al (doi: 10.1118/1.599000); 
+Masi et al (10.1118/1.4810969). 
+PMU Total number of 
+monitor units 
+normalized to a 
+single fraction of 
+2 Gy 
+ Du et al (doi: 10.1118/1.4861821);  
+Mohan et al (doi: 10.1118/1.599000); 
+Masi et al (10.1118/1.4810969). 
+MUCA Average number 
+of monitor units 
+delivered per 
+control arc 
+MU  
+Prescribed Dose Prescrption dose Gy  
+Fractions Number of 
+fractions 
+  
+MUcGy Average number 
+of monitor unit 
+deliverd per cGy 
+of prescription 
+dose 
+MU/cGy Du et al (doi: 10.1118/1.4861821);  
+Mohan et al (doi: 10.1118/1.599000); 
+Masi et al (10.1118/1.4810969). 
+LT Average total leaf 
+travel per control 
+arc 
+mm Masi et al (10.1118/1.4810969). 
+LTMU Average total leaf 
+travel per 
+monitor unit 
+delivered 
+mm/MU  
+LTNLMU Average leaf 
+travel per 
+monitor unit 
+delivered and 
+active leaf 
+mm/MU  
+NL Average number 
+of involved leaves 
+  
+LTNL Average leaf 
+travel per 
+involved leaf 
+mm  
+AL Average arc 
+length 
+deg  
+LNA Average leaf 
+travel per unitary 
+arc length and 
+number of 
+involved leaf 
+mm/deg  
+CAL Average control 
+arc length 
+deg  
+GT Total angular 
+distance travelled 
+by the gantry 
+deg  
+
+===== PAGE 2 =====
+
+MUdeg Monitor unit per 
+degree of gantry 
+rotation 
+MU/deg Miura et al (doi: 10.4236/ijmpcero.2014.32013) 
+LTAL Average leaf 
+travel per unitary 
+arc length  
+mm/deg  
+NArcs Number of arcs    
+mDRV Mean dose rate 
+variation 
+MU/(min deg) Nicolini et al (doi: 10.1186/1748-717X-2-42) 
+mGSV Mean gantry 
+speed variation 
+1/s Nicolini et al (doi: 10.1186/1748-717X-2-42) 
+DR Average dose rate MU/min  
+GS Average gantry 
+speed 
+deg/s  
+LS Average leaf 
+speed 
+mm/s  
+MCSv Modulation 
+complexity score 
+ Masi et al (doi: 10.1118/1.4810969). 
+AAV Aperture Area 
+variability 
+ McNiven et al (doi: 10.1118/1.3276775) 
+LSV Leaf Speed 
+Variation 
+ McNiven et al (doi: 10.1118/1.3276775) 
+TG Average tongue-
+and-groove 
+mm Yao and Farr (doi: 10.1120/jacmp.v16i4.5321) 
+MIt Modulation index 
+total 
+ Park et al (doi: 10.1186/s13014-015-0382-z) 
+MIs Modulation index 
+speed 
+ Park et al (doi: 10.1186/s13014-015-0382-z) 
+Mia Modulation index 
+acceleration 
+ Park et al (doi: 10.1186/s13014-015-0382-z) 
+dt Total delivery 
+time (beam on) 
+s  
+PI/BI Plan 
+irregularity/Beam 
+irregularity 
+ Du et al (doi: 10.1118/1.4861821);  
+PM/BM Plan 
+modulation/Beam 
+modulation 
+ Du et al (doi: 10.1118/1.4861821);  
+MD Modulation 
+degree  
+ Heijmen et al (doi: 
+/10.1016/j.radonc.2018.06.023) 
+PA Average BEV area mm^2 Masi et al (10.1118/1.4810969). 
+EFS Equivalent field 
+size 
+mm Wolfs et al (doi: 10.1088/1361-6560/aae338) 
+psmall Percentage of 
+BEVs with EFS < 
+30 mm 
+  
+SAS10mm Fraction of gaps < 
+10 mm 
+ Kairn et al (doi: 10.1088/1742-
+6596/489/1/012051) 
+Crowe et al (doi: 10.1088/0031-9155/60/6/2587) 
+EM Edge Metric  1/mm Younge et al (doi: /10.1118/1.4762566) 
+
+===== PAGE 3 =====
+
+BJAR Average BEV-jaw 
+area ratio  
+  
+MAD Mean 
+asymmetry/axis 
+distance -  
+mm Kairn et al (doi: 10.1088/1742-
+6596/489/1/012051) 
+Crowe et al (doi: 10.1088/0031-9155/60/6/2587) 
+Average leaf 
+gap (ALG) 
+Average distance 
+(gap) between 
+opposing leaves 
+mm Nauta et al (doi: /10.1118/1.3633912) 
+P Average BEV’s 
+perimeter 
+mm   
+ 
