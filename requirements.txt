@@ -3,3 +3,6 @@ pandas
 pydicom
 scipy
 pytest
+PyYAML
+jsonschema
+Jinja2
