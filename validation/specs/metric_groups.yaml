@@ -1,0 +1,105 @@
+metric_groups:
+- group_key: vmat_imrt_plan_prescription
+  platform: VMAT_IMRT
+  label: Plan prescription
+  description: Canonical research validation family for VMAT/IMRT Plan prescription
+    metrics.
+- group_key: vmat_imrt_leaf_travel
+  platform: VMAT_IMRT
+  label: Leaf travel
+  description: Canonical research validation family for VMAT/IMRT Leaf travel metrics.
+- group_key: vmat_imrt_arc_geometry
+  platform: VMAT_IMRT
+  label: Arc geometry
+  description: Canonical research validation family for VMAT/IMRT Arc geometry metrics.
+- group_key: vmat_imrt_delivery_dynamics
+  platform: VMAT_IMRT
+  label: Delivery dynamics
+  description: Canonical research validation family for VMAT/IMRT Delivery dynamics
+    metrics.
+- group_key: vmat_imrt_mcniven_style_modulation
+  platform: VMAT_IMRT
+  label: McNiven-style modulation
+  description: Canonical research validation family for VMAT/IMRT McNiven-style modulation
+    metrics.
+- group_key: vmat_imrt_mi_family
+  platform: VMAT_IMRT
+  label: MI family
+  description: Canonical research validation family for VMAT/IMRT MI family metrics.
+- group_key: vmat_imrt_mi_components
+  platform: VMAT_IMRT
+  label: MI components
+  description: Canonical research validation family for VMAT/IMRT MI components metrics.
+- group_key: vmat_imrt_shape_modulation
+  platform: VMAT_IMRT
+  label: Shape modulation
+  description: Canonical research validation family for VMAT/IMRT Shape modulation
+    metrics.
+- group_key: vmat_imrt_aperture_geometry
+  platform: VMAT_IMRT
+  label: Aperture geometry
+  description: Canonical research validation family for VMAT/IMRT Aperture geometry
+    metrics.
+- group_key: vmat_imrt_motion_bins
+  platform: VMAT_IMRT
+  label: Motion bins
+  description: Canonical research validation family for VMAT/IMRT Motion bins metrics.
+- group_key: vmat_imrt_sport
+  platform: VMAT_IMRT
+  label: SPORT
+  description: Canonical research validation family for VMAT/IMRT SPORT metrics.
+- group_key: tomo_delivery
+  platform: TOMO
+  label: Delivery
+  description: Canonical research validation family for Tomo Delivery metrics.
+- group_key: tomo_leaf_open_time
+  platform: TOMO
+  label: Leaf open time
+  description: Canonical research validation family for Tomo Leaf open time metrics.
+- group_key: tomo_sinogram_geometry
+  platform: TOMO
+  label: Sinogram geometry
+  description: Canonical research validation family for Tomo Sinogram geometry metrics.
+- group_key: tomo_sinogram_modulation
+  platform: TOMO
+  label: Sinogram modulation
+  description: Canonical research validation family for Tomo Sinogram modulation metrics.
+- group_key: cyberknife_mlc_mlc_based_subset
+  platform: CYBERKNIFE_MLC
+  label: MLC-based subset
+  description: Canonical research validation family for CyberKnife MLC MLC-based subset
+    metrics.
+- group_key: aurora_v2_paper_style_physics
+  platform: AURORA
+  label: V2 paper-style physics
+  description: Canonical research validation family for Aurora V2 paper-style physics
+    metrics.
+- group_key: aurora_v3_bidirectional_symmetry
+  platform: AURORA
+  label: V3 bidirectional symmetry
+  description: Canonical research validation family for Aurora V3 bidirectional symmetry
+    metrics.
+- group_key: aurora_v3_small_opening_burden
+  platform: AURORA
+  label: V3 small-opening burden
+  description: Canonical research validation family for Aurora V3 small-opening burden
+    metrics.
+- group_key: aurora_v3_local_interval_peaks
+  platform: AURORA
+  label: V3 local interval peaks
+  description: Canonical research validation family for Aurora V3 local interval peaks
+    metrics.
+- group_key: aurora_v3_axial_regions
+  platform: AURORA
+  label: V3 axial regions
+  description: Canonical research validation family for Aurora V3 axial regions metrics.
+- group_key: aurora_v3_dual_layer_coordination
+  platform: AURORA
+  label: V3 dual-layer coordination
+  description: Canonical research validation family for Aurora V3 dual-layer coordination
+    metrics.
+- group_key: aurora_legacy_engineering
+  platform: AURORA
+  label: Legacy engineering
+  description: Canonical research validation family for Aurora Legacy engineering
+    metrics.

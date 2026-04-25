@@ -1,0 +1,31 @@
+validation_profiles:
+- profile_key: research
+  description: Baseline research validation coverage for all canonical metric groups.
+  exact_abs_default: 1.0e-06
+  exact_rel_default: 0.0001
+  require_reference_exact_green: true
+  include_association_only_in_core_gate: false
+  group_keys:
+  - vmat_imrt_plan_prescription
+  - vmat_imrt_leaf_travel
+  - vmat_imrt_arc_geometry
+  - vmat_imrt_delivery_dynamics
+  - vmat_imrt_mcniven_style_modulation
+  - vmat_imrt_mi_family
+  - vmat_imrt_mi_components
+  - vmat_imrt_shape_modulation
+  - vmat_imrt_aperture_geometry
+  - vmat_imrt_motion_bins
+  - vmat_imrt_sport
+  - tomo_delivery
+  - tomo_leaf_open_time
+  - tomo_sinogram_geometry
+  - tomo_sinogram_modulation
+  - cyberknife_mlc_mlc_based_subset
+  - aurora_v2_paper_style_physics
+  - aurora_v3_bidirectional_symmetry
+  - aurora_v3_small_opening_burden
+  - aurora_v3_local_interval_peaks
+  - aurora_v3_axial_regions
+  - aurora_v3_dual_layer_coordination
+  - aurora_legacy_engineering

@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import csv
+import re
 from dataclasses import asdict, dataclass
 from pathlib import Path
 from typing import Iterable, Sequence
@@ -32,6 +33,13 @@ class MetricDefinitionRecord:
     notes: str = ""
 
 
+@dataclass(frozen=True)
+class MetricGroupCatalogRecord:
+    platform: str
+    group_label: str
+    group_key: str
+
+
 def build_metric_definition_catalog() -> list[MetricDefinitionRecord]:
     records: list[MetricDefinitionRecord] = []
     records.extend(_build_vmat_metric_records())
@@ -39,6 +47,34 @@ def build_metric_definition_catalog() -> list[MetricDefinitionRecord]:
     records.extend(_build_cyberknife_metric_records())
     records.extend(_build_aurora_metric_records())
     return records
+
+
+def metric_catalog_keys() -> set[tuple[str, str]]:
+    return {(record.platform, record.metric_key) for record in build_metric_definition_catalog()}
+
+
+def build_metric_group_catalog() -> list[MetricGroupCatalogRecord]:
+    records: list[MetricGroupCatalogRecord] = []
+    seen: set[tuple[str, str]] = set()
+    for record in build_metric_definition_catalog():
+        group_identity = (record.platform, record.group)
+        if group_identity in seen:
+            continue
+        seen.add(group_identity)
+        records.append(
+            MetricGroupCatalogRecord(
+                platform=record.platform,
+                group_label=record.group,
+                group_key=metric_group_key(record.platform, record.group),
+            )
+        )
+    return records
+
+
+def metric_group_key(platform: str, group_label: str) -> str:
+    normalized_platform = platform.strip().lower()
+    normalized_group = _slugify_group_label(group_label)
+    return f"{normalized_platform}_{normalized_group}"
 
 
 def export_metric_definitions(*, csv_path: str | Path, markdown_path: str | Path) -> list[MetricDefinitionRecord]:
@@ -812,3 +848,9 @@ def _notes_for_metric(metric_key: str, *, dual_mlc: bool) -> str:
     if dual_mlc:
         return "For Halcyon/Ethos-style plans, the workflow also exports per-layer MLCX1 and MLCX2 variants."
     return ""
+
+
+def _slugify_group_label(group_label: str) -> str:
+    slug = re.sub(r"[^a-z0-9]+", "_", group_label.strip().lower())
+    slug = re.sub(r"_+", "_", slug)
+    return slug.strip("_")
