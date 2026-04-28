@@ -1,0 +1,49 @@
+{
+  "artifacts": [
+    {
+      "bytes": 758,
+      "key": "comparison_csv",
+      "path": "comparator_statistics.csv",
+      "sha256": "943f88da588943f410a4de166c7a8ba5a2327d1ed047969cf2066f777e4d6d1f"
+    },
+    {
+      "bytes": 1526,
+      "key": "comparison_json",
+      "path": "comparator_statistics.json",
+      "sha256": "ad1975abb2ef7f575df034d013a0210b14144152612778deeb1fa71bfe8b48e4"
+    },
+    {
+      "bytes": 83026,
+      "key": "reference_csv",
+      "path": "reference_case_results.csv",
+      "sha256": "db23bcbae7ac5eb3fa579ba4c2d1fe1d0e33745cfb6902f2035b2e6d5ca356a6"
+    },
+    {
+      "bytes": 240910,
+      "key": "reference_json",
+      "path": "reference_case_results.json",
+      "sha256": "584a860fad1cf8e498d35fa15d4bb79846ee6b4b614cbd77e8643d1d7790b460"
+    },
+    {
+      "bytes": 1908,
+      "key": "summary_markdown",
+      "path": "validation_summary.md",
+      "sha256": "05b564685249186f64cc68476d5f7737bf178311f6df06e617a6ee388f7bff7d"
+    },
+    {
+      "bytes": 764,
+      "key": "supplement_comparison_csv",
+      "path": "supplement_tables/comparison_table.csv",
+      "sha256": "da313a9bf829ff4b5779db6d244bd2a170ff41a5c97a4d767af0e851ac4ffad0"
+    },
+    {
+      "bytes": 69488,
+      "key": "validation_report_json",
+      "path": "validation_report.json",
+      "sha256": "f9f622eae30ec13ec3ccdc47475cae5c548453eaaaad2bcdaed6630f29d127c7"
+    }
+  ],
+  "generated_at": "2026-04-28T15:52:13Z",
+  "profile_key": "research",
+  "report_id": "validation-research-20260428T155213UTC"
+}

@@ -1,0 +1,447 @@
+case_id,domain,metric_key,status,expected,observed,abs_tol,rel_tol,abs_diff,rel_diff,comparison_class,validation_level,group_key,gate_included,note
+vmat_truebeam_canonical,VMAT_IMRT,aav,pass,0.24,0.24,1e-06,0.0001,0.0,0.0,exact-equivalent,Reference-case exact,vmat_imrt_mcniven_style_modulation,True,
+vmat_truebeam_canonical,VMAT_IMRT,acc_0_40,skipped,0.9563,0.9563,1e-06,0.0001,,,derived-equivalent,Derived-equivalent,vmat_imrt_motion_bins,False,Deferred to cross-tool comparison statistics.
+vmat_truebeam_canonical,VMAT_IMRT,acc_120_160,skipped,0.0,0.0,1e-06,0.0001,,,derived-equivalent,Derived-equivalent,vmat_imrt_motion_bins,False,Deferred to cross-tool comparison statistics.
+vmat_truebeam_canonical,VMAT_IMRT,acc_160_200,skipped,0.0,0.0,1e-06,0.0001,,,derived-equivalent,Derived-equivalent,vmat_imrt_motion_bins,False,Deferred to cross-tool comparison statistics.
+vmat_truebeam_canonical,VMAT_IMRT,acc_40_80,skipped,0.0436,0.0436,1e-06,0.0001,,,derived-equivalent,Derived-equivalent,vmat_imrt_motion_bins,False,Deferred to cross-tool comparison statistics.
+vmat_truebeam_canonical,VMAT_IMRT,acc_80_120,skipped,0.0001,0.0001,1e-06,0.0001,,,derived-equivalent,Derived-equivalent,vmat_imrt_motion_bins,False,Deferred to cross-tool comparison statistics.
+vmat_truebeam_canonical,VMAT_IMRT,acc_average,skipped,20.7398,20.7398,1e-06,0.0001,,,derived-equivalent,Derived-equivalent,vmat_imrt_motion_bins,False,Deferred to cross-tool comparison statistics.
+vmat_truebeam_canonical,VMAT_IMRT,acc_std,skipped,16.4004,16.4004,1e-06,0.0001,,,derived-equivalent,Derived-equivalent,vmat_imrt_motion_bins,False,Deferred to cross-tool comparison statistics.
+vmat_truebeam_canonical,VMAT_IMRT,al,pass,358.0,358.0,1e-06,0.0001,0.0,0.0,exact-equivalent,Reference-case exact,vmat_imrt_arc_geometry,True,
+vmat_truebeam_canonical,VMAT_IMRT,alg,pass,31.73,31.73,1e-06,0.0001,0.0,0.0,exact-equivalent,Reference-case exact,vmat_imrt_aperture_geometry,True,
+vmat_truebeam_canonical,VMAT_IMRT,alg_sd,pass,16.56,16.56,1e-06,0.0001,0.0,0.0,exact-equivalent,Reference-case exact,vmat_imrt_aperture_geometry,True,
+vmat_truebeam_canonical,VMAT_IMRT,asr,pass,2.19,2.19,1e-06,0.0001,0.0,0.0,exact-equivalent,Reference-case exact,vmat_imrt_aperture_geometry,True,
+vmat_truebeam_canonical,VMAT_IMRT,axjd,pass,60.0,60.0,1e-06,0.0001,0.0,0.0,exact-equivalent,Reference-case exact,vmat_imrt_aperture_geometry,True,
+vmat_truebeam_canonical,VMAT_IMRT,ayjd,pass,60.11,60.11,1e-06,0.0001,0.0,0.0,exact-equivalent,Reference-case exact,vmat_imrt_aperture_geometry,True,
+vmat_truebeam_canonical,VMAT_IMRT,bjar,pass,0.53,0.53,1e-06,0.0001,0.0,0.0,exact-equivalent,Reference-case exact,vmat_imrt_aperture_geometry,True,
+vmat_truebeam_canonical,VMAT_IMRT,cal,pass,2.022598870056497,2.022598870056497,1e-06,0.0001,0.0,0.0,exact-equivalent,Reference-case exact,vmat_imrt_arc_geometry,True,
+vmat_truebeam_canonical,VMAT_IMRT,cam,pass,0.14,0.14,1e-06,0.0001,0.0,0.0,exact-equivalent,Reference-case exact,vmat_imrt_aperture_geometry,True,
+vmat_truebeam_canonical,VMAT_IMRT,dr,pass,4.01,4.01,1e-06,0.0001,0.0,0.0,exact-equivalent,Reference-case exact,vmat_imrt_delivery_dynamics,True,
+vmat_truebeam_canonical,VMAT_IMRT,dt,pass,60.0,60.0,1e-06,0.0001,0.0,0.0,exact-equivalent,Reference-case exact,vmat_imrt_delivery_dynamics,True,
+vmat_truebeam_canonical,VMAT_IMRT,eam,pass,0.28,0.28,1e-06,0.0001,0.0,0.0,exact-equivalent,Reference-case exact,vmat_imrt_aperture_geometry,True,
+vmat_truebeam_canonical,VMAT_IMRT,efs,pass,24.04,24.04,1e-06,0.0001,0.0,0.0,exact-equivalent,Reference-case exact,vmat_imrt_aperture_geometry,True,
+vmat_truebeam_canonical,VMAT_IMRT,em,pass,0.15,0.15,1e-06,0.0001,0.0,0.0,exact-equivalent,Reference-case exact,vmat_imrt_aperture_geometry,True,
+vmat_truebeam_canonical,VMAT_IMRT,fraction_dose_gy,pass,0.54,0.54,1e-06,0.0001,0.0,0.0,exact-equivalent,Reference-case exact,vmat_imrt_plan_prescription,True,
+vmat_truebeam_canonical,VMAT_IMRT,fractions_count,pass,1.0,1.0,1e-06,0.0001,0.0,0.0,exact-equivalent,Reference-case exact,vmat_imrt_plan_prescription,True,
+vmat_truebeam_canonical,VMAT_IMRT,gs,pass,6.0,6.0,1e-06,0.0001,0.0,0.0,exact-equivalent,Reference-case exact,vmat_imrt_delivery_dynamics,True,
+vmat_truebeam_canonical,VMAT_IMRT,gt,pass,716.0,716.0,1e-06,0.0001,0.0,0.0,exact-equivalent,Reference-case exact,vmat_imrt_arc_geometry,True,
+vmat_truebeam_canonical,VMAT_IMRT,lna,pass,2.67,2.67,1e-06,0.0001,0.0,0.0,exact-equivalent,Reference-case exact,vmat_imrt_leaf_travel,True,
+vmat_truebeam_canonical,VMAT_IMRT,ls,pass,11.61,11.61,1e-06,0.0001,0.0,0.0,exact-equivalent,Reference-case exact,vmat_imrt_delivery_dynamics,True,
+vmat_truebeam_canonical,VMAT_IMRT,lsv,pass,0.69,0.69,1e-06,0.0001,0.0,0.0,exact-equivalent,Reference-case exact,vmat_imrt_mcniven_style_modulation,True,
+vmat_truebeam_canonical,VMAT_IMRT,lt,pass,117.3,117.3,1e-06,0.0001,0.0,0.0,exact-equivalent,Reference-case exact,vmat_imrt_leaf_travel,True,
+vmat_truebeam_canonical,VMAT_IMRT,ltal,pass,57.77,57.77,1e-06,0.0001,0.0,0.0,exact-equivalent,Reference-case exact,vmat_imrt_leaf_travel,True,
+vmat_truebeam_canonical,VMAT_IMRT,ltmu,pass,86.65,86.65,1e-06,0.0001,0.0,0.0,exact-equivalent,Reference-case exact,vmat_imrt_leaf_travel,True,
+vmat_truebeam_canonical,VMAT_IMRT,ltnl,pass,5.41,5.41,1e-06,0.0001,0.0,0.0,exact-equivalent,Reference-case exact,vmat_imrt_leaf_travel,True,
+vmat_truebeam_canonical,VMAT_IMRT,ltnlmu,pass,4.0,4.0,1e-06,0.0001,0.0,0.0,exact-equivalent,Reference-case exact,vmat_imrt_leaf_travel,True,
+vmat_truebeam_canonical,VMAT_IMRT,mad,pass,30.74,30.74,1e-06,0.0001,0.0,0.0,exact-equivalent,Reference-case exact,vmat_imrt_aperture_geometry,True,
+vmat_truebeam_canonical,VMAT_IMRT,mcsv,pass,0.17,0.17,1e-06,0.0001,0.0,0.0,exact-equivalent,Reference-case exact,vmat_imrt_mcniven_style_modulation,True,
+vmat_truebeam_canonical,VMAT_IMRT,md,pass,1.77,1.77,1e-06,0.0001,0.0,0.0,exact-equivalent,Reference-case exact,vmat_imrt_shape_modulation,True,
+vmat_truebeam_canonical,VMAT_IMRT,mdrv,pass,0.02,0.02,1e-06,0.0001,0.0,0.0,exact-equivalent,Reference-case exact,vmat_imrt_delivery_dynamics,True,
+vmat_truebeam_canonical,VMAT_IMRT,mgsv,pass,0.0,0.0,1e-06,0.0001,0.0,0.0,exact-equivalent,Reference-case exact,vmat_imrt_delivery_dynamics,True,
+vmat_truebeam_canonical,VMAT_IMRT,muca,pass,1.3519774011299435,1.3519774011299435,1e-06,0.0001,0.0,0.0,exact-equivalent,Reference-case exact,vmat_imrt_plan_prescription,True,
+vmat_truebeam_canonical,VMAT_IMRT,mucgy,pass,8.862962962962964,8.862962962962964,1e-06,0.0001,0.0,0.0,exact-equivalent,Reference-case exact,vmat_imrt_plan_prescription,True,
+vmat_truebeam_canonical,VMAT_IMRT,mudeg,pass,0.6684357541899442,0.6684357541899442,1e-06,0.0001,0.0,0.0,exact-equivalent,Reference-case exact,vmat_imrt_arc_geometry,True,
+vmat_truebeam_canonical,VMAT_IMRT,mus,pass,478.6,478.6,1e-06,0.0001,0.0,0.0,exact-equivalent,Reference-case exact,vmat_imrt_plan_prescription,True,
+vmat_truebeam_canonical,VMAT_IMRT,narcs,pass,2.0,2.0,1e-06,0.0001,0.0,0.0,exact-equivalent,Reference-case exact,vmat_imrt_plan_prescription,True,
+vmat_truebeam_canonical,VMAT_IMRT,nl,pass,21.65,21.65,1e-06,0.0001,0.0,0.0,exact-equivalent,Reference-case exact,vmat_imrt_leaf_travel,True,
+vmat_truebeam_canonical,VMAT_IMRT,pa,pass,1913.62,1913.62,1e-06,0.0001,0.0,0.0,exact-equivalent,Reference-case exact,vmat_imrt_aperture_geometry,True,
+vmat_truebeam_canonical,VMAT_IMRT,perimeter,pass,335.49,335.49,1e-06,0.0001,0.0,0.0,exact-equivalent,Reference-case exact,vmat_imrt_aperture_geometry,True,
+vmat_truebeam_canonical,VMAT_IMRT,pi,pass,5.26,5.26,1e-06,0.0001,0.0,0.0,exact-equivalent,Reference-case exact,vmat_imrt_shape_modulation,True,
+vmat_truebeam_canonical,VMAT_IMRT,pm,pass,0.44,0.44,1e-06,0.0001,0.0,0.0,exact-equivalent,Reference-case exact,vmat_imrt_shape_modulation,True,
+vmat_truebeam_canonical,VMAT_IMRT,pmu,pass,1772.5925925925926,1772.5925925925926,1e-06,0.0001,0.0,0.0,exact-equivalent,Reference-case exact,vmat_imrt_plan_prescription,True,
+vmat_truebeam_canonical,VMAT_IMRT,psmall,pass,0.76,0.76,1e-06,0.0001,0.0,0.0,exact-equivalent,Reference-case exact,vmat_imrt_aperture_geometry,True,
+vmat_truebeam_canonical,VMAT_IMRT,sas_10mm,pass,0.1,0.1,1e-06,0.0001,0.0,0.0,exact-equivalent,Reference-case exact,vmat_imrt_aperture_geometry,True,
+vmat_truebeam_canonical,VMAT_IMRT,sas_20mm,pass,0.31,0.31,1e-06,0.0001,0.0,0.0,exact-equivalent,Reference-case exact,vmat_imrt_aperture_geometry,True,
+vmat_truebeam_canonical,VMAT_IMRT,sas_5mm,pass,0.04,0.04,1e-06,0.0001,0.0,0.0,exact-equivalent,Reference-case exact,vmat_imrt_aperture_geometry,True,
+vmat_truebeam_canonical,VMAT_IMRT,speed_0_4,skipped,0.8033,0.8033,1e-06,0.0001,,,derived-equivalent,Derived-equivalent,vmat_imrt_motion_bins,False,Deferred to cross-tool comparison statistics.
+vmat_truebeam_canonical,VMAT_IMRT,speed_12_16,skipped,0.0157,0.0157,1e-06,0.0001,,,derived-equivalent,Derived-equivalent,vmat_imrt_motion_bins,False,Deferred to cross-tool comparison statistics.
+vmat_truebeam_canonical,VMAT_IMRT,speed_16_20,skipped,0.0137,0.0137,1e-06,0.0001,,,derived-equivalent,Derived-equivalent,vmat_imrt_motion_bins,False,Deferred to cross-tool comparison statistics.
+vmat_truebeam_canonical,VMAT_IMRT,speed_4_8,skipped,0.0755,0.0755,1e-06,0.0001,,,derived-equivalent,Derived-equivalent,vmat_imrt_motion_bins,False,Deferred to cross-tool comparison statistics.
+vmat_truebeam_canonical,VMAT_IMRT,speed_8_12,skipped,0.0197,0.0197,1e-06,0.0001,,,derived-equivalent,Derived-equivalent,vmat_imrt_motion_bins,False,Deferred to cross-tool comparison statistics.
+vmat_truebeam_canonical,VMAT_IMRT,speed_average,skipped,11.6133,11.6133,1e-06,0.0001,,,derived-equivalent,Derived-equivalent,vmat_imrt_motion_bins,False,Deferred to cross-tool comparison statistics.
+vmat_truebeam_canonical,VMAT_IMRT,speed_std,skipped,8.1893,8.1893,1e-06,0.0001,,,derived-equivalent,Derived-equivalent,vmat_imrt_motion_bins,False,Deferred to cross-tool comparison statistics.
+vmat_truebeam_canonical,VMAT_IMRT,sport,pass,5872.39,5872.39,1e-06,0.0001,0.0,0.0,exact-equivalent,Reference-case exact,vmat_imrt_sport,True,
+vmat_truebeam_canonical,VMAT_IMRT,tg,pass,6.42,6.42,1e-06,0.0001,0.0,0.0,exact-equivalent,Reference-case exact,vmat_imrt_mcniven_style_modulation,True,
+vmat_halcyon_edge,VMAT_IMRT,aav_mlcx1,skipped,0.2,0.2,1e-06,0.0001,,,derived-equivalent,Derived-equivalent,vmat_imrt_mcniven_style_modulation,False,Deferred to cross-tool comparison statistics.
+vmat_halcyon_edge,VMAT_IMRT,aav_mlcx2,skipped,0.25,0.25,1e-06,0.0001,,,derived-equivalent,Derived-equivalent,vmat_imrt_mcniven_style_modulation,False,Deferred to cross-tool comparison statistics.
+vmat_halcyon_edge,VMAT_IMRT,al,pass,112.5,112.5,1e-06,0.0001,0.0,0.0,exact-equivalent,Reference-case exact,vmat_imrt_arc_geometry,True,
+vmat_halcyon_edge,VMAT_IMRT,alg_mlcx1,skipped,19.62,19.62,1e-06,0.0001,,,derived-equivalent,Derived-equivalent,vmat_imrt_aperture_geometry,False,Deferred to cross-tool comparison statistics.
+vmat_halcyon_edge,VMAT_IMRT,alg_mlcx2,skipped,25.95,25.95,1e-06,0.0001,,,derived-equivalent,Derived-equivalent,vmat_imrt_aperture_geometry,False,Deferred to cross-tool comparison statistics.
+vmat_halcyon_edge,VMAT_IMRT,alg_sd_mlcx1,skipped,15.12,15.12,1e-06,0.0001,,,derived-equivalent,Derived-equivalent,vmat_imrt_aperture_geometry,False,Deferred to cross-tool comparison statistics.
+vmat_halcyon_edge,VMAT_IMRT,alg_sd_mlcx2,skipped,19.73,19.73,1e-06,0.0001,,,derived-equivalent,Derived-equivalent,vmat_imrt_aperture_geometry,False,Deferred to cross-tool comparison statistics.
+vmat_halcyon_edge,VMAT_IMRT,asr_mlcx1,skipped,4.64,4.64,1e-06,0.0001,,,derived-equivalent,Derived-equivalent,vmat_imrt_aperture_geometry,False,Deferred to cross-tool comparison statistics.
+vmat_halcyon_edge,VMAT_IMRT,asr_mlcx2,skipped,2.68,2.68,1e-06,0.0001,,,derived-equivalent,Derived-equivalent,vmat_imrt_aperture_geometry,False,Deferred to cross-tool comparison statistics.
+vmat_halcyon_edge,VMAT_IMRT,cal,pass,1.3719512195121952,1.3719512195121952,1e-06,0.0001,0.0,0.0,exact-equivalent,Reference-case exact,vmat_imrt_arc_geometry,True,
+vmat_halcyon_edge,VMAT_IMRT,cam_mlcx1,skipped,0.56,0.56,1e-06,0.0001,,,derived-equivalent,Derived-equivalent,vmat_imrt_aperture_geometry,False,Deferred to cross-tool comparison statistics.
+vmat_halcyon_edge,VMAT_IMRT,cam_mlcx2,skipped,0.49,0.49,1e-06,0.0001,,,derived-equivalent,Derived-equivalent,vmat_imrt_aperture_geometry,False,Deferred to cross-tool comparison statistics.
+vmat_halcyon_edge,VMAT_IMRT,dr_mlcx1,skipped,13.33,13.33,1e-06,0.0001,,,derived-equivalent,Derived-equivalent,vmat_imrt_delivery_dynamics,False,Deferred to cross-tool comparison statistics.
+vmat_halcyon_edge,VMAT_IMRT,dr_mlcx2,skipped,13.33,13.33,1e-06,0.0001,,,derived-equivalent,Derived-equivalent,vmat_imrt_delivery_dynamics,False,Deferred to cross-tool comparison statistics.
+vmat_halcyon_edge,VMAT_IMRT,dt_mlcx1,skipped,18.49,18.49,1e-06,0.0001,,,derived-equivalent,Derived-equivalent,vmat_imrt_delivery_dynamics,False,Deferred to cross-tool comparison statistics.
+vmat_halcyon_edge,VMAT_IMRT,dt_mlcx2,skipped,18.49,18.49,1e-06,0.0001,,,derived-equivalent,Derived-equivalent,vmat_imrt_delivery_dynamics,False,Deferred to cross-tool comparison statistics.
+vmat_halcyon_edge,VMAT_IMRT,eam_mlcx1,skipped,0.67,0.67,1e-06,0.0001,,,derived-equivalent,Derived-equivalent,vmat_imrt_aperture_geometry,False,Deferred to cross-tool comparison statistics.
+vmat_halcyon_edge,VMAT_IMRT,eam_mlcx2,skipped,0.49,0.49,1e-06,0.0001,,,derived-equivalent,Derived-equivalent,vmat_imrt_aperture_geometry,False,Deferred to cross-tool comparison statistics.
+vmat_halcyon_edge,VMAT_IMRT,efs_mlcx1,skipped,26.27,26.27,1e-06,0.0001,,,derived-equivalent,Derived-equivalent,vmat_imrt_aperture_geometry,False,Deferred to cross-tool comparison statistics.
+vmat_halcyon_edge,VMAT_IMRT,efs_mlcx2,skipped,34.39,34.39,1e-06,0.0001,,,derived-equivalent,Derived-equivalent,vmat_imrt_aperture_geometry,False,Deferred to cross-tool comparison statistics.
+vmat_halcyon_edge,VMAT_IMRT,em_mlcx1,skipped,0.1,0.1,1e-06,0.0001,,,derived-equivalent,Derived-equivalent,vmat_imrt_aperture_geometry,False,Deferred to cross-tool comparison statistics.
+vmat_halcyon_edge,VMAT_IMRT,em_mlcx2,skipped,0.07,0.07,1e-06,0.0001,,,derived-equivalent,Derived-equivalent,vmat_imrt_aperture_geometry,False,Deferred to cross-tool comparison statistics.
+vmat_halcyon_edge,VMAT_IMRT,fraction_dose_gy,pass,2.0,2.0,1e-06,0.0001,0.0,0.0,exact-equivalent,Reference-case exact,vmat_imrt_plan_prescription,True,
+vmat_halcyon_edge,VMAT_IMRT,fractions_count,pass,25.0,25.0,1e-06,0.0001,0.0,0.0,exact-equivalent,Reference-case exact,vmat_imrt_plan_prescription,True,
+vmat_halcyon_edge,VMAT_IMRT,gs_mlcx1,skipped,6.88,6.88,1e-06,0.0001,,,derived-equivalent,Derived-equivalent,vmat_imrt_delivery_dynamics,False,Deferred to cross-tool comparison statistics.
+vmat_halcyon_edge,VMAT_IMRT,gs_mlcx2,skipped,6.88,6.88,1e-06,0.0001,,,derived-equivalent,Derived-equivalent,vmat_imrt_delivery_dynamics,False,Deferred to cross-tool comparison statistics.
+vmat_halcyon_edge,VMAT_IMRT,gt,pass,450.0,450.0,1e-06,0.0001,0.0,0.0,exact-equivalent,Reference-case exact,vmat_imrt_arc_geometry,True,
+vmat_halcyon_edge,VMAT_IMRT,lna_mlcx1,skipped,4.51,4.51,1e-06,0.0001,,,derived-equivalent,Derived-equivalent,vmat_imrt_leaf_travel,False,Deferred to cross-tool comparison statistics.
+vmat_halcyon_edge,VMAT_IMRT,lna_mlcx2,skipped,4.63,4.63,1e-06,0.0001,,,derived-equivalent,Derived-equivalent,vmat_imrt_leaf_travel,False,Deferred to cross-tool comparison statistics.
+vmat_halcyon_edge,VMAT_IMRT,ls_mlcx1,skipped,17.15,17.15,1e-06,0.0001,,,derived-equivalent,Derived-equivalent,vmat_imrt_delivery_dynamics,False,Deferred to cross-tool comparison statistics.
+vmat_halcyon_edge,VMAT_IMRT,ls_mlcx2,skipped,18.69,18.69,1e-06,0.0001,,,derived-equivalent,Derived-equivalent,vmat_imrt_delivery_dynamics,False,Deferred to cross-tool comparison statistics.
+vmat_halcyon_edge,VMAT_IMRT,lsv_mlcx1,skipped,0.63,0.63,1e-06,0.0001,,,derived-equivalent,Derived-equivalent,vmat_imrt_mcniven_style_modulation,False,Deferred to cross-tool comparison statistics.
+vmat_halcyon_edge,VMAT_IMRT,lsv_mlcx2,skipped,0.71,0.71,1e-06,0.0001,,,derived-equivalent,Derived-equivalent,vmat_imrt_mcniven_style_modulation,False,Deferred to cross-tool comparison statistics.
+vmat_halcyon_edge,VMAT_IMRT,lt_mlcx1,skipped,107.09,107.09,1e-06,0.0001,,,derived-equivalent,Derived-equivalent,vmat_imrt_leaf_travel,False,Deferred to cross-tool comparison statistics.
+vmat_halcyon_edge,VMAT_IMRT,lt_mlcx2,skipped,117.15,117.15,1e-06,0.0001,,,derived-equivalent,Derived-equivalent,vmat_imrt_leaf_travel,False,Deferred to cross-tool comparison statistics.
+vmat_halcyon_edge,VMAT_IMRT,ltal_mlcx1,skipped,77.02,77.02,1e-06,0.0001,,,derived-equivalent,Derived-equivalent,vmat_imrt_leaf_travel,False,Deferred to cross-tool comparison statistics.
+vmat_halcyon_edge,VMAT_IMRT,ltal_mlcx2,skipped,84.4,84.4,1e-06,0.0001,,,derived-equivalent,Derived-equivalent,vmat_imrt_leaf_travel,False,Deferred to cross-tool comparison statistics.
+vmat_halcyon_edge,VMAT_IMRT,ltmu_mlcx1,skipped,38.02,38.02,1e-06,0.0001,,,derived-equivalent,Derived-equivalent,vmat_imrt_leaf_travel,False,Deferred to cross-tool comparison statistics.
+vmat_halcyon_edge,VMAT_IMRT,ltmu_mlcx2,skipped,41.77,41.77,1e-06,0.0001,,,derived-equivalent,Derived-equivalent,vmat_imrt_leaf_travel,False,Deferred to cross-tool comparison statistics.
+vmat_halcyon_edge,VMAT_IMRT,ltnl_mlcx1,skipped,6.27,6.27,1e-06,0.0001,,,derived-equivalent,Derived-equivalent,vmat_imrt_leaf_travel,False,Deferred to cross-tool comparison statistics.
+vmat_halcyon_edge,VMAT_IMRT,ltnl_mlcx2,skipped,6.43,6.43,1e-06,0.0001,,,derived-equivalent,Derived-equivalent,vmat_imrt_leaf_travel,False,Deferred to cross-tool comparison statistics.
+vmat_halcyon_edge,VMAT_IMRT,ltnlmu_mlcx1,skipped,2.22,2.22,1e-06,0.0001,,,derived-equivalent,Derived-equivalent,vmat_imrt_leaf_travel,False,Deferred to cross-tool comparison statistics.
+vmat_halcyon_edge,VMAT_IMRT,ltnlmu_mlcx2,skipped,2.29,2.29,1e-06,0.0001,,,derived-equivalent,Derived-equivalent,vmat_imrt_leaf_travel,False,Deferred to cross-tool comparison statistics.
+vmat_halcyon_edge,VMAT_IMRT,mad_mlcx1,skipped,27.15,27.15,1e-06,0.0001,,,derived-equivalent,Derived-equivalent,vmat_imrt_aperture_geometry,False,Deferred to cross-tool comparison statistics.
+vmat_halcyon_edge,VMAT_IMRT,mad_mlcx2,skipped,27.91,27.91,1e-06,0.0001,,,derived-equivalent,Derived-equivalent,vmat_imrt_aperture_geometry,False,Deferred to cross-tool comparison statistics.
+vmat_halcyon_edge,VMAT_IMRT,mcsv_mlcx1,skipped,0.13,0.13,1e-06,0.0001,,,derived-equivalent,Derived-equivalent,vmat_imrt_mcniven_style_modulation,False,Deferred to cross-tool comparison statistics.
+vmat_halcyon_edge,VMAT_IMRT,mcsv_mlcx2,skipped,0.18,0.18,1e-06,0.0001,,,derived-equivalent,Derived-equivalent,vmat_imrt_mcniven_style_modulation,False,Deferred to cross-tool comparison statistics.
+vmat_halcyon_edge,VMAT_IMRT,md_mlcx1,skipped,2.52,2.52,1e-06,0.0001,,,derived-equivalent,Derived-equivalent,vmat_imrt_shape_modulation,False,Deferred to cross-tool comparison statistics.
+vmat_halcyon_edge,VMAT_IMRT,md_mlcx2,skipped,2.34,2.34,1e-06,0.0001,,,derived-equivalent,Derived-equivalent,vmat_imrt_shape_modulation,False,Deferred to cross-tool comparison statistics.
+vmat_halcyon_edge,VMAT_IMRT,mdrv_mlcx1,skipped,0.0,0.0,1e-06,0.0001,,,derived-equivalent,Derived-equivalent,vmat_imrt_delivery_dynamics,False,Deferred to cross-tool comparison statistics.
+vmat_halcyon_edge,VMAT_IMRT,mdrv_mlcx2,skipped,0.0,0.0,1e-06,0.0001,,,derived-equivalent,Derived-equivalent,vmat_imrt_delivery_dynamics,False,Deferred to cross-tool comparison statistics.
+vmat_halcyon_edge,VMAT_IMRT,mgsv_mlcx1,skipped,0.23,0.23,1e-06,0.0001,,,derived-equivalent,Derived-equivalent,vmat_imrt_delivery_dynamics,False,Deferred to cross-tool comparison statistics.
+vmat_halcyon_edge,VMAT_IMRT,mgsv_mlcx2,skipped,0.23,0.23,1e-06,0.0001,,,derived-equivalent,Derived-equivalent,vmat_imrt_delivery_dynamics,False,Deferred to cross-tool comparison statistics.
+vmat_halcyon_edge,VMAT_IMRT,mlcx1_acc_0_40,skipped,0.7537,0.7537,1e-06,0.0001,,,derived-equivalent,Derived-equivalent,vmat_imrt_motion_bins,False,Deferred to cross-tool comparison statistics.
+vmat_halcyon_edge,VMAT_IMRT,mlcx1_acc_120_160,skipped,0.0309,0.0309,1e-06,0.0001,,,derived-equivalent,Derived-equivalent,vmat_imrt_motion_bins,False,Deferred to cross-tool comparison statistics.
+vmat_halcyon_edge,VMAT_IMRT,mlcx1_acc_160_200,skipped,0.0131,0.0131,1e-06,0.0001,,,derived-equivalent,Derived-equivalent,vmat_imrt_motion_bins,False,Deferred to cross-tool comparison statistics.
+vmat_halcyon_edge,VMAT_IMRT,mlcx1_acc_40_80,skipped,0.119,0.119,1e-06,0.0001,,,derived-equivalent,Derived-equivalent,vmat_imrt_motion_bins,False,Deferred to cross-tool comparison statistics.
+vmat_halcyon_edge,VMAT_IMRT,mlcx1_acc_80_120,skipped,0.0638,0.0638,1e-06,0.0001,,,derived-equivalent,Derived-equivalent,vmat_imrt_motion_bins,False,Deferred to cross-tool comparison statistics.
+vmat_halcyon_edge,VMAT_IMRT,mlcx1_acc_average,skipped,50.6485,50.6485,1e-06,0.0001,,,derived-equivalent,Derived-equivalent,vmat_imrt_motion_bins,False,Deferred to cross-tool comparison statistics.
+vmat_halcyon_edge,VMAT_IMRT,mlcx1_acc_std,skipped,51.4523,51.4523,1e-06,0.0001,,,derived-equivalent,Derived-equivalent,vmat_imrt_motion_bins,False,Deferred to cross-tool comparison statistics.
+vmat_halcyon_edge,VMAT_IMRT,mlcx1_speed_0_4,skipped,0.5426,0.5426,1e-06,0.0001,,,derived-equivalent,Derived-equivalent,vmat_imrt_motion_bins,False,Deferred to cross-tool comparison statistics.
+vmat_halcyon_edge,VMAT_IMRT,mlcx1_speed_12_16,skipped,0.0477,0.0477,1e-06,0.0001,,,derived-equivalent,Derived-equivalent,vmat_imrt_motion_bins,False,Deferred to cross-tool comparison statistics.
+vmat_halcyon_edge,VMAT_IMRT,mlcx1_speed_16_20,skipped,0.0599,0.0599,1e-06,0.0001,,,derived-equivalent,Derived-equivalent,vmat_imrt_motion_bins,False,Deferred to cross-tool comparison statistics.
+vmat_halcyon_edge,VMAT_IMRT,mlcx1_speed_4_8,skipped,0.0476,0.0476,1e-06,0.0001,,,derived-equivalent,Derived-equivalent,vmat_imrt_motion_bins,False,Deferred to cross-tool comparison statistics.
+vmat_halcyon_edge,VMAT_IMRT,mlcx1_speed_8_12,skipped,0.0571,0.0571,1e-06,0.0001,,,derived-equivalent,Derived-equivalent,vmat_imrt_motion_bins,False,Deferred to cross-tool comparison statistics.
+vmat_halcyon_edge,VMAT_IMRT,mlcx1_speed_average,skipped,17.6332,17.6332,1e-06,0.0001,,,derived-equivalent,Derived-equivalent,vmat_imrt_motion_bins,False,Deferred to cross-tool comparison statistics.
+vmat_halcyon_edge,VMAT_IMRT,mlcx1_speed_std,skipped,11.092,11.092,1e-06,0.0001,,,derived-equivalent,Derived-equivalent,vmat_imrt_motion_bins,False,Deferred to cross-tool comparison statistics.
+vmat_halcyon_edge,VMAT_IMRT,mlcx2_acc_0_40,skipped,0.7354,0.7354,1e-06,0.0001,,,derived-equivalent,Derived-equivalent,vmat_imrt_motion_bins,False,Deferred to cross-tool comparison statistics.
+vmat_halcyon_edge,VMAT_IMRT,mlcx2_acc_120_160,skipped,0.0329,0.0329,1e-06,0.0001,,,derived-equivalent,Derived-equivalent,vmat_imrt_motion_bins,False,Deferred to cross-tool comparison statistics.
+vmat_halcyon_edge,VMAT_IMRT,mlcx2_acc_160_200,skipped,0.014,0.014,1e-06,0.0001,,,derived-equivalent,Derived-equivalent,vmat_imrt_motion_bins,False,Deferred to cross-tool comparison statistics.
+vmat_halcyon_edge,VMAT_IMRT,mlcx2_acc_40_80,skipped,0.1277,0.1277,1e-06,0.0001,,,derived-equivalent,Derived-equivalent,vmat_imrt_motion_bins,False,Deferred to cross-tool comparison statistics.
+vmat_halcyon_edge,VMAT_IMRT,mlcx2_acc_80_120,skipped,0.0687,0.0687,1e-06,0.0001,,,derived-equivalent,Derived-equivalent,vmat_imrt_motion_bins,False,Deferred to cross-tool comparison statistics.
+vmat_halcyon_edge,VMAT_IMRT,mlcx2_acc_average,skipped,50.9493,50.9493,1e-06,0.0001,,,derived-equivalent,Derived-equivalent,vmat_imrt_motion_bins,False,Deferred to cross-tool comparison statistics.
+vmat_halcyon_edge,VMAT_IMRT,mlcx2_acc_std,skipped,54.8167,54.8167,1e-06,0.0001,,,derived-equivalent,Derived-equivalent,vmat_imrt_motion_bins,False,Deferred to cross-tool comparison statistics.
+vmat_halcyon_edge,VMAT_IMRT,mlcx2_speed_0_4,skipped,0.5058,0.5058,1e-06,0.0001,,,derived-equivalent,Derived-equivalent,vmat_imrt_motion_bins,False,Deferred to cross-tool comparison statistics.
+vmat_halcyon_edge,VMAT_IMRT,mlcx2_speed_12_16,skipped,0.0485,0.0485,1e-06,0.0001,,,derived-equivalent,Derived-equivalent,vmat_imrt_motion_bins,False,Deferred to cross-tool comparison statistics.
+vmat_halcyon_edge,VMAT_IMRT,mlcx2_speed_16_20,skipped,0.0615,0.0615,1e-06,0.0001,,,derived-equivalent,Derived-equivalent,vmat_imrt_motion_bins,False,Deferred to cross-tool comparison statistics.
+vmat_halcyon_edge,VMAT_IMRT,mlcx2_speed_4_8,skipped,0.0479,0.0479,1e-06,0.0001,,,derived-equivalent,Derived-equivalent,vmat_imrt_motion_bins,False,Deferred to cross-tool comparison statistics.
+vmat_halcyon_edge,VMAT_IMRT,mlcx2_speed_8_12,skipped,0.061,0.061,1e-06,0.0001,,,derived-equivalent,Derived-equivalent,vmat_imrt_motion_bins,False,Deferred to cross-tool comparison statistics.
+vmat_halcyon_edge,VMAT_IMRT,mlcx2_speed_average,skipped,19.1532,19.1532,1e-06,0.0001,,,derived-equivalent,Derived-equivalent,vmat_imrt_motion_bins,False,Deferred to cross-tool comparison statistics.
+vmat_halcyon_edge,VMAT_IMRT,mlcx2_speed_std,skipped,12.1718,12.1718,1e-06,0.0001,,,derived-equivalent,Derived-equivalent,vmat_imrt_motion_bins,False,Deferred to cross-tool comparison statistics.
+vmat_halcyon_edge,VMAT_IMRT,muca,pass,2.8290853658536586,2.8290853658536586,1e-06,0.0001,0.0,0.0,exact-equivalent,Reference-case exact,vmat_imrt_plan_prescription,True,
+vmat_halcyon_edge,VMAT_IMRT,mucgy,pass,4.6397,4.6397,1e-06,0.0001,0.0,0.0,exact-equivalent,Reference-case exact,vmat_imrt_plan_prescription,True,
+vmat_halcyon_edge,VMAT_IMRT,mudeg,pass,2.062088888888889,2.062088888888889,1e-06,0.0001,0.0,0.0,exact-equivalent,Reference-case exact,vmat_imrt_arc_geometry,True,
+vmat_halcyon_edge,VMAT_IMRT,mus,pass,927.94,927.94,1e-06,0.0001,0.0,0.0,exact-equivalent,Reference-case exact,vmat_imrt_plan_prescription,True,
+vmat_halcyon_edge,VMAT_IMRT,narcs,pass,4.0,4.0,1e-06,0.0001,0.0,0.0,exact-equivalent,Reference-case exact,vmat_imrt_plan_prescription,True,
+vmat_halcyon_edge,VMAT_IMRT,nl_mlcx1,skipped,17.14,17.14,1e-06,0.0001,,,derived-equivalent,Derived-equivalent,vmat_imrt_leaf_travel,False,Deferred to cross-tool comparison statistics.
+vmat_halcyon_edge,VMAT_IMRT,nl_mlcx2,skipped,18.25,18.25,1e-06,0.0001,,,derived-equivalent,Derived-equivalent,vmat_imrt_leaf_travel,False,Deferred to cross-tool comparison statistics.
+vmat_halcyon_edge,VMAT_IMRT,pa_mlcx1,skipped,3549.57,3549.57,1e-06,0.0001,,,derived-equivalent,Derived-equivalent,vmat_imrt_aperture_geometry,False,Deferred to cross-tool comparison statistics.
+vmat_halcyon_edge,VMAT_IMRT,pa_mlcx2,skipped,4922.54,4922.54,1e-06,0.0001,,,derived-equivalent,Derived-equivalent,vmat_imrt_aperture_geometry,False,Deferred to cross-tool comparison statistics.
+vmat_halcyon_edge,VMAT_IMRT,perimeter_mlcx1,skipped,538.37,538.37,1e-06,0.0001,,,derived-equivalent,Derived-equivalent,vmat_imrt_aperture_geometry,False,Deferred to cross-tool comparison statistics.
+vmat_halcyon_edge,VMAT_IMRT,perimeter_mlcx2,skipped,594.1,594.1,1e-06,0.0001,,,derived-equivalent,Derived-equivalent,vmat_imrt_aperture_geometry,False,Deferred to cross-tool comparison statistics.
+vmat_halcyon_edge,VMAT_IMRT,pi_mlcx1,skipped,8.99,8.99,1e-06,0.0001,,,derived-equivalent,Derived-equivalent,vmat_imrt_shape_modulation,False,Deferred to cross-tool comparison statistics.
+vmat_halcyon_edge,VMAT_IMRT,pi_mlcx2,skipped,6.84,6.84,1e-06,0.0001,,,derived-equivalent,Derived-equivalent,vmat_imrt_shape_modulation,False,Deferred to cross-tool comparison statistics.
+vmat_halcyon_edge,VMAT_IMRT,pm_mlcx1,skipped,0.59,0.59,1e-06,0.0001,,,derived-equivalent,Derived-equivalent,vmat_imrt_shape_modulation,False,Deferred to cross-tool comparison statistics.
+vmat_halcyon_edge,VMAT_IMRT,pm_mlcx2,skipped,0.57,0.57,1e-06,0.0001,,,derived-equivalent,Derived-equivalent,vmat_imrt_shape_modulation,False,Deferred to cross-tool comparison statistics.
+vmat_halcyon_edge,VMAT_IMRT,pmu,pass,927.94,927.94,1e-06,0.0001,0.0,0.0,exact-equivalent,Reference-case exact,vmat_imrt_plan_prescription,True,
+vmat_halcyon_edge,VMAT_IMRT,psmall_mlcx1,skipped,0.7,0.7,1e-06,0.0001,,,derived-equivalent,Derived-equivalent,vmat_imrt_aperture_geometry,False,Deferred to cross-tool comparison statistics.
+vmat_halcyon_edge,VMAT_IMRT,psmall_mlcx2,skipped,0.36,0.36,1e-06,0.0001,,,derived-equivalent,Derived-equivalent,vmat_imrt_aperture_geometry,False,Deferred to cross-tool comparison statistics.
+vmat_halcyon_edge,VMAT_IMRT,sas_10mm_mlcx1,skipped,0.31,0.31,1e-06,0.0001,,,derived-equivalent,Derived-equivalent,vmat_imrt_aperture_geometry,False,Deferred to cross-tool comparison statistics.
+vmat_halcyon_edge,VMAT_IMRT,sas_10mm_mlcx2,skipped,0.22,0.22,1e-06,0.0001,,,derived-equivalent,Derived-equivalent,vmat_imrt_aperture_geometry,False,Deferred to cross-tool comparison statistics.
+vmat_halcyon_edge,VMAT_IMRT,sas_20mm_mlcx1,skipped,0.56,0.56,1e-06,0.0001,,,derived-equivalent,Derived-equivalent,vmat_imrt_aperture_geometry,False,Deferred to cross-tool comparison statistics.
+vmat_halcyon_edge,VMAT_IMRT,sas_20mm_mlcx2,skipped,0.43,0.43,1e-06,0.0001,,,derived-equivalent,Derived-equivalent,vmat_imrt_aperture_geometry,False,Deferred to cross-tool comparison statistics.
+vmat_halcyon_edge,VMAT_IMRT,sas_5mm_mlcx1,skipped,0.18,0.18,1e-06,0.0001,,,derived-equivalent,Derived-equivalent,vmat_imrt_aperture_geometry,False,Deferred to cross-tool comparison statistics.
+vmat_halcyon_edge,VMAT_IMRT,sas_5mm_mlcx2,skipped,0.14,0.14,1e-06,0.0001,,,derived-equivalent,Derived-equivalent,vmat_imrt_aperture_geometry,False,Deferred to cross-tool comparison statistics.
+vmat_halcyon_edge,VMAT_IMRT,tg_mlcx1,skipped,27.64,27.64,1e-06,0.0001,,,derived-equivalent,Derived-equivalent,vmat_imrt_mcniven_style_modulation,False,Deferred to cross-tool comparison statistics.
+vmat_halcyon_edge,VMAT_IMRT,tg_mlcx2,skipped,23.13,23.13,1e-06,0.0001,,,derived-equivalent,Derived-equivalent,vmat_imrt_mcniven_style_modulation,False,Deferred to cross-tool comparison statistics.
+tomo_canonical,TOMO,centroid,pass,-0.14063943039616933,-0.14063943039616933,1e-06,0.0001,0.0,0.0,exact-equivalent,Reference-case exact,tomo_sinogram_geometry,True,
+tomo_canonical,TOMO,cfns_0_1,pass,0.01929783771215996,0.01929783771215996,1e-06,0.0001,0.0,0.0,exact-equivalent,Reference-case exact,tomo_leaf_open_time,True,
+tomo_canonical,TOMO,cfns_0_25,pass,0.1843369758970782,0.1843369758970782,1e-06,0.0001,0.0,0.0,exact-equivalent,Reference-case exact,tomo_leaf_open_time,True,
+tomo_canonical,TOMO,cfns_0_5,pass,0.5516546539564442,0.5516546539564442,1e-06,0.0001,0.0,0.0,exact-equivalent,Reference-case exact,tomo_leaf_open_time,True,
+tomo_canonical,TOMO,cfns_0_75,pass,0.9249786871270247,0.9249786871270247,1e-06,0.0001,0.0,0.0,exact-equivalent,Reference-case exact,tomo_leaf_open_time,True,
+tomo_canonical,TOMO,clns_10ms,pass,0.5516546539564442,0.5516546539564442,1e-06,0.0001,0.0,0.0,exact-equivalent,Reference-case exact,tomo_leaf_open_time,True,
+tomo_canonical,TOMO,clns_20ms,pass,1.0,1.0,1e-06,0.0001,0.0,0.0,exact-equivalent,Reference-case exact,tomo_leaf_open_time,True,
+tomo_canonical,TOMO,clns_30ms,pass,1.0,1.0,1e-06,0.0001,0.0,0.0,exact-equivalent,Reference-case exact,tomo_leaf_open_time,True,
+tomo_canonical,TOMO,clns_50ms,pass,1.0,1.0,1e-06,0.0001,0.0,0.0,exact-equivalent,Reference-case exact,tomo_leaf_open_time,True,
+tomo_canonical,TOMO,clns_pt_10ms,pass,0.44834534604355575,0.44834534604355575,1e-06,0.0001,0.0,0.0,exact-equivalent,Reference-case exact,tomo_leaf_open_time,True,
+tomo_canonical,TOMO,clns_pt_20ms,pass,1.0,1.0,1e-06,0.0001,0.0,0.0,exact-equivalent,Reference-case exact,tomo_leaf_open_time,True,
+tomo_canonical,TOMO,clns_pt_30ms,pass,1.0,1.0,1e-06,0.0001,0.0,0.0,exact-equivalent,Reference-case exact,tomo_leaf_open_time,True,
+tomo_canonical,TOMO,clns_pt_50ms,pass,1.0,1.0,1e-06,0.0001,0.0,0.0,exact-equivalent,Reference-case exact,tomo_leaf_open_time,True,
+tomo_canonical,TOMO,cls,pass,0.7447982594936708,0.7447982594936708,1e-06,0.0001,0.0,0.0,exact-equivalent,Reference-case exact,tomo_sinogram_geometry,True,
+tomo_canonical,TOMO,clsin,pass,0.01576344936708861,0.01576344936708861,1e-06,0.0001,0.0,0.0,exact-equivalent,Reference-case exact,tomo_sinogram_geometry,True,
+tomo_canonical,TOMO,clsinarea,pass,0.051045648157477516,0.051045648157477516,1e-06,0.0001,0.0,0.0,exact-equivalent,Reference-case exact,tomo_sinogram_geometry,True,
+tomo_canonical,TOMO,clsinareadisc,pass,0.1339736280545091,0.1339736280545091,1e-06,0.0001,0.0,0.0,exact-equivalent,Reference-case exact,tomo_sinogram_geometry,True,
+tomo_canonical,TOMO,clsindisc,pass,0.04137250830564784,0.04137250830564784,1e-06,0.0001,0.0,0.0,exact-equivalent,Reference-case exact,tomo_sinogram_geometry,True,
+tomo_canonical,TOMO,couch_speed_mm_s,pass,0.0,0.0,1e-06,0.0001,0.0,0.0,exact-equivalent,Reference-case exact,tomo_delivery,True,
+tomo_canonical,TOMO,couch_translation_mm,pass,0.0,0.0,1e-06,0.0001,0.0,0.0,exact-equivalent,Reference-case exact,tomo_delivery,True,
+tomo_canonical,TOMO,elotv_1,pass,0.030713769643919284,0.030713769643919284,1e-06,0.0001,0.0,0.0,exact-equivalent,Reference-case exact,tomo_leaf_open_time,True,
+tomo_canonical,TOMO,elotv_5,pass,0.09536192068810537,0.09536192068810537,1e-06,0.0001,0.0,0.0,exact-equivalent,Reference-case exact,tomo_leaf_open_time,True,
+tomo_canonical,TOMO,epstv_0_1,pass,0.040572171589310826,0.040572171589310826,1e-06,0.0001,0.0,0.0,exact-equivalent,Reference-case exact,tomo_sinogram_modulation,True,
+tomo_canonical,TOMO,epstv_1_0,pass,0.029353408803039903,0.029353408803039903,1e-06,0.0001,0.0,0.0,exact-equivalent,Reference-case exact,tomo_sinogram_modulation,True,
+tomo_canonical,TOMO,epstv_1_1,pass,0.07040249866803382,0.07040249866803382,1e-06,0.0001,0.0,0.0,exact-equivalent,Reference-case exact,tomo_sinogram_modulation,True,
+tomo_canonical,TOMO,fdisc,pass,0.3810126582278481,0.3810126582278481,1e-06,0.0001,0.0,0.0,exact-equivalent,Reference-case exact,tomo_sinogram_geometry,True,
+tomo_canonical,TOMO,field_width_mm,pass,25.1,25.1,1e-06,0.0001,0.0,0.0,exact-equivalent,Reference-case exact,tomo_delivery,True,
+tomo_canonical,TOMO,gantry_period_s,pass,1.02,1.02,1e-06,0.0001,0.0,0.0,exact-equivalent,Reference-case exact,tomo_delivery,True,
+tomo_canonical,TOMO,klot,pass,-0.41163100582318757,-0.41163100582318757,1e-06,0.0001,0.0,0.0,exact-equivalent,Reference-case exact,tomo_leaf_open_time,True,
+tomo_canonical,TOMO,l0ns,pass,0.0012559839742453294,0.0012559839742453294,1e-06,0.0001,0.0,0.0,exact-equivalent,Reference-case exact,tomo_sinogram_geometry,True,
+tomo_canonical,TOMO,l1ns,pass,0.18265984893736836,0.18265984893736836,1e-06,0.0001,0.0,0.0,exact-equivalent,Reference-case exact,tomo_sinogram_geometry,True,
+tomo_canonical,TOMO,l2ns,pass,0.8160841670883863,0.8160841670883863,1e-06,0.0001,0.0,0.0,exact-equivalent,Reference-case exact,tomo_sinogram_geometry,True,
+tomo_canonical,TOMO,lengthcc,pass,11.778183477863989,11.778183477863989,1e-06,0.0001,0.0,0.0,exact-equivalent,Reference-case exact,tomo_sinogram_geometry,True,
+tomo_canonical,TOMO,lotv,pass,0.9692862303560807,0.9692862303560807,1e-06,0.0001,0.0,0.0,exact-equivalent,Reference-case exact,tomo_leaf_open_time,True,
+tomo_canonical,TOMO,maxflot,pass,0.96043,0.96043,1e-06,0.0001,0.0,0.0,exact-equivalent,Reference-case exact,tomo_leaf_open_time,True,
+tomo_canonical,TOMO,maxlot,pass,19.2086,19.2086,1e-06,0.0001,0.0,0.0,exact-equivalent,Reference-case exact,tomo_leaf_open_time,True,
+tomo_canonical,TOMO,mdflot,pass,0.469885,0.469885,1e-06,0.0001,0.0,0.0,exact-equivalent,Reference-case exact,tomo_leaf_open_time,True,
+tomo_canonical,TOMO,mdlot,pass,9.3977,9.3977,1e-06,0.0001,0.0,0.0,exact-equivalent,Reference-case exact,tomo_leaf_open_time,True,
+tomo_canonical,TOMO,mdsi,pass,0.0029604683544303795,0.0029604683544303795,1e-06,0.0001,0.0,0.0,exact-equivalent,Reference-case exact,tomo_sinogram_modulation,True,
+tomo_canonical,TOMO,mf,pass,0.48122286330373437,0.48122286330373437,1e-06,0.0001,0.0,0.0,exact-equivalent,Reference-case exact,tomo_delivery,True,
+tomo_canonical,TOMO,mflot,pass,0.4621808746028055,0.4621808746028055,1e-06,0.0001,0.0,0.0,exact-equivalent,Reference-case exact,tomo_leaf_open_time,True,
+tomo_canonical,TOMO,mi,pass,0.17059548528101817,0.17059548528101817,1e-06,0.0001,0.0,0.0,exact-equivalent,Reference-case exact,tomo_sinogram_modulation,True,
+tomo_canonical,TOMO,minflot,pass,0.07781,0.07781,1e-06,0.0001,0.0,0.0,exact-equivalent,Reference-case exact,tomo_leaf_open_time,True,
+tomo_canonical,TOMO,minlot,pass,1.5562000000000002,1.5562000000000002,1e-06,0.0001,0.0,0.0,exact-equivalent,Reference-case exact,tomo_leaf_open_time,True,
+tomo_canonical,TOMO,mlot,pass,9.243617492056112,9.243617492056112,1e-06,0.0001,0.0,0.0,exact-equivalent,Reference-case exact,tomo_leaf_open_time,True,
+tomo_canonical,TOMO,moflot,pass,0.96043,0.96043,1e-06,0.0001,0.0,0.0,exact-equivalent,Reference-case exact,tomo_leaf_open_time,True,
+tomo_canonical,TOMO,molot,pass,19.2086,19.2086,1e-06,0.0001,0.0,0.0,exact-equivalent,Reference-case exact,tomo_leaf_open_time,True,
+tomo_canonical,TOMO,msa,pass,-0.16579188239723627,-0.16579188239723627,1e-06,0.0001,0.0,0.0,exact-equivalent,Reference-case exact,tomo_sinogram_modulation,True,
+tomo_canonical,TOMO,msi,pass,0.11794936362737339,0.11794936362737339,1e-06,0.0001,0.0,0.0,exact-equivalent,Reference-case exact,tomo_sinogram_modulation,True,
+tomo_canonical,TOMO,ncc,pass,1.3867088607594937,1.3867088607594937,1e-06,0.0001,0.0,0.0,exact-equivalent,Reference-case exact,tomo_sinogram_geometry,True,
+tomo_canonical,TOMO,noc,pass,0.5104034810126583,0.5104034810126583,1e-06,0.0001,0.0,0.0,exact-equivalent,Reference-case exact,tomo_sinogram_modulation,True,
+tomo_canonical,TOMO,nproj,pass,1580.0,1580.0,1e-06,0.0001,0.0,0.0,exact-equivalent,Reference-case exact,tomo_delivery,True,
+tomo_canonical,TOMO,nproj_rot,pass,51.0,51.0,1e-06,0.0001,0.0,0.0,exact-equivalent,Reference-case exact,tomo_delivery,True,
+tomo_canonical,TOMO,nrot,pass,30.980392156862745,30.980392156862745,1e-06,0.0001,0.0,0.0,exact-equivalent,Reference-case exact,tomo_delivery,True,
+tomo_canonical,TOMO,pitch,pass,0.287,0.287,1e-06,0.0001,0.0,0.0,exact-equivalent,Reference-case exact,tomo_delivery,True,
+tomo_canonical,TOMO,projection_time_s,pass,0.02,0.02,1e-06,0.0001,0.0,0.0,exact-equivalent,Reference-case exact,tomo_delivery,True,
+tomo_canonical,TOMO,pstv,pass,0.07040249866803382,0.07040249866803382,1e-06,0.0001,0.0,0.0,exact-equivalent,Reference-case exact,tomo_sinogram_modulation,True,
+tomo_canonical,TOMO,sdflot,pass,0.20517797047068692,0.20517797047068692,1e-06,0.0001,0.0,0.0,exact-equivalent,Reference-case exact,tomo_leaf_open_time,True,
+tomo_canonical,TOMO,sdlot,pass,4.103559409413738,4.103559409413738,1e-06,0.0001,0.0,0.0,exact-equivalent,Reference-case exact,tomo_leaf_open_time,True,
+tomo_canonical,TOMO,sdsi,pass,0.15948267012440465,0.15948267012440465,1e-06,0.0001,0.0,0.0,exact-equivalent,Reference-case exact,tomo_sinogram_modulation,True,
+tomo_canonical,TOMO,slot,pass,0.1992171039277052,0.1992171039277052,1e-06,0.0001,0.0,0.0,exact-equivalent,Reference-case exact,tomo_leaf_open_time,True,
+tomo_canonical,TOMO,ta,pass,17.341772151898734,17.341772151898734,1e-06,0.0001,0.0,0.0,exact-equivalent,Reference-case exact,tomo_sinogram_geometry,True,
+tomo_canonical,TOMO,target_length_mm,pass,-25.1,-25.1,1e-06,0.0001,0.0,0.0,exact-equivalent,Reference-case exact,tomo_delivery,True,
+tomo_canonical,TOMO,treatment_time_s,pass,31.6,31.6,1e-06,0.0001,0.0,0.0,exact-equivalent,Reference-case exact,tomo_delivery,True,
+tomo_canonical,TOMO,ttdf_s_cgy,pass,0.0,0.0,1e-06,0.0001,0.0,0.0,exact-equivalent,Reference-case exact,tomo_delivery,True,
+tomo_default_inference_edge,TOMO,centroid,pass,0.23978408422852868,0.23978408422852868,1e-06,0.0001,0.0,0.0,exact-equivalent,Reference-case exact,tomo_sinogram_geometry,True,
+tomo_default_inference_edge,TOMO,cfns_0_1,pass,0.010477299185098952,0.010477299185098952,1e-06,0.0001,0.0,0.0,exact-equivalent,Reference-case exact,tomo_leaf_open_time,True,
+tomo_default_inference_edge,TOMO,cfns_0_25,pass,0.023282887077997673,0.023282887077997673,1e-06,0.0001,0.0,0.0,exact-equivalent,Reference-case exact,tomo_leaf_open_time,True,
+tomo_default_inference_edge,TOMO,cfns_0_5,pass,0.03570042685292976,0.03570042685292976,1e-06,0.0001,0.0,0.0,exact-equivalent,Reference-case exact,tomo_leaf_open_time,True,
+tomo_default_inference_edge,TOMO,cfns_0_75,pass,0.06169965075669383,0.06169965075669383,1e-06,0.0001,0.0,0.0,exact-equivalent,Reference-case exact,tomo_leaf_open_time,True,
+tomo_default_inference_edge,TOMO,clns_10ms,pass,0.03570042685292976,0.03570042685292976,1e-06,0.0001,0.0,0.0,exact-equivalent,Reference-case exact,tomo_leaf_open_time,True,
+tomo_default_inference_edge,TOMO,clns_20ms,pass,1.0,1.0,1e-06,0.0001,0.0,0.0,exact-equivalent,Reference-case exact,tomo_leaf_open_time,True,
+tomo_default_inference_edge,TOMO,clns_30ms,pass,1.0,1.0,1e-06,0.0001,0.0,0.0,exact-equivalent,Reference-case exact,tomo_leaf_open_time,True,
+tomo_default_inference_edge,TOMO,clns_50ms,pass,1.0,1.0,1e-06,0.0001,0.0,0.0,exact-equivalent,Reference-case exact,tomo_leaf_open_time,True,
+tomo_default_inference_edge,TOMO,clns_pt_10ms,pass,0.9642995731470703,0.9642995731470703,1e-06,0.0001,0.0,0.0,exact-equivalent,Reference-case exact,tomo_leaf_open_time,True,
+tomo_default_inference_edge,TOMO,clns_pt_20ms,pass,1.0,1.0,1e-06,0.0001,0.0,0.0,exact-equivalent,Reference-case exact,tomo_leaf_open_time,True,
+tomo_default_inference_edge,TOMO,clns_pt_30ms,pass,1.0,1.0,1e-06,0.0001,0.0,0.0,exact-equivalent,Reference-case exact,tomo_leaf_open_time,True,
+tomo_default_inference_edge,TOMO,clns_pt_50ms,pass,1.0,1.0,1e-06,0.0001,0.0,0.0,exact-equivalent,Reference-case exact,tomo_leaf_open_time,True,
+tomo_default_inference_edge,TOMO,cls,pass,0.9322127525252525,0.9322127525252525,1e-06,0.0001,0.0,0.0,exact-equivalent,Reference-case exact,tomo_sinogram_geometry,True,
+tomo_default_inference_edge,TOMO,clsin,pass,0.013783670033670033,0.013783670033670033,1e-06,0.0001,0.0,0.0,exact-equivalent,Reference-case exact,tomo_sinogram_geometry,True,
+tomo_default_inference_edge,TOMO,clsinarea,pass,0.07017282157891033,0.07017282157891033,1e-06,0.0001,0.0,0.0,exact-equivalent,Reference-case exact,tomo_sinogram_geometry,True,
+tomo_default_inference_edge,TOMO,clsinareadisc,pass,0.4631406224208082,0.4631406224208082,1e-06,0.0001,0.0,0.0,exact-equivalent,Reference-case exact,tomo_sinogram_geometry,True,
+tomo_default_inference_edge,TOMO,clsindisc,pass,0.09097222222222222,0.09097222222222222,1e-06,0.0001,0.0,0.0,exact-equivalent,Reference-case exact,tomo_sinogram_geometry,True,
+tomo_default_inference_edge,TOMO,couch_speed_mm_s,pass,0.0,0.0,1e-06,0.0001,0.0,0.0,exact-equivalent,Reference-case exact,tomo_delivery,True,
+tomo_default_inference_edge,TOMO,couch_translation_mm,pass,0.0,0.0,1e-06,0.0001,0.0,0.0,exact-equivalent,Reference-case exact,tomo_delivery,True,
+tomo_default_inference_edge,TOMO,elotv_1,pass,0.032028727601400034,0.032028727601400034,1e-06,0.0001,0.0,0.0,exact-equivalent,Reference-case exact,tomo_leaf_open_time,True,
+tomo_default_inference_edge,TOMO,elotv_5,pass,0.10496402286453281,0.10496402286453281,1e-06,0.0001,0.0,0.0,exact-equivalent,Reference-case exact,tomo_leaf_open_time,True,
+tomo_default_inference_edge,TOMO,epstv_0_1,pass,0.03642747635080969,0.03642747635080969,1e-06,0.0001,0.0,0.0,exact-equivalent,Reference-case exact,tomo_sinogram_modulation,True,
+tomo_default_inference_edge,TOMO,epstv_1_0,pass,0.03199926117200674,0.03199926117200674,1e-06,0.0001,0.0,0.0,exact-equivalent,Reference-case exact,tomo_sinogram_modulation,True,
+tomo_default_inference_edge,TOMO,epstv_1_1,pass,0.06894260606547284,0.06894260606547284,1e-06,0.0001,0.0,0.0,exact-equivalent,Reference-case exact,tomo_sinogram_modulation,True,
+tomo_default_inference_edge,TOMO,fdisc,pass,0.15151515151515152,0.15151515151515152,1e-06,0.0001,0.0,0.0,exact-equivalent,Reference-case exact,tomo_sinogram_geometry,True,
+tomo_default_inference_edge,TOMO,field_width_mm,pass,25.1,25.1,1e-06,0.0001,0.0,0.0,exact-equivalent,Reference-case exact,tomo_delivery,True,
+tomo_default_inference_edge,TOMO,gantry_period_s,pass,1.02,1.02,1e-06,0.0001,0.0,0.0,exact-equivalent,Reference-case exact,tomo_delivery,True,
+tomo_default_inference_edge,TOMO,klot,pass,18.21613149679684,18.21613149679684,1e-06,0.0001,0.0,0.0,exact-equivalent,Reference-case exact,tomo_leaf_open_time,True,
+tomo_default_inference_edge,TOMO,l0ns,pass,0.12451098284431616,0.12451098284431616,1e-06,0.0001,0.0,0.0,exact-equivalent,Reference-case exact,tomo_sinogram_geometry,True,
+tomo_default_inference_edge,TOMO,l1ns,pass,0.45074421463310355,0.45074421463310355,1e-06,0.0001,0.0,0.0,exact-equivalent,Reference-case exact,tomo_sinogram_geometry,True,
+tomo_default_inference_edge,TOMO,l2ns,pass,0.4247448025225803,0.4247448025225803,1e-06,0.0001,0.0,0.0,exact-equivalent,Reference-case exact,tomo_sinogram_geometry,True,
+tomo_default_inference_edge,TOMO,lengthcc,pass,3.7293777134587556,3.7293777134587556,1e-06,0.0001,0.0,0.0,exact-equivalent,Reference-case exact,tomo_sinogram_geometry,True,
+tomo_default_inference_edge,TOMO,lotv,pass,0.9679712723986,0.9679712723986,1e-06,0.0001,0.0,0.0,exact-equivalent,Reference-case exact,tomo_leaf_open_time,True,
+tomo_default_inference_edge,TOMO,maxflot,pass,0.99908,0.99908,1e-06,0.0001,0.0,0.0,exact-equivalent,Reference-case exact,tomo_leaf_open_time,True,
+tomo_default_inference_edge,TOMO,maxlot,pass,19.9816,19.9816,1e-06,0.0001,0.0,0.0,exact-equivalent,Reference-case exact,tomo_leaf_open_time,True,
+tomo_default_inference_edge,TOMO,mdflot,pass,0.99908,0.99908,1e-06,0.0001,0.0,0.0,exact-equivalent,Reference-case exact,tomo_leaf_open_time,True,
+tomo_default_inference_edge,TOMO,mdlot,pass,19.9816,19.9816,1e-06,0.0001,0.0,0.0,exact-equivalent,Reference-case exact,tomo_leaf_open_time,True,
+tomo_default_inference_edge,TOMO,mdsi,pass,0.0,0.0,1e-06,0.0001,0.0,0.0,exact-equivalent,Reference-case exact,tomo_sinogram_modulation,True,
+tomo_default_inference_edge,TOMO,mf,pass,0.9578584863072089,0.9578584863072089,1e-06,0.0001,0.0,0.0,exact-equivalent,Reference-case exact,tomo_delivery,True,
+tomo_default_inference_edge,TOMO,mflot,pass,0.956977256499806,0.956977256499806,1e-06,0.0001,0.0,0.0,exact-equivalent,Reference-case exact,tomo_leaf_open_time,True,
+tomo_default_inference_edge,TOMO,mi,pass,0.08169420064828155,0.08169420064828155,1e-06,0.0001,0.0,0.0,exact-equivalent,Reference-case exact,tomo_sinogram_modulation,True,
+tomo_default_inference_edge,TOMO,minflot,pass,0.03259,0.03259,1e-06,0.0001,0.0,0.0,exact-equivalent,Reference-case exact,tomo_leaf_open_time,True,
+tomo_default_inference_edge,TOMO,minlot,pass,0.6518,0.6518,1e-06,0.0001,0.0,0.0,exact-equivalent,Reference-case exact,tomo_leaf_open_time,True,
+tomo_default_inference_edge,TOMO,mlot,pass,19.139545129996126,19.139545129996126,1e-06,0.0001,0.0,0.0,exact-equivalent,Reference-case exact,tomo_leaf_open_time,True,
+tomo_default_inference_edge,TOMO,moflot,pass,0.99908,0.99908,1e-06,0.0001,0.0,0.0,exact-equivalent,Reference-case exact,tomo_leaf_open_time,True,
+tomo_default_inference_edge,TOMO,molot,pass,19.9816,19.9816,1e-06,0.0001,0.0,0.0,exact-equivalent,Reference-case exact,tomo_leaf_open_time,True,
+tomo_default_inference_edge,TOMO,msa,pass,0.14938247243285394,0.14938247243285394,1e-06,0.0001,0.0,0.0,exact-equivalent,Reference-case exact,tomo_sinogram_modulation,True,
+tomo_default_inference_edge,TOMO,msi,pass,0.06487085411405734,0.06487085411405734,1e-06,0.0001,0.0,0.0,exact-equivalent,Reference-case exact,tomo_sinogram_modulation,True,
+tomo_default_inference_edge,TOMO,ncc,pass,1.1632996632996633,1.1632996632996633,1e-06,0.0001,0.0,0.0,exact-equivalent,Reference-case exact,tomo_sinogram_geometry,True,
+tomo_default_inference_edge,TOMO,noc,pass,0.13557449494949497,0.13557449494949497,1e-06,0.0001,0.0,0.0,exact-equivalent,Reference-case exact,tomo_sinogram_modulation,True,
+tomo_default_inference_edge,TOMO,nproj,pass,594.0,594.0,1e-06,0.0001,0.0,0.0,exact-equivalent,Reference-case exact,tomo_delivery,True,
+tomo_default_inference_edge,TOMO,nproj_rot,pass,51.0,51.0,1e-06,0.0001,0.0,0.0,exact-equivalent,Reference-case exact,tomo_delivery,True,
+tomo_default_inference_edge,TOMO,nrot,pass,11.647058823529411,11.647058823529411,1e-06,0.0001,0.0,0.0,exact-equivalent,Reference-case exact,tomo_delivery,True,
+tomo_default_inference_edge,TOMO,pitch,pass,0.287,0.287,1e-06,0.0001,0.0,0.0,exact-equivalent,Reference-case exact,tomo_delivery,True,
+tomo_default_inference_edge,TOMO,projection_time_s,pass,0.02,0.02,1e-06,0.0001,0.0,0.0,exact-equivalent,Reference-case exact,tomo_delivery,True,
+tomo_default_inference_edge,TOMO,pstv,pass,0.06894260606547284,0.06894260606547284,1e-06,0.0001,0.0,0.0,exact-equivalent,Reference-case exact,tomo_sinogram_modulation,True,
+tomo_default_inference_edge,TOMO,sdflot,pass,0.1598398562535874,0.1598398562535874,1e-06,0.0001,0.0,0.0,exact-equivalent,Reference-case exact,tomo_leaf_open_time,True,
+tomo_default_inference_edge,TOMO,sdlot,pass,3.1967971250717486,3.1967971250717486,1e-06,0.0001,0.0,0.0,exact-equivalent,Reference-case exact,tomo_leaf_open_time,True,
+tomo_default_inference_edge,TOMO,sdsi,pass,0.09227278438827564,0.09227278438827564,1e-06,0.0001,0.0,0.0,exact-equivalent,Reference-case exact,tomo_sinogram_modulation,True,
+tomo_default_inference_edge,TOMO,slot,pass,-4.285737678806721,-4.285737678806721,1e-06,0.0001,0.0,0.0,exact-equivalent,Reference-case exact,tomo_leaf_open_time,True,
+tomo_default_inference_edge,TOMO,ta,pass,5.220538720538721,5.220538720538721,1e-06,0.0001,0.0,0.0,exact-equivalent,Reference-case exact,tomo_sinogram_geometry,True,
+tomo_default_inference_edge,TOMO,target_length_mm,pass,-25.1,-25.1,1e-06,0.0001,0.0,0.0,exact-equivalent,Reference-case exact,tomo_delivery,True,
+tomo_default_inference_edge,TOMO,treatment_time_s,pass,11.88,11.88,1e-06,0.0001,0.0,0.0,exact-equivalent,Reference-case exact,tomo_delivery,True,
+tomo_default_inference_edge,TOMO,ttdf_s_cgy,pass,0.0,0.0,1e-06,0.0001,0.0,0.0,exact-equivalent,Reference-case exact,tomo_delivery,True,
+cyberknife_multiplan_canonical,CYBERKNIFE_MLC,em,pass,0.12,0.12,1e-06,0.0001,0.0,0.0,exact-equivalent,Reference-case exact,cyberknife_mlc_mlc_based_subset,True,
+cyberknife_multiplan_canonical,CYBERKNIFE_MLC,lg,pass,23.67,23.67,1e-06,0.0001,0.0,0.0,exact-equivalent,Reference-case exact,cyberknife_mlc_mlc_based_subset,True,
+cyberknife_multiplan_canonical,CYBERKNIFE_MLC,mcs,pass,0.24,0.24,1e-06,0.0001,0.0,0.0,exact-equivalent,Reference-case exact,cyberknife_mlc_mlc_based_subset,True,
+cyberknife_multiplan_canonical,CYBERKNIFE_MLC,pi,pass,1.07,1.07,1e-06,0.0001,0.0,0.0,exact-equivalent,Reference-case exact,cyberknife_mlc_mlc_based_subset,True,
+cyberknife_multiplan_canonical,CYBERKNIFE_MLC,pm,pass,0.63,0.63,1e-06,0.0001,0.0,0.0,exact-equivalent,Reference-case exact,cyberknife_mlc_mlc_based_subset,True,
+cyberknife_multiplan_canonical,CYBERKNIFE_MLC,sas10,pass,0.01,0.01,1e-06,0.0001,0.0,0.0,exact-equivalent,Reference-case exact,cyberknife_mlc_mlc_based_subset,True,
+aurora_canonical,AURORA,aperture_change_per_mm,skipped,23.75446225127912,23.75446225127912,1e-06,0.0001,,,not-comparable,Formula-exact,aurora_legacy_engineering,False,Not eligible for exact reference-case comparison.
+aurora_canonical,AURORA,axial_travel_mm,skipped,299.99914646000025,299.99914646000025,1e-06,0.0001,,,not-comparable,Formula-exact,aurora_legacy_engineering,False,Not eligible for exact reference-case comparison.
+aurora_canonical,AURORA,beam_pair_balance_index,skipped,0.9940606775953967,0.9940606775953967,1e-06,0.0001,,,not-comparable,Formula-exact,aurora_v3_bidirectional_symmetry,False,Not eligible for exact reference-case comparison.
+aurora_canonical,AURORA,coupled_modulation_index,skipped,0.5592548912446308,0.5592548912446308,1e-06,0.0001,,,not-comparable,Formula-exact,aurora_legacy_engineering,False,Not eligible for exact reference-case comparison.
+aurora_canonical,AURORA,effective_small_gap_burden,skipped,0.6865038683177911,0.6865038683177911,1e-06,0.0001,,,not-comparable,Formula-exact,aurora_v3_small_opening_burden,False,Not eligible for exact reference-case comparison.
+aurora_canonical,AURORA,forward_backward_metric_difference,skipped,0.006640888482547513,0.006640888482547513,1e-06,0.0001,,,not-comparable,Formula-exact,aurora_v3_bidirectional_symmetry,False,Not eligible for exact reference-case comparison.
+aurora_canonical,AURORA,gantry_rotation_deg,skipped,3240.0,3240.0,1e-06,0.0001,,,not-comparable,Formula-exact,aurora_legacy_engineering,False,Not eligible for exact reference-case comparison.
+aurora_canonical,AURORA,head_aperture_change_cv,skipped,0.9141996628009159,0.9141996628009159,1e-06,0.0001,,,not-comparable,Formula-exact,aurora_v3_axial_regions,False,Not eligible for exact reference-case comparison.
+aurora_canonical,AURORA,head_aperture_change_mean,skipped,14.867879091729954,14.867879091729954,1e-06,0.0001,,,not-comparable,Formula-exact,aurora_v3_axial_regions,False,Not eligible for exact reference-case comparison.
+aurora_canonical,AURORA,head_leaf_travel_cv,skipped,0.4671163463210212,0.4671163463210212,1e-06,0.0001,,,not-comparable,Formula-exact,aurora_v3_axial_regions,False,Not eligible for exact reference-case comparison.
+aurora_canonical,AURORA,head_leaf_travel_mean,skipped,299.0602487634512,299.0602487634512,1e-06,0.0001,,,not-comparable,Formula-exact,aurora_v3_axial_regions,False,Not eligible for exact reference-case comparison.
+aurora_canonical,AURORA,head_mu_density_cv_proxy,skipped,0.3917079530862367,0.3917079530862367,1e-06,0.0001,,,not-comparable,Formula-exact,aurora_v3_axial_regions,False,Not eligible for exact reference-case comparison.
+aurora_canonical,AURORA,head_mu_density_mean_proxy,skipped,0.006980865045512669,0.006980865045512669,1e-06,0.0001,,,not-comparable,Formula-exact,aurora_v3_axial_regions,False,Not eligible for exact reference-case comparison.
+aurora_canonical,AURORA,layer_correlation_index,skipped,0.7599786074395702,0.7599786074395702,1e-06,0.0001,,,not-comparable,Formula-exact,aurora_v3_dual_layer_coordination,False,Not eligible for exact reference-case comparison.
+aurora_canonical,AURORA,layer_imbalance_index,skipped,0.05981811651766552,0.05981811651766552,1e-06,0.0001,,,not-comparable,Formula-exact,aurora_v3_dual_layer_coordination,False,Not eligible for exact reference-case comparison.
+aurora_canonical,AURORA,leaf_travel_per_mm,skipped,370.8460304397375,370.8460304397375,1e-06,0.0001,,,not-comparable,Formula-exact,aurora_legacy_engineering,False,Not eligible for exact reference-case comparison.
+aurora_canonical,AURORA,longitudinal_travel_mm,skipped,299.99914646000025,299.99914646000025,1e-06,0.0001,,,not-comparable,Formula-exact,aurora_v2_paper_style_physics,False,Not eligible for exact reference-case comparison.
+aurora_canonical,AURORA,mid_aperture_change_cv,skipped,0.9291375608994881,0.9291375608994881,1e-06,0.0001,,,not-comparable,Formula-exact,aurora_v3_axial_regions,False,Not eligible for exact reference-case comparison.
+aurora_canonical,AURORA,mid_aperture_change_mean,skipped,34.02685480345529,34.02685480345529,1e-06,0.0001,,,not-comparable,Formula-exact,aurora_v3_axial_regions,False,Not eligible for exact reference-case comparison.
+aurora_canonical,AURORA,mid_leaf_travel_cv,skipped,0.301770793038663,0.301770793038663,1e-06,0.0001,,,not-comparable,Formula-exact,aurora_v3_axial_regions,False,Not eligible for exact reference-case comparison.
+aurora_canonical,AURORA,mid_leaf_travel_mean,skipped,490.57701340669524,490.57701340669524,1e-06,0.0001,,,not-comparable,Formula-exact,aurora_v3_axial_regions,False,Not eligible for exact reference-case comparison.
+aurora_canonical,AURORA,mid_mu_density_cv_proxy,skipped,0.42382981267223474,0.42382981267223474,1e-06,0.0001,,,not-comparable,Formula-exact,aurora_v3_axial_regions,False,Not eligible for exact reference-case comparison.
+aurora_canonical,AURORA,mid_mu_density_mean_proxy,skipped,0.007321166877010003,0.007321166877010003,1e-06,0.0001,,,not-comparable,Formula-exact,aurora_v3_axial_regions,False,Not eligible for exact reference-case comparison.
+aurora_canonical,AURORA,mlc_z_coupling_cv,skipped,0.41778179636257556,0.41778179636257556,1e-06,0.0001,,,not-comparable,Formula-exact,aurora_v2_paper_style_physics,False,Not eligible for exact reference-case comparison.
+aurora_canonical,AURORA,mlcx1_z_coupling_cv,skipped,0.4544267211683786,0.4544267211683786,1e-06,0.0001,,,not-comparable,Formula-exact,aurora_v2_paper_style_physics,False,Not eligible for exact reference-case comparison.
+aurora_canonical,AURORA,mlcx2_z_coupling_cv,skipped,0.4372216990368787,0.4372216990368787,1e-06,0.0001,,,not-comparable,Formula-exact,aurora_v2_paper_style_physics,False,Not eligible for exact reference-case comparison.
+aurora_canonical,AURORA,mm_per_deg,skipped,0.09259232915432107,0.09259232915432107,1e-06,0.0001,,,not-comparable,Formula-exact,aurora_legacy_engineering,False,Not eligible for exact reference-case comparison.
+aurora_canonical,AURORA,mm_per_rotation,skipped,33.333238495555584,33.333238495555584,1e-06,0.0001,,,not-comparable,Formula-exact,aurora_legacy_engineering,False,Not eligible for exact reference-case comparison.
+aurora_canonical,AURORA,mu_per_mm,skipped,0.006666685634276182,0.006666685634276182,1e-06,0.0001,,,not-comparable,Formula-exact,aurora_legacy_engineering,False,Not eligible for exact reference-case comparison.
+aurora_canonical,AURORA,mu_z_coupling_cv_proxy,skipped,0.3890787825984615,0.3890787825984615,1e-06,0.0001,,,not-comparable,Formula-exact,aurora_v2_paper_style_physics,False,Not eligible for exact reference-case comparison.
+aurora_canonical,AURORA,near_closed_fraction,skipped,0.502973178472728,0.502973178472728,1e-06,0.0001,,,not-comparable,Formula-exact,aurora_v3_small_opening_burden,False,Not eligible for exact reference-case comparison.
+aurora_canonical,AURORA,pitch_consistency,skipped,7.179869807526853e-06,7.179869807526853e-06,1e-06,0.0001,,,not-comparable,Formula-exact,aurora_legacy_engineering,False,Not eligible for exact reference-case comparison.
+aurora_canonical,AURORA,projection_aperture_change_cv,skipped,1.0623671424615013,1.0623671424615013,1e-06,0.0001,,,not-comparable,Formula-exact,aurora_v2_paper_style_physics,False,Not eligible for exact reference-case comparison.
+aurora_canonical,AURORA,projection_aperture_change_max,skipped,200.45632333767517,200.45632333767517,1e-06,0.0001,,,not-comparable,Formula-exact,aurora_v3_local_interval_peaks,False,Not eligible for exact reference-case comparison.
+aurora_canonical,AURORA,projection_aperture_change_mean,skipped,23.754473461404146,23.754473461404146,1e-06,0.0001,,,not-comparable,Formula-exact,aurora_v2_paper_style_physics,False,Not eligible for exact reference-case comparison.
+aurora_canonical,AURORA,projection_aperture_change_p95,skipped,74.98846596101603,74.98846596101603,1e-06,0.0001,,,not-comparable,Formula-exact,aurora_v3_local_interval_peaks,False,Not eligible for exact reference-case comparison.
+aurora_canonical,AURORA,projection_aperture_change_top3_mean,skipped,168.8276832508598,168.8276832508598,1e-06,0.0001,,,not-comparable,Formula-exact,aurora_v3_local_interval_peaks,False,Not eligible for exact reference-case comparison.
+aurora_canonical,AURORA,projection_leaf_travel_cv,skipped,0.41778179636257556,0.41778179636257556,1e-06,0.0001,,,not-comparable,Formula-exact,aurora_v2_paper_style_physics,False,Not eligible for exact reference-case comparison.
+aurora_canonical,AURORA,projection_leaf_travel_cv_mlcx1,skipped,0.4544267211683786,0.4544267211683786,1e-06,0.0001,,,not-comparable,Formula-exact,aurora_v2_paper_style_physics,False,Not eligible for exact reference-case comparison.
+aurora_canonical,AURORA,projection_leaf_travel_cv_mlcx2,skipped,0.4372216990368787,0.4372216990368787,1e-06,0.0001,,,not-comparable,Formula-exact,aurora_v2_paper_style_physics,False,Not eligible for exact reference-case comparison.
+aurora_canonical,AURORA,projection_leaf_travel_max,skipped,993.3991228638398,993.3991228638398,1e-06,0.0001,,,not-comparable,Formula-exact,aurora_v3_local_interval_peaks,False,Not eligible for exact reference-case comparison.
+aurora_canonical,AURORA,projection_leaf_travel_mean,skipped,370.846137000132,370.846137000132,1e-06,0.0001,,,not-comparable,Formula-exact,aurora_v2_paper_style_physics,False,Not eligible for exact reference-case comparison.
+aurora_canonical,AURORA,projection_leaf_travel_mean_mlcx1,skipped,174.33140978346597,174.33140978346597,1e-06,0.0001,,,not-comparable,Formula-exact,aurora_v2_paper_style_physics,False,Not eligible for exact reference-case comparison.
+aurora_canonical,AURORA,projection_leaf_travel_mean_mlcx2,skipped,196.51472721666602,196.51472721666602,1e-06,0.0001,,,not-comparable,Formula-exact,aurora_v2_paper_style_physics,False,Not eligible for exact reference-case comparison.
+aurora_canonical,AURORA,projection_leaf_travel_p95,skipped,664.3980144764224,664.3980144764224,1e-06,0.0001,,,not-comparable,Formula-exact,aurora_v3_local_interval_peaks,False,Not eligible for exact reference-case comparison.
+aurora_canonical,AURORA,projection_leaf_travel_top3_mean,skipped,943.1631014684036,943.1631014684036,1e-06,0.0001,,,not-comparable,Formula-exact,aurora_v3_local_interval_peaks,False,Not eligible for exact reference-case comparison.
+aurora_canonical,AURORA,projection_mu_density_cv_proxy,skipped,0.3890787825984615,0.3890787825984615,1e-06,0.0001,,,not-comparable,Formula-exact,aurora_v2_paper_style_physics,False,Not eligible for exact reference-case comparison.
+aurora_canonical,AURORA,projection_mu_density_max_proxy,skipped,0.0145671169635812,0.0145671169635812,1e-06,0.0001,,,not-comparable,Formula-exact,aurora_v3_local_interval_peaks,False,Not eligible for exact reference-case comparison.
+aurora_canonical,AURORA,projection_mu_density_mean_proxy,skipped,0.006666684672834058,0.006666684672834058,1e-06,0.0001,,,not-comparable,Formula-exact,aurora_v2_paper_style_physics,False,Not eligible for exact reference-case comparison.
+aurora_canonical,AURORA,projection_mu_density_p95_proxy,skipped,0.012159394188972751,0.012159394188972751,1e-06,0.0001,,,not-comparable,Formula-exact,aurora_v3_local_interval_peaks,False,Not eligible for exact reference-case comparison.
+aurora_canonical,AURORA,projection_mu_density_top3_mean_proxy,skipped,0.014565179176357967,0.014565179176357967,1e-06,0.0001,,,not-comparable,Formula-exact,aurora_v3_local_interval_peaks,False,Not eligible for exact reference-case comparison.
+aurora_canonical,AURORA,projection_pitch_cv,skipped,7.179869807526853e-06,7.179869807526853e-06,1e-06,0.0001,,,not-comparable,Formula-exact,aurora_v2_paper_style_physics,False,Not eligible for exact reference-case comparison.
+aurora_canonical,AURORA,projection_pitch_max,skipped,0.09259760249999971,0.09259760249999971,1e-06,0.0001,,,not-comparable,Formula-exact,aurora_v3_local_interval_peaks,False,Not eligible for exact reference-case comparison.
+aurora_canonical,AURORA,projection_pitch_mean,skipped,0.09259232915432099,0.09259232915432099,1e-06,0.0001,,,not-comparable,Formula-exact,aurora_v2_paper_style_physics,False,Not eligible for exact reference-case comparison.
+aurora_canonical,AURORA,projection_pitch_p95,skipped,0.09259224000000188,0.09259224000000188,1e-06,0.0001,,,not-comparable,Formula-exact,aurora_v3_local_interval_peaks,False,Not eligible for exact reference-case comparison.
+aurora_canonical,AURORA,projection_pitch_top3_mean,skipped,0.09259740500000173,0.09259740500000173,1e-06,0.0001,,,not-comparable,Formula-exact,aurora_v3_local_interval_peaks,False,Not eligible for exact reference-case comparison.
+aurora_canonical,AURORA,reversal_symmetry_index,skipped,0.9622050208659962,0.9622050208659962,1e-06,0.0001,,,not-comparable,Formula-exact,aurora_v3_bidirectional_symmetry,False,Not eligible for exact reference-case comparison.
+aurora_canonical,AURORA,rotations,skipped,9.0,9.0,1e-06,0.0001,,,not-comparable,Formula-exact,aurora_v2_paper_style_physics,False,Not eligible for exact reference-case comparison.
+aurora_canonical,AURORA,small_opening_fraction,skipped,0.9128075214073226,0.9128075214073226,1e-06,0.0001,,,not-comparable,Formula-exact,aurora_v3_small_opening_burden,False,Not eligible for exact reference-case comparison.
+aurora_canonical,AURORA,tail_aperture_change_cv,skipped,1.038717008102043,1.038717008102043,1e-06,0.0001,,,not-comparable,Formula-exact,aurora_v3_axial_regions,False,Not eligible for exact reference-case comparison.
+aurora_canonical,AURORA,tail_aperture_change_mean,skipped,22.3686864890272,22.3686864890272,1e-06,0.0001,,,not-comparable,Formula-exact,aurora_v3_axial_regions,False,Not eligible for exact reference-case comparison.
+aurora_canonical,AURORA,tail_leaf_travel_cv,skipped,0.29041369801648903,0.29041369801648903,1e-06,0.0001,,,not-comparable,Formula-exact,aurora_v3_axial_regions,False,Not eligible for exact reference-case comparison.
+aurora_canonical,AURORA,tail_leaf_travel_mean,skipped,322.9011488302495,322.9011488302495,1e-06,0.0001,,,not-comparable,Formula-exact,aurora_v3_axial_regions,False,Not eligible for exact reference-case comparison.
+aurora_canonical,AURORA,tail_mu_density_cv_proxy,skipped,0.2229335224428931,0.2229335224428931,1e-06,0.0001,,,not-comparable,Formula-exact,aurora_v3_axial_regions,False,Not eligible for exact reference-case comparison.
+aurora_canonical,AURORA,tail_mu_density_mean_proxy,skipped,0.0056980220959795035,0.0056980220959795035,1e-06,0.0001,,,not-comparable,Formula-exact,aurora_v3_axial_regions,False,Not eligible for exact reference-case comparison.
+aurora_canonical,AURORA,theta_z_coupling_cv,skipped,7.179869807526853e-06,7.179869807526853e-06,1e-06,0.0001,,,not-comparable,Formula-exact,aurora_v2_paper_style_physics,False,Not eligible for exact reference-case comparison.
+aurora_canonical,AURORA,total_rotation_deg,skipped,3240.0,3240.0,1e-06,0.0001,,,not-comparable,Formula-exact,aurora_v2_paper_style_physics,False,Not eligible for exact reference-case comparison.
+aurora_canonical,AURORA,travel_per_rotation_mm,skipped,33.333238495555584,33.333238495555584,1e-06,0.0001,,,not-comparable,Formula-exact,aurora_v2_paper_style_physics,False,Not eligible for exact reference-case comparison.
+aurora_canonical,AURORA,x1_x2_aperture_disparity,skipped,0.10398493105702103,0.10398493105702103,1e-06,0.0001,,,not-comparable,Formula-exact,aurora_v3_dual_layer_coordination,False,Not eligible for exact reference-case comparison.
+aurora_canonical,AURORA,x1_x2_leaf_travel_ratio,skipped,0.887116259695173,0.887116259695173,1e-06,0.0001,,,not-comparable,Formula-exact,aurora_v3_dual_layer_coordination,False,Not eligible for exact reference-case comparison.
+aurora_research_edge,AURORA,aperture_change_per_mm,skipped,32.33865732539034,32.33865732539034,1e-06,0.0001,,,not-comparable,Formula-exact,aurora_legacy_engineering,False,Not eligible for exact reference-case comparison.
+aurora_research_edge,AURORA,axial_travel_mm,skipped,270.001840588,270.001840588,1e-06,0.0001,,,not-comparable,Formula-exact,aurora_legacy_engineering,False,Not eligible for exact reference-case comparison.
+aurora_research_edge,AURORA,beam_pair_balance_index,skipped,0.9884212890983648,0.9884212890983648,1e-06,0.0001,,,not-comparable,Formula-exact,aurora_v3_bidirectional_symmetry,False,Not eligible for exact reference-case comparison.
+aurora_research_edge,AURORA,coupled_modulation_index,skipped,0.5737202922770278,0.5737202922770278,1e-06,0.0001,,,not-comparable,Formula-exact,aurora_legacy_engineering,False,Not eligible for exact reference-case comparison.
+aurora_research_edge,AURORA,effective_small_gap_burden,skipped,0.6919240428836814,0.6919240428836814,1e-06,0.0001,,,not-comparable,Formula-exact,aurora_v3_small_opening_burden,False,Not eligible for exact reference-case comparison.
+aurora_research_edge,AURORA,forward_backward_metric_difference,skipped,0.013271906158932811,0.013271906158932811,1e-06,0.0001,,,not-comparable,Formula-exact,aurora_v3_bidirectional_symmetry,False,Not eligible for exact reference-case comparison.
+aurora_research_edge,AURORA,gantry_rotation_deg,skipped,3240.0,3240.0,1e-06,0.0001,,,not-comparable,Formula-exact,aurora_legacy_engineering,False,Not eligible for exact reference-case comparison.
+aurora_research_edge,AURORA,head_aperture_change_cv,skipped,1.0048811093701384,1.0048811093701384,1e-06,0.0001,,,not-comparable,Formula-exact,aurora_v3_axial_regions,False,Not eligible for exact reference-case comparison.
+aurora_research_edge,AURORA,head_aperture_change_mean,skipped,26.807236334501066,26.807236334501066,1e-06,0.0001,,,not-comparable,Formula-exact,aurora_v3_axial_regions,False,Not eligible for exact reference-case comparison.
+aurora_research_edge,AURORA,head_leaf_travel_cv,skipped,0.41389950344187115,0.41389950344187115,1e-06,0.0001,,,not-comparable,Formula-exact,aurora_v3_axial_regions,False,Not eligible for exact reference-case comparison.
+aurora_research_edge,AURORA,head_leaf_travel_mean,skipped,552.7541795425053,552.7541795425053,1e-06,0.0001,,,not-comparable,Formula-exact,aurora_v3_axial_regions,False,Not eligible for exact reference-case comparison.
+aurora_research_edge,AURORA,head_mu_density_cv_proxy,skipped,0.4345497475814818,0.4345497475814818,1e-06,0.0001,,,not-comparable,Formula-exact,aurora_v3_axial_regions,False,Not eligible for exact reference-case comparison.
+aurora_research_edge,AURORA,head_mu_density_mean_proxy,skipped,0.008042098874790972,0.008042098874790972,1e-06,0.0001,,,not-comparable,Formula-exact,aurora_v3_axial_regions,False,Not eligible for exact reference-case comparison.
+aurora_research_edge,AURORA,layer_correlation_index,skipped,0.8636844265337602,0.8636844265337602,1e-06,0.0001,,,not-comparable,Formula-exact,aurora_v3_dual_layer_coordination,False,Not eligible for exact reference-case comparison.
+aurora_research_edge,AURORA,layer_imbalance_index,skipped,0.02935920515115116,0.02935920515115116,1e-06,0.0001,,,not-comparable,Formula-exact,aurora_v3_dual_layer_coordination,False,Not eligible for exact reference-case comparison.
+aurora_research_edge,AURORA,leaf_travel_per_mm,skipped,606.6443496951492,606.6443496951492,1e-06,0.0001,,,not-comparable,Formula-exact,aurora_legacy_engineering,False,Not eligible for exact reference-case comparison.
+aurora_research_edge,AURORA,longitudinal_travel_mm,skipped,270.001840588,270.001840588,1e-06,0.0001,,,not-comparable,Formula-exact,aurora_v2_paper_style_physics,False,Not eligible for exact reference-case comparison.
+aurora_research_edge,AURORA,mid_aperture_change_cv,skipped,0.9122599477909821,0.9122599477909821,1e-06,0.0001,,,not-comparable,Formula-exact,aurora_v3_axial_regions,False,Not eligible for exact reference-case comparison.
+aurora_research_edge,AURORA,mid_aperture_change_mean,skipped,41.714672356489565,41.714672356489565,1e-06,0.0001,,,not-comparable,Formula-exact,aurora_v3_axial_regions,False,Not eligible for exact reference-case comparison.
+aurora_research_edge,AURORA,mid_leaf_travel_cv,skipped,0.3556567341707581,0.3556567341707581,1e-06,0.0001,,,not-comparable,Formula-exact,aurora_v3_axial_regions,False,Not eligible for exact reference-case comparison.
+aurora_research_edge,AURORA,mid_leaf_travel_mean,skipped,794.3421650042102,794.3421650042102,1e-06,0.0001,,,not-comparable,Formula-exact,aurora_v3_axial_regions,False,Not eligible for exact reference-case comparison.
+aurora_research_edge,AURORA,mid_mu_density_cv_proxy,skipped,0.5750612237657493,0.5750612237657493,1e-06,0.0001,,,not-comparable,Formula-exact,aurora_v3_axial_regions,False,Not eligible for exact reference-case comparison.
+aurora_research_edge,AURORA,mid_mu_density_mean_proxy,skipped,0.007845826152441908,0.007845826152441908,1e-06,0.0001,,,not-comparable,Formula-exact,aurora_v3_axial_regions,False,Not eligible for exact reference-case comparison.
+aurora_research_edge,AURORA,mlc_z_coupling_cv,skipped,0.42966505263616156,0.42966505263616156,1e-06,0.0001,,,not-comparable,Formula-exact,aurora_v2_paper_style_physics,False,Not eligible for exact reference-case comparison.
+aurora_research_edge,AURORA,mlcx1_z_coupling_cv,skipped,0.45567658319856275,0.45567658319856275,1e-06,0.0001,,,not-comparable,Formula-exact,aurora_v2_paper_style_physics,False,Not eligible for exact reference-case comparison.
+aurora_research_edge,AURORA,mlcx2_z_coupling_cv,skipped,0.43512797260023506,0.43512797260023506,1e-06,0.0001,,,not-comparable,Formula-exact,aurora_v2_paper_style_physics,False,Not eligible for exact reference-case comparison.
+aurora_research_edge,AURORA,mm_per_deg,skipped,0.08333390141604938,0.08333390141604938,1e-06,0.0001,,,not-comparable,Formula-exact,aurora_legacy_engineering,False,Not eligible for exact reference-case comparison.
+aurora_research_edge,AURORA,mm_per_rotation,skipped,30.000204509777777,30.000204509777777,1e-06,0.0001,,,not-comparable,Formula-exact,aurora_legacy_engineering,False,Not eligible for exact reference-case comparison.
+aurora_research_edge,AURORA,mu_per_mm,skipped,0.007407356911510211,0.007407356911510211,1e-06,0.0001,,,not-comparable,Formula-exact,aurora_legacy_engineering,False,Not eligible for exact reference-case comparison.
+aurora_research_edge,AURORA,mu_z_coupling_cv_proxy,skipped,0.4847566289728967,0.4847566289728967,1e-06,0.0001,,,not-comparable,Formula-exact,aurora_v2_paper_style_physics,False,Not eligible for exact reference-case comparison.
+aurora_research_edge,AURORA,near_closed_fraction,skipped,0.5260396703260081,0.5260396703260081,1e-06,0.0001,,,not-comparable,Formula-exact,aurora_v3_small_opening_burden,False,Not eligible for exact reference-case comparison.
+aurora_research_edge,AURORA,pitch_consistency,skipped,3.313145089554502e-05,3.313145089554502e-05,1e-06,0.0001,,,not-comparable,Formula-exact,aurora_legacy_engineering,False,Not eligible for exact reference-case comparison.
+aurora_research_edge,AURORA,projection_aperture_change_cv,skipped,0.9964172820324433,0.9964172820324433,1e-06,0.0001,,,not-comparable,Formula-exact,aurora_v2_paper_style_physics,False,Not eligible for exact reference-case comparison.
+aurora_research_edge,AURORA,projection_aperture_change_max,skipped,204.45011786430132,204.45011786430132,1e-06,0.0001,,,not-comparable,Formula-exact,aurora_v3_local_interval_peaks,False,Not eligible for exact reference-case comparison.
+aurora_research_edge,AURORA,projection_aperture_change_mean,skipped,32.33861117012524,32.33861117012524,1e-06,0.0001,,,not-comparable,Formula-exact,aurora_v2_paper_style_physics,False,Not eligible for exact reference-case comparison.
+aurora_research_edge,AURORA,projection_aperture_change_p95,skipped,94.44773248499598,94.44773248499598,1e-06,0.0001,,,not-comparable,Formula-exact,aurora_v3_local_interval_peaks,False,Not eligible for exact reference-case comparison.
+aurora_research_edge,AURORA,projection_aperture_change_top3_mean,skipped,195.6874880603149,195.6874880603149,1e-06,0.0001,,,not-comparable,Formula-exact,aurora_v3_local_interval_peaks,False,Not eligible for exact reference-case comparison.
+aurora_research_edge,AURORA,projection_leaf_travel_cv,skipped,0.42966505263616156,0.42966505263616156,1e-06,0.0001,,,not-comparable,Formula-exact,aurora_v2_paper_style_physics,False,Not eligible for exact reference-case comparison.
+aurora_research_edge,AURORA,projection_leaf_travel_cv_mlcx1,skipped,0.45567658319856275,0.45567658319856275,1e-06,0.0001,,,not-comparable,Formula-exact,aurora_v2_paper_style_physics,False,Not eligible for exact reference-case comparison.
+aurora_research_edge,AURORA,projection_leaf_travel_cv_mlcx2,skipped,0.43512797260023506,0.43512797260023506,1e-06,0.0001,,,not-comparable,Formula-exact,aurora_v2_paper_style_physics,False,Not eligible for exact reference-case comparison.
+aurora_research_edge,AURORA,projection_leaf_travel_max,skipped,1646.9389944397863,1646.9389944397863,1e-06,0.0001,,,not-comparable,Formula-exact,aurora_v3_local_interval_peaks,False,Not eligible for exact reference-case comparison.
+aurora_research_edge,AURORA,projection_leaf_travel_mean,skipped,606.6441721890827,606.6441721890827,1e-06,0.0001,,,not-comparable,Formula-exact,aurora_v2_paper_style_physics,False,Not eligible for exact reference-case comparison.
+aurora_research_edge,AURORA,projection_leaf_travel_mean_mlcx1,skipped,294.4167907420166,294.4167907420166,1e-06,0.0001,,,not-comparable,Formula-exact,aurora_v2_paper_style_physics,False,Not eligible for exact reference-case comparison.
+aurora_research_edge,AURORA,projection_leaf_travel_mean_mlcx2,skipped,312.22738144706614,312.22738144706614,1e-06,0.0001,,,not-comparable,Formula-exact,aurora_v2_paper_style_physics,False,Not eligible for exact reference-case comparison.
+aurora_research_edge,AURORA,projection_leaf_travel_p95,skipped,1157.5349871346025,1157.5349871346025,1e-06,0.0001,,,not-comparable,Formula-exact,aurora_v3_local_interval_peaks,False,Not eligible for exact reference-case comparison.
+aurora_research_edge,AURORA,projection_leaf_travel_top3_mean,skipped,1575.742638052773,1575.742638052773,1e-06,0.0001,,,not-comparable,Formula-exact,aurora_v3_local_interval_peaks,False,Not eligible for exact reference-case comparison.
+aurora_research_edge,AURORA,projection_mu_density_cv_proxy,skipped,0.4847566289728967,0.4847566289728967,1e-06,0.0001,,,not-comparable,Formula-exact,aurora_v2_paper_style_physics,False,Not eligible for exact reference-case comparison.
+aurora_research_edge,AURORA,projection_mu_density_max_proxy,skipped,0.01817268860350152,0.01817268860350152,1e-06,0.0001,,,not-comparable,Formula-exact,aurora_v3_local_interval_peaks,False,Not eligible for exact reference-case comparison.
+aurora_research_edge,AURORA,projection_mu_density_mean_proxy,skipped,0.007407362881611089,0.007407362881611089,1e-06,0.0001,,,not-comparable,Formula-exact,aurora_v2_paper_style_physics,False,Not eligible for exact reference-case comparison.
+aurora_research_edge,AURORA,projection_mu_density_p95_proxy,skipped,0.01488304395283161,0.01488304395283161,1e-06,0.0001,,,not-comparable,Formula-exact,aurora_v3_local_interval_peaks,False,Not eligible for exact reference-case comparison.
+aurora_research_edge,AURORA,projection_mu_density_top3_mean_proxy,skipped,0.01817125279420966,0.01817125279420966,1e-06,0.0001,,,not-comparable,Formula-exact,aurora_v3_local_interval_peaks,False,Not eligible for exact reference-case comparison.
+aurora_research_edge,AURORA,projection_pitch_cv,skipped,3.313145089554502e-05,3.313145089554502e-05,1e-06,0.0001,,,not-comparable,Formula-exact,aurora_v2_paper_style_physics,False,Not eligible for exact reference-case comparison.
+aurora_research_edge,AURORA,projection_pitch_max,skipped,0.08334159850000233,0.08334159850000233,1e-06,0.0001,,,not-comparable,Formula-exact,aurora_v3_local_interval_peaks,False,Not eligible for exact reference-case comparison.
+aurora_research_edge,AURORA,projection_pitch_mean,skipped,0.08333390141604938,0.08333390141604938,1e-06,0.0001,,,not-comparable,Formula-exact,aurora_v2_paper_style_physics,False,Not eligible for exact reference-case comparison.
+aurora_research_edge,AURORA,projection_pitch_p95,skipped,0.08333683250000234,0.08333683250000234,1e-06,0.0001,,,not-comparable,Formula-exact,aurora_v3_local_interval_peaks,False,Not eligible for exact reference-case comparison.
+aurora_research_edge,AURORA,projection_pitch_top3_mean,skipped,0.08334159850000233,0.08334159850000233,1e-06,0.0001,,,not-comparable,Formula-exact,aurora_v3_local_interval_peaks,False,Not eligible for exact reference-case comparison.
+aurora_research_edge,AURORA,reversal_symmetry_index,skipped,0.9750020928507827,0.9750020928507827,1e-06,0.0001,,,not-comparable,Formula-exact,aurora_v3_bidirectional_symmetry,False,Not eligible for exact reference-case comparison.
+aurora_research_edge,AURORA,rotations,skipped,9.0,9.0,1e-06,0.0001,,,not-comparable,Formula-exact,aurora_v2_paper_style_physics,False,Not eligible for exact reference-case comparison.
+aurora_research_edge,AURORA,small_opening_fraction,skipped,0.9094663540729543,0.9094663540729543,1e-06,0.0001,,,not-comparable,Formula-exact,aurora_v3_small_opening_burden,False,Not eligible for exact reference-case comparison.
+aurora_research_edge,AURORA,tail_aperture_change_cv,skipped,0.9974781375829007,0.9974781375829007,1e-06,0.0001,,,not-comparable,Formula-exact,aurora_v3_axial_regions,False,Not eligible for exact reference-case comparison.
+aurora_research_edge,AURORA,tail_aperture_change_mean,skipped,28.493924819385093,28.493924819385093,1e-06,0.0001,,,not-comparable,Formula-exact,aurora_v3_axial_regions,False,Not eligible for exact reference-case comparison.
+aurora_research_edge,AURORA,tail_leaf_travel_cv,skipped,0.2643694315393864,0.2643694315393864,1e-06,0.0001,,,not-comparable,Formula-exact,aurora_v3_axial_regions,False,Not eligible for exact reference-case comparison.
+aurora_research_edge,AURORA,tail_leaf_travel_mean,skipped,472.83617202053256,472.83617202053256,1e-06,0.0001,,,not-comparable,Formula-exact,aurora_v3_axial_regions,False,Not eligible for exact reference-case comparison.
+aurora_research_edge,AURORA,tail_mu_density_cv_proxy,skipped,0.32981952801782716,0.32981952801782716,1e-06,0.0001,,,not-comparable,Formula-exact,aurora_v3_axial_regions,False,Not eligible for exact reference-case comparison.
+aurora_research_edge,AURORA,tail_mu_density_mean_proxy,skipped,0.006334163617600386,0.006334163617600386,1e-06,0.0001,,,not-comparable,Formula-exact,aurora_v3_axial_regions,False,Not eligible for exact reference-case comparison.
+aurora_research_edge,AURORA,theta_z_coupling_cv,skipped,3.313145089554502e-05,3.313145089554502e-05,1e-06,0.0001,,,not-comparable,Formula-exact,aurora_v2_paper_style_physics,False,Not eligible for exact reference-case comparison.
+aurora_research_edge,AURORA,total_rotation_deg,skipped,3240.0,3240.0,1e-06,0.0001,,,not-comparable,Formula-exact,aurora_v2_paper_style_physics,False,Not eligible for exact reference-case comparison.
+aurora_research_edge,AURORA,travel_per_rotation_mm,skipped,30.000204509777777,30.000204509777777,1e-06,0.0001,,,not-comparable,Formula-exact,aurora_v2_paper_style_physics,False,Not eligible for exact reference-case comparison.
+aurora_research_edge,AURORA,x1_x2_aperture_disparity,skipped,0.015689510230445618,0.015689510230445618,1e-06,0.0001,,,not-comparable,Formula-exact,aurora_v3_dual_layer_coordination,False,Not eligible for exact reference-case comparison.
+aurora_research_edge,AURORA,x1_x2_leaf_travel_ratio,skipped,0.9429563460369695,0.9429563460369695,1e-06,0.0001,,,not-comparable,Formula-exact,aurora_v3_dual_layer_coordination,False,Not eligible for exact reference-case comparison.

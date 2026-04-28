@@ -1,0 +1,45 @@
+{
+  "comparisons": [
+    {
+      "bias": 0.0,
+      "comparator": "UCoMX",
+      "comparator_metric": "LT",
+      "internal_metric": "lt",
+      "mae": 0.0,
+      "notes": "Same leaf-travel metric name and unit in the current UCoMX-oriented VMAT inventory.",
+      "platform": "VMAT_IMRT",
+      "relationship": "exact-equivalent",
+      "rmse": 0.0,
+      "sample_count": 1,
+      "status": "compared"
+    },
+    {
+      "bias": -0.060000000000002274,
+      "comparator": "UCoMX",
+      "comparator_metric": "LT_MLCX1",
+      "internal_metric": "lt_mlcx1",
+      "mae": 0.060000000000002274,
+      "notes": "Bank-specific derivative of the VMAT leaf-travel family; agreement is summarized but not exact-gated.",
+      "platform": "VMAT_IMRT",
+      "relationship": "derived-equivalent",
+      "rmse": 0.060000000000002274,
+      "sample_count": 1,
+      "status": "compared"
+    },
+    {
+      "bias": null,
+      "comparator": "AuroraPaper",
+      "comparator_metric": "projection_pitch_mean",
+      "internal_metric": "projection_pitch_mean",
+      "mae": null,
+      "notes": "Not eligible for numeric agreement statistics in this comparison layer. Aurora research metric is tracked in the mapping table but excluded from exact external-equivalence claims.",
+      "platform": "AURORA",
+      "relationship": "not-comparable",
+      "rmse": null,
+      "sample_count": 0,
+      "status": "skipped"
+    }
+  ],
+  "generated_at": "2026-04-28T15:52:13Z",
+  "profile": "research"
+}
