@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import hashlib
 import json
 from datetime import datetime
 from functools import lru_cache
@@ -53,6 +54,7 @@ _FORMAT_CHECKER = FormatChecker()
 _RFC3339_DATE_TIME = re.compile(
     r"^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}(?:\.\d+)?(?:Z|[+-]\d{2}:\d{2})$"
 )
+_PROJECT_ROOT = Path(__file__).resolve().parents[2]
 _SPECS_DIR = Path(__file__).resolve().parents[1] / "specs"
 _SCHEMAS_DIR = Path(__file__).resolve().parents[1] / "schemas"
 _REFERENCE_CASES_DIR = Path(__file__).resolve().parents[1] / "reference_cases"
@@ -247,6 +249,34 @@ def load_reference_manifest() -> list[ReferenceCaseRecord]:
 
     _require_unique([record.case_id for record in records], "reference case")
     return records
+
+
+def resolve_reference_source_path(
+    case: ReferenceCaseRecord,
+    *,
+    source_root: Path | str | None = None,
+) -> Path:
+    repo_root = Path(source_root) if source_root is not None else _PROJECT_ROOT
+    candidate = repo_root / Path(case.source_path)
+    if candidate.exists():
+        return candidate
+    raise FileNotFoundError(
+        f"Could not resolve reference-case source path '{case.source_path}' under '{repo_root}'."
+    )
+
+
+def verify_reference_source_checksum(
+    case: ReferenceCaseRecord,
+    *,
+    source_root: Path | str | None = None,
+) -> Path:
+    source_path = resolve_reference_source_path(case, source_root=source_root)
+    observed = hashlib.sha256(source_path.read_bytes()).hexdigest()
+    if observed.lower() != case.checksum.lower():
+        raise ValueError(
+            f"Checksum mismatch for '{case.case_id}': expected {case.checksum}, observed {observed}."
+        )
+    return source_path
 
 
 def _load_metric_group_definitions() -> dict[str, _MetricGroupDefinition]:

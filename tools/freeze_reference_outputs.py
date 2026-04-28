@@ -1,7 +1,6 @@
 from __future__ import annotations
 
 import argparse
-import hashlib
 import json
 import sys
 from pathlib import Path
@@ -11,13 +10,13 @@ if str(ROOT) not in sys.path:
     sys.path.insert(0, str(ROOT))
 
 from validation.utils.loaders import load_reference_manifest
+from validation.utils.loaders import verify_reference_source_checksum
 from validation_models import ReferenceCaseRecord
 from validation_runtime import analyze_validation_case
 
 
 def freeze_case(case: ReferenceCaseRecord, *, source_root: Path | str | None = None) -> Path:
-    resolved_source_path = _resolve_source_path(case.source_path, source_root=source_root)
-    _verify_checksum(case, resolved_source_path)
+    resolved_source_path = verify_reference_source_checksum(case, source_root=source_root)
     record = analyze_validation_case(str(resolved_source_path), case.domain)
     serializable_metrics = {
         key: _json_ready(value)
@@ -29,26 +28,6 @@ def freeze_case(case: ReferenceCaseRecord, *, source_root: Path | str | None = N
         encoding="utf-8",
     )
     return case.expected_metrics_path
-
-
-def _resolve_source_path(source_path: str, *, source_root: Path | str | None = None) -> Path:
-    relative_path = Path(source_path)
-    repo_root = Path(source_root) if source_root is not None else ROOT
-    candidate = repo_root / relative_path
-    if candidate.exists():
-        return candidate
-    raise FileNotFoundError(
-        f"Could not resolve reference-case source path '{source_path}' under '{repo_root}'."
-    )
-
-
-def _verify_checksum(case: ReferenceCaseRecord, source_path: Path) -> None:
-    observed = hashlib.sha256(source_path.read_bytes()).hexdigest()
-    if observed.lower() != case.checksum.lower():
-        raise ValueError(
-            f"Checksum mismatch for '{case.case_id}': expected {case.checksum}, observed {observed}."
-        )
-
 
 def _json_ready(value: object) -> float | int | str | None:
     item_method = getattr(value, "item", None)
