@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 from dataclasses import dataclass
+from typing import Any
 
 
 @dataclass(frozen=True)
@@ -52,9 +53,22 @@ class ValidationProfileRecord:
     group_keys: tuple[str, ...]
 
 
+@dataclass(frozen=True)
+class ValidationCaseResult:
+    source_path: str
+    domain: str
+    mode: str
+    supported: bool
+    reason: str
+    metadata: dict[str, Any]
+    metrics: dict[str, float | int | str | None]
+    warnings: tuple[str, ...]
+
+
 __all__ = [
     "ExpectedRangeRecord",
     "MetricGroupRecord",
     "MetricSpecRecord",
+    "ValidationCaseResult",
     "ValidationProfileRecord",
 ]

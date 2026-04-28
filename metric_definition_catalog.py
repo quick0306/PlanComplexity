@@ -53,6 +53,14 @@ def metric_catalog_keys() -> set[tuple[str, str]]:
     return {(record.platform, record.metric_key) for record in build_metric_definition_catalog()}
 
 
+def metric_catalog_keys_for_platform(platform: str) -> set[str]:
+    return {
+        record.metric_key
+        for record in build_metric_definition_catalog()
+        if record.platform == platform
+    }
+
+
 def build_metric_group_catalog() -> list[MetricGroupCatalogRecord]:
     records: list[MetricGroupCatalogRecord] = []
     seen: set[tuple[str, str]] = set()

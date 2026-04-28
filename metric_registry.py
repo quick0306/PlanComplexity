@@ -4,6 +4,14 @@ from dataclasses import dataclass, field
 from typing import Dict, Iterable, Tuple
 
 
+SUPPORTED_VALIDATION_DOMAINS = (
+    "VMAT_IMRT",
+    "TOMO",
+    "CYBERKNIFE_MLC",
+    "AURORA",
+)
+
+
 @dataclass(frozen=True)
 class MetricSpec:
     key: str
