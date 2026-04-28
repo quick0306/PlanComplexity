@@ -1,0 +1,4 @@
+platform,internal_metric,comparator,comparator_metric,relationship,status,sample_count,mae,bias,rmse,notes
+{% for row in comparison_rows -%}
+{{ row.platform | csv_cell }},{{ row.internal_metric | csv_cell }},{{ row.comparator | csv_cell }},{{ row.comparator_metric | csv_cell }},{{ row.relationship | csv_cell }},{{ row.status | csv_cell }},{{ row.sample_count | csv_cell }},{{ row.mae | csv_cell }},{{ row.bias | csv_cell }},{{ row.rmse | csv_cell }},{{ row.notes | csv_cell }}
+{% endfor -%}
