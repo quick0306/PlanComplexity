@@ -56,6 +56,27 @@ Run the Aurora-focused standalone prototype tests:
 python -m unittest tests.test_aurora_parser tests.test_aurora_metrics tests.test_aurora_export tests.test_aurora_service tests.test_aurora_gui_smoke -v
 ```
 
+Run the research validation gates:
+
+```bash
+python -m unittest tests.validation.test_validation_smoke tests.validation.test_metric_specs tests.validation.test_spec_loaders tests.validation.test_validation_runtime tests.validation.test_reference_manifest tests.validation.test_freeze_reference_outputs tests.validation.test_reference_suite tests.validation.test_tool_comparison tests.validation.test_validation_report -v
+```
+
+Rebuild the Phase 1 research validation evidence bundle:
+
+```bash
+python tools/run_reference_suite.py --profile research --output-dir run_reports/validation
+python tools/run_tool_comparison.py --profile research --output-dir run_reports/validation
+python tools/build_validation_report.py --profile research --output-dir run_reports/validation
+```
+
+These commands produce `reference_case_results.json`, `reference_case_results.csv`,
+`comparator_statistics.csv`, `validation_summary.md`, `validation_report.json`,
+`supplement_tables/`, and `manifest_lock.json` under `run_reports/validation/`.
+The full artifact rebuild requires the referenced RTPLAN files under `data/`; when running
+from a separate worktree, pass `--source-root path/to/PlanComplexity` to point at the data root.
+The validation bundle is research/publication evidence support and is not clinical deployment ready.
+
 Build a standalone Windows GUI executable:
 
 ```powershell

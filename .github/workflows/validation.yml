@@ -1,0 +1,77 @@
+name: Validation
+
+on:
+  pull_request:
+  push:
+    branches:
+      - main
+      - master
+
+jobs:
+  validation:
+    name: Research validation gates
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install dependencies
+        run: python -m pip install -r requirements.txt
+
+      - name: Run validation unit gates
+        run: >
+          python -m unittest
+          tests.validation.test_validation_smoke
+          tests.validation.test_metric_specs
+          tests.validation.test_spec_loaders
+          tests.validation.test_validation_runtime
+          tests.validation.test_reference_manifest
+          tests.validation.test_freeze_reference_outputs
+          tests.validation.test_reference_suite
+          tests.validation.test_tool_comparison
+          tests.validation.test_validation_report
+          -v
+
+      - name: Check reference data availability
+        id: reference_data
+        shell: bash
+        run: |
+          if python - <<'PY'
+          from pathlib import Path
+          import yaml
+
+          manifest = yaml.safe_load(Path("validation/reference_cases/manifest.yaml").read_text(encoding="utf-8"))
+          missing = [
+              case["source_path"]
+              for case in manifest.get("cases", [])
+              if not Path(case["source_path"]).exists()
+          ]
+          if missing:
+              print("Missing reference RTPLAN data; skipping full artifact rebuild:")
+              for path in missing:
+                  print(f"  - {path}")
+              raise SystemExit(1)
+          PY
+          then
+            echo "available=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "available=false" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Run reference suite
+        if: steps.reference_data.outputs.available == 'true'
+        run: python tools/run_reference_suite.py --profile research --output-dir run_reports/validation
+
+      - name: Run tool comparison
+        if: steps.reference_data.outputs.available == 'true'
+        run: python tools/run_tool_comparison.py --profile research --output-dir run_reports/validation
+
+      - name: Build validation report
+        if: steps.reference_data.outputs.available == 'true'
+        run: python tools/build_validation_report.py --profile research --output-dir run_reports/validation

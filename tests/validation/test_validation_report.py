@@ -150,5 +150,14 @@ class ValidationReportTests(unittest.TestCase):
                 self.assertRegex(artifact["sha256"], r"^[0-9a-f]{64}$")
 
 
+class ReadmeValidationDocsTests(unittest.TestCase):
+    def test_readme_mentions_validation_commands(self):
+        readme = Path("README.md").read_text(encoding="utf-8")
+        self.assertIn("run_reference_suite.py", readme)
+        self.assertIn("run_tool_comparison.py", readme)
+        self.assertIn("build_validation_report.py", readme)
+        self.assertIn("test_freeze_reference_outputs", readme)
+
+
 if __name__ == "__main__":
     unittest.main()
