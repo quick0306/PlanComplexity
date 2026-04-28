@@ -1,0 +1,47 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Comparator Mapping Inventory",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "mappings"
+  ],
+  "properties": {
+    "mappings": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "internal_metric",
+          "comparator",
+          "comparator_metric",
+          "relationship"
+        ],
+        "properties": {
+          "internal_metric": {
+            "type": "string"
+          },
+          "comparator": {
+            "type": "string"
+          },
+          "comparator_metric": {
+            "type": "string"
+          },
+          "relationship": {
+            "type": "string",
+            "enum": [
+              "exact-equivalent",
+              "derived-equivalent",
+              "association-only",
+              "not-comparable"
+            ]
+          },
+          "notes": {
+            "type": "string"
+          }
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,164 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Canonical Metric Spec Inventory",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "metric_specs"
+  ],
+  "properties": {
+    "metric_specs": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/metricSpec"
+      }
+    }
+  },
+  "$defs": {
+    "expectedRange": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "kind",
+        "minimum",
+        "maximum"
+      ],
+      "properties": {
+        "kind": {
+          "type": "string",
+          "enum": [
+            "nonnegative",
+            "unit_interval",
+            "signed_unit_interval",
+            "unbounded"
+          ]
+        },
+        "minimum": {
+          "type": [
+            "number",
+            "null"
+          ]
+        },
+        "maximum": {
+          "type": [
+            "number",
+            "null"
+          ]
+        }
+      }
+    },
+    "metricSpec": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "platform",
+        "mode",
+        "group_key",
+        "metric_key",
+        "label",
+        "unit",
+        "aggregation_scope",
+        "normalization_basis",
+        "validation_level",
+        "comparison_class",
+        "default_tolerance_abs",
+        "default_tolerance_rel",
+        "expected_range",
+        "clinical_readiness",
+        "known_noncomparability",
+        "comparable_to",
+        "assumptions",
+        "exclusions"
+      ],
+      "properties": {
+        "key": {
+          "type": "string"
+        },
+        "platform": {
+          "type": "string"
+        },
+        "mode": {
+          "type": "string"
+        },
+        "group_key": {
+          "type": "string"
+        },
+        "metric_key": {
+          "type": "string"
+        },
+        "label": {
+          "type": "string"
+        },
+        "unit": {
+          "type": "string"
+        },
+        "aggregation_scope": {
+          "type": "string"
+        },
+        "normalization_basis": {
+          "type": "string"
+        },
+        "validation_level": {
+          "type": "string",
+          "enum": [
+            "Formula-exact",
+            "Reference-case exact",
+            "Derived-equivalent",
+            "Association-only"
+          ]
+        },
+        "comparison_class": {
+          "type": "string",
+          "enum": [
+            "exact-equivalent",
+            "derived-equivalent",
+            "association-only",
+            "not-comparable"
+          ]
+        },
+        "default_tolerance_abs": {
+          "type": [
+            "number",
+            "null"
+          ]
+        },
+        "default_tolerance_rel": {
+          "type": [
+            "number",
+            "null"
+          ]
+        },
+        "expected_range": {
+          "$ref": "#/$defs/expectedRange"
+        },
+        "clinical_readiness": {
+          "type": "string"
+        },
+        "known_noncomparability": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "comparable_to": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "assumptions": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "exclusions": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      }
+    }
+  }
+}

@@ -110,6 +110,7 @@ class MetricSpecInventoryTests(unittest.TestCase):
                   - platform: VMAT_IMRT
                     mode: VMAT_IMRT
                     group_key: vmat_imrt_aperture_geometry
+                    key: alpha
                     metric_key: alpha
                     label: Alpha
                     unit: dimensionless
@@ -133,6 +134,7 @@ class MetricSpecInventoryTests(unittest.TestCase):
                   - platform: VMAT_IMRT
                     mode: VMAT_IMRT
                     group_key: vmat_imrt_aperture_geometry
+                    key: beta
                     metric_key: beta
                     label: Beta
                     unit: mm
@@ -156,6 +158,7 @@ class MetricSpecInventoryTests(unittest.TestCase):
                   - platform: TOMO
                     mode: TOMO
                     group_key: tomo_delivery
+                    key: gamma
                     metric_key: gamma
                     label: Gamma
                     unit: s
@@ -252,6 +255,7 @@ class MetricSpecInventoryTests(unittest.TestCase):
                   - platform: VMAT_IMRT
                     mode: VMAT_IMRT
                     group_key: vmat_imrt_aperture_geometry
+                    key: alpha
                     metric_key: alpha
                     label: Alpha
                     unit: dimensionless
@@ -273,6 +277,7 @@ class MetricSpecInventoryTests(unittest.TestCase):
                   - platform: VMAT_IMRT
                     mode: VMAT_IMRT
                     group_key: vmat_imrt_aperture_geometry
+                    key: alpha
                     metric_key: alpha
                     label: Alpha duplicate
                     unit: dimensionless
@@ -343,6 +348,7 @@ class MetricSpecInventoryTests(unittest.TestCase):
                       - platform: VMAT_IMRT
                         mode: VMAT_IMRT
                         group_key: missing_group
+                        key: alpha
                         metric_key: alpha
                         label: Alpha
                         unit: dimensionless
@@ -410,6 +416,7 @@ class MetricSpecInventoryTests(unittest.TestCase):
                       - platform: VMAT_IMRT
                         mode: TOMO
                         group_key: vmat_imrt_aperture_geometry
+                        key: alpha
                         metric_key: alpha
                         label: Alpha
                         unit: dimensionless
@@ -440,6 +447,7 @@ class MetricSpecInventoryTests(unittest.TestCase):
                       - platform: VMAT_IMRT
                         mode: VMAT_IMRT
                         group_key: vmat_imrt_aperture_geometry
+                        key: alpha
                         metric_key: alpha
                         label: Alpha
                         unit: dimensionless
@@ -461,7 +469,7 @@ class MetricSpecInventoryTests(unittest.TestCase):
                     """.strip(),
                     encoding="utf-8",
                 )
-                with self.assertRaisesRegex(ValueError, "must be one of"):
+                with self.assertRaisesRegex(ValueError, "not one of"):
                     loaders.load_metric_groups()
 
                 (specs_dir / "metric_groups.yaml").write_text(
@@ -480,6 +488,7 @@ class MetricSpecInventoryTests(unittest.TestCase):
                       - platform: VMAT_IMRT
                         mode: VMAT_IMRT
                         group_key: vmat_imrt_aperture_geometry
+                        key: alpha
                         metric_key: alpha
                         label: Alpha
                         unit: dimensionless
@@ -510,6 +519,7 @@ class MetricSpecInventoryTests(unittest.TestCase):
                       - platform: VMAT_IMRT
                         mode: VMAT_IMRT
                         group_key: vmat_imrt_aperture_geometry
+                        key: alpha
                         metric_key: alpha
                         label: Alpha
                         unit: dimensionless
@@ -550,6 +560,7 @@ class MetricSpecInventoryTests(unittest.TestCase):
                       - platform: VMAT_IMRT
                         mode: VMAT_IMRT
                         group_key: vmat_imrt_aperture_geometry
+                        key: alpha
                         metric_key: alpha
                         label: Alpha
                         unit: dimensionless
@@ -585,6 +596,23 @@ class MetricSpecInventoryTests(unittest.TestCase):
                     encoding="utf-8",
                 )
                 with self.assertRaisesRegex(ValueError, "Duplicate validation profile entries"):
+                    loaders.load_validation_profiles()
+
+                (specs_dir / "validation_profiles.yaml").write_text(
+                    """
+                    validation_profiles:
+                      - profile_key: research
+                        description: Example profile.
+                        exact_abs_default: true
+                        exact_rel_default: 1.0e-4
+                        require_reference_exact_green: true
+                        include_association_only_in_core_gate: false
+                        group_keys:
+                          - missing_group
+                    """.strip(),
+                    encoding="utf-8",
+                )
+                with self.assertRaisesRegex(ValueError, "missing required numeric field 'exact_abs_default'"):
                     loaders.load_validation_profiles()
 
                 (specs_dir / "validation_profiles.yaml").write_text(

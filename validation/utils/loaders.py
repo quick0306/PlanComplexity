@@ -1,67 +1,29 @@
 from __future__ import annotations
 
-from dataclasses import dataclass
+import json
+from datetime import datetime
+from functools import lru_cache
 from pathlib import Path
+import re
 from typing import Any
 
+from jsonschema import Draft202012Validator, FormatChecker
 import yaml
 
-
-@dataclass(frozen=True)
-class MetricSpecRecord:
-    platform: str
-    mode: str
-    group_key: str
-    metric_key: str
-    label: str
-    unit: str
-    aggregation_scope: str
-    normalization_basis: str
-    validation_level: str
-    comparison_class: str
-    default_tolerance_abs: float | None
-    default_tolerance_rel: float | None
-    expected_range: "ExpectedRangeRecord"
-    clinical_readiness: str
-    known_noncomparability: tuple[str, ...]
-    comparable_to: tuple[str, ...]
-    assumptions: tuple[str, ...]
-    exclusions: tuple[str, ...]
+from validation_models import (
+    ExpectedRangeRecord,
+    MetricGroupRecord,
+    MetricSpecRecord,
+    ValidationProfileRecord,
+)
 
 
-@dataclass(frozen=True)
-class ExpectedRangeRecord:
-    kind: str
-    minimum: float | None
-    maximum: float | None
-
-
-@dataclass(frozen=True)
-class MetricGroupRecord:
-    group_key: str
-    platform: str
-    label: str
-    description: str
-    metric_keys: tuple[str, ...]
-
-
-@dataclass(frozen=True)
-class ValidationProfileRecord:
-    profile_key: str
-    description: str
-    exact_abs_default: float
-    exact_rel_default: float
-    require_reference_exact_green: bool
-    include_association_only_in_core_gate: bool
-    group_keys: tuple[str, ...]
-
-
-@dataclass(frozen=True)
 class _MetricGroupDefinition:
-    group_key: str
-    platform: str
-    label: str
-    description: str
+    def __init__(self, *, group_key: str, platform: str, label: str, description: str) -> None:
+        self.group_key = group_key
+        self.platform = platform
+        self.label = label
+        self.description = description
 
 
 _VALIDATION_LEVELS = {
@@ -82,11 +44,31 @@ _EXPECTED_RANGE_KINDS = {
     "signed_unit_interval",
     "unbounded",
 }
+_FORMAT_CHECKER = FormatChecker()
+_RFC3339_DATE_TIME = re.compile(
+    r"^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}(?:\.\d+)?(?:Z|[+-]\d{2}:\d{2})$"
+)
 _SPECS_DIR = Path(__file__).resolve().parents[1] / "specs"
+_SCHEMAS_DIR = Path(__file__).resolve().parents[1] / "schemas"
+
+
+@_FORMAT_CHECKER.checks("date-time")
+def _is_date_time(value: object) -> bool:
+    if not isinstance(value, str):
+        return True
+    if not _RFC3339_DATE_TIME.match(value):
+        return False
+    candidate = value.replace("Z", "+00:00")
+    try:
+        datetime.fromisoformat(candidate)
+    except ValueError:
+        return False
+    return True
 
 
 def load_metric_specs() -> list[MetricSpecRecord]:
     payload = _load_payload("metric_specs.yaml")
+    _validate_schema(payload, "metric_spec.schema.json")
     entries = _require_sequence(payload, "metric_specs", "metric_specs.yaml")
     group_definitions = _load_metric_group_definitions()
     records: list[MetricSpecRecord] = []
@@ -239,6 +221,31 @@ def _load_payload(file_name: str) -> dict[str, Any]:
     return payload
 
 
+def _validate_schema(payload: dict[str, Any], schema_name: str) -> None:
+    validator = Draft202012Validator(_load_schema(schema_name), format_checker=_FORMAT_CHECKER)
+    errors = sorted(validator.iter_errors(payload), key=lambda error: list(error.absolute_path))
+    if not errors:
+        return
+    first_error = errors[0]
+    location = ".".join(str(item) for item in first_error.absolute_path) or "<root>"
+    raise ValueError(
+        f"Schema validation failed for {schema_name} at {location}: {first_error.message}"
+    )
+
+
+@lru_cache(maxsize=None)
+def _load_schema(schema_name: str) -> dict[str, Any]:
+    path = _SCHEMAS_DIR / schema_name
+    try:
+        with path.open("r", encoding="utf-8") as handle:
+            payload = json.load(handle)
+    except (OSError, json.JSONDecodeError) as exc:
+        raise ValueError(f"Failed to load schema {schema_name}: {exc}") from exc
+    if not isinstance(payload, dict):
+        raise ValueError(f"Failed to load schema {schema_name}: top-level JSON value must be an object.")
+    return payload
+
+
 def _require_sequence(payload: dict[str, Any], key: str, file_name: str) -> list[Any]:
     value = payload.get(key)
     if not isinstance(value, list):
@@ -283,7 +290,7 @@ def _require_choice(
 
 def _require_float(row: dict[str, Any], key: str, context: str) -> float:
     value = row.get(key)
-    if not isinstance(value, (int, float)):
+    if isinstance(value, bool) or not isinstance(value, (int, float)):
         raise ValueError(f"{context} is missing required numeric field '{key}'.")
     return float(value)
 
@@ -292,7 +299,7 @@ def _require_float_or_none(row: dict[str, Any], key: str, context: str) -> float
     value = row.get(key)
     if value is None:
         return None
-    if not isinstance(value, (int, float)):
+    if isinstance(value, bool) or not isinstance(value, (int, float)):
         raise ValueError(f"{context} field '{key}' must be numeric or null.")
     return float(value)
 
@@ -321,7 +328,7 @@ def _require_string_tuple(row: dict[str, Any], key: str, context: str) -> tuple[
 def _require_metric_key(row: dict[str, Any], context: str) -> str:
     metric_key = row.get("metric_key")
     key_alias = row.get("key")
-    if metric_key is None and key_alias is None:
+    if metric_key is None:
         raise ValueError(f"{context} is missing required string field 'metric_key'.")
     if metric_key is not None and not isinstance(metric_key, str):
         raise ValueError(f"{context} field 'metric_key' must be a string.")
@@ -329,7 +336,7 @@ def _require_metric_key(row: dict[str, Any], context: str) -> str:
         raise ValueError(f"{context} field 'key' must be a string.")
     if metric_key and key_alias and metric_key != key_alias:
         raise ValueError(f"{context} field 'metric_key' does not match alias field 'key'.")
-    value = metric_key or key_alias
+    value = metric_key
     if value is None or not value.strip():
         raise ValueError(f"{context} field 'metric_key' cannot be empty.")
     return value
@@ -367,7 +374,7 @@ def _optional_float(row: dict[str, Any], key: str, context: str) -> float | None
     value = row.get(key)
     if value is None:
         return None
-    if not isinstance(value, (int, float)):
+    if isinstance(value, bool) or not isinstance(value, (int, float)):
         raise ValueError(f"{context} field '{key}' must be numeric or null.")
     return float(value)
 
