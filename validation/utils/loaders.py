@@ -8,12 +8,16 @@ import re
 from typing import Any
 
 from jsonschema import Draft202012Validator, FormatChecker
+from metric_registry import SUPPORTED_VALIDATION_DOMAINS
 import yaml
 
 from validation_models import (
     ExpectedRangeRecord,
     MetricGroupRecord,
     MetricSpecRecord,
+    ReferenceCaseProvenanceRecord,
+    ReferenceCaseRecord,
+    ToleranceOverrideRecord,
     ValidationProfileRecord,
 )
 
@@ -44,12 +48,14 @@ _EXPECTED_RANGE_KINDS = {
     "signed_unit_interval",
     "unbounded",
 }
+_CASE_CLASSES = {"canonical", "edge"}
 _FORMAT_CHECKER = FormatChecker()
 _RFC3339_DATE_TIME = re.compile(
     r"^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}(?:\.\d+)?(?:Z|[+-]\d{2}:\d{2})$"
 )
 _SPECS_DIR = Path(__file__).resolve().parents[1] / "specs"
 _SCHEMAS_DIR = Path(__file__).resolve().parents[1] / "schemas"
+_REFERENCE_CASES_DIR = Path(__file__).resolve().parents[1] / "reference_cases"
 
 
 @_FORMAT_CHECKER.checks("date-time")
@@ -193,6 +199,56 @@ def load_validation_profiles() -> list[ValidationProfileRecord]:
     return records
 
 
+def load_reference_manifest() -> list[ReferenceCaseRecord]:
+    payload = _load_yaml_payload(_REFERENCE_CASES_DIR / "manifest.yaml", "manifest.yaml")
+    _validate_schema(payload, "reference_case.schema.json")
+    entries = _require_sequence(payload, "cases", "manifest.yaml")
+    records: list[ReferenceCaseRecord] = []
+    for index, entry in enumerate(entries):
+        context = f"manifest.yaml cases[{index}]"
+        row = _require_mapping(entry, context)
+        case_id = _require_string(row, "case_id", context)
+        expected_metrics_source = _require_string(row, "expected_metrics_source", context)
+        if expected_metrics_source != "checked_in_json":
+            raise ValueError(
+                f"{context} field 'expected_metrics_source' must be 'checked_in_json'."
+            )
+
+        domain = _require_choice(
+            row,
+            "domain",
+            context,
+            set(SUPPORTED_VALIDATION_DOMAINS),
+        )
+        expected_mode = _require_string(row, "expected_mode", context)
+        if expected_mode != domain:
+            raise ValueError(
+                f"{context} has expected_mode mismatch: domain '{domain}' vs expected_mode '{expected_mode}'."
+            )
+
+        expected_metrics_path = _REFERENCE_CASES_DIR / "cases" / case_id / "expected_metrics.json"
+        records.append(
+            ReferenceCaseRecord(
+                case_id=case_id,
+                source_path=_require_string(row, "source_path", context),
+                domain=domain,
+                device_or_tps=_require_string(row, "device_or_tps", context),
+                expected_mode=expected_mode,
+                case_class=_require_choice(row, "case_class", context, _CASE_CLASSES),
+                expected_metrics_source=expected_metrics_source,
+                expected_metrics_path=expected_metrics_path,
+                expected_metrics=_load_expected_metrics(expected_metrics_path, context),
+                tolerance_overrides=_require_tolerance_overrides(row, "tolerance_overrides", context),
+                checksum=_require_string(row, "checksum", context),
+                provenance=_require_provenance(row, "provenance", context),
+                notes=_require_string(row, "notes", context, allow_empty=True),
+            )
+        )
+
+    _require_unique([record.case_id for record in records], "reference case")
+    return records
+
+
 def _load_metric_group_definitions() -> dict[str, _MetricGroupDefinition]:
     payload = _load_payload("metric_groups.yaml")
     entries = _require_sequence(payload, "metric_groups", "metric_groups.yaml")
@@ -214,10 +270,13 @@ def _load_metric_group_definitions() -> dict[str, _MetricGroupDefinition]:
 
 
 def _load_payload(file_name: str) -> dict[str, Any]:
-    path = _SPECS_DIR / file_name
+    return _load_yaml_payload(_SPECS_DIR / file_name, file_name)
+
+
+def _load_yaml_payload(path: Path, label: str) -> dict[str, Any]:
     payload = yaml.safe_load(path.read_text(encoding="utf-8"))
     if not isinstance(payload, dict):
-        raise ValueError(f"{file_name} must contain a top-level mapping.")
+        raise ValueError(f"{label} must contain a top-level mapping.")
     return payload
 
 
@@ -308,6 +367,32 @@ def _require_bool(row: dict[str, Any], key: str, context: str) -> bool:
     value = row.get(key)
     if not isinstance(value, bool):
         raise ValueError(f"{context} is missing required boolean field '{key}'.")
+    return value
+
+
+def _optional_bool(row: dict[str, Any], key: str, context: str) -> bool | None:
+    value = row.get(key)
+    if value is None:
+        return None
+    if not isinstance(value, bool):
+        raise ValueError(f"{context} field '{key}' must be a boolean.")
+    return value
+
+
+def _optional_string(
+    row: dict[str, Any],
+    key: str,
+    context: str,
+    *,
+    allow_empty: bool = False,
+) -> str | None:
+    value = row.get(key)
+    if value is None:
+        return None
+    if not isinstance(value, str):
+        raise ValueError(f"{context} field '{key}' must be a string.")
+    if not allow_empty and not value.strip():
+        raise ValueError(f"{context} field '{key}' cannot be empty.")
     return value
 
 
@@ -431,3 +516,65 @@ def _require_unique(values: list[object], label: str) -> None:
         seen.add(value)
     if duplicates:
         raise ValueError(f"Duplicate {label} entries: {', '.join(duplicates)}")
+
+
+def _require_tolerance_overrides(
+    row: dict[str, Any],
+    key: str,
+    context: str,
+) -> dict[str, ToleranceOverrideRecord]:
+    value = row.get(key)
+    if not isinstance(value, dict):
+        raise ValueError(f"{context} field '{key}' must be a mapping.")
+
+    overrides: dict[str, ToleranceOverrideRecord] = {}
+    for metric_key, item in value.items():
+        if not isinstance(metric_key, str) or not metric_key.strip():
+            raise ValueError(f"{context} field '{key}' contains an invalid metric key.")
+        item_context = f"{context} field '{key}'[{metric_key}]"
+        item_row = _require_mapping(item, item_context)
+        overrides[metric_key] = ToleranceOverrideRecord(
+            absolute=_optional_float(item_row, "abs", item_context),
+            relative=_optional_float(item_row, "rel", item_context),
+            skip=_optional_bool(item_row, "skip", item_context) or False,
+            reason=_optional_string(item_row, "reason", item_context, allow_empty=True) or "",
+        )
+    return overrides
+
+
+def _require_provenance(
+    row: dict[str, Any],
+    key: str,
+    context: str,
+) -> ReferenceCaseProvenanceRecord:
+    value = row.get(key)
+    if not isinstance(value, dict):
+        raise ValueError(f"{context} field '{key}' must be a mapping.")
+    item_context = f"{context} field '{key}'"
+    return ReferenceCaseProvenanceRecord(
+        source_kind=_require_string(value, "source_kind", item_context),
+        version=_optional_string(value, "version", item_context, allow_empty=True) or "",
+        notes=_optional_string(value, "notes", item_context, allow_empty=True) or "",
+    )
+
+
+def _load_expected_metrics(path: Path, context: str) -> dict[str, float | int | str | None]:
+    if not path.exists():
+        raise ValueError(f"{context} is missing expected metrics artifact '{path}'.")
+    try:
+        payload = json.loads(path.read_text(encoding="utf-8"))
+    except (OSError, json.JSONDecodeError) as exc:
+        raise ValueError(f"{context} failed to load expected metrics '{path}': {exc}") from exc
+    if not isinstance(payload, dict):
+        raise ValueError(f"{context} expected metrics '{path}' must contain a top-level object.")
+
+    metrics: dict[str, float | int | str | None] = {}
+    for metric_key, value in payload.items():
+        if not isinstance(metric_key, str) or not metric_key.strip():
+            raise ValueError(f"{context} expected metrics '{path}' contains an invalid metric key.")
+        if isinstance(value, bool) or not isinstance(value, (int, float, str)) and value is not None:
+            raise ValueError(
+                f"{context} expected metrics '{path}' value for '{metric_key}' must be numeric, string, or null."
+            )
+        metrics[metric_key] = value
+    return metrics

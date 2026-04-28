@@ -3,6 +3,7 @@ import types
 import unittest
 from unittest.mock import patch
 
+import numpy as np
 from aurora_svmat_lab.models import AuroraAnalysisResult, AuroraPlanMetadata
 from ucomx_models import AnalysisMode, PlanAnalysisResult
 
@@ -63,6 +64,31 @@ class ValidationRuntimeTests(unittest.TestCase):
         self.assertTrue(record.supported)
         self.assertEqual({"projection_pitch_mean": 1.25}, record.metrics)
         self.assertEqual(("synthetic warning",), record.warnings)
+
+    def test_runtime_normalization_drops_non_scalar_core_metric_values(self):
+        from validation_runtime import analyze_validation_case
+
+        fake_result = PlanAnalysisResult(
+            source_path="demo_vmat.dcm",
+            mode=AnalysisMode.VMAT_IMRT,
+            metadata={"plan_name": "Demo VMAT"},
+            metrics={"mi_0_2": np.array([5.93, 7.8, 7.85])},
+            flattened_metrics={
+                "mi_0_2": np.array([5.93, 7.8, 7.85]),
+                "pm": np.float64(0.44),
+            },
+            supported=True,
+            warnings=[],
+        )
+
+        fake_service = types.ModuleType("ucomx_service")
+        fake_service.analyze_plan_file = unittest.mock.Mock(return_value=fake_result)
+
+        with patch.dict(sys.modules, {"ucomx_service": fake_service}):
+            record = analyze_validation_case(source_path="demo_vmat.dcm", domain="VMAT_IMRT")
+
+        self.assertEqual({"pm": 0.44}, record.metrics)
+        self.assertNotIn("mi_0_2", record.metrics)
 
 
 if __name__ == "__main__":

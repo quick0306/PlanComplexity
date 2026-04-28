@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 from dataclasses import dataclass
+from pathlib import Path
 from typing import Any
 
 
@@ -54,6 +55,38 @@ class ValidationProfileRecord:
 
 
 @dataclass(frozen=True)
+class ToleranceOverrideRecord:
+    absolute: float | None
+    relative: float | None
+    skip: bool
+    reason: str
+
+
+@dataclass(frozen=True)
+class ReferenceCaseProvenanceRecord:
+    source_kind: str
+    version: str
+    notes: str
+
+
+@dataclass(frozen=True)
+class ReferenceCaseRecord:
+    case_id: str
+    source_path: str
+    domain: str
+    device_or_tps: str
+    expected_mode: str
+    case_class: str
+    expected_metrics_source: str
+    expected_metrics_path: Path
+    expected_metrics: dict[str, float | int | str | None]
+    tolerance_overrides: dict[str, ToleranceOverrideRecord]
+    checksum: str
+    provenance: ReferenceCaseProvenanceRecord
+    notes: str
+
+
+@dataclass(frozen=True)
 class ValidationCaseResult:
     source_path: str
     domain: str
@@ -69,6 +102,9 @@ __all__ = [
     "ExpectedRangeRecord",
     "MetricGroupRecord",
     "MetricSpecRecord",
+    "ReferenceCaseProvenanceRecord",
+    "ReferenceCaseRecord",
+    "ToleranceOverrideRecord",
     "ValidationCaseResult",
     "ValidationProfileRecord",
 ]

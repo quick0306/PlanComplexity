@@ -7,6 +7,8 @@ from metric_definition_catalog import metric_catalog_keys_for_platform
 from ucomx_models import AnalysisMode, PlanAnalysisResult
 from validation_models import ValidationCaseResult
 
+_UNSUPPORTED_METRIC_VALUE = object()
+
 
 def analyze_validation_case(source_path: str, domain: str) -> ValidationCaseResult:
     normalized_domain = domain.strip().upper()
@@ -37,11 +39,7 @@ def _analysis_mode_for_domain(domain: str) -> AnalysisMode:
 
 def _normalize_core_result(result: PlanAnalysisResult, *, domain: str) -> ValidationCaseResult:
     allowed_metric_keys = metric_catalog_keys_for_platform(domain)
-    metrics = {
-        key: value
-        for key, value in result.flattened_metrics.items()
-        if key in allowed_metric_keys
-    }
+    metrics = _normalize_metric_mapping(result.flattened_metrics, allowed_metric_keys)
     return ValidationCaseResult(
         source_path=result.source_path,
         domain=domain,
@@ -56,18 +54,11 @@ def _normalize_core_result(result: PlanAnalysisResult, *, domain: str) -> Valida
 
 def _normalize_aurora_result(result: AuroraAnalysisResult) -> ValidationCaseResult:
     allowed_metric_keys = metric_catalog_keys_for_platform("AURORA")
-    listed_metrics = {
-        metric.metric_name: metric.value
-        for metric in result.metrics
-        if metric.metric_name in allowed_metric_keys
-    }
-    listed_metrics.update(
-        {
-            key: value
-            for key, value in result.plan_metrics.items()
-            if key in allowed_metric_keys
-        }
+    listed_metrics = _normalize_metric_mapping(
+        {metric.metric_name: metric.value for metric in result.metrics},
+        allowed_metric_keys,
     )
+    listed_metrics.update(_normalize_metric_mapping(result.plan_metrics, allowed_metric_keys))
     return ValidationCaseResult(
         source_path=result.source_path,
         domain="AURORA",
@@ -78,6 +69,33 @@ def _normalize_aurora_result(result: AuroraAnalysisResult) -> ValidationCaseResu
         metrics=listed_metrics,
         warnings=tuple(result.warnings),
     )
+
+
+def _normalize_metric_mapping(
+    raw_metrics: dict[str, object],
+    allowed_metric_keys: set[str],
+) -> dict[str, float | int | str | None]:
+    normalized_metrics: dict[str, float | int | str | None] = {}
+    for key, value in raw_metrics.items():
+        if key not in allowed_metric_keys:
+            continue
+        normalized_value = _normalize_metric_value(value)
+        if normalized_value is _UNSUPPORTED_METRIC_VALUE:
+            continue
+        normalized_metrics[key] = normalized_value
+    return normalized_metrics
+
+
+def _normalize_metric_value(value: object) -> float | int | str | None | object:
+    item_method = getattr(value, "item", None)
+    if callable(item_method):
+        try:
+            value = item_method()
+        except (TypeError, ValueError):
+            return _UNSUPPORTED_METRIC_VALUE
+    if isinstance(value, bool) or not isinstance(value, (int, float, str)) and value is not None:
+        return _UNSUPPORTED_METRIC_VALUE
+    return value
 
 
 __all__ = [
