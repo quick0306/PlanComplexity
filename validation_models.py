@@ -55,6 +55,24 @@ class ValidationProfileRecord:
 
 
 @dataclass(frozen=True)
+class ComparatorSampleRecord:
+    case_id: str
+    comparator_value: float | int | str | None
+    notes: str
+
+
+@dataclass(frozen=True)
+class ComparatorMappingRecord:
+    platform: str
+    internal_metric: str
+    comparator: str
+    comparator_metric: str
+    relationship: str
+    samples: tuple[ComparatorSampleRecord, ...]
+    notes: str
+
+
+@dataclass(frozen=True)
 class ToleranceOverrideRecord:
     absolute: float | None
     relative: float | None
@@ -99,6 +117,8 @@ class ValidationCaseResult:
 
 
 __all__ = [
+    "ComparatorMappingRecord",
+    "ComparatorSampleRecord",
     "ExpectedRangeRecord",
     "MetricGroupRecord",
     "MetricSpecRecord",

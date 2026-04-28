@@ -13,6 +13,8 @@ from metric_registry import SUPPORTED_VALIDATION_DOMAINS
 import yaml
 
 from validation_models import (
+    ComparatorMappingRecord,
+    ComparatorSampleRecord,
     ExpectedRangeRecord,
     MetricGroupRecord,
     MetricSpecRecord,
@@ -198,6 +200,65 @@ def load_validation_profiles() -> list[ValidationProfileRecord]:
             raise ValueError(
                 f"Validation profile '{record.profile_key}' references unknown groups: {', '.join(unknown)}"
             )
+    return records
+
+
+def load_comparator_mappings() -> list[ComparatorMappingRecord]:
+    payload = _load_payload("comparator_mapping.yaml")
+    _validate_schema(payload, "comparator_mapping.schema.json")
+    entries = _require_sequence(payload, "mappings", "comparator_mapping.yaml")
+    metric_keys = {(spec.platform, spec.metric_key) for spec in load_metric_specs()}
+    reference_cases = {case.case_id: case for case in load_reference_manifest()}
+    records: list[ComparatorMappingRecord] = []
+    for index, entry in enumerate(entries):
+        context = f"comparator_mapping.yaml mappings[{index}]"
+        row = _require_mapping(entry, context)
+        platform = _require_string(row, "platform", context)
+        internal_metric = _require_string(row, "internal_metric", context)
+        if (platform, internal_metric) not in metric_keys:
+            raise ValueError(
+                f"{context} references unknown metric '{platform}/{internal_metric}'."
+            )
+        samples = _require_comparator_samples(row, "samples", context)
+        for sample in samples:
+            reference_case = reference_cases.get(sample.case_id)
+            if reference_case is None:
+                raise ValueError(
+                    f"{context} references unknown reference case '{sample.case_id}'."
+                )
+            if reference_case.domain != platform:
+                raise ValueError(
+                    f"{context} sample '{sample.case_id}' has domain mismatch: "
+                    f"mapping platform '{platform}' vs case domain '{reference_case.domain}'."
+                )
+            if internal_metric not in reference_case.expected_metrics:
+                raise ValueError(
+                    f"{context} sample '{sample.case_id}' does not include metric '{internal_metric}'."
+                )
+        records.append(
+            ComparatorMappingRecord(
+                platform=platform,
+                internal_metric=internal_metric,
+                comparator=_require_string(row, "comparator", context),
+                comparator_metric=_require_string(row, "comparator_metric", context),
+                relationship=_require_choice(row, "relationship", context, _COMPARISON_CLASSES),
+                samples=samples,
+                notes=_optional_string(row, "notes", context, allow_empty=True) or "",
+            )
+        )
+
+    _require_unique(
+        [
+            (
+                record.platform,
+                record.internal_metric,
+                record.comparator,
+                record.comparator_metric,
+            )
+            for record in records
+        ],
+        "comparator mapping",
+    )
     return records
 
 
@@ -546,6 +607,45 @@ def _require_unique(values: list[object], label: str) -> None:
         seen.add(value)
     if duplicates:
         raise ValueError(f"Duplicate {label} entries: {', '.join(duplicates)}")
+
+
+def _require_comparator_samples(
+    row: dict[str, Any],
+    key: str,
+    context: str,
+) -> tuple[ComparatorSampleRecord, ...]:
+    value = row.get(key)
+    if not isinstance(value, list):
+        raise ValueError(f"{context} field '{key}' must be a list.")
+    samples: list[ComparatorSampleRecord] = []
+    for index, item in enumerate(value):
+        sample_context = f"{context} field '{key}'[{index}]"
+        sample_row = _require_mapping(item, sample_context)
+        samples.append(
+            ComparatorSampleRecord(
+                case_id=_require_string(sample_row, "case_id", sample_context),
+                comparator_value=_require_comparator_value(
+                    sample_row,
+                    "comparator_value",
+                    sample_context,
+                ),
+                notes=_optional_string(sample_row, "notes", sample_context, allow_empty=True) or "",
+            )
+        )
+    return tuple(samples)
+
+
+def _require_comparator_value(
+    row: dict[str, Any],
+    key: str,
+    context: str,
+) -> float | int | str | None:
+    value = row.get(key)
+    if isinstance(value, bool) or not isinstance(value, (int, float, str)) and value is not None:
+        raise ValueError(
+            f"{context} field '{key}' must be numeric, string, or null."
+        )
+    return value
 
 
 def _require_tolerance_overrides(

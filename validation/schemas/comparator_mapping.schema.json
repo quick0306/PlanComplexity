@@ -13,12 +13,17 @@
         "type": "object",
         "additionalProperties": false,
         "required": [
+          "platform",
           "internal_metric",
           "comparator",
           "comparator_metric",
-          "relationship"
+          "relationship",
+          "samples"
         ],
         "properties": {
+          "platform": {
+            "type": "string"
+          },
           "internal_metric": {
             "type": "string"
           },
@@ -39,6 +44,32 @@
           },
           "notes": {
             "type": "string"
+          },
+          "samples": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "case_id",
+                "comparator_value"
+              ],
+              "properties": {
+                "case_id": {
+                  "type": "string"
+                },
+                "comparator_value": {
+                  "type": [
+                    "number",
+                    "string",
+                    "null"
+                  ]
+                },
+                "notes": {
+                  "type": "string"
+                }
+              }
+            }
           }
         }
       }

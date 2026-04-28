@@ -1,0 +1,31 @@
+mappings:
+  - platform: VMAT_IMRT
+    internal_metric: lt
+    comparator: UCoMX
+    comparator_metric: LT
+    relationship: exact-equivalent
+    notes: Same leaf-travel metric name and unit in the current UCoMX-oriented VMAT inventory.
+    samples:
+      - case_id: vmat_truebeam_canonical
+        comparator_value: 117.3
+        notes: Initial checked-in comparator sample aligned to the phase 1 reference baseline.
+  - platform: VMAT_IMRT
+    internal_metric: lt_mlcx1
+    comparator: UCoMX
+    comparator_metric: LT_MLCX1
+    relationship: derived-equivalent
+    notes: Bank-specific derivative of the VMAT leaf-travel family; agreement is summarized but not exact-gated.
+    samples:
+      - case_id: vmat_halcyon_edge
+        comparator_value: 107.15
+        notes: Initial sample retained to exercise derived-equivalent routing.
+  - platform: AURORA
+    internal_metric: projection_pitch_mean
+    comparator: AuroraPaper
+    comparator_metric: projection_pitch_mean
+    relationship: not-comparable
+    notes: Aurora research metric is tracked in the mapping table but excluded from exact external-equivalence claims.
+    samples:
+      - case_id: aurora_canonical
+        comparator_value: 0.09259232915432099
+        notes: Included only to verify not-comparable routing.
