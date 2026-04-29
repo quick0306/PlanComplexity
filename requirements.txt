@@ -3,3 +3,5 @@ pandas
 pydicom
 scipy
 pytest
+reportlab
+pypdf

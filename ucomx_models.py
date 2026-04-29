@@ -8,6 +8,7 @@ class AnalysisMode(str, Enum):
     VMAT_IMRT = "VMAT_IMRT"
     TOMO = "TOMO"
     CYBERKNIFE_MLC = "CYBERKNIFE_MLC"
+    AURORA = "AURORA"
 
 
 @dataclass
@@ -35,6 +36,12 @@ class PlanAnalysisResult:
             return "Incomplete aperture geometry"
         if "overrides detected mode" in warning_text:
             return "Mode override"
+        if "missing axial trajectory" in warning_text:
+            return "Missing axial trajectory"
+        if "incompatible manufacturer/model" in warning_text:
+            return "Incompatible manufacturer/model hints"
+        if "unsupported plan geometry" in warning_text:
+            return "Unsupported plan geometry"
         if self.supported:
             return "Ready"
         if self.warnings:

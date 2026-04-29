@@ -3,6 +3,8 @@ from __future__ import annotations
 from dataclasses import dataclass, field
 from typing import Dict, Iterable, Tuple
 
+from aurora_svmat_lab.notes import get_metric_notes
+
 
 @dataclass(frozen=True)
 class MetricSpec:
@@ -168,9 +170,37 @@ TOMO_METRIC_SPECS = (
     MetricSpec("sdsi", "sdSI", description="Standard deviation of sinogram intensity."),
 )
 
+
+def _humanize_aurora_metric_key(metric_key: str) -> str:
+    replacements = {
+        "cv": "CV",
+        "mu": "MU",
+        "mm": "mm",
+        "mlc": "MLC",
+        "mlcx1": "MLCX1",
+        "mlcx2": "MLCX2",
+        "x1": "X1",
+        "x2": "X2",
+        "z": "Z",
+        "p95": "P95",
+        "top3": "Top3",
+    }
+    return " ".join(
+        replacements.get(word, word.capitalize())
+        for word in metric_key.replace("-", "_").split("_")
+        if word
+    )
+
+
 VMAT_METRIC_BY_KEY: Dict[str, MetricSpec] = {spec.key: spec for spec in VMAT_METRIC_SPECS}
 CYBERKNIFE_METRIC_BY_KEY: Dict[str, MetricSpec] = {spec.key: spec for spec in CYBERKNIFE_METRIC_SPECS}
 TOMO_METRIC_BY_KEY: Dict[str, MetricSpec] = {spec.key: spec for spec in TOMO_METRIC_SPECS}
+AURORA_METRIC_DESCRIPTIONS: Dict[str, str] = get_metric_notes()
+AURORA_METRIC_LABELS: Dict[str, str] = {
+    key: _humanize_aurora_metric_key(key)
+    for key in AURORA_METRIC_DESCRIPTIONS
+}
+AURORA_METRIC_GUI_LABELS: Dict[str, str] = dict(AURORA_METRIC_LABELS)
 VMAT_METRIC_LABELS: Dict[str, str] = {spec.key: spec.label for spec in VMAT_METRIC_SPECS}
 CYBERKNIFE_METRIC_LABELS: Dict[str, str] = {spec.key: spec.label for spec in CYBERKNIFE_METRIC_SPECS}
 TOMO_METRIC_LABELS: Dict[str, str] = {spec.key: spec.label for spec in TOMO_METRIC_SPECS}
@@ -294,6 +324,7 @@ def metric_labels_with_aliases() -> Dict[str, str]:
     labels = dict(VMAT_METRIC_LABELS)
     labels.update(CYBERKNIFE_METRIC_LABELS)
     labels.update(TOMO_METRIC_LABELS)
+    labels.update(AURORA_METRIC_LABELS)
     for alias, key in VMAT_ALIAS_TO_KEY.items():
         labels[alias] = VMAT_METRIC_LABELS[key]
     return labels
@@ -303,6 +334,7 @@ def metric_gui_labels_with_aliases() -> Dict[str, str]:
     labels = dict(VMAT_METRIC_GUI_LABELS)
     labels.update(CYBERKNIFE_METRIC_GUI_LABELS)
     labels.update(TOMO_METRIC_GUI_LABELS)
+    labels.update(AURORA_METRIC_GUI_LABELS)
     labels.update(SPECIAL_FLATTENED_LABELS)
     for alias, key in VMAT_ALIAS_TO_KEY.items():
         labels[alias] = VMAT_METRIC_GUI_LABELS[key]
@@ -313,6 +345,7 @@ def metric_descriptions_with_aliases() -> Dict[str, str]:
     descriptions = dict(VMAT_METRIC_DESCRIPTIONS)
     descriptions.update(CYBERKNIFE_METRIC_DESCRIPTIONS)
     descriptions.update(TOMO_METRIC_DESCRIPTIONS)
+    descriptions.update(AURORA_METRIC_DESCRIPTIONS)
     descriptions.update(SPECIAL_FLATTENED_DESCRIPTIONS)
     for alias, key in VMAT_ALIAS_TO_KEY.items():
         if key in VMAT_METRIC_DESCRIPTIONS:

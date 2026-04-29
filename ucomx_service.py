@@ -8,6 +8,8 @@ from typing import Any, Dict, Iterable, List, Sequence
 import pydicom
 
 from analysis_helpers import calculate_core_metrics, calculate_cyberknife_mlc_metrics, get_plan_metadata
+from aurora_svmat_lab.parser import is_aurora_rtplan
+from aurora_svmat_lab.service import analyze_plan_file as analyze_aurora_plan_file
 from cyberknife_parser import build_cyberknife_plan_dict, parse_cyberknife_beams, resolve_referenced_xml_paths
 from DicomParse.dicom_rt import RTPlan
 from DicomParse.utilities import retrieve_dcm_filenames
@@ -45,10 +47,19 @@ def _first_treatment_beam(beam_sequence: Sequence[Any]) -> Any | None:
 def detect_mode(metadata: Dict[str, Any]) -> AnalysisMode:
     machine_id = str(metadata.get("machine_id", "")).lower()
     model = str(metadata.get("calculation_model", "")).lower()
+    manufacturer_model = str(metadata.get("manufacturer_model_name", "")).lower()
     plan_name = str(metadata.get("plan_name", "")).lower()
     plan_label = str(metadata.get("plan_label", "")).lower()
     manufacturer = str(metadata.get("manufacturer", "")).lower()
 
+    if (
+        any(token in manufacturer for token in ("wisdomtech", "neurt"))
+        or any(token in model for token in ("deepplan", "aurora"))
+        or any(token in manufacturer_model for token in ("deepplan", "aurora"))
+        or "aurora" in plan_name
+        or "aurora" in plan_label
+    ):
+        return AnalysisMode.AURORA
     if any(token in machine_id for token in ("tomo", "tomotherapy", "radixact")):
         return AnalysisMode.TOMO
     if any(token in model for token in ("tomo", "tomotherapy", "radixact")):
@@ -65,6 +76,8 @@ def detect_mode(metadata: Dict[str, Any]) -> AnalysisMode:
 
 def detect_mode_from_file(source_path: str) -> AnalysisMode:
     ds = pydicom.dcmread(source_path, force=True, stop_before_pixels=True)
+    if is_aurora_rtplan(ds):
+        return AnalysisMode.AURORA
     manufacturer = str(getattr(ds, "Manufacturer", "")).lower()
     model = str(getattr(ds, "ManufacturerModelName", "")).lower()
     plan_name = str(getattr(ds, "RTPlanName", "")).lower()
@@ -120,8 +133,18 @@ def _unsupported_result(
 
 def analyze_plan_file(source_path: str, requested_mode: AnalysisMode = AnalysisMode.AUTO) -> PlanAnalysisResult:
     detected_mode_from_file = detect_mode_from_file(source_path)
-    if requested_mode == AnalysisMode.AUTO and detected_mode_from_file in (AnalysisMode.TOMO, AnalysisMode.CYBERKNIFE_MLC):
+    if requested_mode == AnalysisMode.AUTO and detected_mode_from_file in (
+        AnalysisMode.TOMO,
+        AnalysisMode.CYBERKNIFE_MLC,
+        AnalysisMode.AURORA,
+    ):
         requested_mode = detected_mode_from_file
+
+    if requested_mode == AnalysisMode.AURORA:
+        return _adapt_aurora_result(
+            source_path=source_path,
+            result=analyze_aurora_plan_file(source_path),
+        )
 
     if requested_mode == AnalysisMode.TOMO:
         tomo_plan, warnings = parse_tomo_rtplan(source_path)
@@ -223,6 +246,44 @@ def analyze_plan_file(source_path: str, requested_mode: AnalysisMode = AnalysisM
         metrics=metrics,
         flattened_metrics=flattened_metrics,
         supported=True,
+        warnings=warnings,
+    )
+
+
+def _adapt_aurora_result(*, source_path: str, result: Any) -> PlanAnalysisResult:
+    aurora_metadata = result.metadata
+    metrics = dict(getattr(result, "plan_metrics", {}) or {})
+    warnings = list(getattr(result, "warnings", []) or [])
+    reason = str(getattr(result, "reason", "") or "")
+    supported = bool(getattr(result, "supported", False))
+    if not supported and reason and reason not in warnings:
+        warnings.insert(0, reason)
+
+    metadata = {
+        "patient_id": getattr(aurora_metadata, "patient_id", ""),
+        "patient_name": "",
+        "plan_name": getattr(aurora_metadata, "plan_name", ""),
+        "plan_label": getattr(aurora_metadata, "plan_label", ""),
+        "manufacturer": getattr(aurora_metadata, "manufacturer", ""),
+        "manufacturer_model_name": getattr(aurora_metadata, "manufacturer_model_name", ""),
+        "machine_id": getattr(aurora_metadata, "treatment_machine_name", ""),
+        "calculation_model": getattr(aurora_metadata, "manufacturer_model_name", ""),
+        "prescribed_dose": "",
+        "mu": "",
+        "beam_type": "AURORA_SVMAT",
+        "beam_number": getattr(aurora_metadata, "beam_count", 0),
+        "rotation_direction": "",
+        "study_instance_uid": getattr(aurora_metadata, "study_instance_uid", ""),
+        "series_instance_uid": getattr(aurora_metadata, "series_instance_uid", ""),
+        "sop_instance_uid": getattr(aurora_metadata, "sop_instance_uid", ""),
+    }
+    return PlanAnalysisResult(
+        source_path=source_path,
+        mode=AnalysisMode.AURORA,
+        metadata=metadata,
+        metrics=metrics,
+        flattened_metrics=flatten_metrics(metrics),
+        supported=supported,
         warnings=warnings,
     )
 

@@ -1,7 +1,7 @@
 # PlanComplexity
 
-Utilities for parsing RT Plan DICOM files and calculating plan complexity metrics, with a
-desktop GUI inspired by UCoMX.
+Utilities for parsing RT Plan DICOM files and calculating plan complexity metrics across
+VMAT/IMRT, TOMO, CyberKnife MLC, and Aurora SVMAT plans, with a desktop GUI inspired by UCoMX.
 
 ## Requirements
 
@@ -27,6 +27,8 @@ Analyze a single RT Plan file:
 ```bash
 python main.py --input-file path/to/plan.dcm
 ```
+
+The main analyzer auto-detects VMAT/IMRT, TOMO, CyberKnife MLC, and Aurora SVMAT RTPLAN files.
 
 Batch export metrics for standard linac plans:
 
@@ -67,8 +69,9 @@ The packaged GUI is created at `dist\PyUCoMX.exe`.
 
 ## Aurora SVMAT Lab
 
-`Aurora SVMAT Lab` is a standalone experimental research prototype for NeuRT Aurora SVMAT RTPLAN analysis.
-It is intentionally separate from the main `PyUCoMX` workflow.
+`Aurora SVMAT Lab` remains the focused experimental research module for NeuRT Aurora SVMAT RTPLAN analysis.
+Aurora plan-level metrics are also available through the main `PyUCoMX` analyzer, GUI, batch CSV export,
+and `AUTO` mode alongside VMAT/IMRT, TOMO, and CyberKnife MLC.
 
 Launch the standalone Aurora GUI:
 

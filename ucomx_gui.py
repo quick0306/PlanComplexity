@@ -52,7 +52,7 @@ class UCoMXApp(tk.Tk):
         ttk.Label(header, text="PyUCoMX", style="Header.TLabel").pack(anchor="w")
         ttk.Label(
             header,
-            text="Python implementation of VMAT/IMRT and Tomo complexity analysis.",
+            text="Python implementation of VMAT/IMRT, Tomo, CyberKnife MLC, and Aurora SVMAT complexity analysis.",
             style="Sub.TLabel",
         ).pack(anchor="w", pady=(2, 0))
 

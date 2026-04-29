@@ -4,10 +4,12 @@ from unittest.mock import patch
 
 import analysis_helpers
 import main
+from aurora_svmat_lab.models import AuroraAnalysisResult, AuroraPlanMetadata
 from analysis_exports import build_dual_mlc_row, build_standard_row
 from ucomx_models import AnalysisMode, PlanAnalysisResult
 import ucomx_service
 from ucomx_service import analyze_filepaths, build_export_record, build_metric_reference_rows, build_metric_rows, detect_mode
+from tests.test_aurora_parser import build_fake_aurora_rtplan
 
 
 class FakeMetric:
@@ -365,6 +367,29 @@ class AnalysisHelpersTests(unittest.TestCase):
         self.assertIn("EPSTV-1,1", notes_by_label)
         self.assertIn("one-step projection and leaf offsets", notes_by_label["EPSTV-1,1"])
 
+    def test_metric_reference_rows_include_aurora_notes(self):
+        result = PlanAnalysisResult(
+            source_path="aurora.dcm",
+            mode=AnalysisMode.AURORA,
+            metadata={},
+            metrics={},
+            flattened_metrics={
+                "projection_pitch_mean": 0.12,
+                "theta_z_coupling_cv": 0.05,
+            },
+            supported=True,
+            warnings=[],
+        )
+
+        metric_rows = build_metric_rows(result)
+        reference_rows = build_metric_reference_rows(result)
+        notes_by_label = {label: note for label, note in reference_rows}
+
+        self.assertEqual(metric_rows[0][0], "Projection Pitch Mean")
+        self.assertEqual(metric_rows[1][0], "Theta Z Coupling CV")
+        self.assertIn("projection pitch", notes_by_label["Projection Pitch Mean"].lower())
+        self.assertIn("theta-z coupling", notes_by_label["Theta Z Coupling CV"].lower())
+
     def test_reason_label_and_export_record_for_missing_external_xml(self):
         result = PlanAnalysisResult(
             source_path="data/CyberKnife/plan.dcm",
@@ -417,6 +442,62 @@ class AnalysisHelpersTests(unittest.TestCase):
             }
         )
         self.assertEqual(mode, AnalysisMode.CYBERKNIFE_MLC)
+
+    def test_detect_mode_identifies_aurora_from_metadata(self):
+        mode = detect_mode(
+            {
+                "manufacturer": "WisdomTech Medical Systems",
+                "calculation_model": "DeepPlan",
+                "plan_name": "Aurora Research Plan",
+                "plan_label": "AURORA",
+            }
+        )
+        self.assertEqual(mode, AnalysisMode.AURORA)
+
+    @patch.object(ucomx_service, "pydicom")
+    def test_detect_mode_from_file_identifies_aurora_rtplan(self, pydicom_mock):
+        pydicom_mock.dcmread.return_value = build_fake_aurora_rtplan()
+
+        self.assertEqual(ucomx_service.detect_mode_from_file("aurora.dcm"), AnalysisMode.AURORA)
+
+    @patch.object(ucomx_service, "analyze_aurora_plan_file")
+    @patch.object(ucomx_service, "detect_mode_from_file", return_value=AnalysisMode.AURORA)
+    def test_analyze_plan_file_auto_routes_aurora_into_unified_result(
+        self,
+        _detect_mode_mock,
+        analyze_aurora_plan_file_mock,
+    ):
+        analyze_aurora_plan_file_mock.return_value = AuroraAnalysisResult(
+            source_path="aurora.dcm",
+            metadata=AuroraPlanMetadata(
+                source_path="aurora.dcm",
+                plan_label="AURORA",
+                plan_name="Aurora Research Plan",
+                manufacturer="WisdomTech Medical Systems",
+                manufacturer_model_name="DeepPlan",
+                treatment_machine_name="Aurora Linac",
+                patient_id="AURORA-001",
+                beam_count=2,
+            ),
+            plan_metrics={
+                "projection_pitch_mean": 0.12,
+                "theta_z_coupling_cv": 0.05,
+            },
+            warnings=["research-only metric set"],
+            supported=True,
+            reason="",
+        )
+
+        result = ucomx_service.analyze_plan_file("aurora.dcm", requested_mode=AnalysisMode.AUTO)
+
+        self.assertEqual(result.mode, AnalysisMode.AURORA)
+        self.assertTrue(result.supported)
+        self.assertEqual(result.metadata["calculation_model"], "DeepPlan")
+        self.assertEqual(result.metadata["machine_id"], "Aurora Linac")
+        self.assertEqual(result.metrics["projection_pitch_mean"], 0.12)
+        self.assertEqual(result.flattened_metrics["theta_z_coupling_cv"], 0.05)
+        self.assertIn("research-only metric set", result.warnings)
+        analyze_aurora_plan_file_mock.assert_called_once_with("aurora.dcm")
 
     @patch.object(main, "log_metric_summary")
     @patch.object(main, "log_plan_summary")
