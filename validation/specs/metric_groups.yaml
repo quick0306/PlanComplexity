@@ -48,6 +48,16 @@ metric_groups:
   platform: VMAT_IMRT
   label: SPORT
   description: Canonical research validation family for VMAT/IMRT SPORT metrics.
+- group_key: vmat_imrt_halcyon_ethos_tamura_2020
+  platform: VMAT_IMRT
+  label: Halcyon/Ethos Tamura 2020
+  description: Canonical research validation family for Halcyon/Ethos dual-layer
+    Tamura 2020 metrics.
+- group_key: vmat_imrt_halcyon_ethos_quintero_2021
+  platform: VMAT_IMRT
+  label: Halcyon/Ethos Quintero 2021
+  description: Canonical research validation family for Halcyon/Ethos dual-layer
+    Quintero 2021 metrics.
 - group_key: tomo_delivery
   platform: TOMO
   label: Delivery

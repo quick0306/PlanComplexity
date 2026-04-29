@@ -524,7 +524,7 @@ This appendix is generated from the shared metric-definition catalog.
 - Group: McNiven-style modulation
 - Symbol/short name: MCSv
 - Mathematical definition: MCSv = weighted mean[((AAV_i + AAV_{i+1}) / 2) * ((LSV_i + LSV_{i+1}) / 2)]
-- Physical meaning: Overall aperture modulation score combining area and leaf sequence variability.
+- Physical meaning: Overall aperture modulation score combining area and leaf sequence variability. For Halcyon/Ethos dual-layer plans this is also reported on the synthesized effective aperture used by Quintero et al. 2021.
 - Unit: dimensionless
 - Inputs required: MLC leaf positions, jaw positions, gantry angle, and control-point meterset weights
 - Status: implemented
@@ -535,7 +535,7 @@ This appendix is generated from the shared metric-definition catalog.
 - Group: McNiven-style modulation
 - Symbol/short name: MCSv MLCX1
 - Mathematical definition: Same formula as MCSv, but computed using MLCX1 apertures only.
-- Physical meaning: Overall aperture modulation score combining area and leaf sequence variability. Reported for MLCX1.
+- Physical meaning: Overall aperture modulation score combining area and leaf sequence variability. For Halcyon/Ethos dual-layer plans this is also reported on the synthesized effective aperture used by Quintero et al. 2021. Reported for MLCX1.
 - Unit: dimensionless
 - Inputs required: MLCX1 leaf positions, control-point weights, and beam geometry
 - Status: implemented_flattened
@@ -546,7 +546,7 @@ This appendix is generated from the shared metric-definition catalog.
 - Group: McNiven-style modulation
 - Symbol/short name: MCSv MLCX2
 - Mathematical definition: Same formula as MCSv, but computed using MLCX2 apertures only.
-- Physical meaning: Overall aperture modulation score combining area and leaf sequence variability. Reported for MLCX2.
+- Physical meaning: Overall aperture modulation score combining area and leaf sequence variability. For Halcyon/Ethos dual-layer plans this is also reported on the synthesized effective aperture used by Quintero et al. 2021. Reported for MLCX2.
 - Unit: dimensionless
 - Inputs required: MLCX2 leaf positions, control-point weights, and beam geometry
 - Status: implemented_flattened
@@ -1189,6 +1189,391 @@ This appendix is generated from the shared metric-definition catalog.
 - Inputs required: MLCX2 leaf positions, control-point weights, and beam geometry
 - Status: implemented_flattened
 - Notes: Layer-specific flattened export for PM.
+
+## `mcs5` - MCS5 (Tamura 2020 effective 5 mm MLC)
+
+- Group: Halcyon/Ethos Tamura 2020
+- Symbol/short name: MCS5
+- Mathematical definition: MCS5 = MCSv computed on the synthesized effective 5 mm dual-layer aperture
+- Physical meaning: Tamura et al. effective 5 mm dual-layer MLC modulation complexity score computed from the synthesized Halcyon/Ethos aperture.
+- Unit: dimensionless
+- Inputs required: Halcyon/Ethos MLCX1 and MLCX2 leaf positions, jaw positions, and control-point meterset weights
+- Status: implemented
+- Notes: None
+
+## `pa5` - PA5 (Tamura 2020 effective 5 mm MLC)
+
+- Group: Halcyon/Ethos Tamura 2020
+- Symbol/short name: PA5
+- Mathematical definition: PA5 = weighted mean area of the synthesized effective 5 mm dual-layer aperture
+- Physical meaning: Tamura et al. plan averaged beam area for the synthesized effective 5 mm Halcyon/Ethos aperture.
+- Unit: mm^2
+- Inputs required: Halcyon/Ethos MLCX1 and MLCX2 leaf positions, jaw positions, and control-point meterset weights
+- Status: implemented
+- Notes: None
+
+## `pi5` - PI5 (Tamura 2020 effective 5 mm MLC)
+
+- Group: Halcyon/Ethos Tamura 2020
+- Symbol/short name: PI5
+- Mathematical definition: PI5 = weighted mean perimeter^2 / (4*pi*area) on the synthesized effective 5 mm aperture
+- Physical meaning: Tamura et al. plan averaged beam irregularity for the synthesized effective 5 mm Halcyon/Ethos aperture.
+- Unit: dimensionless
+- Inputs required: Halcyon/Ethos MLCX1 and MLCX2 leaf positions, jaw positions, and control-point meterset weights
+- Status: implemented
+- Notes: None
+
+## `pm5` - PM5 (Tamura 2020 effective 5 mm MLC)
+
+- Group: Halcyon/Ethos Tamura 2020
+- Symbol/short name: PM5
+- Mathematical definition: PM5 = 1 - weighted effective aperture area / effective union aperture area
+- Physical meaning: Tamura et al. plan averaged beam modulation for the synthesized effective 5 mm Halcyon/Ethos aperture.
+- Unit: dimensionless
+- Inputs required: Halcyon/Ethos MLCX1 and MLCX2 leaf positions, jaw positions, and control-point meterset weights
+- Status: implemented
+- Notes: None
+
+## `eds` - EDS (Tamura 2020 effective distal MLC score)
+
+- Group: Halcyon/Ethos Tamura 2020
+- Symbol/short name: EDS
+- Mathematical definition: EDS = weighted mean of the distal-layer contribution fraction to the effective field shape
+- Physical meaning: Tamura et al. effective distal MLC score: MU-weighted fraction of the effective field shape attributed to the distal MLC layer.
+- Unit: dimensionless
+- Inputs required: Halcyon/Ethos MLCX1 and MLCX2 leaf positions, jaw positions, and control-point meterset weights
+- Status: implemented
+- Notes: None
+
+## `mcsw` - MCSw (Tamura 2020 weighted dual-layer MCS)
+
+- Group: Halcyon/Ethos Tamura 2020
+- Symbol/short name: MCSw
+- Mathematical definition: MCSw = pMCSw + dMCSw using proximal/distal field-shape contribution weights
+- Physical meaning: Tamura et al. weighted MCS combining proximal and distal MLC layer contributions to the effective field shape.
+- Unit: dimensionless
+- Inputs required: Halcyon/Ethos MLCX1 and MLCX2 leaf positions, jaw positions, and control-point meterset weights
+- Status: implemented
+- Notes: None
+
+## `paw` - PAw (Tamura 2020 weighted dual-layer PA)
+
+- Group: Halcyon/Ethos Tamura 2020
+- Symbol/short name: PAw
+- Mathematical definition: PAw = weighted proximal PA contribution + weighted distal PA contribution
+- Physical meaning: Tamura et al. weighted plan averaged beam area combining proximal and distal MLC layer field-shape contributions.
+- Unit: mm^2
+- Inputs required: Halcyon/Ethos MLCX1 and MLCX2 leaf positions, jaw positions, and control-point meterset weights
+- Status: implemented
+- Notes: None
+
+## `piw` - PIw (Tamura 2020 weighted dual-layer PI)
+
+- Group: Halcyon/Ethos Tamura 2020
+- Symbol/short name: PIw
+- Mathematical definition: PIw = weighted proximal PI contribution + weighted distal PI contribution
+- Physical meaning: Tamura et al. weighted plan averaged beam irregularity combining proximal and distal MLC layer field-shape contributions.
+- Unit: dimensionless
+- Inputs required: Halcyon/Ethos MLCX1 and MLCX2 leaf positions, jaw positions, and control-point meterset weights
+- Status: implemented
+- Notes: None
+
+## `pmw` - PMw (Tamura 2020 weighted dual-layer PM)
+
+- Group: Halcyon/Ethos Tamura 2020
+- Symbol/short name: PMw
+- Mathematical definition: PMw = weighted proximal PM contribution + weighted distal PM contribution
+- Physical meaning: Tamura et al. weighted plan averaged beam modulation combining proximal and distal MLC layer field-shape contributions.
+- Unit: dimensionless
+- Inputs required: Halcyon/Ethos MLCX1 and MLCX2 leaf positions, jaw positions, and control-point meterset weights
+- Status: implemented
+- Notes: None
+
+## `proximal_mcs` - pMCS
+
+- Group: Halcyon/Ethos Tamura 2020
+- Symbol/short name: pMCS
+- Mathematical definition: pMCS = MCSv computed on the proximal MLCX2 layer only
+- Physical meaning: Tamura et al. proximal-layer MCS for Halcyon/Ethos MLCX2.
+- Unit: dimensionless
+- Inputs required: Halcyon/Ethos MLCX1 and MLCX2 leaf positions, jaw positions, and control-point meterset weights
+- Status: implemented
+- Notes: None
+
+## `distal_mcs` - dMCS
+
+- Group: Halcyon/Ethos Tamura 2020
+- Symbol/short name: dMCS
+- Mathematical definition: dMCS = MCSv computed on the distal MLCX1 layer only
+- Physical meaning: Tamura et al. distal-layer MCS for Halcyon/Ethos MLCX1.
+- Unit: dimensionless
+- Inputs required: Halcyon/Ethos MLCX1 and MLCX2 leaf positions, jaw positions, and control-point meterset weights
+- Status: implemented
+- Notes: None
+
+## `proximal_pa` - pPA
+
+- Group: Halcyon/Ethos Tamura 2020
+- Symbol/short name: pPA
+- Mathematical definition: pPA = weighted mean aperture area for proximal MLCX2
+- Physical meaning: Tamura et al. proximal-layer PA for Halcyon/Ethos MLCX2.
+- Unit: mm^2
+- Inputs required: Halcyon/Ethos MLCX1 and MLCX2 leaf positions, jaw positions, and control-point meterset weights
+- Status: implemented
+- Notes: None
+
+## `distal_pa` - dPA
+
+- Group: Halcyon/Ethos Tamura 2020
+- Symbol/short name: dPA
+- Mathematical definition: dPA = weighted mean aperture area for distal MLCX1
+- Physical meaning: Tamura et al. distal-layer PA for Halcyon/Ethos MLCX1.
+- Unit: mm^2
+- Inputs required: Halcyon/Ethos MLCX1 and MLCX2 leaf positions, jaw positions, and control-point meterset weights
+- Status: implemented
+- Notes: None
+
+## `proximal_pi` - pPI
+
+- Group: Halcyon/Ethos Tamura 2020
+- Symbol/short name: pPI
+- Mathematical definition: pPI = weighted mean aperture irregularity for proximal MLCX2
+- Physical meaning: Tamura et al. proximal-layer PI for Halcyon/Ethos MLCX2.
+- Unit: dimensionless
+- Inputs required: Halcyon/Ethos MLCX1 and MLCX2 leaf positions, jaw positions, and control-point meterset weights
+- Status: implemented
+- Notes: None
+
+## `distal_pi` - dPI
+
+- Group: Halcyon/Ethos Tamura 2020
+- Symbol/short name: dPI
+- Mathematical definition: dPI = weighted mean aperture irregularity for distal MLCX1
+- Physical meaning: Tamura et al. distal-layer PI for Halcyon/Ethos MLCX1.
+- Unit: dimensionless
+- Inputs required: Halcyon/Ethos MLCX1 and MLCX2 leaf positions, jaw positions, and control-point meterset weights
+- Status: implemented
+- Notes: None
+
+## `proximal_pm` - pPM
+
+- Group: Halcyon/Ethos Tamura 2020
+- Symbol/short name: pPM
+- Mathematical definition: pPM = 1 - weighted proximal aperture area / proximal union area
+- Physical meaning: Tamura et al. proximal-layer PM for Halcyon/Ethos MLCX2.
+- Unit: dimensionless
+- Inputs required: Halcyon/Ethos MLCX1 and MLCX2 leaf positions, jaw positions, and control-point meterset weights
+- Status: implemented
+- Notes: None
+
+## `distal_pm` - dPM
+
+- Group: Halcyon/Ethos Tamura 2020
+- Symbol/short name: dPM
+- Mathematical definition: dPM = 1 - weighted distal aperture area / distal union area
+- Physical meaning: Tamura et al. distal-layer PM for Halcyon/Ethos MLCX1.
+- Unit: dimensionless
+- Inputs required: Halcyon/Ethos MLCX1 and MLCX2 leaf positions, jaw positions, and control-point meterset weights
+- Status: implemented
+- Notes: None
+
+## `proximal_mcsw` - pMCSw
+
+- Group: Halcyon/Ethos Tamura 2020
+- Symbol/short name: pMCSw
+- Mathematical definition: pMCSw = proximal component of MCSw
+- Physical meaning: Proximal contribution term of Tamura et al. weighted MCS.
+- Unit: dimensionless
+- Inputs required: Halcyon/Ethos MLCX1 and MLCX2 leaf positions, jaw positions, and control-point meterset weights
+- Status: implemented
+- Notes: None
+
+## `distal_mcsw` - dMCSw
+
+- Group: Halcyon/Ethos Tamura 2020
+- Symbol/short name: dMCSw
+- Mathematical definition: dMCSw = distal component of MCSw
+- Physical meaning: Distal contribution term of Tamura et al. weighted MCS.
+- Unit: dimensionless
+- Inputs required: Halcyon/Ethos MLCX1 and MLCX2 leaf positions, jaw positions, and control-point meterset weights
+- Status: implemented
+- Notes: None
+
+## `proximal_paw` - pPAw
+
+- Group: Halcyon/Ethos Tamura 2020
+- Symbol/short name: pPAw
+- Mathematical definition: pPAw = proximal component of PAw
+- Physical meaning: Proximal contribution term of Tamura et al. weighted PA.
+- Unit: mm^2
+- Inputs required: Halcyon/Ethos MLCX1 and MLCX2 leaf positions, jaw positions, and control-point meterset weights
+- Status: implemented
+- Notes: None
+
+## `distal_paw` - dPAw
+
+- Group: Halcyon/Ethos Tamura 2020
+- Symbol/short name: dPAw
+- Mathematical definition: dPAw = distal component of PAw
+- Physical meaning: Distal contribution term of Tamura et al. weighted PA.
+- Unit: mm^2
+- Inputs required: Halcyon/Ethos MLCX1 and MLCX2 leaf positions, jaw positions, and control-point meterset weights
+- Status: implemented
+- Notes: None
+
+## `proximal_piw` - pPIw
+
+- Group: Halcyon/Ethos Tamura 2020
+- Symbol/short name: pPIw
+- Mathematical definition: pPIw = proximal component of PIw
+- Physical meaning: Proximal contribution term of Tamura et al. weighted PI.
+- Unit: dimensionless
+- Inputs required: Halcyon/Ethos MLCX1 and MLCX2 leaf positions, jaw positions, and control-point meterset weights
+- Status: implemented
+- Notes: None
+
+## `distal_piw` - dPIw
+
+- Group: Halcyon/Ethos Tamura 2020
+- Symbol/short name: dPIw
+- Mathematical definition: dPIw = distal component of PIw
+- Physical meaning: Distal contribution term of Tamura et al. weighted PI.
+- Unit: dimensionless
+- Inputs required: Halcyon/Ethos MLCX1 and MLCX2 leaf positions, jaw positions, and control-point meterset weights
+- Status: implemented
+- Notes: None
+
+## `proximal_pmw` - pPMw
+
+- Group: Halcyon/Ethos Tamura 2020
+- Symbol/short name: pPMw
+- Mathematical definition: pPMw = proximal component of PMw
+- Physical meaning: Proximal contribution term of Tamura et al. weighted PM.
+- Unit: dimensionless
+- Inputs required: Halcyon/Ethos MLCX1 and MLCX2 leaf positions, jaw positions, and control-point meterset weights
+- Status: implemented
+- Notes: None
+
+## `distal_pmw` - dPMw
+
+- Group: Halcyon/Ethos Tamura 2020
+- Symbol/short name: dPMw
+- Mathematical definition: dPMw = distal component of PMw
+- Physical meaning: Distal contribution term of Tamura et al. weighted PM.
+- Unit: dimensionless
+- Inputs required: Halcyon/Ethos MLCX1 and MLCX2 leaf positions, jaw positions, and control-point meterset weights
+- Status: implemented
+- Notes: None
+
+## `ul` - UL (Quintero 2021 uncovered-layer score)
+
+- Group: Halcyon/Ethos Quintero 2021
+- Symbol/short name: UL
+- Mathematical definition: UL = weighted mean of proximal plus distal uncovered-layer fractions
+- Physical meaning: Quintero et al. uncovered-layer score: MU-weighted fraction of effective leaf-edge spots exposed by incomplete complementary-layer coverage.
+- Unit: dimensionless
+- Inputs required: Halcyon/Ethos MLCX1 and MLCX2 leaf positions, jaw positions, and control-point meterset weights
+- Status: implemented
+- Notes: None
+
+## `proximal_ul` - pUL
+
+- Group: Halcyon/Ethos Quintero 2021
+- Symbol/short name: pUL
+- Mathematical definition: pUL = weighted proximal uncovered-layer fraction
+- Physical meaning: Proximal-layer component of the Quintero et al. uncovered-layer score.
+- Unit: dimensionless
+- Inputs required: Halcyon/Ethos MLCX1 and MLCX2 leaf positions, jaw positions, and control-point meterset weights
+- Status: implemented
+- Notes: None
+
+## `distal_ul` - dUL
+
+- Group: Halcyon/Ethos Quintero 2021
+- Symbol/short name: dUL
+- Mathematical definition: dUL = weighted distal uncovered-layer fraction
+- Physical meaning: Distal-layer component of the Quintero et al. uncovered-layer score.
+- Unit: dimensionless
+- Inputs required: Halcyon/Ethos MLCX1 and MLCX2 leaf positions, jaw positions, and control-point meterset weights
+- Status: implemented
+- Notes: None
+
+## `mcsul` - MCSUL (Quintero 2021 uncovered-layer weighted MCS)
+
+- Group: Halcyon/Ethos Quintero 2021
+- Symbol/short name: MCSUL
+- Mathematical definition: MCSUL = pMCSUL + dMCSUL, with MCSw terms scaled by uncovered-layer fractions
+- Physical meaning: Quintero et al. MCSw adapted by uncovered-layer contribution for Halcyon-v2 dual-layer MLC complexity.
+- Unit: dimensionless
+- Inputs required: Halcyon/Ethos MLCX1 and MLCX2 leaf positions, jaw positions, and control-point meterset weights
+- Status: implemented
+- Notes: None
+
+## `proximal_mcsul` - pMCSUL
+
+- Group: Halcyon/Ethos Quintero 2021
+- Symbol/short name: pMCSUL
+- Mathematical definition: pMCSUL = proximal MCSw component scaled by proximal uncovered-layer fraction
+- Physical meaning: Proximal component of Quintero et al. MCSUL.
+- Unit: dimensionless
+- Inputs required: Halcyon/Ethos MLCX1 and MLCX2 leaf positions, jaw positions, and control-point meterset weights
+- Status: implemented
+- Notes: None
+
+## `distal_mcsul` - dMCSUL
+
+- Group: Halcyon/Ethos Quintero 2021
+- Symbol/short name: dMCSUL
+- Mathematical definition: dMCSUL = distal MCSw component scaled by distal uncovered-layer fraction
+- Physical meaning: Distal component of Quintero et al. MCSUL.
+- Unit: dimensionless
+- Inputs required: Halcyon/Ethos MLCX1 and MLCX2 leaf positions, jaw positions, and control-point meterset weights
+- Status: implemented
+- Notes: None
+
+## `np` - NP (Quintero 2021 number of peaks score)
+
+- Group: Halcyon/Ethos Quintero 2021
+- Symbol/short name: NP
+- Mathematical definition: NP = mean over moving leaves of count(scipy.signal.find_peaks(position trajectory))
+- Physical meaning: Quintero et al. number of peaks score: average number of scipy.signal.find_peaks trajectory peaks across moving leaves.
+- Unit: peaks/leaf
+- Inputs required: Halcyon/Ethos MLCX1 and MLCX2 leaf positions, jaw positions, and control-point meterset weights
+- Status: implemented
+- Notes: None
+
+## `mucp` - MUcp (Quintero 2021 mean MU increment %)
+
+- Group: Halcyon/Ethos Quintero 2021
+- Symbol/short name: MUcp
+- Mathematical definition: MUcp = 100 * mean over control arcs of delta MU / beam MU
+- Physical meaning: Quintero et al. averaged monitor-unit increment between adjacent control points, reported as a percentage of beam MU.
+- Unit: %
+- Inputs required: Halcyon/Ethos MLCX1 and MLCX2 leaf positions, jaw positions, and control-point meterset weights
+- Status: implemented
+- Notes: None
+
+## `proximal_weight_mean` - Mean wp
+
+- Group: Halcyon/Ethos Tamura 2020
+- Symbol/short name: Mean wp
+- Mathematical definition: Mean wp = weighted mean proximal field-shape contribution fraction
+- Physical meaning: MU-weighted mean proximal MLC field-shape contribution used by the Tamura weighting method.
+- Unit: dimensionless
+- Inputs required: Halcyon/Ethos MLCX1 and MLCX2 leaf positions, jaw positions, and control-point meterset weights
+- Status: implemented
+- Notes: None
+
+## `distal_weight_mean` - Mean wd
+
+- Group: Halcyon/Ethos Tamura 2020
+- Symbol/short name: Mean wd
+- Mathematical definition: Mean wd = weighted mean distal field-shape contribution fraction
+- Physical meaning: MU-weighted mean distal MLC field-shape contribution used by the Tamura weighting method and equivalent to the EDS attribution basis.
+- Unit: dimensionless
+- Inputs required: Halcyon/Ethos MLCX1 and MLCX2 leaf positions, jaw positions, and control-point meterset weights
+- Status: implemented
+- Notes: None
 
 ## `md` - MD
 

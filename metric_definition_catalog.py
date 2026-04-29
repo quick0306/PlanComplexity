@@ -466,6 +466,17 @@ def _write_platform_appendices(records: Sequence[MetricDefinitionRecord], output
 
 
 def _vmat_group(metric_key: str) -> str:
+    if metric_key in {
+        "mcs5", "pa5", "pi5", "pm5", "eds", "mcsw", "paw", "piw", "pmw",
+        "proximal_mcs", "distal_mcs", "proximal_pa", "distal_pa",
+        "proximal_pi", "distal_pi", "proximal_pm", "distal_pm",
+        "proximal_mcsw", "distal_mcsw", "proximal_paw", "distal_paw",
+        "proximal_piw", "distal_piw", "proximal_pmw", "distal_pmw",
+        "proximal_weight_mean", "distal_weight_mean",
+    }:
+        return "Halcyon/Ethos Tamura 2020"
+    if metric_key in {"ul", "proximal_ul", "distal_ul", "mcsul", "proximal_mcsul", "distal_mcsul", "np", "mucp"}:
+        return "Halcyon/Ethos Quintero 2021"
     if metric_key in {"mus", "pmu", "muca", "fraction_dose_gy", "fractions_count", "mucgy", "narcs"}:
         return "Plan prescription"
     if metric_key in {"al", "cal", "gt", "mudeg"}:
@@ -523,6 +534,41 @@ def _vmat_formula(metric_key: str) -> str:
         "dt": "dt = mean(control-point time increment) * N_control_points",
         "pi": "PI = perimeter^2 / (4 * pi * area), aggregated over apertures",
         "pm": "PM = mean over adjacent control points of normalized aperture-area change",
+        "mcs5": "MCS5 = MCSv computed on the synthesized effective 5 mm dual-layer aperture",
+        "pa5": "PA5 = weighted mean area of the synthesized effective 5 mm dual-layer aperture",
+        "pi5": "PI5 = weighted mean perimeter^2 / (4*pi*area) on the synthesized effective 5 mm aperture",
+        "pm5": "PM5 = 1 - weighted effective aperture area / effective union aperture area",
+        "eds": "EDS = weighted mean of the distal-layer contribution fraction to the effective field shape",
+        "mcsw": "MCSw = pMCSw + dMCSw using proximal/distal field-shape contribution weights",
+        "paw": "PAw = weighted proximal PA contribution + weighted distal PA contribution",
+        "piw": "PIw = weighted proximal PI contribution + weighted distal PI contribution",
+        "pmw": "PMw = weighted proximal PM contribution + weighted distal PM contribution",
+        "proximal_mcs": "pMCS = MCSv computed on the proximal MLCX2 layer only",
+        "distal_mcs": "dMCS = MCSv computed on the distal MLCX1 layer only",
+        "proximal_pa": "pPA = weighted mean aperture area for proximal MLCX2",
+        "distal_pa": "dPA = weighted mean aperture area for distal MLCX1",
+        "proximal_pi": "pPI = weighted mean aperture irregularity for proximal MLCX2",
+        "distal_pi": "dPI = weighted mean aperture irregularity for distal MLCX1",
+        "proximal_pm": "pPM = 1 - weighted proximal aperture area / proximal union area",
+        "distal_pm": "dPM = 1 - weighted distal aperture area / distal union area",
+        "proximal_mcsw": "pMCSw = proximal component of MCSw",
+        "distal_mcsw": "dMCSw = distal component of MCSw",
+        "proximal_paw": "pPAw = proximal component of PAw",
+        "distal_paw": "dPAw = distal component of PAw",
+        "proximal_piw": "pPIw = proximal component of PIw",
+        "distal_piw": "dPIw = distal component of PIw",
+        "proximal_pmw": "pPMw = proximal component of PMw",
+        "distal_pmw": "dPMw = distal component of PMw",
+        "ul": "UL = weighted mean of proximal plus distal uncovered-layer fractions",
+        "proximal_ul": "pUL = weighted proximal uncovered-layer fraction",
+        "distal_ul": "dUL = weighted distal uncovered-layer fraction",
+        "mcsul": "MCSUL = pMCSUL + dMCSUL, with MCSw terms scaled by uncovered-layer fractions",
+        "proximal_mcsul": "pMCSUL = proximal MCSw component scaled by proximal uncovered-layer fraction",
+        "distal_mcsul": "dMCSUL = distal MCSw component scaled by distal uncovered-layer fraction",
+        "np": "NP = mean over moving leaves of count(scipy.signal.find_peaks(position trajectory))",
+        "mucp": "MUcp = 100 * mean over control arcs of delta MU / beam MU",
+        "proximal_weight_mean": "Mean wp = weighted mean proximal field-shape contribution fraction",
+        "distal_weight_mean": "Mean wd = weighted mean distal field-shape contribution fraction",
         "md": "MD = union-area / weighted mean aperture area",
         "pa": "PA = weighted mean(aperture area)",
         "efs": "EFS = weighted mean(4 * area / perimeter)",
@@ -574,6 +620,12 @@ def _vmat_unit(metric_key: str) -> str:
         "ls": "mm/s",
         "dt": "s",
         "pa": "mm^2",
+        "pa5": "mm^2",
+        "paw": "mm^2",
+        "proximal_pa": "mm^2",
+        "distal_pa": "mm^2",
+        "proximal_paw": "mm^2",
+        "distal_paw": "mm^2",
         "ja": "mm^2",
         "efs": "mm",
         "tg": "mm",
@@ -581,11 +633,24 @@ def _vmat_unit(metric_key: str) -> str:
         "alg": "mm",
         "alg_sd": "mm",
         "perimeter": "mm",
+        "np": "peaks/leaf",
+        "mucp": "%",
     }
     return units.get(metric_key, "dimensionless")
 
 
 def _vmat_inputs(metric_key: str) -> str:
+    if metric_key in {
+        "mcs5", "pa5", "pi5", "pm5", "eds", "mcsw", "paw", "piw", "pmw",
+        "proximal_mcs", "distal_mcs", "proximal_pa", "distal_pa",
+        "proximal_pi", "distal_pi", "proximal_pm", "distal_pm",
+        "proximal_mcsw", "distal_mcsw", "proximal_paw", "distal_paw",
+        "proximal_piw", "distal_piw", "proximal_pmw", "distal_pmw",
+        "ul", "proximal_ul", "distal_ul", "mcsul", "proximal_mcsul",
+        "distal_mcsul", "np", "mucp", "proximal_weight_mean",
+        "distal_weight_mean",
+    }:
+        return "Halcyon/Ethos MLCX1 and MLCX2 leaf positions, jaw positions, and control-point meterset weights"
     if metric_key in {"mus", "pmu", "muca", "fraction_dose_gy", "fractions_count", "mucgy", "narcs"}:
         return "Plan MU, prescription, fraction count, beam list"
     if metric_key in {"al", "cal", "gt", "mudeg"}:

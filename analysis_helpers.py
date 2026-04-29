@@ -16,6 +16,7 @@ from ComplexityMetric.proportion_mlc_speed_acceleration import ProportionMLCSpee
 from ComplexityMetric.small_aperture_score import SmallApertureScore
 from ComplexityMetric.station_parameter_optimized_radiation_therapy import StationParameterOptimizedRadiationTherapy
 from cyberknife_metrics import calculate_cyberknife_metrics
+from halcyon_dual_layer_metrics import calculate_halcyon_dual_layer_paper_metrics
 from vcomx_vmat_metrics import calculate_vcomx_supplemental_metrics
 
 
@@ -75,6 +76,7 @@ def calculate_core_metrics(plan_dict):
     else:
         metrics["alg"], metrics["alg_sd"] = leaf_gap_summary
     metrics.update(calculate_vcomx_supplemental_metrics(plan_dict))
+    metrics.update(calculate_halcyon_dual_layer_paper_metrics(plan_dict))
     return metrics
 
 

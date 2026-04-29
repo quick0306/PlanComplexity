@@ -42,6 +42,14 @@ Batch export metrics for Halcyon/Ethos-style plans:
 python complexity_metrics_analysis.py --input-dir path/to/plans --output-csv RTPlan1.csv
 ```
 
+Halcyon/Ethos dual-layer MLC support includes the paper-specific metrics from Tamura et al. 2020
+and Quintero et al. 2021:
+
+- Tamura-style effective 5 mm metrics: `MCS5`, `PA5`, `PI5`, `PM5`, and `EDS`.
+- Tamura-style weighted layer metrics: `MCSw`, `PAw`, `PIw`, and `PMw`, with proximal/distal
+  component outputs.
+- Quintero-style Halcyon-v2 metrics: `MUcp`, `UL`, `MCSUL`, and `NP`.
+
 Use `--recursive` if the input directory contains nested folders.
 
 Use `--verbose` on any script to include debug logging.
