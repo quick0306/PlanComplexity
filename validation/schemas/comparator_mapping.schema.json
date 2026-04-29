@@ -1,0 +1,78 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Comparator Mapping Inventory",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "mappings"
+  ],
+  "properties": {
+    "mappings": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "platform",
+          "internal_metric",
+          "comparator",
+          "comparator_metric",
+          "relationship",
+          "samples"
+        ],
+        "properties": {
+          "platform": {
+            "type": "string"
+          },
+          "internal_metric": {
+            "type": "string"
+          },
+          "comparator": {
+            "type": "string"
+          },
+          "comparator_metric": {
+            "type": "string"
+          },
+          "relationship": {
+            "type": "string",
+            "enum": [
+              "exact-equivalent",
+              "derived-equivalent",
+              "association-only",
+              "not-comparable"
+            ]
+          },
+          "notes": {
+            "type": "string"
+          },
+          "samples": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "case_id",
+                "comparator_value"
+              ],
+              "properties": {
+                "case_id": {
+                  "type": "string"
+                },
+                "comparator_value": {
+                  "type": [
+                    "number",
+                    "string",
+                    "null"
+                  ]
+                },
+                "notes": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

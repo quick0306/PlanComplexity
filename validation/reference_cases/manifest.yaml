@@ -1,0 +1,113 @@
+cases:
+  - case_id: vmat_truebeam_canonical
+    source_path: data/TrueBeam/RP.E1801016.D2VMATa.dcm
+    domain: VMAT_IMRT
+    device_or_tps: TrueBeam
+    expected_mode: VMAT_IMRT
+    case_class: canonical
+    expected_metrics_source: checked_in_json
+    tolerance_overrides: {}
+    checksum: 5097cd72e73a24e2d99b91d77c8e8df7a441ab299eb335ebeec41a8c5c156e91
+    provenance:
+      source_kind: clinical_rtplan
+      version: phase1
+      notes: Representative TrueBeam VMAT plan used as the initial canonical anchor.
+    notes: Canonical VMAT reference plan for initial cross-platform validation.
+  - case_id: vmat_halcyon_edge
+    source_path: data/Halcyon/RP.RT202404431.test_Hal_A.dcm
+    domain: VMAT_IMRT
+    device_or_tps: Halcyon
+    expected_mode: VMAT_IMRT
+    case_class: edge
+    expected_metrics_source: checked_in_json
+    tolerance_overrides: {}
+    checksum: 9813382359503e91d2b1750b706ae98be811ca3bc064cc223f9aa80ddb02b854
+    provenance:
+      source_kind: clinical_rtplan
+      version: phase1
+      notes: Dual-layer Halcyon plan retained as the initial VMAT edge case.
+    notes: Edge VMAT case covering Halcyon dual-layer metric export behavior.
+  - case_id: tomo_canonical
+    source_path: data/Tomo/RP.1.2.826.0.1.3680043.2.200.1006842071.58789.987.79527.2425.dcm
+    domain: TOMO
+    device_or_tps: Tomo
+    expected_mode: TOMO
+    case_class: canonical
+    expected_metrics_source: checked_in_json
+    tolerance_overrides: {}
+    checksum: c0804684e11fb3064a0980969d8e98a94e9f82266504aee92dd0cd73d9c6426b
+    provenance:
+      source_kind: clinical_rtplan
+      version: phase1
+      notes: Representative Tomo plan used as the initial canonical anchor.
+    notes: Canonical TOMO reference plan with stable plan-level delivery metrics.
+  - case_id: tomo_default_inference_edge
+    source_path: data/Tomo/RP.1.2.826.0.1.3680043.2.200.1088238539.27227.434.12906.657.dcm
+    domain: TOMO
+    device_or_tps: Tomo
+    expected_mode: TOMO
+    case_class: edge
+    expected_metrics_source: checked_in_json
+    tolerance_overrides: {}
+    checksum: afdb4d429bd9e0019a5908bbe5f0fc0f675862d205bddd5c16eaadab17b6fbda
+    provenance:
+      source_kind: clinical_rtplan
+      version: phase1
+      notes: Tomo plan retained because runtime currently defaults projection time and pitch inference.
+    notes: Edge TOMO case used to preserve current warning-bearing inference behavior.
+  - case_id: cyberknife_multiplan_canonical
+    source_path: data/CyberKnife/RTPLAN-260302100746-1.2.840.114358.14038002808480.20260302101311.3687176168660.dcm
+    domain: CYBERKNIFE_MLC
+    device_or_tps: CyberKnife
+    expected_mode: CYBERKNIFE_MLC
+    case_class: canonical
+    expected_metrics_source: checked_in_json
+    tolerance_overrides: {}
+    checksum: 39985f5433862491fe430fe8c9be85ef4d676b13eb7455f0e90fdd3bb364775c
+    provenance:
+      source_kind: clinical_rtplan
+      version: phase1
+      notes: Canonical CyberKnife plan with colocated beam-path XML support.
+    notes: Canonical CyberKnife MLC reference plan with full XML-backed metric support.
+  - case_id: cyberknife_precision_missing_xml_edge
+    source_path: data/PRECISION/ANON_PRECISION_RP01_Prostata.dcm
+    domain: CYBERKNIFE_MLC
+    device_or_tps: PRECISION
+    expected_mode: CYBERKNIFE_MLC
+    case_class: edge
+    expected_metrics_source: checked_in_json
+    tolerance_overrides: {}
+    checksum: 1ef3410843e7f14753b7086415c1ce995160ada65a3c85297225d3e65bd84c23
+    provenance:
+      source_kind: clinical_rtplan
+      version: phase1
+      notes: PRECISION export intentionally kept without auxiliary beam-path XML.
+    notes: Edge CyberKnife case expected to remain unsupported until XML sidecars are present.
+  - case_id: aurora_canonical
+    source_path: data/Aurora/RTPLAN_57661.dcm
+    domain: AURORA
+    device_or_tps: Aurora
+    expected_mode: AURORA
+    case_class: canonical
+    expected_metrics_source: checked_in_json
+    tolerance_overrides: {}
+    checksum: 883a5b3fac085e6b9f57d66ec1f0dd335f49ae65637d293457fb2ec4d3878af6
+    provenance:
+      source_kind: clinical_rtplan
+      version: phase1
+      notes: Canonical Aurora SVMAT research plan aligned with the v2/v3 metric inventory.
+    notes: Canonical Aurora case for projection-physics and dual-layer research metrics.
+  - case_id: aurora_research_edge
+    source_path: data/Aurora/RTPLAN_001.dcm
+    domain: AURORA
+    device_or_tps: Aurora
+    expected_mode: AURORA
+    case_class: edge
+    expected_metrics_source: checked_in_json
+    tolerance_overrides: {}
+    checksum: da8c0ff7625677e89fb9ed6d7b52c8ba97a0f5cee4cb9892ac5ca77a2268ea5c
+    provenance:
+      source_kind: research_rtplan
+      version: phase1
+      notes: Secondary Aurora research plan with distinct longitudinal motion and aperture dynamics.
+    notes: Edge Aurora case used to detect drift in research-only motion metric families.

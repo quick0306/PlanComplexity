@@ -6,6 +6,14 @@ from typing import Dict, Iterable, Tuple
 from aurora_svmat_lab.notes import get_metric_notes
 
 
+SUPPORTED_VALIDATION_DOMAINS = (
+    "VMAT_IMRT",
+    "TOMO",
+    "CYBERKNIFE_MLC",
+    "AURORA",
+)
+
+
 @dataclass(frozen=True)
 class MetricSpec:
     key: str

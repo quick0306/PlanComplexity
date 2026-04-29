@@ -5,3 +5,6 @@ scipy
 pytest
 reportlab
 pypdf
+PyYAML
+jsonschema
+Jinja2

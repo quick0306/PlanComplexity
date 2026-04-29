@@ -1,0 +1,40 @@
+# Unified Complexity Validation Summary
+
+Research validation profile: {{ profile_key }}
+
+Generated at: {{ generated_at }}
+
+Report ID: {{ report_id }}
+
+Scope: This artifact is research/publication-ready evidence support and is not clinical deployment ready.
+
+## Reference Suite
+
+- Reference cases: {{ reference_summary.cases_total }}
+- Metric rows: {{ reference_summary.metrics_total }}
+- Exact-equivalent metric rows: {{ reference_summary.exact_metrics_total }}
+- Exact failures: {{ reference_summary.exact_failures }}
+- Reference exact green: {{ reference_summary.reference_exact_green }}
+
+## Domains
+
+| Domain | Cases |
+| --- | ---: |
+{% for domain, count in domain_case_counts %}
+| {{ domain }} | {{ count }} |
+{% endfor %}
+
+## Cross-Tool And Literature Comparisons
+
+| Platform | Metric | Comparator | Relationship | Status | N | MAE | Bias | RMSE | Notes |
+| --- | --- | --- | --- | --- | ---: | ---: | ---: | ---: | --- |
+{% for row in comparison_rows %}
+| {{ row.platform }} | {{ row.internal_metric }} | {{ row.comparator }} / {{ row.comparator_metric }} | {{ row.relationship }} | {{ row.status }} | {{ row.sample_count }} | {{ row.mae | display_value }} | {{ row.bias | display_value }} | {{ row.rmse | display_value }} | {{ row.notes }} |
+{% endfor %}
+
+## Interpretation Notes
+
+- Exact-equivalent rows contribute to the reference-case exactness gate.
+- Derived-equivalent rows report agreement statistics and should not be reduced to simple pass/fail claims.
+- Association-only and not-comparable evidence remains visible rather than being silently dropped.
+- Aurora is included in the same artifact pipeline while preserving declared non-comparability where external equivalence is not established.

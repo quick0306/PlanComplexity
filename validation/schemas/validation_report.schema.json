@@ -1,0 +1,87 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Validation Report Artifact",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "report_id",
+    "generated_at",
+    "profile_key",
+    "summary",
+    "results"
+  ],
+  "properties": {
+    "report_id": {
+      "type": "string"
+    },
+    "generated_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "profile_key": {
+      "type": "string"
+    },
+    "summary": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "total_metrics",
+        "exact_passes",
+        "exact_failures"
+      ],
+      "properties": {
+        "total_metrics": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "exact_passes": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "exact_failures": {
+          "type": "integer",
+          "minimum": 0
+        }
+      }
+    },
+    "results": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "platform",
+          "metric_key",
+          "comparison_class",
+          "status"
+        ],
+        "properties": {
+          "platform": {
+            "type": "string"
+          },
+          "metric_key": {
+            "type": "string"
+          },
+          "comparison_class": {
+            "type": "string",
+            "enum": [
+              "exact-equivalent",
+              "derived-equivalent",
+              "association-only",
+              "not-comparable"
+            ]
+          },
+          "status": {
+            "type": "string",
+            "enum": [
+              "pass",
+              "fail",
+              "warning",
+              "skipped"
+            ]
+          }
+        }
+      }
+    }
+  }
+}

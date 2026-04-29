@@ -1,0 +1,110 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Reference Case Manifest",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "cases"
+  ],
+  "properties": {
+    "cases": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "case_id",
+          "source_path",
+          "domain",
+          "device_or_tps",
+          "expected_mode",
+          "case_class",
+          "expected_metrics_source",
+          "tolerance_overrides",
+          "checksum",
+          "provenance",
+          "notes"
+        ],
+        "properties": {
+          "case_id": {
+            "type": "string"
+          },
+          "source_path": {
+            "type": "string"
+          },
+          "domain": {
+            "type": "string"
+          },
+          "device_or_tps": {
+            "type": "string"
+          },
+          "expected_mode": {
+            "type": "string"
+          },
+          "case_class": {
+            "type": "string",
+            "enum": [
+              "canonical",
+              "edge"
+            ]
+          },
+          "expected_metrics_source": {
+            "type": "string"
+          },
+          "tolerance_overrides": {
+            "type": "object",
+            "additionalProperties": {
+              "type": "object",
+              "additionalProperties": false,
+              "properties": {
+                "abs": {
+                  "type": [
+                    "number",
+                    "null"
+                  ]
+                },
+                "rel": {
+                  "type": [
+                    "number",
+                    "null"
+                  ]
+                },
+                "skip": {
+                  "type": "boolean"
+                },
+                "reason": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "checksum": {
+            "type": "string",
+            "minLength": 1
+          },
+          "provenance": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "source_kind"
+            ],
+            "properties": {
+              "source_kind": {
+                "type": "string"
+              },
+              "version": {
+                "type": "string"
+              },
+              "notes": {
+                "type": "string"
+              }
+            }
+          },
+          "notes": {
+            "type": "string"
+          }
+        }
+      }
+    }
+  }
+}
