@@ -1,6 +1,10 @@
 import unittest
 from pathlib import Path
 
+import numpy as np
+
+from ApertureMetric.aperture_geometry import PyAperture
+from halcyon_dual_layer_metrics import _layer_contributions
 from ucomx_models import AnalysisMode
 from ucomx_service import analyze_plan_file, build_metric_reference_rows
 
@@ -64,6 +68,27 @@ class HalcyonDualLayerPaperMetricTests(unittest.TestCase):
         self.assertIn("effective distal MLC score", reference_text)
         self.assertIn("Quintero", reference_text)
         self.assertIn("uncovered-layer", reference_text)
+
+    def test_uncovered_layer_is_zero_when_dual_layers_are_identical(self):
+        # Identical dual layers should not inflate Quintero UL via open-height alone.
+        positions = np.array([[-5.0, -4.0], [5.0, 6.0]])
+        aperture = PyAperture(
+            leaf_positions=positions,
+            leaf_widths=np.array([5.0, 5.0]),
+            jaw=[-10.0, 10.0, 10.0, -10.0],
+            gantry_angle=0.0,
+        )
+
+        distal_weight, proximal_weight, distal_ul, proximal_ul = _layer_contributions(
+            aperture,
+            positions,
+            positions,
+        )
+
+        self.assertAlmostEqual(0.5, distal_weight)
+        self.assertAlmostEqual(0.5, proximal_weight)
+        self.assertEqual(0.0, distal_ul)
+        self.assertEqual(0.0, proximal_ul)
 
 
 if __name__ == "__main__":

@@ -127,7 +127,8 @@ dmypy.json
 
 # Pyre type checker
 .pyre/
-.csv
+# Generated CSV reports can contain patient identifiers; keep them local.
+*.csv
 data/
 .idea/
 .worktrees/

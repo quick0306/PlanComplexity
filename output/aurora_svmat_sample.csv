@@ -1,2 +1,0 @@
-source_path,plan_label,plan_name,manufacturer,manufacturer_model_name,supported,reason,warning_count,total_beams,axial_travel_mm,gantry_rotation_deg,mm_per_deg,mm_per_rotation,pitch_consistency,mu_per_mm,aperture_change_per_mm,leaf_travel_per_mm,coupled_modulation_index
-D:\Obsidian\Web Clipper\001_inbox\RTPLAN_57661.dcm,NewPlan,A10FSVMATax2.5-20260321,WisdomTech Medical Systems,DeepPlan,True,,0,2,299.99914646,3240.0,0.09259232915432099,33.333238495555555,7.179869807526853e-06,0.0066666856342761874,23.75446225127912,370.84603043973743,0.5592548912446308

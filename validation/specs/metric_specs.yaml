@@ -8144,8 +8144,9 @@ metric_specs:
   unit: dimensionless
   aggregation_scope: plan
   normalization_basis: formula_defined
-  validation_level: Formula-exact
-  comparison_class: not-comparable
+  # Checked-in Halcyon edge cases now gate these paper metrics for regression drift.
+  validation_level: Reference-case exact
+  comparison_class: exact-equivalent
   default_tolerance_abs: 1.0e-06
   default_tolerance_rel: 0.0001
   expected_range: &halcyon_unit_interval
@@ -8153,8 +8154,7 @@ metric_specs:
     minimum: 0.0
     maximum: 1.0
   clinical_readiness: research
-  known_noncomparability: &halcyon_no_external_comparator
-  - No external exact comparator is checked in yet for this Halcyon/Ethos dual-layer paper metric.
+  known_noncomparability: &halcyon_no_external_comparator []
   comparable_to: []
   assumptions: &halcyon_dual_layer_assumptions
   - Halcyon/Ethos plans expose both MLCX1 distal and MLCX2 proximal DICOM leaf positions.
@@ -8295,8 +8295,8 @@ metric_specs:
   unit: dimensionless
   aggregation_scope: plan
   normalization_basis: formula_defined
-  validation_level: Formula-exact
-  comparison_class: not-comparable
+  validation_level: Reference-case exact
+  comparison_class: exact-equivalent
   default_tolerance_abs: 1.0e-06
   default_tolerance_rel: 0.0001
   expected_range: *halcyon_unit_interval

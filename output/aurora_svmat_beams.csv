@@ -1,3 +1,0 @@
-source_path,plan_label,plan_name,beam_number,beam_name,supported,reason,axial_travel_mm,gantry_rotation_deg,mm_per_deg,mm_per_rotation,pitch_consistency,mu_per_mm,aperture_change_per_mm,leaf_travel_per_mm,coupled_modulation_index
-D:\Obsidian\Web Clipper\001_inbox\RTPLAN_57661.dcm,NewPlan,A10FSVMATax2.5-20260321,1,Beam1,True,,149.99957323,1620.0,0.09259232915432099,33.333238495555555,7.179869807526853e-06,0.0066666856342761874,21.15741486233292,386.3663925972357,0.555740676720984
-D:\Obsidian\Web Clipper\001_inbox\RTPLAN_57661.dcm,NewPlan,A10FSVMATax2.5-20260321,2,Beam11,True,,149.99957323,1620.0,0.09259232915432099,33.333238495555555,7.179869807526853e-06,0.0066666856342761874,26.351509640225103,355.325668282236,0.5623815652035316

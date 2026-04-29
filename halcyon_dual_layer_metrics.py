@@ -14,6 +14,8 @@ from DicomParse.utilities import divide_or_default
 
 DISTAL_DEVICE = "MLCX1"
 PROXIMAL_DEVICE = "MLCX2"
+EDGE_TIE_ABS_TOL = 1e-6
+EDGES_PER_LEAF_PAIR = 2.0
 
 
 @dataclass(frozen=True)
@@ -292,8 +294,9 @@ def _layer_contributions(
 ) -> tuple[float, float, float, float]:
     distal_edge_score = 0.0
     proximal_edge_score = 0.0
+    distal_uncovered_edge_score = 0.0
+    proximal_uncovered_edge_score = 0.0
     active_pairs = 0
-    possible_edge_count = max(len(effective_aperture.leaf_pairs) * 2, 1)
 
     for index, leaf_pair in enumerate(effective_aperture.leaf_pairs):
         if leaf_pair.is_outside_jaw() or leaf_pair.field_size() <= 0.0:
@@ -308,12 +311,20 @@ def _layer_contributions(
         right_distal, right_proximal = _limiting_right_edge(distal_right, proximal_right)
         distal_edge_score += left_distal + right_distal
         proximal_edge_score += left_proximal + right_proximal
+        # Tied layer edges share effective-aperture weight but do not create uncovered exposure.
+        if not _edges_tied(distal_left, proximal_left):
+            distal_uncovered_edge_score += left_distal
+            proximal_uncovered_edge_score += left_proximal
+        if not _edges_tied(distal_right, proximal_right):
+            distal_uncovered_edge_score += right_distal
+            proximal_uncovered_edge_score += right_proximal
 
     if active_pairs == 0:
         return 0.5, 0.5, 0.0, 0.0
 
-    distal_weight = distal_edge_score / (2.0 * active_pairs)
-    proximal_weight = proximal_edge_score / (2.0 * active_pairs)
+    normalization = EDGES_PER_LEAF_PAIR * active_pairs
+    distal_weight = distal_edge_score / normalization
+    proximal_weight = proximal_edge_score / normalization
     total = distal_weight + proximal_weight
     if total <= 0.0:
         distal_weight = proximal_weight = 0.5
@@ -324,21 +335,25 @@ def _layer_contributions(
     return (
         distal_weight,
         proximal_weight,
-        distal_edge_score / possible_edge_count,
-        proximal_edge_score / possible_edge_count,
+        distal_uncovered_edge_score / normalization,
+        proximal_uncovered_edge_score / normalization,
     )
 
 
 def _limiting_left_edge(distal_left: float, proximal_left: float) -> tuple[float, float]:
-    if math.isclose(distal_left, proximal_left, abs_tol=1e-6):
+    if _edges_tied(distal_left, proximal_left):
         return 0.5, 0.5
     return (1.0, 0.0) if distal_left > proximal_left else (0.0, 1.0)
 
 
 def _limiting_right_edge(distal_right: float, proximal_right: float) -> tuple[float, float]:
-    if math.isclose(distal_right, proximal_right, abs_tol=1e-6):
+    if _edges_tied(distal_right, proximal_right):
         return 0.5, 0.5
     return (1.0, 0.0) if distal_right < proximal_right else (0.0, 1.0)
+
+
+def _edges_tied(first: float, second: float) -> bool:
+    return math.isclose(first, second, abs_tol=EDGE_TIE_ABS_TOL)
 
 
 def _beam_mcs(apertures: Sequence[PyAperture], interval_mu: Sequence[float]) -> float:

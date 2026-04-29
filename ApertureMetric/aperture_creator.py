@@ -6,6 +6,16 @@ from pydicom.dataset import Dataset
 from ApertureMetric.aperture_geometry import PyAperture
 
 
+STANDARD_MLC_DEVICE_TYPES = {"MLCX", "MLCY"}
+
+
+def _stack_leaf_banks(leaf_jaw_positions) -> np.ndarray:
+    number_of_pairs = int(len(leaf_jaw_positions) / 2)
+    bank_a_positions = leaf_jaw_positions[:number_of_pairs]
+    bank_b_positions = leaf_jaw_positions[number_of_pairs:]
+    return np.vstack((bank_a_positions, bank_b_positions))
+
+
 class AperturesFromBeamCreator:
     """Build per-control-point aperture geometry from a beam definition."""
 
@@ -76,11 +86,7 @@ class AperturesFromBeamCreator:
 
         for position_item in control_point.BeamLimitingDevicePositionSequence:
             if position_item.RTBeamLimitingDeviceType == mlc_type:
-                mlc_open = position_item.LeafJawPositions
-                number_of_pairs = int(len(mlc_open) / 2)
-                bank_a_positions = mlc_open[:number_of_pairs]
-                bank_b_positions = mlc_open[number_of_pairs:]
-                return np.vstack((bank_a_positions, bank_b_positions))
+                return _stack_leaf_banks(position_item.LeafJawPositions)
         return None
 
     def get_analyze_leaf_position(self, leaf_mlcx1_positions: np.ndarray, leaf_mlcx2_positions: np.ndarray) -> np.ndarray:
@@ -133,11 +139,11 @@ class AperturesFromBeamCreator:
         if "BeamLimitingDevicePositionSequence" not in control_point:
             return None
 
-        position_item = control_point.BeamLimitingDevicePositionSequence[-1]
-        mlc_open = position_item.LeafJawPositions
-        number_of_pairs = int(len(mlc_open) / 2)
-        bank_a_positions = mlc_open[:number_of_pairs]
-        bank_b_positions = mlc_open[number_of_pairs:]
-        return np.vstack((bank_a_positions, bank_b_positions))
+        # DICOM item order is not semantic; select the MLC positions by device type.
+        for position_item in control_point.BeamLimitingDevicePositionSequence:
+            if str(position_item.RTBeamLimitingDeviceType).upper() not in STANDARD_MLC_DEVICE_TYPES:
+                continue
+            return _stack_leaf_banks(position_item.LeafJawPositions)
+        return None
 
 

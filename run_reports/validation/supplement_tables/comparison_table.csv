@@ -1,4 +1,0 @@
-platform,internal_metric,comparator,comparator_metric,relationship,status,sample_count,mae,bias,rmse,notes
-VMAT_IMRT,lt,UCoMX,LT,exact-equivalent,compared,1,0.0,0.0,0.0,Same leaf-travel metric name and unit in the current UCoMX-oriented VMAT inventory.
-VMAT_IMRT,lt_mlcx1,UCoMX,LT_MLCX1,derived-equivalent,compared,1,0.060000000000002274,-0.060000000000002274,0.060000000000002274,Bank-specific derivative of the VMAT leaf-travel family; agreement is summarized but not exact-gated.
-AURORA,projection_pitch_mean,AuroraPaper,projection_pitch_mean,not-comparable,skipped,0,"","","",Not eligible for numeric agreement statistics in this comparison layer. Aurora research metric is tracked in the mapping table but excluded from exact external-equivalence claims.
