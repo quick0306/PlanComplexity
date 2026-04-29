@@ -1,0 +1,1591 @@
+
+
+===== PAGE 1 =====
+
+User manual
+Samuele Cavinato and Alessandro Scaggion *1
+1Medical Physics Department, Veneto Institute of Oncology IOV-IRCCS, Padua,
+Italy
+August 12, 2024
+i VCoMX
+1 Overview and functioning of VCoMX 3
+1.1 Input section 3
+1.1.1 CONFIG.in 3
+1.1.2 machinename.txt 5
+1.1.3 METRICS.in 5
+1.2 How to use VCoMX 6
+1.2.1 Configuration and execution 6
+1.2.2 Reading the results 9
+2 The complexity metrics in VCoMX 10
+2.0.1 Plan value and notation used 10
+2.1 Complexity metrics: accuracy 10
+2.1.1 Leaf gap (LG) 10
+2.1.2 Asymmetry distance (MAD) 11
+2.1.3 Equivalent field size (EFS) 12
+2.1.4 Percentage of small fields (psmall) 12
+2.1.5 Edge metric (EM) 12
+2.2 Complexity metrics: deliverability 13
+*Email us at samuele.cavinato@iov.veneto.it and alessandro.scaggion@iov.veneto.it. Please, add
+ucomx@iov.veneto.it in cc and insert ’UCOMX SUPPORT’in the object.
+
+===== PAGE 2 =====
+
+2.2.1 Monitor units (MU) 13
+2.2.2 Monitor units per control-arc (MUCA) 13
+2.2.3 Monitor units per unitary gantry angle (MUdeg) 13
+2.2.4 Leaf travel (LT) 13
+2.2.5 Leaf travel per monitor unit (LTMU) 14
+2.2.6 Leaf travel per leaf and monitor unit (LTNLMU) 14
+2.2.7 Arc length (AL) 14
+2.2.8 Leaf travel per leaf and unitary CA length (LNA) 14
+2.2.9 Leaf travel per unitary arc length (LTAL) 14
+2.2.10 Delivery Time (dt) 14
+2.2.11 Dose rate (DR) 15
+2.2.12 Mean dose rate variation (mDRV) 15
+2.2.13 Gantry travel (GT) 15
+2.2.14 Gantry speed (GS) 16
+2.2.15 Mean gantry speed variation (mGSV) 16
+2.2.16 Leaf speed (LS) 16
+2.2.17 Aperture area variability (AAV) 16
+2.2.18 Leaf sequence variability (LSV) 17
+2.2.19 Modulation complexity score for VMAT (MCSv) 17
+2.2.20 Plan area (PA) 17
+2.2.21 Jaw area (JA) 17
+2.2.22 Plan irregularity (PI) 18
+2.2.23 Plan modulation (PM) 18
+2.2.24 Tongue-and-groove (TG) 19
+2.2.25 Modulation degree (MD) 19
+2.2.26 Modulation index (MI) 19
+ii TCoMX
+3 Overview and functioning of TCoMX 21
+3.1 Input files 21
+3.1.1 CONFIG.in 21
+3.1.2 METRICS.in 23
+3.2 How to use TCoMX 24
+3.2.1 Configuration and execution 24
+3.2.2 Reading the results 27
+4 Complexity metrics in TCoMX 28
+4.1 TPS: delivery parameters 28
+4.1.1 Modulation Factor (MF) 28
+4.1.2 Number of projection per rotation (N proj,rot) 28
+4.1.3 Number of projections (N proj ) 28
+4.1.4 Number of rotations (N rot) 28
+4.1.5 Projection Time (PT) 28
+4.1.6 Gantry Period (GP) 29
+4.1.7 Treatment Time (TT) 29
+4.1.8 Field Width (FW) 29
+
+===== PAGE 3 =====
+
+4.1.9 Pitch 29
+4.1.10 Couch Translation (CT) 29
+4.1.11 Couch Speed (CS) 29
+4.1.12 Target Length (TL) 30
+4.1.13 Treatment time over fraction dose (TTDF) 30
+4.2 LOT statistics: absolute LOT statistics 30
+4.2.1 LOT mean (mLOT) 30
+4.2.2 LOT standard deviation (sdLOT) 30
+4.2.3 LOT median (mdLOT) 30
+4.2.4 LOT mode (moLOT) 30
+4.2.5 LOT maximum (maxLOT) 30
+4.2.6 LOT minimum (minLOT) 31
+4.2.7 LOT kurtosis (kLOT) 31
+4.2.8 LOT skewness (sLOT) 31
+4.2.9 Cumulative LOT Number Score (CLNS n) 31
+4.2.10 Cumulative LOT Number Score at Projection Time (CLNS pt,n) 31
+4.3 LOT statistics: relative LOT statistics 31
+4.3.1 FLOT mean (mFLOT) 31
+4.3.2 FLOT standard deviation (sdFLOT) 31
+4.3.3 FLOT median (mdFLOT) 32
+4.3.4 FLOT mode (moFLOT) 32
+4.3.5 FLOT maximum (maxFLOT) 32
+4.3.6 FLOT minimum (minFLOT) 32
+4.3.7 Cumulative FLOT Number Score (CFNS n) 32
+4.4 Sinogram: geometry 32
+4.4.1 Leaves with n Open Nearest Neighbors (LnNS) 32
+4.4.2 Treatment Area (TA) 33
+4.4.3 Number of Connected Components (nCC) 33
+4.4.4 Length of the Connected Components (lengthCC) 33
+4.4.5 Fraction of Discontinuous Projections (fDISC) 34
+4.4.6 Closed Leaf Score (CLS) 34
+4.4.7 Closed Leaf Score within the treatment area (CLS in) 34
+4.4.8 Centroid 34
+4.5 Sinogram: modulation 35
+4.5.1 Leaf Open Time Variability (LOTV) 35
+4.5.2 Extended Leaf Open Time Variability (ELOTV∆p) 35
+4.5.3 Plan Sinogram Time Variation (PSTV) 35
+4.5.4 Extended Plan Sinogram Time Variation (EPSTV∆p,∆l) 36
+4.5.5 Modulation Index (MI) 36
+4.5.6 Number of Openings and Closures (nOC) 36
+4.5.7 Mean Sinogram Asymmetry (mSA) 37
+4.5.8 Sinogram intensity (SI) 37
+
+===== PAGE 4 =====
+
+A B B R E V I A T I O N S A N D D E F I N I T I O N S
+MLC Multi-leaf collimator
+Nleaves Number of leaves
+It is the number of leaves of the binary MLC.
+LOT Leaf Open Time
+It indicates the time duration of leaf aperture. It is usually measured in milliseconds (ms).
+FLOT Fractional Leaf Open Time
+It indicates the fractional duration of an MLC opening for a given leaf. It is a number
+in [0, 1].
+S Sinogram
+It is an (Nproj × Nleaves )−dimensional matrix containing the FLOT for each leaf (columns)
+at each projection (rows).
+O Mask-sinogram
+It is an (Nproj × Nleaves )−dimensional matrix whose entries are set to 1 for all FLOTs > 0, 0
+otherwise.
+P Leaf position array
+It is an (1 × Nleaves )−dimensional array whose entries of mark the central position of each
+leaf.
+NCA Number of control arcsNumber of active control arcs in a VMAT arc.
+NCP Number of control pointsNumber of control points in a VMAT arc.
+i
+
+===== PAGE 5 =====
+
+P R E F A C E
+This user guide explains the operation of UCoMX’s extraction engines, namely VCoMX
+(described in Part One) and TCoMX (described in Part Two). The technical note associated
+with the software package provides the general UCoMX description, and it is not covered
+here. The sole aim of this guide is to aid users with the practical installation and usage
+of UCoMX, and to offer a thorough outline of the implemented metrics. For additional
+details on the complexity metrics proposed in the literature, please refer to [ 1] and [2].
+1
+
+===== PAGE 6 =====
+
+Part I
+V C O M X
+
+===== PAGE 7 =====
+
+1 O V E R V I E W A N D F U N C T I O N I N G O F V C O M X
+1.1 input section
+The input data for the VCoMX engine is taken from two specific text files: CONFIG.in and
+METRICS.in. In the GUI-based version, the package automatically generates these files
+when the user fills in the GUI fields. Conversely, in the Matlab command-line version,
+the user must manually enter the data into these files. A pre-filled version is provided
+with the package. The definitions of the different fields are explained in the following
+subsections.
+1.1.1 CONFIG.in
+This file is used to set all the necessary input parameters. The overall structure of the file
+is the following:
+CONFIG.in
+# Analysis ID name
+(OPTIONAL) Type here a user’s define name to assign to the current session
+# Dataset input folder
+Type here the full path where your DICOM RTPLAN files or a file containing the list of
+plans (see below) are stored.
+# Results output folder
+Type here the full path where the results of the extraction process will be saved
+# Precision scale (1: 1mm, 2: 0.5mm, 10:0.1mm
+Spatial Resolution for the computation of some MLC related metrics (DEFAUL: 10)
+# Read from file
+T rueor False. If it is set to true, the library will read the filenames from a dedicated .xlsx
+file stored in the ’Dataset input folder’. The name of the .xlxs file is specified in the
+’List file name’ field (see below). An example of this file is provided together with the
+reference dataset.
+# List file name
+.xlsx file containing the list of plans. It is used only if ’Read from file’ is set to true.
+In Fig. 1 and Fig. 2 the GUI panels used for setting the values of fields of the CONFIG.in
+file in the GUI-based versions are shown.
+3
+
+===== PAGE 8 =====
+
+4 overview and functioning of vcomx
+Figure 1: Main panel of the VCoMX extraction engine. From this panel, the input and output
+paths can be set.
+Figure 2: Panels for configuration of the additional field of the CONFIG.in file.
+WARNING/1
+If the CONFIG.in is filled manually (i.e. not using the GUI), be sure of:
+• Leaving the fields with the # as they are in the pre-filled version
+• Writing the value of a given field must be written immediately below the name
+of the field as shown in the CONFIG.in box above.
+
+===== PAGE 9 =====
+
+1.1 input section 5
+1.1.2 machinename.txt
+There are some needed parameters that are not stored in the DICOM RT-Plan files and
+which are needed in order to get an accurate computation of the complexity indicators:
+the maximum gantry speed and maximum leaf speed. These two parameters depend on
+the particular Linac used. The user can create one file for each Linac by naming it as
+machinename.txt, where machinename should be replace with the name of the machine as
+store in the TPS. This file must be placed .../UCoMX/VCoMX/database/LINACInfo/.
+The file structure to use is the following:
+machinename.txt
+##Optional comments such as the machine name
+##
+# Maximum gantry speed [deg/s]
+value
+# Maximum MLC leaf speed [cm/s]
+value
+In case machinename.txt is not provided, default parameters are used. In particular,
+the maximum gantry speed will be set to 6deg/s and the maximum leaf speed to 2.5cm/s.
+WARNING/2
+Before setting the default paramters, VCoMX looks for the machinename.txt file
+using the machinename stored in the DICOM RT-Plan file. Therefore, check that
+machinename is spelled correctly, otherwise VCoMX will not find it.
+1.1.3 METRICS.in
+This file is used to select the metrics to extract and to set their extraction parameters. The
+general structure of the file is the following:
+METRICS.in
+FIRST CATEGORY NAME:
+FIRST SUBCATEGORY NAME:
+METRIC NAME 1
+METRIC NAME 2
+...
+SECOND SUBCATEGORY NAME:
+METRIC NAME 1
+...
+SECOND CATEGORY NAME:
+...
+
+===== PAGE 10 =====
+
+6 overview and functioning of vcomx
+Figure 3: Panel of the VCoMX interface for the selection of the complexity metrics to extract.
+TIPS
+• The indentation of the input file can help to visualize the content, but it is not
+fundamental for correct execution.
+• Punctuation marks are part of the syntax and must be used properly. In
+particular:
+– Each category and subcategory is followed by semicolons ”:”
+– No punctuation has to be but after the names of the metrics.
+1.2 how to use vcomx
+1.2.1 Configuration and execution
+Stand-alone GUI-based
+The stand-alone version of UCoMX can be downloaded from this link 1. This version was
+created for Windows 10 a requires the Matlab RunTime r 2023b for its execution (available
+at this link2). If stand-alone version for a different operative system is needed, please email
+us at samuele.cavinato@iov.veneto.it or alessandro.scaggion@iov.veneto.it.
+Once you have UCoMX available on your PC and you have the Matlab Runtime
+installed, please follow these steps for the execution:
+1. Move to the UCoMX download folder;
+1 10.5281/zenodo.8276838
+2 https://it.mathworks.com/products/compiler/matlab-runtime.html
+
+===== PAGE 11 =====
+
+1.2 how to use vcomx 7
+2. Double click on UCoMX;
+3. Select VCoMX.
+4. Select the input folder where the DICOM RT-Plan files are located;
+5. Select the output folder where the results will be stored;
+6. (Optional) Click on ’Configure parameters’.
+7. From the new panel you can:
+(a) Give a name to the execution.
+(b) Select the precision scale of the MLC BEVs.
+(c) Select if you want to read the list of plans from a .xlsx file by enabling the
+checkbox. If so, write the filename. In this case, the file must be place in the
+input folder indicated in the previous panel.
+REMEMBER
+The VCoMX library can handle three different types of input:
+i. Folder containing all the DICOM RT-Plan files;
+ii. Folder containing a subfolder for each DICOM RT-Plan file;
+iii. File containing the list of plans to extract the metrics from.
+8. Close the ’Configure parameters’ panel;
+9. Click on ’Select metrics’, a new panel appears.The metrics implemented in the
+VCoMX engine are listed on the left box. The metrics that will be extracted are listed
+in the right You can perform the following operations:
+(a) Add metrics to the right box. To do it, select a metric on the left box and click
+’ADD’.
+(b) Remove a metric from the left box. To do it, select a metrics a click ’REMOVE’.
+10. Once the metrics have been selected, close the panel.
+11. From the main panel, click ’EXTRACT’ to start the execution.
+Matlab GUI-based
+The Matlab GUI version of UCoMX can be downloaded from this link 3. The execution of
+this version requires a valid Matlab licence installed. The use of this version is very similar
+to that of the stand-alone versione, with the first three steps replaced by the following
+ones:
+1. Open Matlab
+3 10.5281/zenodo.8276838
+
+===== PAGE 12 =====
+
+8 overview and functioning of vcomx
+2. Move to .../UCoMX
+3. Add .../UCoMX and its subfolders to the Matlab path;
+4. Type ’UCoMX’ on the command line;
+5. Continue from point 4 of the instructions for the stand-alone version.
+Matlab command-line version
+This version requires a valid Matlab licence installed. It is the same as the Matlab GUI-
+based version (download), but it is run from the Matlab command line without using the
+GUI. This extends its compatibility with older Matlab versions. The steps for the execution
+are the following:
+1. Open Matlab
+2. Move to .../UCoMX/
+3. Add .../UCoMX/VCoMX to the Matlab path
+4. Move to .../UCoMX/VCoMX/database/input
+5. Open ’CONFIG.in’. Opening it with Matlab is warmly suggested since it keeps the
+formatting.
+(a) (Optional) Give a name to the execution. Type it below ”Analysis ID name”;
+(b) Add the full path to the folder containing the DICOM RT-Plan files or the file
+containing the list of plans
+REMEMBER
+The TCoMX library can handle three different types of input:
+• Folder containing all the DICOM RT-PLAN files;
+• Folder containing a subfolder for each DICOM RT-PLAN file.
+• File containing the list of plans to extract the metrics from.
+(c) Add the full path of the results folder where you want save the result. If it does
+not exist, VCoMX will create it for you
+(d) Select if you want to read the list of plans from a .xlsx file ( T rue) or not ( False).
+(e) If you chose T rueat point 1d, write the filename.
+6. Close ’CONFIG.in’.
+1. Open METRICS.in.
+2. You can perform the following operations:
+(a) Leave everything as it is and compute all the metrics;
+
+===== PAGE 13 =====
+
+1.2 how to use vcomx 9
+(b) Remove some metric;
+(c) Remove a whole subcategory;
+(d) Remove a whole category.
+3. Save and close.
+4. Move to .../UCoMX, type VCoMX on your Matlab console, and press return.
+WARNING/3
+The following operation are not allowed and will comprimise the correct execution
+of the routines in the library:
+• Remove a category without removing the corresponding subcategories
+• Remove a subcategory without removing the corresponding metrics
+REMEMBER
+The provided input files has been tested many times and their syntax was found
+to be robust over different Matlab versions and operative systems. Every time you
+make a change in the metrics to extract, be sure to keep the correct syntax.
+1.2.2 Reading the results
+The results of the extraction will be stored within the results folder provided during the
+Configuration. The following files will be stored:
+• dataset.xlsx: this file contains general metadata information about the analyzed
+plans, the metrics and some basic descriptive statistics about the metrics over the
+whole sample such as mean, standard deviation, mode, median.
+• dataset.mat: this file contains the same information as dataset.xlsx but it is in .mat
+format.
+• CONFIG.in
+• METRICS.in
+• logfile.log: a summary containing information about the extraction such as the
+unique id associated by VCoMX and the total number of metrics extracted.
+• vmatplan.mat: a matlab structure containing the values of every metric at each CP .
+This can be used for a more in-depth analysis.
+
+===== PAGE 14 =====
+
+2 T H E C O M P L E X I T Y M E T R I C S I N V C O M X
+2.0.1 Plan value and notation used
+Metrics are computed at each active control arc (CA) of each arc. In the current version,
+the plan value (i.e. the final value of the metric reported in the output table) is generally
+calculated as the average over all arcs and CAs. More precisely, given a metric mij
+computed at each CA j and arc i, the plan value is computed as:
+m = 1
+∑i NCA i
+NA
+∑
+i=1
+NCA i
+∑
+j=1
+mij (1)
+where NA and NCA i denote the number of arcs and corresponding active CAs. Addi-
+tionally, for some metrics a weight corresponding to the relative number of monitor units
+delivered might be also included as:
+m = 1
+∑i NCA i
+NA
+∑
+i=1
+NCA i
+∑
+j=1
+mij
+MUij
+MUtot
+(2)
+where MUij is the number of monitor unit delivered during the j − th control-arc of
+the i − th arc, and MUtot is the total number of monitor unit delivered during the plan.
+The latter is particularly useful in the case of geometrical metrics describing the shape,
+dimensions and irregularity of the beam eye view (BEV).
+Consistently with this description, the notation used in the following pages is the
+following:
+• The index i runs from 1 to the number of plan arcs NA;
+• the index j runs over the active CAs of a given arc i, namely from 1 to NCA i;
+• the index l runs over the leaves of each MLC bank, namely from 1 to NL ij/2;
+• xA(B)
+ijl and yA(B)
+ijl indicate the positions of the leaves sides and ends, respectively.
+• In some case, the index k ∈ [1; NCP ] will be used to indicated CPs. NCP is the
+number of CPs. In particular, CA j is found between CP k and k + 1.
+2.1 complexity metrics: accuracy
+2.1.1 Leaf gap (LG)
+This metric measures the gap of each active leaf for each arc and CA. It is defined as:
+LGijl = ( yA
+ijl − yB
+ijl ) (3)
+
+===== PAGE 15 =====
+
+2.1 complexity metrics: accuracy 11
+Figure 4: Schematic example of the asymmetry distance. The red points indicate the centroid of
+the leaf gaps. The MAD for each segment is computed as the average of distance of the
+red points from the central axis of the MLC (dotted line).
+The plan value is called average leaf gap (ALG).
+Small aperture score (SASn) . This metric was first introduced by Crowe and colleagues
+[REF]. It measures the fracion of leaf gaps smaller than a given threshold, and it is
+computed on the whole plan as:
+SAS n = 1
+∑ij NL ij/2
+NA
+∑
+i=1
+NCA i
+∑
+j=1
+NL ij /2
+∑
+l=1
+[LGij < n] (4)
+where
+
+LGij < n
+
+is 1 if LGij < n, 0 otherwise.
+2.1.2 Asymmetry distance (MAD)
+. This metric measures the average distance between the centroid of the BEV and the
+central axis of the MLC. It is measured in mm and it is calculated as follows:
+ADij =
+Nij /2
+∑
+l=1
+
+|yB
+ijl | + |yA
+ijl |
+
+2 (5)
+The plan values is the so-called mean asymmetry distance (MAD). A schematic representa-
+tion is shown in Fig. 4
+Perimeter (P) . The perimeter of the BEV is measured in mm and it is computed as
+follows:
+Pij = 2(xij + yij ) (6)
+The plan value is computed using Eq. ( 2).
+
+===== PAGE 16 =====
+
+12 the complexity metrics in vcomx
+(a)
+ (b)
+Figure 5: (a) Schematic representation of Lij (blue arrow) and Wij (average of the red arrows) in
+the computation of the EFS ij. (b) Schematic representation of Pxij (green) Pyij (red) in
+the definition of EM.
+2.1.3 Equivalent field size (EFS)
+The EFS is implemented based on the definition provided in [REF], and it is computed as
+follows:
+EFS ij = 2LijWij
+Lij + Wij
+(7)
+with Lij and Wij shown in Fig. 5a. The plan value is compute using Eq. ( 2).
+2.1.4 Percentage of small fields (psmall)
+This metrics counts the percentage of fields with EFS ij < 30 mm and it is defined as
+follows:
+psmall ij =
+
+EFS ij < 30 mm
+
+(8)
+where the term in the square brackets is equal to 1 if EFS ij < 30 mm, 0 otherwise.
+2.1.5 Edge metric (EM)
+This metric was first proposed by Younge and colleagues [ 3] and quantifies the ’amount of
+edge’ in a VMAT/IMRT plan. It is measured in mm−1 and it is computed as follows:
+EMij = C1Pxij + C2Pyij
+BA ij
+(9)
+where Pxij and Pyij denote the length of the perimeter of defined by the MLC ends and
+sides, respectively, at the j − th CA of the i − th arc. The two constants C1 and C2 are
+
+===== PAGE 17 =====
+
+2.2 complexity metrics: deliverability 13
+scaling factors to adjust the relative importance of Pxij and Pyij, independently. In the
+current implementation, C1 = 0 and C2 = 1 consistently to what used in the original paper.
+In a future version of the code, the user will be able to set these two parameters arbitrarily.
+A schematic representation of Pxij and Pyij is shown in Fig. 5b.
+2.2 complexity metrics: deliverability
+2.2.1 Monitor units (MU)
+This metric indicates the number of monitor units delivered during a CA. In this case, the
+plan value is computed as the sum over all arcs and CAs, namely:
+MUs =
+NA
+∑
+i=1
+NCA i
+∑
+j=1
+MUs ij (10)
+Monitor units per unitary prescribed dose (MUcGy). This metric measures the ration
+between MU and the fraction dose. It is measured as MU/cGy, and it is computed as
+follows:
+MUcGy = MUs
+DF (11)
+2.2.2 Monitor units per control-arc (MUCA)
+This metric measures the average number of MUs delivered per each CA. It is computed
+as follows:
+MUCA i = MUs i
+NCA i
+(12)
+2.2.3 Monitor units per unitary gantry angle (MUdeg)
+This metric measures the average number of MUs delivered per unitary gantry rotation. It
+is measured in MU/◦, and it is computed as follows:
+MUdeg i = MUs i
+CAL i
+(13)
+2.2.4 Leaf travel (LT)
+This metric was introduced by Masi and colleagues [ 4] and the total distance travelled by
+the MLC leaves during a CA. It is measured in mm, and it is computed as follows:
+LTij =
+NL ij /2
+∑
+l=1
+|∆yA
+ijl | + |∆yB
+ijl | (14)
+with:
+∆yA(B)
+ijl = yA
+ikl − yA
+i(k+1)l (15)
+which correspond to the distance travelled by leaf l between CP k and k + 1.
+
+===== PAGE 18 =====
+
+14 the complexity metrics in vcomx
+2.2.5 Leaf travel per monitor unit (LTMU)
+This metric measures the distance travelled by the MLC leaves per delivered MU. It is
+measured in mm/MU, and it is computed as follows:
+LTMUij = LTij
+MUs ij
+(16)
+The plan values is computed using Eq. ( 2).
+2.2.6 Leaf travel per leaf and monitor unit (LTNLMU)
+This metric measures the distance travelled by the MLC leaves per delivered MU and
+active leaf. It is measured in mm/MU, and it is computed as follows:
+LTNLMU ij = LTij
+(NL ij MUs ij ) (17)
+2.2.7 Arc length (AL)
+This metric measures the distance travelled by the gantry gantry during each arc. It is
+valid for VMAT plans only. It is measured in ◦ and it is computed as follows:
+ALi =
+NCA i
+∑
+j=1
+CAL ij
+ (18)
+where CAL ij indicates the length of the j − th CA of the i − th arc.
+2.2.8 Leaf travel per leaf and unitary CA length (LNA)
+This metric measures the average leaf travel per single active leaf and unitary CA lengtht.
+It is measured in mm/MU, and it is computed as follows:
+LN Aij = LTij/(NL ij CAL ij ) (19)
+2.2.9 Leaf travel per unitary arc length (LTAL)
+This metric measures the average leaf travel and unitary CA length. It is measured in
+mm/◦, and it is computed as follows:
+LTALij = LTij/CAL ij (20)
+2.2.10 Delivery Time (dt)
+The total delivery time is not stored in the DICOM RT-Plan file and it is handled by the
+machine during treatment. Therefore, its computation is based on a strategy aimed at
+mimicking what the machine does. In particular, for each CA the following time intervals
+are computed:
+
+===== PAGE 19 =====
+
+2.2 complexity metrics: deliverability 15
+• dt(MAX ,MLC )
+ij : estimated time interval for the MLC moving at its maximum speed;
+• dt(MAX ,GANTRY )
+ij : estimated time interval for the gantry moving at its maximum
+speed;
+• dt(MAX ,J AWS)
+ij : estimated time interval for the jaws moving at their maximum speed;
+• dt(MAX ,DR)
+ij : estimated time interval for the machine delivering at its maximum
+allowed dose rate.
+During delivery, the machine adapts the speeds of its mechanical axis and the dose rate
+to the element leading the longest time. Therefore, the delivery time for a given CA is
+computed as:
+dtij = max
+
+dt(MAX ,MLC )
+ij , dt(MAX ,GANTRY )
+ij , dt(MAX ,J AWS)
+ij , dt(MAX ,DR)
+ij
+
+(21)
+The total delivery time is thus computed as:
+dt =
+NA
+∑
+i=1
+NCA i
+∑
+j=1
+dtij (22)
+2.2.11 Dose rate (DR)
+This metric measures the average dose rate during the treatment. It is measured in
+MU/min, and it is computed as follows:
+DRij = MUij
+dtij
+(23)
+2.2.12 Mean dose rate variation (mDRV)
+This metric measures the average variation of dose rate per degree of gantry rotation. It is
+measured in MU/(min), and it is computed as follows:
+mDRVij =
+
+DRij+1 − DRij
+CALij + 1 + CAL ij/2
+
+ (24)
+2.2.13 Gantry travel (GT)
+This metric measures the total distance travelled by the gantry gantry. It is measured in ◦
+and it is computed as follows:
+GT =
+NA
+∑
+i=1
+NCA i
+∑
+j=1
+CAL ij
+ (25)
+
+===== PAGE 20 =====
+
+16 the complexity metrics in vcomx
+2.2.14 Gantry speed (GS)
+This metric measures the average speed of rotation of the gantry. It is measured in deg /s,
+and it is computed as follows:
+GSij = CAL ij
+dtij
+(26)
+2.2.15 Mean gantry speed variation (mGSV)
+This metric measures the average variation of the gantry speed per degree of gantry
+rotation. It is measured in / (s) or 1/s, and it is computed as follows:
+mGSVij =
+
+GSij+1 − GSij
+CALij + 1 + CAL ij/2
+
+ (27)
+2.2.16 Leaf speed (LS)
+This metric measures the average translation speed of the leaves of the MLC. It is measured
+in mm/s, and it is computed as follows:
+LSij = 1
+NL ij
+NL ij
+∑
+l=1
+∆yijl
+dti j (28)
+where ∆yijl is computed according to Eq. ( 15).
+2.2.17 Aperture area variability (AAV)
+This metric is computed according to the definition provided by Masi and colleagues [ 4].
+It is calculated ‘as the area defined by apertures of opposing leaves in the single control
+point normalized to the maximum area in the arc’, namely:
+AAVik = ∑NL ik/2
+l
+
+yB
+ikl − yA
+ikl
+
+· wl
+∑
+NL ij /2
+l=1
+
+max (yB
+l ) − max (yA
+l )
+
+· wl
+(29)
+where max (yA(B)
+l ) and wl denote the position of the l − th leaf of bank A(B) during the
+i − th arc, and its width. Based on the approach proposed in [REF Masi], the AAV in
+Eq. (29) is computed at each CP and then mapped to the CAs as follows:
+AAVij =
+ AAVik + AAVik+1
+2
+
+(30)
+The plan value is computed using Eq. ( 2).
+
+===== PAGE 21 =====
+
+2.2 complexity metrics: deliverability 17
+2.2.18 Leaf sequence variability (LSV)
+This metric is computed according to the definition provided by Masi and colleagues [ 4].
+It is calculated ‘for each control point considering in each bank the differences in position
+between adjacent MLC leaves’ as follows:
+LSVik = ∏
+α={A,B}
+ 
+∑NKik/2−1
+l ymax,l − |ykl − ykl+1|
+(NL ik/2 − 1) · xmax,l
+!
+α
+(31)
+where max (yA(B)
+l ) and wl denote the position of the l − th leaf of bank A(B) during the
+i − th arc, and its width.
+Based on the approach proposed in [REF Masi], the LSV in Eq. ( 31) is computed at
+each CP and then mapped to the CAs as follows:
+LSVij =
+ LSVik + LSVik+1
+2
+
+(32)
+The plan value is computed using Eq. ( 2).
+2.2.19 Modulation complexity score for VMAT (MCSv)
+This metric was first introduced by McNiven and colleagues [ 5] for the IMRT technique
+and then adapted to the VMAT technique by Masi and colleagues [ 5]. It combines the
+AAV and the LSV in a single numerical score and it is computed as follows:
+MCSv ij = LSVij · AAVij (33)
+2.2.20 Plan area (PA)
+This metrics evaluated the area of the BEV . It is measured in mm2, and it is computed as
+follows:
+Aij =
+Nij /2
+∑
+l=1
+LGijl · wl (34)
+The plan value is computed according to Eq. ( 2), and it is called the plan area (PA). A
+schematic of Aij is shown in Fig. 6a.
+2.2.21 Jaw area (JA)
+This metric measures the average area defined by the Jaws. It is measured in mm2, and it
+is computed as follows:
+J Aij =
+Jaw X1
+ij − Jaw X2
+ij
+ ×
+Jaw Y1
+ij − Jaw Y2
+ij
+
+
+(35)
+where Jaw X(Y)
+ij are shown in Fig. 6b. The plan values is computed using Eq. ( 2).
+
+===== PAGE 22 =====
+
+18 the complexity metrics in vcomx
+(a)
+ (b)
+Figure 6: (a) Schematic representation of the area of the BEV Aij. (b) Schematic representation of
+jaw area J Aij.
+BEV-Jaw area ratio (BJAR) . This is a novel metric which measures the ration between
+the ratio between the area of the BEV and that of the JAW. It is computed as follows:
+BJ ARij = Aij
+J Aij
+(36)
+2.2.22 Plan irregularity (PI)
+This metric was proposed by Du and collegues [ 6], and it is computed as follows:
+BIij =
+PI 2
+ij
+4πAij
+(37)
+The plan values is computed using Eq. ( 2), and it is called plan irregularity (PI) according
+to the original paper.
+2.2.23 Plan modulation (PM)
+This metric was proposed by Du and collegues [REF], and it is computed as follows:
+BMij = 1 −
+∑NCA i
+j=1 MUij Aij
+MUi Atot
+i
+(38)
+where Atot
+i is the area of the union of the BEVs of al CAs of beam i. Following the original
+paper, the plan value is called plan modulation (PM), and it is computed using Eq. ( 2). The
+values of PM range from 0 to 1, with the two values corresponding to the lowest and
+highest level of modulation, respectively.
+
+===== PAGE 23 =====
+
+2.2 complexity metrics: deliverability 19
+(a)
+ (b)
+Figure 7: (a) Example of leaf pairs with zero toungue-and-groove. (b) Example of leaf pairs with
+non-zero tongue-and-groove.
+2.2.24 Tongue-and-groove (TG)
+This metric was first proposed by Yao and collegues [ 7]. For each leaf in the two banks
+compute its contribution to the tongue-and-groove effect as:
+TGαij (l − 1, l) =
+
+
+
+0 yijl −1 − yijl < 0
+LGijl yijl −1 − yijl > LGijl
+yijl −1 − yl othercwise
+(39)
+with α = {A, B}.
+The TG effect for each leaf pair is thus computed as follows:
+TGijl = 1
+2 ∑
+α
+
+TGαij (l − 1, l) + TGαij (l + 1, l)
+
+(40)
+The value of the tongue-and-groove is thus computed as follows:
+TGij =
+NL ij /2
+∑
+l=1
+TGijl (41)
+The plan values is computed using Eq. ( 2). In Fig. 7a and 7b, schematics of leaf pairs with
+zero and non-zero TG effect are shown, respectively.
+2.2.25 Modulation degree (MD)
+The use of this metric was proposed in [ 8], and it is computed as follows:
+MD = MU
+∑ij
+Aij ·MUij
+Atot,i
+(42)
+2.2.26 Modulation index (MI)
+The modulation indexes were first introduced by Park and collegues [ 9]. We refer to the
+original paper for all the mathematical details concerning its computation. In VCoMX, the
+metrics has been implemented as described by the authors.
+
+===== PAGE 24 =====
+
+Part II
+T C O M X
+
+===== PAGE 25 =====
+
+3 O V E R V I E W A N D F U N C T I O N I N G O F T C O M X
+3.1 input files
+The input data for the TCoMX engine is taken from two specific text files: CONFIG.in and
+METRICS.in. In the GUI-based version, the package automatically generates these files
+when the user fills in the GUI fields. Conversely, in the Matlab command-line version,
+the user must manually enter the data into these files. A pre-filled version is provided
+with the package. The definitions of the different fields are explained in the following
+subsections.
+3.1.1 CONFIG.in
+This file is used to set all the necessary input parameters. The overall structure of the file
+is the following:
+CONFIG.in
+# Analysis ID name
+(OPTIONAL) Type here a user’s define name to assign to the current session
+# Dataset input folder
+Type here the full path where your DICOM RTPLAN files or a file containing the list of
+plans (see below) are stored.
+# Results output folder
+Type here the full path where the results of the extraction process will be saved
+# Read from file
+T rueor False. If it is set to true, the library will read the filenames from a dedicated .xlsx
+file stored in the the ’Dataset input folder’. The name of the .xlxs file is specified in the
+’List file name’ field (see below). An example of this file is provided together with the
+reference dataset.
+# List file name
+.xlsx file containing the list of plans. It is used only if ’Read from file’ is set to true.
+In Fig. 8 and Fig. 9 the GUI panels used for setting the values of fields of the CONFIG.in
+file in the GUI-based versions are shown.
+21
+
+===== PAGE 26 =====
+
+22 overview and functioning of tcomx
+Figure 8: Main panel of the TCoMX extraction engine. From this panel, the input and output path
+can be set.
+Figure 9: Panels for configuration of the additional field of the CONFIG.in fil
+WARNING/1
+If CONFIG.in is filled manually (i.e. not using the GUI), be sure of:
+• Leaving the fields with the # must as they are.
+• Writing the value of a given field immediately after the corresponding field name
+as shown in the CONFIG.in box above.
+
+===== PAGE 27 =====
+
+3.1 input files 23
+Figure 10: Panel of the VCoMX interface for the selection of the complexity metrics to extract.
+3.1.2 METRICS.in
+This file is used to select the metrics to extract and to set their extraction parameters. The
+general structure of the file is the following:
+METRICS.in
+FIRST CATEGORY NAME:
+FIRST SUBCATEGORY NAME:
+METRIC NAME 1
+METRIC NAME 2
+...
+SECOND SUBCATEGORY NAME:
+METRIC NAME 1
+...
+SECOND CATEGORY NAME:
+...
+The METRICS NAME field can have three different input formats, depending on the
+corresponding definition:
+1. Metrics with no input parameters. The metric has to be written using the corre-
+sponding name as:
+METRIC NAME
+2. Metrics with one input parameter. The metric has to be reported as:
+METRIC NAME → par1, par2, ..., parN
+
+===== PAGE 28 =====
+
+24 overview and functioning of tcomx
+3. Metrics with two input parameters. The metric has to be reported as:
+METRIC NAME → [par11;par12], [par21;par22], ..., [parN1;parN2]
+REMEMBER
+For cases 2 and 3, a given metric is computed for all the different (pairs of) input
+parameters. The total number of metrics computed starting from a given metric will
+be equal to the number of (pairs of) parameters N.
+TIPS
+• The indentation of the input file can help to visualize the content, but it is not
+fundamental for a correct execution.
+• Punctuation marks are part of the syntax and must be used properly. In
+particular:
+– Each category and subcategory is followed by semicolons ”:”
+– No punctuation has to be but after the names of the metrics with no
+tunable parameters.
+– Do not add a → after the metrics that are not endowed with tunable
+parameters. The library will not recognize the metric and will not extract
+it.
+– Tunable parameters needs to be reported after the → and separated by a
+comma ”,”
+– Vectors of tunable parameters needs to be written after the → as [a; b],
+and separated by commas ”,”
+3.2 how to use tcomx
+3.2.1 Configuration and execution
+Stand-alone GUI-based
+The stand-alone version of UCoMX can be downloaded from this link 1. This version was
+created for Windows 10 a requires the Matlab RunTime R 2023b for its execution (available
+at this link2). If stand-alone version for a different operative system is needed, please email
+us at samuele.cavinato@iov.veneto.it or alessandro.scaggion@iov.veneto.it.
+Once you have UCoMX available on your PC and you have the Matlab Runtime
+installed, please follow these steps for the execution:
+1. Move to the UCoMX download folder;
+1 10.5281/zenodo.8276838
+2 https://it.mathworks.com/products/compiler/matlab-runtime.html
+
+===== PAGE 29 =====
+
+3.2 how to use tcomx 25
+2. Double click on UCoMX;
+3. Select TCoMX.
+4. Select the input folder where the DICOM RT-Plan files are located;
+5. Select the output folder where the results will be stored;
+6. (Optional) Click on ’Configure parameters’.
+7. From the new panel you can:
+(a) Give a name to the execution.
+(b) Select if you want to read the list of plans from a .xlsx file by enabling the
+checkbox. If so, write the filename. In this case, the file must be place in the
+input folder indicated in the previous panel.
+REMEMBER
+The TCoMX library can handle three different types of input:
+i. Folder containing all the DICOM RT-Plan files;
+ii. Folder containing a subfolder for each DICOM RT-Plan file;
+iii. File containing the list of plans to extract the metrics from.
+8. Close the ’Configure parameters’ panel;
+9. Click on ’Select metrics’, a new panel appears.The metrics implemented in the
+TCoMX engine are listed on the left box. The metrics that will be extracted are listed
+in the right You can perform the following operations:
+(a) Add metrics to the right box. To do it, select a metric on the left box and click
+’ADD’.
+(b) Remove a metric from the left box. To do it, select a metrics a click ’REMOVE’.
+(c) Some metrics have configurable parameters (See. Sec.4) which can be configured
+by right-clicking on the metrics before adding it.
+10. Once the metrics have been selected, close the panel.
+11. From the main panel, click ’EXTRACT’ to start the execution.
+Matlab GUI-based
+The Matlab GUI version of UCoMX can be downloaded from this link 3. The execution of
+this version requires a valid Matlab licence installed. The use of this version is very similar
+to that of the stand-alone versione, with the first three steps replaced by the following
+ones:
+3 10.5281/zenodo.8276838
+
+===== PAGE 30 =====
+
+26 overview and functioning of tcomx
+1. Open Matlab
+2. Move to .../UCoMX
+3. Add .../UCoMX and its subfolders to the Maltab path;
+4. Type ’UCoMX’ on the command line;
+5. Continue from point 4 of the instructions for the stand-alone version.
+Matlab command-line version
+1. Move to .../UCoMX/TCoMX/input/
+2. Open ’CONFIG.in’. Opening it with Matlab is warmly suggested since it keeps the
+formatting.
+(a) (Optional) Give a name to the execution. Type it below ”Analysis ID name”;
+(b) Add the full path to the folder containing the DICOM RT-Plan files or the file
+containing the list of plans.
+REMEMBER
+The TCoMX library can handle three different types of input:
+• Folder containing all the DICOM RT-Plan files;
+• Folder containing a subfolder for each DICOM RT-Plan file.
+• File containing the list of plans to extract the metrics from.
+(c) Add the full path of the results folder where you want save the result. If it does
+not exist, TCoMX will create it for you
+(d) Select if you want to read the list of plans from a .xlsx file ( T rue) or not ( False).
+(e) If you chose T rueat point 1d, write the filename.
+3. Close ’CONFIG.in’.
+4. Open METRICS.in.
+5. You can perform the following operations:
+(a) Leave everything as it is and compute all the metrics;
+(b) Remove some metric;
+(c) Remove a whole subcategory;
+(d) Remove a whole category.
+6. Save and close.
+7. Move to .../UCoMX/, type TCoMX on your Matlab console, and press return.
+
+===== PAGE 31 =====
+
+3.2 how to use tcomx 27
+WARNING/2
+The following operation are not allowed and will compromise the correct execution
+of the routines in the library:
+• Remove a category without removing the corresponding subcategories
+• Remove a subcategory without removing the corresponding metrics
+WARNING/3
+• In the current version, the metrics belonging to the subcategory delivery are
+always computed and do not need to be added to the ’METRICS.in’file.
+• The computation of the TTDF requires the dose per fraction. This information
+is not contained in the DICOM RT-PLAN files create by Precision. In this
+case, you need to specify the fraction dose for each plan in a file called
+’DoseFraction.xlsx’ which has to be stored in the ’Dataset input folder’. An
+example of this file is provided together with the reference dataset.
+REMEMBER
+The provided input files has been tested many times and their syntax was found
+to be robust over different Matlab versions and operative systems. Every time you
+make a change in the metrics to extract, be sure to keep the correct syntax.
+3.2.2 Reading the results
+The results of the extraction will be stored within the results folder provided during the
+Configuration. The following files will be stored:
+• dataset.xlsx: this file contains general metadata information about the analyzed
+plans, the metrics and some basic descriptive statistics about the metrics over the
+whole sample such as mean, standard deviation, mode, median.
+• dataset.mat: this file contains the same information as dataset.xlsx but it is in .mat
+format.
+• CONFIG.in
+• METRICS.in
+• logfile.log: a summary containing information about the extraction such as the
+unique id associated by VCoMX and the total number of metrics extracted.
+
+===== PAGE 32 =====
+
+4 C O M P L E X I T Y M E T R I C S I N T C O M X
+The metrics included in the TCoMX library were classified into categories and subcategories
+according to the features of the HT plans they are related to. Three categories have been
+conceived, TPS, LOT statistics and Sinogram, each one containing at least one subcategory.
+They are all described in the following.
+4.1 tps: delivery parameters
+4.1.1 Modulation Factor (MF)
+It is a dimensionless quantity computed as:
+MF = mLOT
+maxLOT (43)
+with mLOT the mean LOT and maxLOT the maximum LOT. These two quantities are
+explicitely defined in Sec. 4.2.1.
+4.1.2 Number of projection per rotation (Nproj,rot)
+Each rotation of the gantry is subdivided into N proj,rot descrete steps called projections.
+4.1.3 Number of projections (Nproj)
+It is the total number of projections in the treatment and corresponds to the number of
+rows of the sinogram stored in the RT-PLAN files minus one.
+4.1.4 Number of rotations (Nrot)
+It quantifies the number of gantry rotations during the treatment. It can be expressed as:
+Nrot = Nproj
+Nproj,rot
+(44)
+4.1.5 Projection Time (PT)
+The duration of each projection is refered to as projection time. It is measured in seconds (s).
+
+===== PAGE 33 =====
+
+4.1 tps: delivery parameters 29
+4.1.6 Gantry Period (GP)
+It quantifies the duration of each rotation and it is related to PT through the following
+relation:
+GP = Nproj,rot × PT (45)
+and it is measured in seconds (s).
+4.1.7 Treatment Time (TT)
+It quantifies the duration of the treatment. It is related to the gantry period by the following
+relation:
+TT = GP × Nrot (46)
+It is measured in seconds (s).
+4.1.8 Field Width (FW)
+Is is defined as the distance between the Y jaws. It is measured in millimeters (mm).
+4.1.9 Pitch
+It is a dimensionless quantity defined as follows:
+pitch = FW
+∆y (47)
+where ∆y is the translation of the couch after each full gantry rotation.
+4.1.10 Couch Translation (CT)
+It is defined as follows:
+CT = Nrot × FW × Pitch = Nrot × ∆y (48)
+It is measured in millimiters (mm):
+4.1.11 Couch Speed (CS)
+It is defined as follows:
+CS = CT
+TT (49)
+It is measured in millimiters per second (mm/s).
+
+===== PAGE 34 =====
+
+30 complexity metrics in tcomx
+4.1.12 Target Length (TL)
+It is defined as follows:
+TL = CT − FW (50)
+It is measured in millimiters (mm).
+4.1.13 Treatment time over fraction dose (TTDF)
+It is defined as follows:
+TTDF = TT
+DF (51)
+where DF is the dose per fraction expressed in cGy. It is measured in s/cGy.
+4.2 lot statistics: absolute lot statistics
+4.2.1 LOT mean (mLOT)
+It is computed as the arithmetic average of the non-zero entries of the sinogram multiplied
+by the projection time. The unit of measure used is the millisecond (ms).
+4.2.2 LOT standard deviation (sdLOT)
+It is computed as the sample standard deviation of the non-zero entries of the sinogram
+multiplied by the projection time. The unit of measur used is the millisecond (ms).
+4.2.3 LOT median (mdLOT)
+It is computed as the median of the non-zero entries of the sinogram multiplied by the
+projection time. The unit of measure used is the millisecond (ms).
+4.2.4 LOT mode (moLOT)
+It is computed as the mode of the non-zero entries of the sinogram multiplied by the
+projection time. The unit of measure used is the millisecond (ms).
+4.2.5 LOT maximum (maxLOT)
+It is computed as the maximum of the non-zero entries of the sinogram multiplied by the
+projection time. The unit of measure used is the millisecond (ms).
+
+===== PAGE 35 =====
+
+4.3 lot statistics: relative lot statistics 31
+4.2.6 LOT minimum (minLOT)
+It is computed as the minimum of the non-zero entries of the sinogram multiplied by the
+projection time. The unit of measure used is the millisecond (ms).
+4.2.7 LOT kurtosis (kLOT)
+It is computed as the kurtosis of the non-zero entries of the sinogram.
+4.2.8 LOT skewness (sLOT)
+It is computed as the skewness of the non-zero entries of the sinogram.
+4.2.9 Cumulative LOT Number Score (CLNSn)
+It is a dimensionless metrics defined as follows:
+CLNS n = 1
+∑ij Oij
+Nproj
+∑
+i=1
+Nleaves
+∑
+j=1
+O∗
+ij (n)
+(
+O∗
+ij (n) = 1 i f S ij × PT < n
+O∗
+ij (n) = 0 otherwise
+n ∈ [0; PT]
+(52)
+It counts the fractional number of LOTs smaller than n.
+4.2.10 Cumulative LOT Number Score at Projection Time (CLNSpt,n)
+It is dimensionless metrics defined as follows:
+CLNS pt,n = 1
+∑ij Oij
+Nproj
+∑
+i=1
+Nleaves
+∑
+j=1
+O∗
+ij (n)
+(
+O(pt∗)
+ij (n) = 1 i f S ij × PT > PT − n
+O(pt∗)
+ij (n) = 0 otherwise
+n ∈ [0, PT]
+(53)
+which counts the fractional number of LOTs which are closer than n ms to the projection
+time.
+4.3 lot statistics: relative lot statistics
+4.3.1 FLOT mean (mFLOT)
+It is computed as the arithmetic average of the non-zero entries of the sinogram. It is a
+dimensionless metric.
+4.3.2 FLOT standard deviation (sdFLOT)
+It is computed as the sample standard deviation of the non-zero entries of the sinogram. It
+is a dimensionless metric.
+
+===== PAGE 36 =====
+
+32 complexity metrics in tcomx
+4.3.3 FLOT median (mdFLOT)
+It is computed as the median of the non-zero entries of the sinogram. It is a dimensionless
+metric.
+4.3.4 FLOT mode (moFLOT)
+It is computed as the mode of the non-zero entries of the sinogram. It is a dimensionless
+metric.
+4.3.5 FLOT maximum (maxFLOT)
+It is computed as the maximum of the non-zero entries of the sinogram. It is a dimension-
+less metric.
+4.3.6 FLOT minimum (minFLOT)
+It is computed as the minimum of the non-zero entries of the sinogram. It is a dimensionless
+metric.
+4.3.7 Cumulative FLOT Number Score (CFNSn)
+It is a dimensionless metric defined as follows:
+CFNS n = 1
+∑ij Oij
+Nproj
+∑
+i=1
+Nleaves
+∑
+j=1
+O∗
+ij (n)
+(
+O∗
+ij (n) = 1 i f S ij < n
+O∗
+ij (n) = 0 otherwise
+n ∈ [0; 1] (54)
+It counts the fraction of FLOTs smaller than n.
+4.4 sinogram: geometry
+4.4.1 Leaves with n Open Nearest Neighbors (LnNS)
+It was introduced by Santos et al. in [ 10] and it is a dimensionless metric defined as
+follows:
+LnNS = 1
+Nproj
+Nproj
+∑
+i=1
+ NO(n)
+NO
+
+i
+× 100% ( 55)
+where NO(n) indicates the number of open leaves with n open neighbors and NO the
+number of open leaves. The sub-index i indicates that the ratio has to be evaluated at each
+projection. The plan value is obtained as the average over all the projections. The index n
+can take three different values: 0, 1 and 2.
+
+===== PAGE 37 =====
+
+4.4 sinogram: geometry 33
+Figure 11: Schematic representation of two projections with different numbers of connected
+components. White and gray squares represent open and closed leaves, respectively.
+The upper projection has 2 connected components, the lower one has 3.
+4.4.2 Treatment Area (TA)
+It is defined as follows:
+TA = 1
+Nproj
+Nproj
+∑
+i=1
+(|Ri − Li| + 1) (56)
+where Ri and Li are the right-most and left-most open leaves at projectioni, respectively.The
+plan value is obtained by averaging over all the projections. Since the LOTs values are
+not considered in this definition, TA represents the average cumulative open area. It is
+measured in number-of-leaves.
+4.4.3 Number of Connected Components (nCC)
+It is a dimensionless metric which counts the number of independent groups of connected
+leaves inside the treatment area. It is computed at each projection and then averaged over
+all the projections to get the plan value. In Fig. 11 an example of two projections with
+different numbers of connected components is shown.
+4.4.4 Length of the Connected Components (lengthCC)
+It is defined as follows:
+lengthCC = 1
+∑
+Nproj
+i=1 nCCi
+Nproj
+∑
+i=1
+nCCi
+∑
+k=1
+|Lk − Rk| + 1 ( 57)
+where Lk and Rk are the positions of the leftmost and rightmost open leaves of the k − th
+connected component at the i − th projection, respectively. It is measured in number-of-
+leaves. The plan value measures the average length of the connected components.
+In Fig. 11, four examples of connected components (white blocks) with different lengths
+are shown. The two connected components of the upper projection have length 3 and 2,
+respectively. The three connected components of the lower projection have length 1, 1 and
+2, respectively. The plan value is obtained by averaging over the total number of connected
+components of the sinogram.
+
+===== PAGE 38 =====
+
+34 complexity metrics in tcomx
+4.4.5 Fraction of Discontinuous Projections (fDISC)
+It is a dimensionless metric defined as follows:
+f DISC = 1
+Nproj
+Nproj
+∑
+i=1
+[nCCi > 1] (58)
+where the term [nCCi > 1] is 0 if nCCi = 0 or 1, 1 otherwise. It counts the fraction of
+projections with two or more connected components, namely all the projections having at
+least one closed leaf within the treatment area.
+4.4.6 Closed Leaf Score (CLS)
+It was introduced in [ 10] and it is a dimensionless defined as follows:
+CLS = 1
+Nproj
+Nproj
+∑
+i=1
+
+ Nleaves − ∑Nleaves
+j Oij
+Nleaves
+
+ (59)
+It can take values in [0, 1], being 1 when all leaves remain closed.
+4.4.7 Closed Leaf Score within the treatment area (CLS in)
+It was introduced in [ 10] with this definition:
+CLS in = 1
+Nproj
+Nproj
+∑
+i=1
+
+ TAi − ∑Nleaves
+j Oij
+Nleaves
+
+ (60)
+A more general form has been devised and three variants have been introduced:
+1. CLS in,area : the number of closed leaves within the treatment area at projecton i is
+normalized by TAi instead of Nleaves ;
+2. CLS in,disc : it is computed by considering the discontinuous projections (nCCi > 1)
+only, namely the first summation in Eq. ( 60) runs from 1 to the total number of
+discontinuous projections and is then divided by the number of discontinuous
+projections instead of by Nproj ;
+3. CLS in,area,disc : it corresponds to the combination of the CLS in,area with the CLS in,disc;
+The three quantities are in general correlated with each other. However, the different
+definitions should help to characterize the geometry of the leaf openings in a more intuitive
+way.
+4.4.8 Centroid
+It is defined as follows:
+centroid = 1
+Nproj
+Nproj
+∑
+i=1
+1
+∑Nleaves
+j=1 Oij
+"Nleaves
+∑
+j=1
+Oij Pj
+#
+(61)
+
+===== PAGE 39 =====
+
+4.5 sinogram: modulation 35
+The centroid is measured in number-of-leaves. The plan value is obtained by averaging
+over Nproj . The centroid of a plan represents the mean of the average positions of the open
+leaves at each projection.
+4.5 sinogram: modulation
+4.5.1 Leaf Open Time Variability (LOTV)
+It was introduced in [ 10] and it is a dimensionless metric defined as follows:
+LOTV = 1
+Nleaves
+Nleaves
+∑
+j=1
+"
+∑
+Nproj −1
+i=1 max (Sj) − |Sij − Si+1,j|
+(Nproj − 1) × max (Sj)
+#
+(62)
+where Sj marks the j-th column (leaf) of the sinogram. It takes values in [0, 1], being 1
+when all the leaves have the same opening time at each projection. For the leaves which
+do not open during the treatment it is set to 1 by definition.
+4.5.2 Extended Leaf Open Time Variability (ELOTV∆p)
+It is a dimensionless metric defined as follows:
+ELOTV∆p = 1
+Nleaves
+Nleaves
+∑
+j=1
+
+ ∑
+Nproj −∆p
+i=1 |Sij − Si+∆p,j|
+(Nproj − ∆p) × max (Sj)
+
+ (63)
+where ∆p is the projection step and Sj the j-th column (leaf) of the sinogram. It takes
+values in [0, 1], being 0 when all the leaves have the same opening time at each projection.
+The ELOTV∆p is first evaluated for each leaf and then averaged over all the leaves to obtain
+the plan value. For the leaves which do not open during the treatment it is set to 0 by
+definition. It is worth noticing that the ELOTV∆p includes the LOTV as a special case. In
+particular:
+LOTV = 1 − ELOTV1 (64)
+Compared to the LOTV it shows two main differences:
+• It is positively correlated with the inter-projection (F)LOT variability;
+• It allows the comparison of projections which lie at arbitrary distances.
+4.5.3 Plan Sinogram Time Variation (PSTV)
+It was introduced by Santos et al. in [ 10] and it is a dimensionless metrics defined as
+follows:
+PSTV = 1
+Nproj − 1
+Nproj −1
+∑
+i=1
+Nleaves −1
+∑
+j=1
+|Si+1,j − Si,j| + |Si,j+1 − Si,j| (65)
+which is the arithmetic average over all the projections of the sum of FLOTs difference
+between pairs of adjacent leaves and projections. Higher values of PSTV value correspond
+to a higher variability of the (F)LOT across the leaves and the projections.
+
+===== PAGE 40 =====
+
+36 complexity metrics in tcomx
+4.5.4 Extended Plan Sinogram Time Variation (EPSTV∆p,∆l)
+It is a dimensionless metric defined as follows:
+EPSTV∆p,∆l = 1
+Nproj − ∆p
+Nproj −∆p
+∑
+i=1
+Nleaves −∆l
+∑
+j=1
+|Si+∆p,j − Si,j| + |Si,j+∆l − Si,j| (66)
+The EPSTV∆p,∆l contains the PSTV defined in Eq. ( 65) as a special case, namely:
+PSTV = EPSTV1,1 (67)
+This new formulation allows the comparison of projections/leaves which lie at arbitrary
+distances. Furthermore, there are two special cases included in it, namely:
+• EPSTV0,∆l: time variation along the leaves direction;
+• EPSTV∆p,0: time variation along the projection direction.
+In general, a higher EPSTV∆p,∆l corresponds to higher inter-leaf and/or inter-projection
+(F)LOT variability.
+4.5.5 Modulation Index (MI)
+The Modulation Index was introduced by Park and collegues [ 9] for VMAT plans. It was
+adapted to HT plans by Santos and colleques [ 10]. It is a dimensionless metric defined as
+follows:
+MI =
+Z 2σ
+0
+Z( f )d f (68)
+where Z(f) is defined as:
+Z( f ) = Zx( f ) + Zy( f ) + Zxy( f ) + Zyx ( f )
+4 (69)
+with each Zk( f ) defined as:
+Zk( f ) = 1
+Nproj
+Nk( f ; ∆tk > f σ) (70)
+where k = {x, y, xy, yx} represents four different directions of the sinogram S (leaves,
+projections, diagonal and anti-diagonal), ∆tk represents the time variation between adjacent
+elements in the k direction, f a fraction of the sdFLOT and Nk( f , ∆tk > f σ) the number of
+FLOTs exeeding this fraction. Higher values of MI should correspond to a higher plan
+modulation.
+4.5.6 Number of Openings and Closures (nOC)
+It is a dimensionless metric and it is computed by counting the number of times each
+leaf opens and closes during the treatment. The plan value is obtained by averaging
+over the leaves and normalizing by the total number of projections. The number of
+
+===== PAGE 41 =====
+
+4.5 sinogram: modulation 37
+Figure 12: Schematic representation of possible combinations of the LOTs leading to different
+numbers of openings and closures. Rows represent two adjacent projections, while
+columns show seven possible leaf movements. White and gray spaces represent open
+and closed leaves, respectively. Each LOT is centered about the middle point of the
+corresponding projection. The number under each leaf represents the cumulative
+number of openings and closures for each leaf over the two projections.
+openings and closures is computed considering that each (F)LOT is centered with respect
+to the projection time. In Fig. 12, a schematic of the different conditions that might be
+encountered during the treatment is shown. This metric is associated with the mechanical
+stress of the MLC during the treatment. Moreover, this metric is related to the CLS (average
+fraction of closed leaves per projectoin) by the following approximate linear relationship:
+CLS ≈ 1 − 0.5 × nOC (71)
+This is due to the fact that fully closed ( Sij = 0) have nOCij = 0 and fully open ( Sij = 1)
+appear only in a negligible amount. Therefore, each 0 < Sij < 1 correspond to nOCij = 2.
+4.5.7 Mean Sinogram Asymmetry (mSA)
+It is defined as follows:
+MSA =
+∑Nleaves
+j=1 Pj × LPS j
+∑Nleaves
+j=1 LPS j
+(72)
+where LPS j is called Leaf Projected Sinogram and is defined as:
+LPS j =
+Nproj
+∑
+i=1
+Sij
+Nproj
+(73)
+An example of LPS is shown in Fig. 13. The MSA represents the weighted average
+displacement of the (F)LOTs from the vertical axis passing through the center of the
+sinogram and it is measured in number-of-leaves. It allows to highlight asymmetries of
+the sinogram.
+4.5.8 Sinogram intensity (SI)
+Starting from the LPS defined in Eq. ( 73), it is possible to compute another metric related
+to it, namely the Sinogram Intensity. In particular, the mean sinogram intensity (mSI), is
+
+===== PAGE 42 =====
+
+38 complexity metrics in tcomx
+Figure 13: (Upper panel) Example sinogram. Rows correspond to the projections, columns to
+the leaves. (Lower Panel) Example of LPS. Each bar corresponds to a leaf (column
+of the sinogram), the height corresponds to the sum over all the projections properly
+normalized by Nproj .
+computed as the average of the LPS values over the MLC leaves. Leaves with LPS = 0
+are included in the computation and this fact distinguishes mSI from mLOT (mFLOT). In
+addition to mSI, also its standard deviation (sdSI) and the median (mdSI) are computed.
+
+===== PAGE 43 =====
+
+B I B L I O G R A P H Y
+[1] M. Antoine, F. Ralite, C. Soustiel, T. Marsac, P . Sargos, A. Cugny, and J. Caron, “Use
+of metrics to quantify imrt and vmat treatment plan complexity: A systematic review
+and perspectives,” Physica Medica, vol. 64, pp. 98–108, 2019.
+[2] S. Chiavassa, I. Bessieres, M. Edouard, M. Mathot, and A. Moignier, “Complexity
+metrics for imrt and vmat plans: a review of current literature and applications,” The
+British Journal of Radiology , vol. 92, no. 1102, p. 20190270, 2019. PMID: 31295002.
+[3] K. C. Younge, M. M. Matuszak, J. M. Moran, D. L. McShan, B. A. Fraass, and
+D. A. Roberts, “Penalization of aperture complexity in inversely planned volumetric
+modulated arc therapy,” Medical Physics, vol. 39, no. 11, pp. 7160–7170, 2012.
+[4] L. Masi, R. Doro, V . Favuzza, S. Cipressi, and L. Livi, “Impact of plan parameters on
+the dosimetric accuracy of volumetric modulated arc therapy,” Medical Physics, vol. 40,
+no. 7, p. 071718, 2013.
+[5] A. L. McNiven, M. B. Sharpe, and T. G. Purdie, “A new metric for assessing imrt
+modulation complexity and plan deliverability,” Medical Physics, vol. 37, no. 2, pp. 505–
+515, 2010.
+[6] W. Du, S. H. Cho, X. Zhang, K. E. Hoffman, and R. J. Kudchadker, “Quantification of
+beam complexity in intensity-modulated radiation therapy treatment plans,” Medical
+Physics, vol. 41, no. 2, p. 021716, 2014.
+[7] W. Yao and J. B. Farr, “Determining the optimal dosimetric leaf gap setting for
+rounded leaf-end multileaf collimator systems by simple test fields,” Journal of Applied
+Clinical Medical Physics , vol. 16, no. 4, pp. 65–77, 2015.
+[8] B. Heijmen, P . Voet, D. Fransen, J. Penninkhof, M. Milder, H. Akhiat, P . Bonomo,
+M. Casati, D. Georg, G. Goldner, A. Henry, J. Lilley, F. Lohr, L. Marrazzo, S. Pallotta,
+R. Pellegrini, Y. Seppenwoolde, G. Simontacchi, V . Steil, F. Stieler, S. Wilson, and
+S. Breedveld, “Fully automated, multi-criterial planning for volumetric modulated arc
+therapy – an international multi-center validation for prostate cancer,” Radiotherapy
+and Oncology, vol. 128, no. 2, pp. 343–348, 2018.
+[9] J. M. Park, S.-Y. Park, H. Kim, J. H. Kim, J. Carlson, and S.-J. Ye, “Modulation
+indices for volumetric modulated arc therapy,” Physics in Medicine and Biology , vol. 59,
+pp. 7315–7340, nov 2014.
+[10] T. Santos, T. Ventura, J. Mateus, M. Capela, and M. d. C. Lopes, “On the complexity
+of helical tomotherapy treatment plans,” Journal of Applied Clinical Medical Physics ,
+vol. 21, no. 7, pp. 107–118, 2020.
+39

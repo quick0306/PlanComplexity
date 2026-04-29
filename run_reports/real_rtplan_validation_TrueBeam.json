@@ -1,0 +1,256 @@
+{
+  "all_files": {
+    "summary": {
+      "TrueBeam": {
+        "total": 30,
+        "ok": 30,
+        "error": 0,
+        "modes": {
+          "VMAT_IMRT": 30
+        }
+      }
+    },
+    "details": [
+      {
+        "tps": "TrueBeam",
+        "file": "RP.TB_Cen_cuiyun.cen_cuiyun1.dcm",
+        "status": "ok",
+        "mode": "VMAT_IMRT",
+        "metric_count": 24,
+        "warning_count": 0
+      },
+      {
+        "tps": "TrueBeam",
+        "file": "RP.TB_Chen_miaoying.chen_miaoying.dcm",
+        "status": "ok",
+        "mode": "VMAT_IMRT",
+        "metric_count": 24,
+        "warning_count": 0
+      },
+      {
+        "tps": "TrueBeam",
+        "file": "RP.TB_Chen_peiyan.chen_peiying1.dcm",
+        "status": "ok",
+        "mode": "VMAT_IMRT",
+        "metric_count": 24,
+        "warning_count": 0
+      },
+      {
+        "tps": "TrueBeam",
+        "file": "RP.TB_chen_shuiying.test.dcm",
+        "status": "ok",
+        "mode": "VMAT_IMRT",
+        "metric_count": 24,
+        "warning_count": 0
+      },
+      {
+        "tps": "TrueBeam",
+        "file": "RP.TB_Chen_yanxuan.Chen_yanxuan.dcm",
+        "status": "ok",
+        "mode": "VMAT_IMRT",
+        "metric_count": 24,
+        "warning_count": 0
+      },
+      {
+        "tps": "TrueBeam",
+        "file": "RP.TB_Chen_yingbi.chen_biying.dcm",
+        "status": "ok",
+        "mode": "VMAT_IMRT",
+        "metric_count": 24,
+        "warning_count": 0
+      },
+      {
+        "tps": "TrueBeam",
+        "file": "RP.TB_Fang_gongmei.fang_gongmei1.dcm",
+        "status": "ok",
+        "mode": "VMAT_IMRT",
+        "metric_count": 24,
+        "warning_count": 0
+      },
+      {
+        "tps": "TrueBeam",
+        "file": "RP.TB_He_mengxi.he_mengxi.dcm",
+        "status": "ok",
+        "mode": "VMAT_IMRT",
+        "metric_count": 24,
+        "warning_count": 0
+      },
+      {
+        "tps": "TrueBeam",
+        "file": "RP.TB_Huang_jielan.huang_jielan1.dcm",
+        "status": "ok",
+        "mode": "VMAT_IMRT",
+        "metric_count": 24,
+        "warning_count": 0
+      },
+      {
+        "tps": "TrueBeam",
+        "file": "RP.TB_Lai_fengjiao.lai_fengjiao1.dcm",
+        "status": "ok",
+        "mode": "VMAT_IMRT",
+        "metric_count": 24,
+        "warning_count": 0
+      },
+      {
+        "tps": "TrueBeam",
+        "file": "RP.TB_Li_jianxian.li_jingxian1.dcm",
+        "status": "ok",
+        "mode": "VMAT_IMRT",
+        "metric_count": 24,
+        "warning_count": 0
+      },
+      {
+        "tps": "TrueBeam",
+        "file": "RP.TB_Li_jinson.li_jinsong.dcm",
+        "status": "ok",
+        "mode": "VMAT_IMRT",
+        "metric_count": 24,
+        "warning_count": 0
+      },
+      {
+        "tps": "TrueBeam",
+        "file": "RP.TB_Li_shaobing.li_shaobing1.dcm",
+        "status": "ok",
+        "mode": "VMAT_IMRT",
+        "metric_count": 24,
+        "warning_count": 0
+      },
+      {
+        "tps": "TrueBeam",
+        "file": "RP.TB_Li_tianying.li_tianying1.dcm",
+        "status": "ok",
+        "mode": "VMAT_IMRT",
+        "metric_count": 24,
+        "warning_count": 0
+      },
+      {
+        "tps": "TrueBeam",
+        "file": "RP.TB_Li_xueying.li_xueying1.dcm",
+        "status": "ok",
+        "mode": "VMAT_IMRT",
+        "metric_count": 24,
+        "warning_count": 0
+      },
+      {
+        "tps": "TrueBeam",
+        "file": "RP.TB_Liu_caimei.liu_caimei1.dcm",
+        "status": "ok",
+        "mode": "VMAT_IMRT",
+        "metric_count": 24,
+        "warning_count": 0
+      },
+      {
+        "tps": "TrueBeam",
+        "file": "RP.TB_Liu_miaojian.liu_miaojian1.dcm",
+        "status": "ok",
+        "mode": "VMAT_IMRT",
+        "metric_count": 24,
+        "warning_count": 0
+      },
+      {
+        "tps": "TrueBeam",
+        "file": "RP.TB_Liu_yiyan.liu_yiyan1.dcm",
+        "status": "ok",
+        "mode": "VMAT_IMRT",
+        "metric_count": 24,
+        "warning_count": 0
+      },
+      {
+        "tps": "TrueBeam",
+        "file": "RP.TB_Peng_meizhen.peng_meizhen1.dcm",
+        "status": "ok",
+        "mode": "VMAT_IMRT",
+        "metric_count": 24,
+        "warning_count": 0
+      },
+      {
+        "tps": "TrueBeam",
+        "file": "RP.TB_Song_jisen.song_jisen1.dcm",
+        "status": "ok",
+        "mode": "VMAT_IMRT",
+        "metric_count": 24,
+        "warning_count": 0
+      },
+      {
+        "tps": "TrueBeam",
+        "file": "RP.TB_Tan_yanqing.tan_yanqing.dcm",
+        "status": "ok",
+        "mode": "VMAT_IMRT",
+        "metric_count": 24,
+        "warning_count": 0
+      },
+      {
+        "tps": "TrueBeam",
+        "file": "RP.TB_Weng_baoming.weng_baoming1.dcm",
+        "status": "ok",
+        "mode": "VMAT_IMRT",
+        "metric_count": 24,
+        "warning_count": 0
+      },
+      {
+        "tps": "TrueBeam",
+        "file": "RP.TB_Wu_ling.wu_ling.dcm",
+        "status": "ok",
+        "mode": "VMAT_IMRT",
+        "metric_count": 24,
+        "warning_count": 0
+      },
+      {
+        "tps": "TrueBeam",
+        "file": "RP.TB_Wu_mushi.wu_mushi1.dcm",
+        "status": "ok",
+        "mode": "VMAT_IMRT",
+        "metric_count": 24,
+        "warning_count": 0
+      },
+      {
+        "tps": "TrueBeam",
+        "file": "RP.TB_Xu_lanping.xu_lanping1.dcm",
+        "status": "ok",
+        "mode": "VMAT_IMRT",
+        "metric_count": 24,
+        "warning_count": 0
+      },
+      {
+        "tps": "TrueBeam",
+        "file": "RP.TB_Zhang_bili.zheng_bili1.dcm",
+        "status": "ok",
+        "mode": "VMAT_IMRT",
+        "metric_count": 24,
+        "warning_count": 0
+      },
+      {
+        "tps": "TrueBeam",
+        "file": "RP.TB_Zhang_delan.zhang_delan.dcm",
+        "status": "ok",
+        "mode": "VMAT_IMRT",
+        "metric_count": 24,
+        "warning_count": 0
+      },
+      {
+        "tps": "TrueBeam",
+        "file": "RP.TB_Zhang_ying.zhang_ying.dcm",
+        "status": "ok",
+        "mode": "VMAT_IMRT",
+        "metric_count": 24,
+        "warning_count": 0
+      },
+      {
+        "tps": "TrueBeam",
+        "file": "RP.TB_Zheng_qiuyue.test2.dcm",
+        "status": "ok",
+        "mode": "VMAT_IMRT",
+        "metric_count": 24,
+        "warning_count": 0
+      },
+      {
+        "tps": "TrueBeam",
+        "file": "RP.TB_Zhong_xuelan.zhong_xuelan1.dcm",
+        "status": "ok",
+        "mode": "VMAT_IMRT",
+        "metric_count": 24,
+        "warning_count": 0
+      }
+    ]
+  }
+}

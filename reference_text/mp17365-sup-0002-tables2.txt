@@ -1,0 +1,227 @@
+
+
+===== PAGE 1 =====
+
+Table S2. List of the metrics implemented in the TCoMX extraction engine.  
+Metric acronym  Metric 
+definition 
+Unit of measure Reference(s) 
+mLOT LOT mean ms  Santos et al (doi: 10.1002/acm2.12895) 
+sdLOT LOT standard 
+deviation 
+ms  
+mdLOT LOT median ms  
+moLOT LOT mode ms  
+kLOT LOT 
+distribution’s 
+kurtosis 
+ms Cavinato et al (doi: 10.1002/acm2.13781) 
+sLOT LOT 
+distribution’s 
+skewness 
+ms  
+minLOT Minimum LOT  ms  
+maxLOT Maximum LOT ms  
+CLNSx Cumulative 
+LOT Number 
+Score – 
+fraction of 
+LOTs < x ms 
+ Santos et al (doi: 10.1002/acm2.12895) 
+Cavinato et al (doi: 10.1002/acm2.13781) 
+CLSNptx Cumulative 
+LOT Number 
+Score at 
+Projection 
+Time – fraction 
+number of 
+LOTs < 
+(Projection 
+Time – x) ms 
+ Santos et al (doi: 10.1002/acm2.12895) 
+Cavinato et al (doi: 10.1002/acm2.13781) 
+mFLOT FLOT mean  Cavinato et al (doi: 10.1002/acm2.13781) 
+sdFLOT FLOT standard 
+deviation 
+ Cavinato et al (doi: 10.1002/acm2.13781) 
+mdFLOT FLOT median  Cavinato et al (doi: 10.1002/acm2.13781) 
+moFLOT FLOT mode  Cavinato et al (doi: 10.1002/acm2.13781) 
+minFLOT Minimum FLOT  Cavinato et al (doi: 10.1002/acm2.13781) 
+maxFLOT Maximum 
+FLOT 
+ Cavinato et al (doi: 10.1002/acm2.13781) 
+CFNSx Cumulative 
+FLOT Number 
+Score – 
+fraction of 
+FLOTs < x/100 
+ Santos et al (doi: 10.1002/acm2.12895) 
+Cavinato et al (doi: 10.1002/acm2.13781) 
+nOC Average 
+number of 
+opening and 
+closures per 
+leaf 
+ Cavinato et al (doi: 10.1002/acm2.13781) 
+PSTV Plan Sinogram 
+Time 
+Variability 
+ Santos et al (doi: 10.1002/acm2.12895) 
+
+===== PAGE 2 =====
+
+EPSTV Extended Plan 
+Sinogram Time 
+Variability 
+ Cavinato et al (doi: 10.1002/acm2.13781) 
+LOTV Leaf Open 
+Time 
+Variability 
+ Santos et al (doi: 10.1002/acm2.12895) 
+ELOTV Extended Leaf 
+Open Time 
+Variability 
+ Cavinato et al (doi: 10.1002/acm2.13781) 
+MI Modulation 
+Index 
+ Santos et al (doi: 10.1002/acm2.12895) 
+mSI Mean 
+Sinogram 
+Intensity 
+ Cavinato et al (doi: 10.1002/acm2.13781) 
+mdSI Median 
+Sinogram 
+Intensity 
+ Cavinato et al (doi: 10.1002/acm2.13781) 
+sdSI Sinogram 
+Intensity 
+Standard 
+Deviation 
+ Cavinato et al (doi: 10.1002/acm2.13781) 
+MSA Mean 
+Sinogram 
+Asymmetry 
+ Cavinato et al (doi: 10.1002/acm2.13781) 
+LxNS Leaves with x 
+open 
+Neighbours 
+Score 
+ Santos et al (doi: 10.1002/acm2.12895), 
+Cavinato et al (doi: 10.1002/acm2.13781) 
+nCC Number of 
+connected 
+components 
+ Cavinato et al (doi: 10.1002/acm2.13781) 
+TA Treatment 
+Area 
+ Santos et al (doi: 10.1002/acm2.12895), 
+Cavinato et al (doi: 10.1002/acm2.13781) 
+fDISC Fraction of 
+Discontinuous 
+Projections 
+ Cavinato et al (doi: 10.1002/acm2.13781) 
+CLS Closed Leaf 
+Score 
+ Santos et al (doi: 10.1002/acm2.12895) 
+CLSin Closed Leaf 
+Score Within 
+Treatment 
+Area 
+ Santos et al (doi: 10.1002/acm2.12895) 
+CLSinarea Closed Leaf 
+Score withing 
+treatment area 
+normalized by 
+treatment area 
+ Cavinato et al (doi: 10.1002/acm2.13781) 
+CLSinareadisc Closed Leaf 
+Score withing 
+treatment area 
+normalized by 
+treatment area 
+ Cavinato et al (doi: 10.1002/acm2.13781) 
+
+===== PAGE 3 =====
+
+and averaged 
+over 
+discontinuous 
+projections 
+only 
+CLSindisc Closed Leaf 
+Score within 
+treatment area 
+averaged over 
+discontinuous 
+projections 
+only 
+ Cavinato et al (doi: 10.1002/acm2.13781) 
+Centroid Average 
+position of 
+open leaves 
+barycenter  
+ Cavinato et al (doi: 10.1002/acm2.13781) 
+MF Modulation 
+Factor (ratio 
+between 
+maxLOT and 
+mLOT) 
+  
+Santos et al (doi: 10.1002/acm2.12895) 
+TTDF Treatment 
+Time over 
+Dose per 
+Fraction 
+s/cGy Santos et al (doi: 10.1002/acm2.12895) 
+Pitch Ratio between 
+the gantry 
+translation for 
+each full 
+rotation and 
+the field width 
+  
+Field Width Width of the 
+field (distance 
+between the 
+jaws) 
+mm  
+Projection time Time duration 
+of each 
+projection 
+ms  
+Gantry Period TIme duration 
+of each full 
+gantry rotation 
+s  
+Treatment Time Duration of the 
+treatment 
+s  
+Target length Length of the 
+target 
+extracted from 
+the DICOM-RT 
+plan file 
+mm  
+Couch Speed Speed of 
+translation of 
+the couch 
+mm/s  
+
+===== PAGE 4 =====
+
+Couch Translation Total 
+translation of 
+the couch 
+mm  
+NProjection Total number 
+of projections 
+  
+NRotations Total number 
+of rotations 
+  
+NProjectionsPeriod Total number 
+of projection 
+for each full 
+rotation 
+  
+ 
