@@ -21,7 +21,7 @@ The data and migration provenance record and the shared-code extraction boundary
 
 The current codebase, tests, privacy rules, and validation fixtures are authoritative. Imported documents describe research intent or historical evidence boundaries; they do not override current implementation or policy.
 
-The following legacy documents are also planned for preservation at their repository-relative locations and remain **unimplemented future work**:
+The following legacy documents are preserved at their repository-relative locations as **unimplemented future work**:
 
 - [UCoMX comparator validation design](../superpowers/specs/2026-07-09-ucomx-comparator-validation-design.md) — unimplemented future work.
 - [UCoMX comparator validation plan](../superpowers/plans/2026-07-09-ucomx-comparator-validation.md) — unimplemented future work.
