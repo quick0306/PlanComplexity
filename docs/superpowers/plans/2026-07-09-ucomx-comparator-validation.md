@@ -54,7 +54,7 @@
 - `tests/validation/test_ucomx_comparator.py`
   - Unit and integration tests for loaders, PHI checks, normalizer helpers, and comparator logic.
 
-- `docs/research/ucomx_comparator_validation_technical_report.md`
+- `04_Manuscript/ucomx_comparator_validation_technical_report.md`
   - Technical report draft with explicit evidence tiers and clinical/open-source boundaries.
 
 ### Modify
@@ -89,7 +89,7 @@
 - Recommended local map path for development:
 
 ```text
-%TEMP%\PlanComplexity\ucomx_comparator\local_case_map.yaml
+D:\MedicalPhysicsResearch\.codex_tmp\ucomx_comparator\local_case_map.yaml
 ```
 
 ---
@@ -197,7 +197,7 @@ class UcomxComparatorLoaderTests(unittest.TestCase):
 Run:
 
 ```powershell
-.venv\Scripts\python.exe -m pytest tests/validation/test_ucomx_comparator.py::UcomxComparatorLoaderTests::test_loads_manifest_mapping_and_normalized_rows -q
+D:\MedicalPhysicsResearch\.venv\Scripts\python.exe -m pytest tests/validation/test_ucomx_comparator.py::UcomxComparatorLoaderTests::test_loads_manifest_mapping_and_normalized_rows -q
 ```
 
 Expected: FAIL with `ModuleNotFoundError: No module named 'validation.ucomx_comparator'`.
@@ -424,7 +424,7 @@ def _validate_schema(payload: dict[str, Any], schema_name: str) -> None:
 Run:
 
 ```powershell
-.venv\Scripts\python.exe -m pytest tests/validation/test_ucomx_comparator.py::UcomxComparatorLoaderTests::test_loads_manifest_mapping_and_normalized_rows -q
+D:\MedicalPhysicsResearch\.venv\Scripts\python.exe -m pytest tests/validation/test_ucomx_comparator.py::UcomxComparatorLoaderTests::test_loads_manifest_mapping_and_normalized_rows -q
 ```
 
 Expected: PASS.
@@ -483,7 +483,7 @@ class UcomxComparatorSafetyTests(unittest.TestCase):
 Run:
 
 ```powershell
-.venv\Scripts\python.exe -m pytest tests/validation/test_ucomx_comparator.py::UcomxComparatorSafetyTests::test_normalized_rows_reject_phi_like_columns_and_values -q
+D:\MedicalPhysicsResearch\.venv\Scripts\python.exe -m pytest tests/validation/test_ucomx_comparator.py::UcomxComparatorSafetyTests::test_normalized_rows_reject_phi_like_columns_and_values -q
 ```
 
 Expected: FAIL because `assert_ucomx_public_safe_rows` is missing.
@@ -537,7 +537,7 @@ Call `assert_ucomx_public_safe_rows(rows)` inside `load_ucomx_metric_rows()` bef
 Run:
 
 ```powershell
-.venv\Scripts\python.exe -m pytest tests/validation/test_ucomx_comparator.py::UcomxComparatorSafetyTests -q
+D:\MedicalPhysicsResearch\.venv\Scripts\python.exe -m pytest tests/validation/test_ucomx_comparator.py::UcomxComparatorSafetyTests -q
 ```
 
 Expected: PASS.
@@ -547,7 +547,7 @@ Expected: PASS.
 Run:
 
 ```powershell
-.venv\Scripts\python.exe -m pytest tests/validation/test_ucomx_comparator.py -q
+D:\MedicalPhysicsResearch\.venv\Scripts\python.exe -m pytest tests/validation/test_ucomx_comparator.py -q
 ```
 
 Expected: PASS.
@@ -602,7 +602,7 @@ class UcomxNormalizerTests(unittest.TestCase):
 Run:
 
 ```powershell
-.venv\Scripts\python.exe -m pytest tests/validation/test_ucomx_comparator.py::UcomxNormalizerTests::test_build_case_id_and_label_are_public_safe -q
+D:\MedicalPhysicsResearch\.venv\Scripts\python.exe -m pytest tests/validation/test_ucomx_comparator.py::UcomxNormalizerTests::test_build_case_id_and_label_are_public_safe -q
 ```
 
 Expected: FAIL because `tools.normalize_ucomx_outputs` does not exist.
@@ -784,9 +784,9 @@ Add:
 
 ```gitignore
 # UCoMX comparator local/protected evidence
-validation/external_comparators/ucomx/raw/*
-!validation/external_comparators/ucomx/raw/README.md
-validation/external_comparators/ucomx/local_case_map*.yaml
+02_Projects/Plan_Complexity_Metrics/validation/external_comparators/ucomx/raw/*
+!02_Projects/Plan_Complexity_Metrics/validation/external_comparators/ucomx/raw/README.md
+02_Projects/Plan_Complexity_Metrics/validation/external_comparators/ucomx/local_case_map*.yaml
 ```
 
 If working from project root rather than workspace root, also add project-local patterns:
@@ -802,7 +802,7 @@ validation/external_comparators/ucomx/local_case_map*.yaml
 Run:
 
 ```powershell
-.venv\Scripts\python.exe -m pytest tests/validation/test_ucomx_comparator.py -q
+D:\MedicalPhysicsResearch\.venv\Scripts\python.exe -m pytest tests/validation/test_ucomx_comparator.py -q
 ```
 
 Expected: PASS.
@@ -946,10 +946,10 @@ mappings:
 
 - [ ] **Step 2: Generate normalized CSV from historical UCoMX workbooks**
 
-Run from the repository root.
+Run from `D:\MedicalPhysicsResearch\02_Projects\Plan_Complexity_Metrics`:
 
 ```powershell
-.venv\Scripts\python.exe tools\normalize_ucomx_outputs.py `
+D:\MedicalPhysicsResearch\.venv\Scripts\python.exe tools\normalize_ucomx_outputs.py `
   --output-root validation\external_comparators\ucomx `
   --workbook truebeam_jsz "C:\Users\hujin\Desktop\Programming\ucomx\data\TB_JSZ\1-ExtractionName-20251229202454.303\TB_JSZ_dataset.xlsx" VCoMX `
   --workbook halcyon_jsz "C:\Users\hujin\Desktop\Programming\ucomx\data\Hal_JSZ\1-ExtractionName-20251229202958.09\Hal_JSZ_dataset.xlsx" VCoMX
@@ -990,7 +990,7 @@ class UcomxCheckedPackTests(unittest.TestCase):
 Run:
 
 ```powershell
-.venv\Scripts\python.exe -m pytest tests/validation/test_ucomx_comparator.py::UcomxCheckedPackTests::test_checked_in_ucomx_pack_loads_and_is_public_safe -q
+D:\MedicalPhysicsResearch\.venv\Scripts\python.exe -m pytest tests/validation/test_ucomx_comparator.py::UcomxCheckedPackTests::test_checked_in_ucomx_pack_loads_and_is_public_safe -q
 ```
 
 Expected: PASS after generated files are present.
@@ -1065,7 +1065,7 @@ class UcomxComparisonTests(unittest.TestCase):
 Run:
 
 ```powershell
-.venv\Scripts\python.exe -m pytest tests/validation/test_ucomx_comparator.py::UcomxComparisonTests::test_compares_exact_equivalent_rows -q
+D:\MedicalPhysicsResearch\.venv\Scripts\python.exe -m pytest tests/validation/test_ucomx_comparator.py::UcomxComparisonTests::test_compares_exact_equivalent_rows -q
 ```
 
 Expected: FAIL because `compare_ucomx_rows` is missing.
@@ -1225,7 +1225,7 @@ This first CLI can support mocked/report-only comparison. Add protected RTPLAN c
 Run:
 
 ```powershell
-.venv\Scripts\python.exe -m pytest tests/validation/test_ucomx_comparator.py::UcomxComparisonTests -q
+D:\MedicalPhysicsResearch\.venv\Scripts\python.exe -m pytest tests/validation/test_ucomx_comparator.py::UcomxComparisonTests -q
 ```
 
 Expected: PASS.
@@ -1277,7 +1277,7 @@ class UcomxCaseMapTests(unittest.TestCase):
 Run:
 
 ```powershell
-.venv\Scripts\python.exe -m pytest tests/validation/test_ucomx_comparator.py::UcomxCaseMapTests::test_loads_local_case_map -q
+D:\MedicalPhysicsResearch\.venv\Scripts\python.exe -m pytest tests/validation/test_ucomx_comparator.py::UcomxCaseMapTests::test_loads_local_case_map -q
 ```
 
 Expected: FAIL because `load_ucomx_case_map` is missing.
@@ -1341,7 +1341,7 @@ If `--case-map` is provided, call `build_observed_by_case()`.
 
 - [ ] **Step 5: Create protected local case map outside tracked files**
 
-Create `%TEMP%\PlanComplexity\ucomx_comparator\local_case_map.yaml` with a small subset mapping `ucomx_truebeam_001` etc. to local project RTPLANs. Use the UCoMX workbook `info` sheet to align case order to `data/TrueBeam` and `data/Halcyon`, but do not commit this file.
+Create `D:\MedicalPhysicsResearch\.codex_tmp\ucomx_comparator\local_case_map.yaml` with a small subset mapping `ucomx_truebeam_001` etc. to local project RTPLANs. Use the UCoMX workbook `info` sheet to align case order to `data/TrueBeam` and `data/Halcyon`, but do not commit this file.
 
 Example shape:
 
@@ -1349,7 +1349,7 @@ Example shape:
 cases:
   - case_id: ucomx_truebeam_jsz_001
     domain: VMAT_IMRT
-    source_path: data/TrueBeam/<local-file>.dcm
+    source_path: D:/MedicalPhysicsResearch/02_Projects/Plan_Complexity_Metrics/data/TrueBeam/<local-file>.dcm
 ```
 
 - [ ] **Step 6: Run local full comparison**
@@ -1357,8 +1357,8 @@ cases:
 Run:
 
 ```powershell
-.venv\Scripts\python.exe tools\run_ucomx_comparison.py `
-  --case-map %TEMP%\PlanComplexity\ucomx_comparator\local_case_map.yaml `
+D:\MedicalPhysicsResearch\.venv\Scripts\python.exe tools\run_ucomx_comparison.py `
+  --case-map D:\MedicalPhysicsResearch\.codex_tmp\ucomx_comparator\local_case_map.yaml `
   --output-dir run_reports\validation `
   --strict
 ```
@@ -1426,7 +1426,7 @@ def test_summary_includes_ucomx_report_when_available(self):
 Run:
 
 ```powershell
-.venv\Scripts\python.exe -m pytest tests/validation/test_validation_report.py::ValidationReportTests::test_summary_includes_ucomx_report_when_available -q
+D:\MedicalPhysicsResearch\.venv\Scripts\python.exe -m pytest tests/validation/test_validation_report.py::ValidationReportTests::test_summary_includes_ucomx_report_when_available -q
 ```
 
 Expected: FAIL because `render_validation_artifacts()` has no `ucomx_report` parameter.
@@ -1491,7 +1491,7 @@ Use a dictionary-safe approach if Jinja dot access is awkward:
 Run:
 
 ```powershell
-.venv\Scripts\python.exe -m pytest tests/validation/test_validation_report.py -q
+D:\MedicalPhysicsResearch\.venv\Scripts\python.exe -m pytest tests/validation/test_validation_report.py -q
 ```
 
 Expected: PASS.
@@ -1542,7 +1542,7 @@ def test_readiness_allows_public_safe_validation_csv(self):
 Run:
 
 ```powershell
-.venv\Scripts\python.exe -m pytest tests/validation/test_clinical_readiness.py::ClinicalReadinessTests::test_readiness_allows_public_safe_validation_csv -q
+D:\MedicalPhysicsResearch\.venv\Scripts\python.exe -m pytest tests/validation/test_clinical_readiness.py::ClinicalReadinessTests::test_readiness_allows_public_safe_validation_csv -q
 ```
 
 Expected: FAIL because new check function does not exist.
@@ -1586,7 +1586,7 @@ For `ucomx_pack_ready`, load manifest, mapping, and rows from `validation/extern
 Run:
 
 ```powershell
-.venv\Scripts\python.exe -m pytest tests/validation/test_clinical_readiness.py -q
+D:\MedicalPhysicsResearch\.venv\Scripts\python.exe -m pytest tests/validation/test_clinical_readiness.py -q
 ```
 
 Expected: PASS.
@@ -1596,7 +1596,7 @@ Expected: PASS.
 Run:
 
 ```powershell
-.venv\Scripts\python.exe tools\run_clinical_readiness_gate.py --output-dir run_reports\validation
+D:\MedicalPhysicsResearch\.venv\Scripts\python.exe tools\run_clinical_readiness_gate.py --output-dir run_reports\validation
 ```
 
 Expected:
@@ -1617,13 +1617,13 @@ git commit -m "Add UCoMX readiness guardrails"
 ## Task 9: Draft Technical Report And README Workflow
 
 **Files:**
-- Create: `docs/research/ucomx_comparator_validation_technical_report.md`
+- Create: `04_Manuscript/ucomx_comparator_validation_technical_report.md`
 - Modify: `README.md`
 - Modify: `tests/validation/test_validation_report.py` or add a small docs test if desired
 
 - [ ] **Step 1: Draft technical report**
 
-Create `docs/research/ucomx_comparator_validation_technical_report.md` with:
+Create `04_Manuscript/ucomx_comparator_validation_technical_report.md` with:
 
 ```markdown
 # Multi-system Plan Complexity Calculator and UCoMX Comparator Validation Technical Report
@@ -1695,7 +1695,7 @@ Include command examples for normalizer, comparator, and validation report.
 Run:
 
 ```powershell
-.venv\Scripts\python.exe -m pytest tests/validation/test_validation_report.py::ReadmeValidationDocsTests::test_readme_mentions_validation_commands -q
+D:\MedicalPhysicsResearch\.venv\Scripts\python.exe -m pytest tests/validation/test_validation_report.py::ReadmeValidationDocsTests::test_readme_mentions_validation_commands -q
 ```
 
 Expected: PASS, after updating test if it should check for `run_ucomx_comparison.py`.
@@ -1703,7 +1703,7 @@ Expected: PASS, after updating test if it should check for `run_ucomx_comparison
 - [ ] **Step 4: Commit**
 
 ```powershell
-git add README.md docs/research/ucomx_comparator_validation_technical_report.md tests/validation/test_validation_report.py
+git add README.md 04_Manuscript/ucomx_comparator_validation_technical_report.md tests/validation/test_validation_report.py
 git commit -m "Document UCoMX comparator validation workflow"
 ```
 
@@ -1718,7 +1718,7 @@ git commit -m "Document UCoMX comparator validation workflow"
 - [ ] **Step 1: Run focused UCoMX tests**
 
 ```powershell
-.venv\Scripts\python.exe -m pytest tests/validation/test_ucomx_comparator.py -q
+D:\MedicalPhysicsResearch\.venv\Scripts\python.exe -m pytest tests/validation/test_ucomx_comparator.py -q
 ```
 
 Expected: PASS.
@@ -1726,7 +1726,7 @@ Expected: PASS.
 - [ ] **Step 2: Run validation test suite**
 
 ```powershell
-.venv\Scripts\python.exe -m pytest tests/validation -q
+D:\MedicalPhysicsResearch\.venv\Scripts\python.exe -m pytest tests/validation -q
 ```
 
 Expected: PASS.
@@ -1734,7 +1734,7 @@ Expected: PASS.
 - [ ] **Step 3: Run full project tests**
 
 ```powershell
-.venv\Scripts\python.exe -m pytest -q
+D:\MedicalPhysicsResearch\.venv\Scripts\python.exe -m pytest -q
 ```
 
 Expected: all tests pass, allowing existing intentional skips.
@@ -1742,11 +1742,11 @@ Expected: all tests pass, allowing existing intentional skips.
 - [ ] **Step 4: Rebuild reference and comparator artifacts**
 
 ```powershell
-.venv\Scripts\python.exe tools\run_reference_suite.py --profile research --output-dir run_reports\validation
-.venv\Scripts\python.exe tools\run_tool_comparison.py --profile research --output-dir run_reports\validation
-.venv\Scripts\python.exe tools\run_ucomx_comparison.py --case-map %TEMP%\PlanComplexity\ucomx_comparator\local_case_map.yaml --output-dir run_reports\validation
-.venv\Scripts\python.exe tools\build_validation_report.py --profile research --output-dir run_reports\validation
-.venv\Scripts\python.exe tools\run_clinical_readiness_gate.py --output-dir run_reports\validation
+D:\MedicalPhysicsResearch\.venv\Scripts\python.exe tools\run_reference_suite.py --profile research --output-dir run_reports\validation
+D:\MedicalPhysicsResearch\.venv\Scripts\python.exe tools\run_tool_comparison.py --profile research --output-dir run_reports\validation
+D:\MedicalPhysicsResearch\.venv\Scripts\python.exe tools\run_ucomx_comparison.py --case-map D:\MedicalPhysicsResearch\.codex_tmp\ucomx_comparator\local_case_map.yaml --output-dir run_reports\validation
+D:\MedicalPhysicsResearch\.venv\Scripts\python.exe tools\build_validation_report.py --profile research --output-dir run_reports\validation
+D:\MedicalPhysicsResearch\.venv\Scripts\python.exe tools\run_clinical_readiness_gate.py --output-dir run_reports\validation
 ```
 
 Expected:

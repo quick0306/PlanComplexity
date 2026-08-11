@@ -39,7 +39,7 @@ After those exclusions, the comparison found 438 common in-scope files and 19 le
 | 15 | `AGENTS.md` | Convert to ordinary documentation at `docs/research/research_guardrails.md`. |
 | 16 | `DATA_INDEX.md` | Merge into `docs/research/data_and_migration_provenance.md`. |
 | 17 | `MIGRATION_NOTES.md` | Merge into `docs/research/data_and_migration_provenance.md`. |
-| 18 | `docs/superpowers/plans/2026-07-09-ucomx-comparator-validation.md` | Preserve at the same relative path and adapt stale paths. |
+| 18 | `docs/superpowers/plans/2026-07-09-ucomx-comparator-validation.md` | Preserve at the same relative path with the original body unchanged and an overriding non-executable archival warning; the 2026-08-12 user override supersedes the earlier path-adaptation disposition. |
 | 19 | `docs/superpowers/specs/2026-07-09-ucomx-comparator-validation-design.md` | Preserve at the same relative path as unimplemented future work. |
 
 ## Shared-file Differences
