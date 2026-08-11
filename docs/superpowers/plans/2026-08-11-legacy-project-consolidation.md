@@ -1,5 +1,10 @@
 # Legacy Plan Complexity Project Consolidation Implementation Plan
 
+> **COMPLETED PLAN — HISTORICAL ARCHIVE ONLY (2026-08-12):** This consolidation was completed on 2026-08-12. This document is now historical archival material only and is non-executable.
+> This notice overrides every `REQUIRED SUB-SKILL` line, checkbox, imperative, command, path, and acceptance step below.
+> None of those items may be executed or treated as current guidance.
+> `D:\MedicalPhysicsResearch` is a historical source path and may no longer exist.
+
 > **For agentic workers:** REQUIRED SUB-SKILL: Use superpowers:subagent-driven-development (recommended) or superpowers:executing-plans to implement this plan task-by-task. Steps use checkbox (`- [ ]`) syntax for tracking.
 
 **Goal:** Preserve all useful, unique material from the legacy Plan Complexity Metrics snapshot in the current repository without importing obsolete code, monorepo policy, or patient-data tracking behavior.
