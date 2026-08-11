@@ -13,9 +13,11 @@ This directory consolidates research knowledge formerly held in the 2026-05-22 l
 | [Target journal logic](target_journal_logic.md) | Imported evidence boundary | Preserves the journal-selection rationale. |
 | [Research guardrails](research_guardrails.md) | Imported evidence boundary | Converts legacy project instructions into ordinary scientific documentation. |
 | [Data and migration provenance](data_and_migration_provenance.md) | Historical provenance | Combines the historical data index and migration record. |
-| [Shared-code extraction](shared_code_extraction.md) | Future work | Preserves the deferred architecture boundary for extracting stable shared code. |
+| [Shared-code extraction](shared_code_extraction.md) | Deferred architecture work | Preserves the deferred architecture boundary for extracting stable shared code. |
 
 The seven linked research-design and guardrail documents have been imported and are present in this directory.
+
+The data and migration provenance record and the shared-code extraction boundary are also consolidated here. The former is historical provenance; the latter remains deferred architecture work.
 
 The current codebase, tests, privacy rules, and validation fixtures are authoritative. Imported documents describe research intent or historical evidence boundaries; they do not override current implementation or policy.
 
