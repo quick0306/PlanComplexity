@@ -8,7 +8,8 @@ The project preserves plan-complexity-metric research and tooling across TOMO, V
 
 ## Data Traceability
 
-- Validation fixtures, run reports, reference text, and project `data/` retained during the legacy Phase 2 snapshot remain part of the traceability record.
+- Validation fixtures, reference text, and `run_reports/` evidence retained during the legacy Phase 2 snapshot remain part of the traceability record, governed by current repository-hygiene and privacy rules; this statement does not assert that all run-report contents are tracked.
+- Project `data/` retained during the legacy Phase 2 snapshot exists only in this authoritative repository's local working state. It remains Git-ignored and must not be committed.
 - Generated `output/` artifacts remain source-side in this authoritative repository unless a later recorded decision establishes why they are needed elsewhere.
 - Metric definitions, assumptions, and test evidence are tracked before any code is extracted into a shared package.
 

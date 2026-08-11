@@ -6,7 +6,8 @@
 ## Source Evidence
 
 - This repository is the authoritative source for Plan_Complexity_Metrics code, tests, policies, fixtures, and ongoing work; the legacy unified-workspace copy is historical provenance only.
-- Current repository evidence includes metric code for VMAT/IMRT, TOMO, CyberKnife MLC, Aurora SVMAT, Halcyon/Ethos, GUI/CLI entry points, docs, tests, validation framework, `data/`, and [`run_reports/`](../../run_reports/).
+- Current repository evidence includes metric code for VMAT/IMRT, TOMO, CyberKnife MLC, Aurora SVMAT, Halcyon/Ethos, GUI/CLI entry points, docs, tests, validation framework, and [`run_reports/`](../../run_reports/) evidence governed by current repository-hygiene and privacy rules; this statement does not assert that all run-report contents are tracked.
+- `data/` is retained only in this authoritative repository's local working state. It remains Git-ignored and must not be committed.
 - Generated `output/` artifacts remain source-side in this authoritative repository and are indexed rather than copied elsewhere.
 
 ## Primary Research Question

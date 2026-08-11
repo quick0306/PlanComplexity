@@ -11,7 +11,8 @@
 
 ## Current Data or Dependency Boundary
 
-- `data/` and [`run_reports/`](../../run_reports/) are retained in this repository for internal verification and validation evidence.
+- `data/` is retained only in this authoritative repository's local working state. It remains Git-ignored and must not be committed.
+- [`run_reports/`](../../run_reports/) provides internal verification and validation evidence governed by current repository-hygiene and privacy rules; this statement does not assert that all run-report contents are tracked.
 - The legacy source data/evidence included 238 data files (about 220.54 MB) and 21 run-report files (about 1.33 MB); these counts are retained as historical provenance rather than asserted as the current inventory.
 - Generated `output/` remains source-side in this authoritative repository and is indexed rather than copied elsewhere.
 
