@@ -56,6 +56,35 @@ The standardized placeholder directories `01_Data`, `02_Code`, `03_Results`,
 `04_Manuscript`, `05_References`, and `99_Archive` are not copied. Their README
 files contain no project information beyond the empty monorepo skeleton.
 
+## Complete Legacy-only File Map
+
+Every one of the 19 legacy-only files has the following disposition:
+
+| Legacy source | Disposition in current repository |
+|---|---|
+| `00_Project_Design/analysis_plan.md` | Import as `docs/research/analysis_plan.md`. |
+| `00_Project_Design/novelty_and_gap.md` | Import as `docs/research/novelty_and_gap.md`. |
+| `00_Project_Design/project_design_summary.md` | Import as `docs/research/project_design_summary.md`. |
+| `00_Project_Design/README.md` | Do not copy; replace its placeholder role with `docs/research/README.md`. |
+| `00_Project_Design/research_question.md` | Import as `docs/research/research_question.md`. |
+| `00_Project_Design/reviewer_risk_register.md` | Import as `docs/research/reviewer_risk_register.md`. |
+| `00_Project_Design/target_journal_logic.md` | Import as `docs/research/target_journal_logic.md`. |
+| `01_Data/README.md` | Do not copy; placeholder-only and covered by the provenance document. |
+| `02_Code/extraction_note.md` | Import as `docs/research/shared_code_extraction.md`. |
+| `02_Code/README.md` | Do not copy; placeholder-only and covered by the research index. |
+| `03_Results/README.md` | Do not copy; placeholder-only and covered by the research index. |
+| `04_Manuscript/README.md` | Do not copy; placeholder-only and covered by the research index. |
+| `05_References/README.md` | Do not copy; placeholder-only and covered by the research index. |
+| `99_Archive/README.md` | Do not copy; placeholder-only and covered by the comparison report. |
+| `AGENTS.md` | Rewrite as ordinary documentation at `docs/research/research_guardrails.md`. |
+| `DATA_INDEX.md` | Merge into `docs/research/data_and_migration_provenance.md`. |
+| `MIGRATION_NOTES.md` | Merge into `docs/research/data_and_migration_provenance.md`. |
+| `docs/superpowers/plans/2026-07-09-ucomx-comparator-validation.md` | Import at the same relative path and adapt stale execution paths. |
+| `docs/superpowers/specs/2026-07-09-ucomx-comparator-validation-design.md` | Import at the same relative path and mark as imported, future work. |
+
+`docs/research/codebase_comparison_2026-08-11.md` is newly authored from the
+comparison evidence and is not counted among the 19 legacy-only files.
+
 ## UCoMX Documents
 
 Copy the legacy UCoMX validation documents into the existing documentation
@@ -74,7 +103,8 @@ tree:
 - Replace the planned `04_Manuscript` output with
   `docs/research/ucomx_comparator_validation_technical_report.md`.
 - Replace protected temporary paths beneath `D:\MedicalPhysicsResearch` with
-  a user-local temporary directory outside the repository.
+  `%TEMP%\PlanComplexity\ucomx_comparator`, which is user-local and outside the
+  repository.
 - Retain references to `C:\Users\hujin\Desktop\Programming\ucomx` because that
   is a separate input location and is not part of the tree being discarded.
 
