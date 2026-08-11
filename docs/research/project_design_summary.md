@@ -13,7 +13,7 @@
 
 - `data/` and [`run_reports/`](../../run_reports/) are retained in this repository for internal verification and validation evidence.
 - The legacy source data/evidence included 238 data files (about 220.54 MB) and 21 run-report files (about 1.33 MB); these counts are retained as historical provenance rather than asserted as the current inventory.
-- Generated `output/` remains outside the authoritative repository and is indexed as historical evidence rather than copied into it.
+- Generated `output/` remains source-side in this authoritative repository as generated, untracked material and is indexed rather than copied elsewhere.
 
 ## Required Inputs
 
