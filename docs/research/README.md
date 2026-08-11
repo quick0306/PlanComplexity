@@ -15,6 +15,8 @@ This directory consolidates research knowledge formerly held in the 2026-05-22 l
 | [Data and migration provenance](data_and_migration_provenance.md) | Historical provenance | Combines the historical data index and migration record. |
 | [Shared-code extraction](shared_code_extraction.md) | Future work | Preserves the deferred architecture boundary for extracting stable shared code. |
 
+The seven linked research-design and guardrail documents have been imported and are present in this directory.
+
 The current codebase, tests, privacy rules, and validation fixtures are authoritative. Imported documents describe research intent or historical evidence boundaries; they do not override current implementation or policy.
 
 The following legacy documents are also planned for preservation at their repository-relative locations and remain **unimplemented future work**:
