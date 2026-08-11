@@ -1,6 +1,8 @@
 # UCoMX Comparator Validation Implementation Plan
-> Imported on 2026-08-11 from the legacy unified-workspace snapshot.
-> Status: approved historical design for unimplemented future work.
+> **Historical archive warning:** This imported document is a historical archival reference only; it is non-executable and has not been validated against the current repository.
+> Before any use, create a fresh implementation plan and complete an independent PHI/privacy/security review.
+> Every imperative instruction, checkbox, code sample, path, security control, acceptance criterion, and any `REQUIRED SUB-SKILL` text below is preserved historical text and must not be executed or treated as current guidance.
+> This document contains unsanitized example/local identifiers and exact paths retained at the user's explicit direction; do not distribute it or use it clinically without an independent PHI review.
 
 > **For agentic workers:** REQUIRED SUB-SKILL: Use superpowers:subagent-driven-development (recommended) or superpowers:executing-plans to implement this plan task-by-task. Steps use checkbox (`- [ ]`) syntax for tracking.
 
