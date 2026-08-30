@@ -170,6 +170,8 @@ def analyze_plan_file(source_path: str, requested_mode: AnalysisMode = AnalysisM
     metadata = get_plan_metadata(plan_info, plan_dict)
     detected_mode = detect_mode(metadata)
     active_mode = detected_mode if requested_mode == AnalysisMode.AUTO else requested_mode
+    if active_mode == AnalysisMode.VMAT_IMRT:
+        metadata["metric_formula_version"] = "hybrid-v2"
     cyberknife_beams = None
 
     if active_mode == AnalysisMode.TOMO:
@@ -234,7 +236,6 @@ def analyze_plan_file(source_path: str, requested_mode: AnalysisMode = AnalysisM
             )
         else:
             metrics, metric_warnings = calculate_core_metrics_with_warnings(plan_dict)
-            metadata["metric_formula_version"] = "hybrid-v2"
     except IndexError as exc:
         return _unsupported_result(
             source_path=source_path,
