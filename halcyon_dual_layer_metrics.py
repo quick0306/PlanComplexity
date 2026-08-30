@@ -125,16 +125,24 @@ def _has_dual_layer_devices(beam: Dict[str, Any]) -> bool:
 
 def _dual_layer_alignment_ok(beam: Dict[str, Any]) -> bool:
     creator = AperturesFromBeamCreator()
-    distal_count = 0
-    proximal_count = 0
+    last_distal = None
+    last_proximal = None
+    paired_count = 0
     for control_point in beam.get("ControlPointSequence", []):
-        has_distal = creator.get_halcyon_leaf_positions(control_point, DISTAL_DEVICE) is not None
-        has_proximal = creator.get_halcyon_leaf_positions(control_point, PROXIMAL_DEVICE) is not None
-        distal_count += int(has_distal)
-        proximal_count += int(has_proximal)
-        if has_distal != has_proximal:
+        distal = creator.get_halcyon_leaf_positions(control_point, DISTAL_DEVICE)
+        proximal = creator.get_halcyon_leaf_positions(control_point, PROXIMAL_DEVICE)
+        if distal is None:
+            distal = last_distal
+        if proximal is None:
+            proximal = last_proximal
+        if (distal is None) != (proximal is None):
             return False
-    return distal_count == proximal_count
+        if distal is None:
+            continue
+        last_distal = np.asarray(distal, dtype=float).copy()
+        last_proximal = np.asarray(proximal, dtype=float).copy()
+        paired_count += 1
+    return paired_count == len(beam.get("ControlPointSequence", []))
 
 
 def _calculate_beam_paper_metrics(beam: Dict[str, Any]) -> BeamPaperMetrics | None:
@@ -354,11 +362,19 @@ def _build_layer_control_points(beam: Dict[str, Any]) -> list[LayerControlPoint]
 
     snapshots: list[LayerControlPoint] = []
     creator = AperturesFromBeamCreator()
+    last_distal_positions = None
+    last_proximal_positions = None
     for control_point in beam.get("ControlPointSequence", []):
         distal_positions = creator.get_halcyon_leaf_positions(control_point, DISTAL_DEVICE)
         proximal_positions = creator.get_halcyon_leaf_positions(control_point, PROXIMAL_DEVICE)
+        if distal_positions is None and last_distal_positions is not None:
+            distal_positions = last_distal_positions.copy()
+        if proximal_positions is None and last_proximal_positions is not None:
+            proximal_positions = last_proximal_positions.copy()
         if distal_positions is None or proximal_positions is None:
             continue
+        last_distal_positions = np.asarray(distal_positions, dtype=float).copy()
+        last_proximal_positions = np.asarray(proximal_positions, dtype=float).copy()
 
         gantry_angle = float(control_point.GantryAngle) if "GantryAngle" in control_point else float(beam.get("GantryAngle", 0.0))
         jaw = creator.get_halcyon_jaw_positions(beam, control_point)

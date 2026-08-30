@@ -162,6 +162,25 @@ class HalcyonDualLayerPaperMetricTests(unittest.TestCase):
         self.assertTrue(all(metrics[key] is None for key in HYBRID_REPRESENTATION_KEYS))
         self.assertTrue(any(item.startswith("[HALCYON_LAYER_ALIGNMENT]") for item in warnings))
 
+    def test_omitted_unchanged_dual_layer_positions_are_inherited(self):
+        samples = sorted(Path("data/Halcyon").glob("*.dcm"))
+        if not samples:
+            self.skipTest("No Halcyon RTPLAN samples are available")
+
+        plan = RTPlan(filename=str(samples[0])).to_plan_dict()
+        beam = next(iter(plan["beams"].values()))
+        control_point = beam["ControlPointSequence"][-1]
+        control_point.BeamLimitingDevicePositionSequence = [
+            item
+            for item in control_point.BeamLimitingDevicePositionSequence
+            if str(item.RTBeamLimitingDeviceType).upper() not in {"MLCX1", "MLCX2"}
+        ]
+
+        metrics, warnings = calculate_halcyon_dual_layer_metrics_with_warnings(plan)
+
+        self.assertTrue(all(metrics[key] is not None for key in HYBRID_REPRESENTATION_KEYS))
+        self.assertFalse(any(item.startswith("[HALCYON_LAYER_ALIGNMENT]") for item in warnings))
+
 
 if __name__ == "__main__":
     unittest.main()
