@@ -3,6 +3,7 @@ import math
 import numpy as np
 
 from ApertureMetric.aperture_geometry import PyAperture
+from ApertureMetric.stacked_aperture import stack_dual_layer_apertures
 from ComplexityMetric.aperture_series_metrics import (
     active_pair_count,
     mean_asymmetry_distance,
@@ -97,3 +98,30 @@ def test_invalid_weights_use_uniform_fallback_and_report_it():
 
     assert result.value == 1.5
     assert result.used_uniform_weights
+
+
+def test_stacked_aperture_preserves_layer_geometry_and_jaw_state():
+    distal = _aperture(
+        [-2.0, -3.0],
+        [2.0, 3.0],
+        widths=[5.0, 5.0],
+        jaw=[-20.0, 4.9, 20.0, -4.9],
+    )
+    proximal = _aperture(
+        [-4.0, -5.0],
+        [4.0, 5.0],
+        widths=[5.0, 5.0],
+        jaw=[-20.0, 4.9, 20.0, -4.9],
+    )
+
+    stacked = stack_dual_layer_apertures(distal, proximal)
+
+    assert stacked.active_pair_count == 4
+    assert math.isclose(stacked.area(), distal.area() + proximal.area())
+    assert stacked.artificial_boundary_count == 1
+    assert [pair.layer_id for pair in stacked.leaf_pairs] == ["MLCX1", "MLCX1", "MLCX2", "MLCX2"]
+    assert [pair.slot_id for pair in stacked.leaf_pairs] == [0, 1, 0, 1]
+    assert stacked.leaf_pairs[0].width == distal.leaf_pairs[0].width
+    assert stacked.leaf_pairs[2].left == proximal.leaf_pairs[0].left
+    assert stacked.leaf_pairs[2].right == proximal.leaf_pairs[0].right
+    assert not any(pair.is_outside_jaw() for pair in stacked.leaf_pairs)
