@@ -9,8 +9,12 @@ from ApertureMetric.aperture_geometry import PyAperture
 from ComplexityMetric.leaf_gap import LeafGap
 from ComplexityMetric.mean_asymmetry_distance import MeanAsymmetryDistance
 from ComplexityMetric.small_aperture_score import SmallApertureScore
-from ucomx_service import analyze_plan_file, build_export_record
-from vcomx_vmat_metrics import calculate_vcomx_supplemental_metrics
+from ucomx_models import AnalysisMode
+from ucomx_service import _analyze_plan_file_safe, analyze_plan_file, build_export_record
+from vcomx_vmat_metrics import (
+    calculate_vcomx_supplemental_metrics,
+    calculate_vcomx_supplemental_metrics_with_warnings,
+)
 
 
 TRUEBEAM_BASELINE_PLAN = Path(
@@ -18,7 +22,7 @@ TRUEBEAM_BASELINE_PLAN = Path(
 )
 
 
-def test_representative_truebeam_preserves_legacy_metric_values():
+def test_representative_truebeam_preserves_required_legacy_values_and_uses_hybrid_nl():
     if not TRUEBEAM_BASELINE_PLAN.exists():
         pytest.skip("Representative TrueBeam RTPLAN fixture is unavailable")
 
@@ -26,7 +30,7 @@ def test_representative_truebeam_preserves_legacy_metric_values():
 
     assert {
         key: float(result.flattened_metrics[key])
-        for key in ("mcsv", "aav", "lsv", "pa", "ja", "lt", "nl")
+        for key in ("mcsv", "aav", "lsv", "pa", "ja", "lt")
     } == {
         "mcsv": 0.32,
         "aav": 0.37,
@@ -34,8 +38,8 @@ def test_representative_truebeam_preserves_legacy_metric_values():
         "pa": 3209.64,
         "ja": 12440.02,
         "lt": 37.47,
-        "nl": 35.62,
     }
+    assert result.flattened_metrics["nl"] == 38.0
 
 
 def _aperture(left, right):
@@ -114,6 +118,20 @@ def test_core_metrics_keep_mapping_api_and_report_weight_fallbacks():
     assert any(warning.startswith("[METRIC_WEIGHT_FALLBACK]") for warning in warnings)
 
 
+def test_supplemental_metrics_report_uniform_weight_fallbacks():
+    first = _aperture([0.0], [2.0])
+    second = _aperture([-1.0], [9.0])
+    plan = _plan([first, second])
+    plan["beams"][1]["_cached_cp_metersets"] = np.asarray([np.nan, np.nan])
+    plan["beams"][1]["_cached_cumulative_metersets"] = np.asarray([0.0])
+
+    metrics, warnings = calculate_vcomx_supplemental_metrics_with_warnings(plan)
+
+    assert metrics["nl_pairs"] == 1.0
+    assert any("Supplemental control-point" in warning for warning in warnings)
+    assert any("Supplemental control-arc" in warning for warning in warnings)
+
+
 def test_vmat_analysis_and_exports_include_formula_provenance():
     if not TRUEBEAM_BASELINE_PLAN.exists():
         pytest.skip("Representative TrueBeam RTPLAN fixture is unavailable")
@@ -125,3 +143,15 @@ def test_vmat_analysis_and_exports_include_formula_provenance():
     assert export_record["metric_formula_version"] == "hybrid-v2"
     assert "Formula_Version" in BASE_HEADER
     assert build_standard_row(result.metadata, {})[7] == "hybrid-v2"
+
+
+def test_failed_vmat_analysis_keeps_formula_provenance(monkeypatch):
+    def fail_analysis(*args, **kwargs):
+        raise ValueError("synthetic parse failure")
+
+    monkeypatch.setattr("ucomx_service.analyze_plan_file", fail_analysis)
+
+    result = _analyze_plan_file_safe("invalid.dcm", AnalysisMode.VMAT_IMRT)
+
+    assert not result.supported
+    assert result.metadata["metric_formula_version"] == "hybrid-v2"

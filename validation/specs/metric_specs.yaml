@@ -8451,16 +8451,17 @@ metric_specs:
   key: lt_mean_leaf_effective
   metric_key: lt_mean_leaf_effective
   label: LT Mean Leaf Effective
+  unit: mm/moving effective virtual leaf
 - <<: *hybrid_v2_metric
   key: nl_pairs_effective
   metric_key: nl_pairs_effective
   label: NL Pairs Effective
-  unit: active leaf pairs
+  unit: active effective virtual leaf pairs
 - <<: *hybrid_v2_metric
   key: nl_leaves_effective
   metric_key: nl_leaves_effective
   label: NL Leaves Effective
-  unit: active physical leaves
+  unit: active effective virtual leaves
 - <<: *hybrid_v2_metric
   key: mcsv_stacked
   metric_key: mcsv_stacked

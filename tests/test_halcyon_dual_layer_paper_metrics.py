@@ -6,7 +6,9 @@ import numpy as np
 from ApertureMetric.aperture_geometry import PyAperture
 from DicomParse.dicom_rt import RTPlan
 from halcyon_dual_layer_metrics import (
+    BeamPaperMetrics,
     HYBRID_REPRESENTATION_KEYS,
+    _aggregate_beam_results,
     _layer_contributions,
     calculate_halcyon_dual_layer_metrics_with_warnings,
 )
@@ -15,6 +17,23 @@ from ucomx_service import analyze_plan_file, build_metric_reference_rows
 
 
 class HalcyonDualLayerPaperMetricTests(unittest.TestCase):
+    def test_plan_aggregation_excludes_beams_without_valid_geometry_observations(self):
+        metrics = _aggregate_beam_results(
+            [
+                BeamPaperMetrics(
+                    values={"mad_effective": None, "nl_pairs_effective": 0.0},
+                    mu=3.0,
+                ),
+                BeamPaperMetrics(
+                    values={"mad_effective": 10.0, "nl_pairs_effective": 2.0},
+                    mu=1.0,
+                ),
+            ]
+        )
+
+        self.assertEqual(metrics["mad_effective"], 10.0)
+        self.assertEqual(metrics["nl_pairs_effective"], 0.5)
+
     def test_halcyon_result_includes_tamura_and_quintero_metrics(self):
         samples = sorted(Path("data/Halcyon").glob("*.dcm"))
         if not samples:

@@ -10,7 +10,7 @@ from ApertureMetric.aperture_geometry import PyAperture
 from ApertureMetric.aperture_creator import AperturesFromBeamCreator
 from ApertureMetric.meterset_creator import MetersetsFromMetersetWeightsCreator
 from ApertureMetric.mlc_attributes import MLCAttributes
-from ComplexityMetric.aperture_series_metrics import mean_leaf_travel
+from ComplexityMetric.aperture_series_metrics import active_leaf_pairs, mean_leaf_travel
 from DicomParse.utilities import divide_or_default
 
 
@@ -44,13 +44,22 @@ class BeamLayerSummary:
 
 
 def calculate_vcomx_supplemental_metrics(plan_dict: Dict[str, object]) -> Dict[str, object]:
+    metrics, _ = calculate_vcomx_supplemental_metrics_with_warnings(plan_dict)
+    return metrics
+
+
+def calculate_vcomx_supplemental_metrics_with_warnings(
+    plan_dict: Dict[str, object],
+) -> tuple[Dict[str, object], list[str]]:
     beams = [
         beam
         for beam in plan_dict.get("beams", {}).values()
         if beam.get("TreatmentDeliveryType") == "TREATMENT" and float(beam.get("MU", 0.0)) > 0.0
     ]
     if not beams:
-        return {}
+        return {}, []
+
+    warnings = _supplemental_weight_warnings(beams)
 
     total_mu = float(plan_dict.get("Plan_MU", 0.0) or sum(float(beam.get("MU", 0.0)) for beam in beams))
     fractions = float(plan_dict.get("fractions", 0.0) or 0.0)
@@ -97,7 +106,37 @@ def calculate_vcomx_supplemental_metrics(plan_dict: Dict[str, object]) -> Dict[s
             )
         metrics["nl"] = metrics["nl_pairs"]
 
-    return metrics
+    return metrics, list(dict.fromkeys(warnings))
+
+
+def supplemental_metric_weight_warnings(plan_dict: Dict[str, object]) -> list[str]:
+    beams = [
+        beam
+        for beam in plan_dict.get("beams", {}).values()
+        if beam.get("TreatmentDeliveryType") == "TREATMENT" and float(beam.get("MU", 0.0)) > 0.0
+    ]
+    return _supplemental_weight_warnings(beams)
+
+
+def _supplemental_weight_warnings(beams: Sequence[Dict[str, object]]) -> list[str]:
+    warnings = []
+    for beam_number, beam in enumerate(beams, start=1):
+        _, cp_fallback = _cp_weights_with_fallback(beam)
+        _, ca_fallback = _ca_weights_with_fallback(beam)
+        if cp_fallback:
+            warnings.append(
+                "[METRIC_WEIGHT_FALLBACK] Supplemental control-point metrics used uniform "
+                f"weights for treatment beam {beam_number} because MU increments were missing, "
+                "misaligned, or invalid."
+            )
+        if ca_fallback:
+            warnings.append(
+                "[METRIC_WEIGHT_FALLBACK] Supplemental control-arc metrics used uniform "
+                f"weights for treatment beam {beam_number} because MU increments were missing, "
+                "misaligned, or invalid."
+            )
+
+    return list(dict.fromkeys(warnings))
 
 
 def _summarize_dual_layer_beam(beam: Dict[str, object]) -> tuple[BeamLayerSummary, BeamLayerSummary]:
@@ -198,17 +237,40 @@ def _timing_metrics(apertures: Sequence[PyAperture], cumulative_mu: np.ndarray |
 
 
 def _cp_weights(beam: Dict[str, object]) -> np.ndarray:
+    return _cp_weights_with_fallback(beam)[0]
+
+
+def _cp_weights_with_fallback(beam: Dict[str, object]) -> tuple[np.ndarray, bool]:
+    expected_count = len(beam.get("ControlPointSequence", []))
     values = MetersetsFromMetersetWeightsCreator().create(beam)
-    if values is None or len(values) == 0:
-        return np.ones(len(beam.get("ControlPointSequence", [])), dtype=float)
-    return np.asarray(values, dtype=float)
+    return _validated_weights(values, expected_count)
 
 
 def _ca_weights(beam: Dict[str, object]) -> np.ndarray:
+    return _ca_weights_with_fallback(beam)[0]
+
+
+def _ca_weights_with_fallback(beam: Dict[str, object]) -> tuple[np.ndarray, bool]:
+    expected_count = max(len(beam.get("ControlPointSequence", [])) - 1, 0)
     cumulative = MetersetsFromMetersetWeightsCreator().get_cumulative_metersets(beam)
-    if cumulative is None or len(cumulative) < 2:
-        return np.ones(max(len(beam.get("ControlPointSequence", [])) - 1, 0), dtype=float)
-    return np.diff(np.asarray(cumulative, dtype=float))
+    values = None if cumulative is None else np.diff(np.asarray(cumulative, dtype=float))
+    return _validated_weights(values, expected_count)
+
+
+def _validated_weights(
+    values: Sequence[float] | None, expected_count: int
+) -> tuple[np.ndarray, bool]:
+    if values is not None:
+        weights = np.asarray(values, dtype=float)
+        valid = (
+            weights.size == expected_count
+            and np.all(np.isfinite(weights))
+            and np.all(weights >= 0.0)
+            and (expected_count == 0 or float(np.sum(weights)) > 0.0)
+        )
+        if valid:
+            return weights, False
+    return np.ones(expected_count, dtype=float), True
 
 
 def _weighted_mean(values: Iterable[float], weights: Sequence[float]) -> float:
@@ -216,32 +278,33 @@ def _weighted_mean(values: Iterable[float], weights: Sequence[float]) -> float:
     if values_arr.size == 0:
         return 0.0
     weights_arr = np.asarray(weights, dtype=float)
-    if weights_arr.size != values_arr.size:
+    if (
+        weights_arr.size != values_arr.size
+        or not np.all(np.isfinite(weights_arr))
+        or np.any(weights_arr < 0.0)
+        or float(np.sum(weights_arr)) <= 0.0
+    ):
         weights_arr = np.ones(values_arr.size, dtype=float)
-    valid = np.isfinite(values_arr) & np.isfinite(weights_arr) & (weights_arr >= 0)
+    valid = np.isfinite(values_arr)
     if not np.any(valid):
         return 0.0
     values_arr = values_arr[valid]
     weights_arr = weights_arr[valid]
     total = float(np.sum(weights_arr))
-    if total <= 0:
+    if total <= 0.0:
         return float(np.mean(values_arr))
     return float(np.sum(values_arr * weights_arr) / total)
 
 
 def _weighted_fraction(mask: np.ndarray, weights: Sequence[float]) -> float:
-    weights_arr = np.asarray(weights, dtype=float)
     mask_arr = np.asarray(mask, dtype=float)
-    if weights_arr.size != mask_arr.size or mask_arr.size == 0:
+    if mask_arr.size == 0:
         return 0.0
-    total = np.sum(weights_arr)
-    if total <= 0:
-        return float(np.mean(mask_arr))
-    return float(np.sum(mask_arr * weights_arr) / total)
+    return _weighted_mean(mask_arr, weights)
 
 
 def _active_leaf_count(aperture: PyAperture) -> int:
-    return sum(1 for lp in aperture.leaf_pairs if not lp.is_outside_jaw() and lp.field_size() > 0)
+    return len(active_leaf_pairs(aperture))
 
 
 def _aperture_perimeter(aperture: PyAperture) -> float:

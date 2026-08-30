@@ -4,7 +4,13 @@ import numpy as np
 
 from ApertureMetric.aperture_creator import AperturesFromBeamCreator
 from ApertureMetric.aperture_geometry import PyAperture
-from ComplexityMetric.aperture_series_metrics import GapMoments, weighted_gap_moments, weighted_mean
+from ComplexityMetric.aperture_series_metrics import (
+    GapMoments,
+    active_leaf_pairs,
+    raw_leaf_gap,
+    weighted_gap_moments,
+    weighted_mean,
+)
 from ComplexityMetric.complexity_metric import ComplexityMetric
 
 
@@ -39,7 +45,7 @@ class LeafGap(ComplexityMetric):
             cp_weights = self.get_weights_beam(beam)
             for layer_index, layer_apertures in enumerate(aperture_layers):
                 moments = weighted_gap_moments(layer_apertures, cp_weights)
-                if not self.get_aperture_leaf_gaps(layer_apertures):
+                if not any(active_leaf_pairs(aperture) for aperture in layer_apertures):
                     continue
                 if moments.used_uniform_weights:
                     warnings.append(
@@ -74,15 +80,11 @@ class LeafGap(ComplexityMetric):
 
     @staticmethod
     def get_aperture_leaf_gaps(apertures: List[PyAperture]) -> List[float]:
-        gaps = []
-        for aperture in apertures:
-            for leaf_pair in aperture.leaf_pairs:
-                if leaf_pair.is_outside_jaw():
-                    continue
-                gap = leaf_pair.field_size()
-                if gap > 0:
-                    gaps.append(gap)
-        return gaps
+        return [
+            raw_leaf_gap(leaf_pair)
+            for aperture in apertures
+            for leaf_pair in active_leaf_pairs(aperture)
+        ]
 
     def calculate_per_aperture(self, apertures: List[PyAperture]) -> List[float]:
         return [self.summarize(self.get_aperture_leaf_gaps([aperture]))[0] for aperture in apertures]

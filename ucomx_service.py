@@ -533,10 +533,13 @@ def _analyze_plan_file_safe(source_path: str, requested_mode: AnalysisMode) -> P
         return analyze_plan_file(source_path, requested_mode=requested_mode)
     except Exception as exc:
         fallback_mode = requested_mode if requested_mode != AnalysisMode.AUTO else AnalysisMode.VMAT_IMRT
+        metadata = {"plan_name": "", "patient_id": "", "patient_name": "", "machine_id": ""}
+        if fallback_mode == AnalysisMode.VMAT_IMRT:
+            metadata["metric_formula_version"] = "hybrid-v2"
         return PlanAnalysisResult(
             source_path=source_path,
             mode=fallback_mode,
-            metadata={"plan_name": "", "patient_id": "", "patient_name": "", "machine_id": ""},
+            metadata=metadata,
             metrics={},
             flattened_metrics={},
             supported=False,

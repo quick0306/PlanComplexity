@@ -100,6 +100,22 @@ def test_invalid_weights_use_uniform_fallback_and_report_it():
     assert result.used_uniform_weights
 
 
+def test_hybrid_aperture_metrics_use_raw_gap_and_y_jaw_only():
+    clipped_by_x_jaw = _aperture(
+        [-10.0], [10.0], jaw=[-2.0, 10.0, 2.0, -10.0]
+    )
+    outside_x_jaw = _aperture(
+        [10.0], [20.0], jaw=[-2.0, 10.0, 2.0, -10.0]
+    )
+
+    moments = weighted_gap_moments([clipped_by_x_jaw, outside_x_jaw], [1.0, 1.0])
+
+    assert moments.mean == 15.0
+    assert small_aperture_score([clipped_by_x_jaw], [1.0], 5.0).value == 0.0
+    assert active_pair_count([outside_x_jaw], [1.0]).value == 1.0
+    assert mean_asymmetry_distance([outside_x_jaw], [1.0]).value == 15.0
+
+
 def test_stacked_aperture_preserves_layer_geometry_and_jaw_state():
     distal = _aperture(
         [-2.0, -3.0],

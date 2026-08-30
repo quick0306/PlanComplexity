@@ -16,11 +16,15 @@ class StackedLeafPair:
     layer_id: str
     slot_id: int
     _outside_jaw: bool
+    _outside_y_jaw: bool
     _field_size: float
     _open_leaf_width: float
 
     def is_outside_jaw(self) -> bool:
         return self._outside_jaw
+
+    def is_outside_y_jaw(self) -> bool:
+        return self._outside_y_jaw
 
     def field_size(self) -> float:
         return self._field_size
@@ -81,6 +85,9 @@ def _pair_view(pair, layer_id: str, slot_id: int) -> StackedLeafPair:
         layer_id=layer_id,
         slot_id=slot_id,
         _outside_jaw=bool(pair.is_outside_jaw()),
+        _outside_y_jaw=bool(
+            pair.jaw.top <= pair.bottom or pair.jaw.bottom >= pair.top
+        ),
         _field_size=float(pair.field_size()),
         _open_leaf_width=float(pair.open_leaf_width()),
     )

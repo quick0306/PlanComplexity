@@ -11,7 +11,9 @@ from ApertureMetric.aperture_geometry import PyAperture
 from ApertureMetric.meterset_creator import MetersetsFromMetersetWeightsCreator
 from ApertureMetric.stacked_aperture import StackedAperture, stack_dual_layer_apertures
 from ComplexityMetric.aperture_series_metrics import (
+    active_leaf_pairs,
     active_pair_count,
+    is_outside_y_jaw,
     mean_asymmetry_distance,
     mean_leaf_travel,
     small_aperture_score,
@@ -42,7 +44,7 @@ class LayerControlPoint:
 
 @dataclass(frozen=True)
 class BeamPaperMetrics:
-    values: Dict[str, float]
+    values: Dict[str, float | None]
     mu: float
     warnings: tuple[str, ...] = ()
 
@@ -74,13 +76,7 @@ def calculate_halcyon_dual_layer_metrics_with_warnings(
             ]
         return {}, []
 
-    total_mu = sum(result.mu for result in beam_results)
-    metric_keys = list(beam_results[0].values.keys())
-    metrics: Dict[str, float] = {}
-    for key in metric_keys:
-        metrics[key] = _round_metric(
-            sum(result.values.get(key, 0.0) * result.mu for result in beam_results) / total_mu
-        )
+    metrics = _aggregate_beam_results(beam_results)
     warnings = list(dict.fromkeys(warning for result in beam_results for warning in result.warnings))
     if alignment_failed:
         for key in HYBRID_REPRESENTATION_KEYS:
@@ -90,6 +86,25 @@ def calculate_halcyon_dual_layer_metrics_with_warnings(
             "the dual-layer control-point series are not aligned."
         )
     return metrics, warnings
+
+
+def _aggregate_beam_results(beam_results: Sequence[BeamPaperMetrics]) -> Dict[str, float]:
+    """Aggregate each metric over beams that contain a valid observation for it."""
+    metric_keys = list(beam_results[0].values.keys())
+    metrics: Dict[str, float] = {}
+    for key in metric_keys:
+        observations = [
+            (float(value), result.mu)
+            for result in beam_results
+            if (value := result.values.get(key)) is not None
+        ]
+        observation_mu = sum(mu for _, mu in observations)
+        metrics[key] = _round_metric(
+            sum(value * mu for value, mu in observations) / observation_mu
+            if observation_mu > 0.0
+            else 0.0
+        )
+    return metrics
 
 
 HYBRID_REPRESENTATION_KEYS = tuple(
@@ -287,7 +302,8 @@ def _hybrid_representation_values(
     cp_mu: Sequence[float],
     interval_mu: Sequence[float],
     suffix: str,
-) -> tuple[Dict[str, float], list[str]]:
+) -> tuple[Dict[str, float | None], list[str]]:
+    has_active_pairs = any(active_leaf_pairs(aperture) for aperture in apertures)
     gap_moments = weighted_gap_moments(apertures, cp_mu)
     mad = mean_asymmetry_distance(apertures, cp_mu)
     sas_values = {
@@ -305,12 +321,12 @@ def _hybrid_representation_values(
         f"aav_{suffix}": aav,
         f"lsv_{suffix}": lsv,
         f"pa_{suffix}": _weighted_cp_mean([aperture.area() for aperture in apertures], cp_mu),
-        f"mad_{suffix}": mad.value,
-        f"alg_{suffix}": gap_moments.mean,
-        f"alg_sd_{suffix}": gap_moments.standard_deviation,
-        f"sas_5mm_{suffix}": sas_values[5].value,
-        f"sas_10mm_{suffix}": sas_values[10].value,
-        f"sas_20mm_{suffix}": sas_values[20].value,
+        f"mad_{suffix}": mad.value if has_active_pairs else None,
+        f"alg_{suffix}": gap_moments.mean if has_active_pairs else None,
+        f"alg_sd_{suffix}": gap_moments.standard_deviation if has_active_pairs else None,
+        f"sas_5mm_{suffix}": sas_values[5].value if has_active_pairs else None,
+        f"sas_10mm_{suffix}": sas_values[10].value if has_active_pairs else None,
+        f"sas_20mm_{suffix}": sas_values[20].value if has_active_pairs else None,
         f"lt_{suffix}": _weighted_interval_mean(travel_terms, interval_mu),
         f"lt_mean_leaf_{suffix}": mean_leaf_travel(apertures),
         f"nl_pairs_{suffix}": pair_count.value,
@@ -347,7 +363,7 @@ def _beam_aav_lsv(
 def _leaf_travel_total(first: Any, second: Any) -> float:
     total = 0.0
     for first_pair, second_pair in zip(first.leaf_pairs, second.leaf_pairs):
-        if first_pair.is_outside_jaw() and second_pair.is_outside_jaw():
+        if is_outside_y_jaw(first_pair) and is_outside_y_jaw(second_pair):
             continue
         total += abs(float(first_pair.left) - float(second_pair.left))
         total += abs(float(first_pair.right) - float(second_pair.right))

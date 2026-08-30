@@ -2,7 +2,12 @@ from typing import Dict, List, Tuple, Union
 
 from ApertureMetric.aperture_creator import AperturesFromBeamCreator
 from ApertureMetric.aperture_geometry import PyAperture
-from ComplexityMetric.aperture_series_metrics import active_leaf_pairs, small_aperture_score, weighted_mean
+from ComplexityMetric.aperture_series_metrics import (
+    active_leaf_pairs,
+    raw_leaf_gap,
+    small_aperture_score,
+    weighted_mean,
+)
 from ComplexityMetric.complexity_metric import ComplexityMetric
 
 
@@ -74,5 +79,5 @@ class SmallApertureScore(ComplexityMetric):
         for aperture in apertures:
             active_pairs = active_leaf_pairs(aperture)
             total_count += len(active_pairs)
-            small_count += sum(leaf_pair.field_size() < x for leaf_pair in active_pairs)
+            small_count += sum(raw_leaf_gap(leaf_pair) < x for leaf_pair in active_pairs)
         return small_count, total_count

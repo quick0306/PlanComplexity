@@ -23,8 +23,22 @@ def active_leaf_pairs(aperture) -> list:
     return [
         leaf_pair
         for leaf_pair in aperture.leaf_pairs
-        if not leaf_pair.is_outside_jaw() and leaf_pair.field_size() > 0.0
+        if not is_outside_y_jaw(leaf_pair) and raw_leaf_gap(leaf_pair) > 0.0
     ]
+
+
+def raw_leaf_gap(leaf_pair) -> float:
+    return float(leaf_pair.right) - float(leaf_pair.left)
+
+
+def is_outside_y_jaw(leaf_pair) -> bool:
+    layer_aware = getattr(leaf_pair, "is_outside_y_jaw", None)
+    if callable(layer_aware):
+        return bool(layer_aware())
+    return bool(
+        leaf_pair.jaw.top <= leaf_pair.bottom
+        or leaf_pair.jaw.bottom >= leaf_pair.top
+    )
 
 
 def weighted_mean(values: Sequence[float], weights: Sequence[float]) -> MetricValue:
@@ -53,7 +67,7 @@ def weighted_gap_moments(apertures: Sequence, cp_weights: Sequence[float]) -> Ga
     gap_groups = []
     weights = []
     for aperture, weight in _paired_observations(apertures, cp_weights):
-        gaps = [float(pair.field_size()) for pair in active_leaf_pairs(aperture)]
+        gaps = [raw_leaf_gap(pair) for pair in active_leaf_pairs(aperture)]
         if not gaps:
             continue
         gap_groups.append(np.asarray(gaps, dtype=float))
@@ -95,7 +109,7 @@ def small_aperture_score(
         if not active_pairs:
             continue
         values.append(
-            sum(pair.field_size() < threshold_mm for pair in active_pairs) / len(active_pairs)
+            sum(raw_leaf_gap(pair) < threshold_mm for pair in active_pairs) / len(active_pairs)
         )
         weights.append(weight)
     return weighted_mean(values, weights)
@@ -119,7 +133,7 @@ def mean_leaf_travel(apertures: Sequence) -> float:
         for index, (first_pair, second_pair) in enumerate(
             zip(first.leaf_pairs[:pair_count], second.leaf_pairs[:pair_count])
         ):
-            if first_pair.is_outside_jaw() and second_pair.is_outside_jaw():
+            if is_outside_y_jaw(first_pair) and is_outside_y_jaw(second_pair):
                 continue
             travel[0, index] += abs(float(first_pair.left) - float(second_pair.left))
             travel[1, index] += abs(float(first_pair.right) - float(second_pair.right))

@@ -35,7 +35,12 @@ VMAT_METRIC_SPECS = (
     MetricSpec("lt", "LT", "10.1118/1.4810969", dual_mlc=True, aliases=("leaf_travel",), description="Average total leaf travel across a control arc."),
     MetricSpec("ltmu", "LTMU", dual_mlc=True, description="Leaf travel normalized by delivered monitor units."),
     MetricSpec("ltnlmu", "LTNLMU", dual_mlc=True, description="Leaf travel per involved leaf, normalized by monitor units."),
-    MetricSpec("nl", "NL", dual_mlc=True, description="Average number of leaves actively shaping the aperture."),
+    MetricSpec(
+        "nl",
+        "NL",
+        dual_mlc=True,
+        description="Legacy alias of the MU-weighted active leaf-pair count (NL Pairs).",
+    ),
     MetricSpec("ltnl", "LTNL", dual_mlc=True, description="Leaf travel normalized by the number of involved leaves."),
     MetricSpec("al", "AL", description="Average arc length delivered per beam."),
     MetricSpec("lna", "LNA", dual_mlc=True, description="Leaf travel per involved leaf and per unit gantry travel."),
@@ -174,15 +179,32 @@ _HYBRID_REPRESENTATION_LABELS = {
     "nl_pairs": "NL Pairs",
     "nl_leaves": "NL Leaves",
 }
+
+
+def _hybrid_representation_description(key: str, label: str, representation: str) -> str:
+    if representation == "effective":
+        descriptions = {
+            "lt_mean_leaf": (
+                "Raw trajectory travel per moving synthesized 5 mm effective virtual leaf."
+            ),
+            "nl_pairs": (
+                "MU-weighted active synthesized effective virtual leaf-pair count."
+            ),
+            "nl_leaves": (
+                "Twice the active synthesized effective virtual leaf-pair count."
+            ),
+        }
+        return descriptions.get(
+            key, f"{label} computed on the physical effective dual-layer aperture."
+        )
+    return f"{label} computed on the non-physical stacked dual-layer diagnostic geometry."
+
+
 VMAT_METRIC_SPECS += tuple(
     MetricSpec(
         f"{key}_{representation}",
         f"{label} {representation.title()}",
-        description=(
-            f"{label} computed on the physical effective dual-layer aperture."
-            if representation == "effective"
-            else f"{label} computed on the non-physical stacked dual-layer diagnostic geometry."
-        ),
+        description=_hybrid_representation_description(key, label, representation),
     )
     for representation in ("effective", "stacked")
     for key, label in _HYBRID_REPRESENTATION_LABELS.items()

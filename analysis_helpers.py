@@ -17,7 +17,10 @@ from ComplexityMetric.small_aperture_score import SmallApertureScore
 from ComplexityMetric.station_parameter_optimized_radiation_therapy import StationParameterOptimizedRadiationTherapy
 from cyberknife_metrics import calculate_cyberknife_metrics
 from halcyon_dual_layer_metrics import calculate_halcyon_dual_layer_metrics_with_warnings
-from vcomx_vmat_metrics import calculate_vcomx_supplemental_metrics
+from vcomx_vmat_metrics import (
+    calculate_vcomx_supplemental_metrics,
+    supplemental_metric_weight_warnings,
+)
 
 
 def get_plan_metadata(plan_info, plan_dict):
@@ -94,6 +97,7 @@ def calculate_core_metrics_with_warnings(plan_dict):
     else:
         metrics["alg"], metrics["alg_sd"] = leaf_gap_summary
     metrics.update(calculate_vcomx_supplemental_metrics(plan_dict))
+    warnings.extend(supplemental_metric_weight_warnings(plan_dict))
     halcyon_metrics, halcyon_warnings = calculate_halcyon_dual_layer_metrics_with_warnings(
         plan_dict
     )

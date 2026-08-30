@@ -176,7 +176,7 @@ Definitions are written to match the current code implementation. They are not a
 - Group: Leaf travel
 - Symbol/short name: NL
 - Mathematical definition: NL = weighted mean over control points of the number of active leaf pairs
-- Physical meaning: Average number of leaves actively shaping the aperture.
+- Physical meaning: Legacy alias of the MU-weighted active leaf-pair count (NL Pairs).
 - Unit: count
 - Inputs required: MLC leaf positions, jaw positions, gantry angle, and control-point meterset weights
 - Status: implemented
@@ -187,7 +187,7 @@ Definitions are written to match the current code implementation. They are not a
 - Group: Leaf travel
 - Symbol/short name: NL MLCX1
 - Mathematical definition: Same formula as NL, but computed using MLCX1 apertures only.
-- Physical meaning: Average number of leaves actively shaping the aperture. Reported for MLCX1.
+- Physical meaning: Legacy alias of the MU-weighted active leaf-pair count (NL Pairs). Reported for MLCX1.
 - Unit: count
 - Inputs required: MLCX1 leaf positions, control-point weights, and beam geometry
 - Status: implemented_flattened
@@ -198,7 +198,7 @@ Definitions are written to match the current code implementation. They are not a
 - Group: Leaf travel
 - Symbol/short name: NL MLCX2
 - Mathematical definition: Same formula as NL, but computed using MLCX2 apertures only.
-- Physical meaning: Average number of leaves actively shaping the aperture. Reported for MLCX2.
+- Physical meaning: Legacy alias of the MU-weighted active leaf-pair count (NL Pairs). Reported for MLCX2.
 - Unit: count
 - Inputs required: MLCX2 leaf positions, control-point weights, and beam geometry
 - Status: implemented_flattened
@@ -2804,9 +2804,9 @@ Definitions are written to match the current code implementation. They are not a
 
 - Group: Halcyon/Ethos Hybrid v2
 - Symbol/short name: LT Mean Leaf Effective
-- Mathematical definition: LT Mean Leaf = total raw geometric trajectory travel / number of moving physical leaves, computed on the physical effective dual-layer aperture
-- Physical meaning: LT Mean Leaf computed on the physical effective dual-layer aperture.
-- Unit: mm/moving leaf
+- Mathematical definition: LT Mean Leaf Effective = total raw geometric trajectory travel / number of moving synthesized 5 mm effective virtual leaves
+- Physical meaning: Raw trajectory travel per moving synthesized 5 mm effective virtual leaf.
+- Unit: mm/moving effective virtual leaf
 - Inputs required: Aligned Halcyon/Ethos MLCX1 and MLCX2 apertures with control-point and beam MU
 - Status: implemented
 - Notes: Physical effective aperture formed by intersecting the aligned dual-layer openings.
@@ -2815,9 +2815,9 @@ Definitions are written to match the current code implementation. They are not a
 
 - Group: Halcyon/Ethos Hybrid v2
 - Symbol/short name: NL Pairs Effective
-- Mathematical definition: NL Pairs = MU-weighted mean active leaf-pair count; identical to legacy NL, computed on the physical effective dual-layer aperture
-- Physical meaning: NL Pairs computed on the physical effective dual-layer aperture.
-- Unit: active leaf pairs
+- Mathematical definition: NL Pairs Effective = MU-weighted active synthesized effective virtual leaf-pair count
+- Physical meaning: MU-weighted active synthesized effective virtual leaf-pair count.
+- Unit: active effective virtual leaf pairs
 - Inputs required: Aligned Halcyon/Ethos MLCX1 and MLCX2 apertures with control-point and beam MU
 - Status: implemented
 - Notes: Physical effective aperture formed by intersecting the aligned dual-layer openings.
@@ -2826,9 +2826,9 @@ Definitions are written to match the current code implementation. They are not a
 
 - Group: Halcyon/Ethos Hybrid v2
 - Symbol/short name: NL Leaves Effective
-- Mathematical definition: NL Leaves = 2 * NL Pairs, computed on the physical effective dual-layer aperture
-- Physical meaning: NL Leaves computed on the physical effective dual-layer aperture.
-- Unit: active physical leaves
+- Mathematical definition: NL Leaves Effective = 2 * NL Pairs Effective
+- Physical meaning: Twice the active synthesized effective virtual leaf-pair count.
+- Unit: active effective virtual leaves
 - Inputs required: Aligned Halcyon/Ethos MLCX1 and MLCX2 apertures with control-point and beam MU
 - Status: implemented
 - Notes: Physical effective aperture formed by intersecting the aligned dual-layer openings.

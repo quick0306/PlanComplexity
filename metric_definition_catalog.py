@@ -503,6 +503,18 @@ def _vmat_group(metric_key: str) -> str:
 
 
 def _vmat_formula(metric_key: str) -> str:
+    effective_virtual_formulas = {
+        "lt_mean_leaf_effective": (
+            "LT Mean Leaf Effective = total raw geometric trajectory travel / number of moving "
+            "synthesized 5 mm effective virtual leaves"
+        ),
+        "nl_pairs_effective": (
+            "NL Pairs Effective = MU-weighted active synthesized effective virtual leaf-pair count"
+        ),
+        "nl_leaves_effective": "NL Leaves Effective = 2 * NL Pairs Effective",
+    }
+    if metric_key in effective_virtual_formulas:
+        return effective_virtual_formulas[metric_key]
     for suffix, geometry in (
         ("_effective", "physical effective dual-layer aperture"),
         ("_stacked", "non-physical stacked dual-layer diagnostic geometry"),
@@ -608,6 +620,13 @@ def _vmat_formula(metric_key: str) -> str:
 
 
 def _vmat_unit(metric_key: str) -> str:
+    effective_virtual_units = {
+        "lt_mean_leaf_effective": "mm/moving effective virtual leaf",
+        "nl_pairs_effective": "active effective virtual leaf pairs",
+        "nl_leaves_effective": "active effective virtual leaves",
+    }
+    if metric_key in effective_virtual_units:
+        return effective_virtual_units[metric_key]
     if metric_key.endswith("_effective"):
         return _vmat_unit(metric_key.removesuffix("_effective"))
     if metric_key.endswith("_stacked"):
