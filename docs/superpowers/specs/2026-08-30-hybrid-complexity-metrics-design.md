@@ -148,6 +148,8 @@ The effective aperture series produces:
 
 For effective geometry, the denominator of `lt_mean_leaf_effective` is the number of synthesized 5 mm effective virtual leaves with strictly positive accumulated travel. It is not a count of underlying physical leaves. Its documented unit is millimetres per moving effective virtual leaf.
 
+`lt_effective` retains the legacy `lt` unit and dose-weighted control-arc aggregation; only `lt_mean_leaf_effective` uses the per-moving-effective-virtual-leaf unit.
+
 ### Stacked diagnostic geometry
 
 The stacked representation is inspired by the RT Complexity Lens dual-layer parser behavior but is implemented as an internal diagnostic representation, not as an RT Lens compatibility mode.
@@ -178,6 +180,8 @@ At every paired control point:
 `nl_pairs_stacked,c = nl_pairs_mlcx1,c + nl_pairs_mlcx2,c`.
 
 Active-pair count is defined even when the count is zero, so NL uses the shared control-point weight vector without excluding empty control points. Consequently, the equality also holds after beam and plan aggregation when the dual-layer series is aligned. This invariant does not apply to LG, MAD, or SAS, whose empty observations are excluded and independently renormalized.
+
+NL is therefore an explicit exception to the general rule that empty active-pair observations are excluded: a zero active-pair count is a valid NL observation and remains in its weighted denominator.
 
 ### Dual-layer alignment failures
 
