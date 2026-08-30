@@ -1854,7 +1854,7 @@ This appendix is generated from the shared metric-definition catalog.
 
 - Group: Aperture geometry
 - Symbol/short name: MAD
-- Mathematical definition: MAD = mean distance of open leaf ends from the beam central axis
+- Mathematical definition: MAD = MU-weighted mean(abs((left + right) / 2)) over jaw-active positive gaps
 - Physical meaning: Average distance of the aperture opening from the beam central axis.
 - Unit: mm
 - Inputs required: MLC leaf positions, jaw positions, gantry angle, and control-point meterset weights
@@ -1887,7 +1887,7 @@ This appendix is generated from the shared metric-definition catalog.
 
 - Group: Aperture geometry
 - Symbol/short name: ALG
-- Mathematical definition: ALG = mean(opposing leaf gap over active leaf pairs)
+- Mathematical definition: ALG = control-point-MU-weighted mean active gap, then beam-MU weighted
 - Physical meaning: Average gap between opposing leaf pairs.
 - Unit: mm
 - Inputs required: MLC leaf positions, jaw positions, gantry angle, and control-point meterset weights
@@ -1920,7 +1920,7 @@ This appendix is generated from the shared metric-definition catalog.
 
 - Group: Aperture geometry
 - Symbol/short name: ALG SD
-- Mathematical definition: ALG SD = std(opposing leaf gap over active leaf pairs)
+- Mathematical definition: ALG SD = control-point-balanced weighted population SD of active gaps
 - Physical meaning: Standard deviation of the opposing leaf gap.
 - Unit: mm
 - Inputs required: MLC leaf positions, jaw positions, gantry angle, and control-point meterset weights
@@ -2572,9 +2572,416 @@ This appendix is generated from the shared metric-definition catalog.
 - Mathematical definition: mean_leaf(std_interval(acceleration)), restricted to MLCX2 leaf positions.
 - Physical meaning: MLCX2-only Park 2015 derived motion statistic.
 - Unit: mm/s^2
-- Inputs required: MLCX2 motion traces only
+- Inputs required: MLCX2 motion traces with a valid control-point time model
 - Status: implemented_flattened
-- Notes: Layer-specific Park 2015 flattened export for MLCX2.
+- Notes: Layer-specific Park 2015 flattened export for MLCX2. Requires a valid control-point time model. RTPLAN-only exact calculation is unavailable when dose-rate/gantry-speed timing inputs are absent, zero, or machine-specific limits cannot be identified; Elekta values should be labeled estimated unless validated site timing or delivery-log timestamps are supplied.
+
+## `lt_mean_leaf` - LT Mean Leaf
+
+- Group: Halcyon/Ethos Hybrid v2
+- Symbol/short name: LT Mean Leaf
+- Mathematical definition: LT Mean Leaf = total raw geometric trajectory travel / number of moving physical leaves
+- Physical meaning: Raw trajectory travel averaged over moving physical leaves.
+- Unit: mm/moving leaf
+- Inputs required: MLC leaf positions, jaw positions, gantry angle, and control-point meterset weights
+- Status: implemented
+- Notes: For Halcyon/Ethos-style plans, the workflow also exports per-layer MLCX1 and MLCX2 variants.
+
+## `lt_mean_leaf_mlcx1` - LT Mean Leaf MLCX1
+
+- Group: Halcyon/Ethos Hybrid v2
+- Symbol/short name: LT Mean Leaf MLCX1
+- Mathematical definition: Same formula as LT Mean Leaf, but computed using MLCX1 apertures only.
+- Physical meaning: Raw trajectory travel averaged over moving physical leaves. Reported for MLCX1.
+- Unit: mm/moving leaf
+- Inputs required: MLCX1 leaf positions, control-point weights, and beam geometry
+- Status: implemented_flattened
+- Notes: Layer-specific flattened export for LT Mean Leaf.
+
+## `lt_mean_leaf_mlcx2` - LT Mean Leaf MLCX2
+
+- Group: Halcyon/Ethos Hybrid v2
+- Symbol/short name: LT Mean Leaf MLCX2
+- Mathematical definition: Same formula as LT Mean Leaf, but computed using MLCX2 apertures only.
+- Physical meaning: Raw trajectory travel averaged over moving physical leaves. Reported for MLCX2.
+- Unit: mm/moving leaf
+- Inputs required: MLCX2 leaf positions, control-point weights, and beam geometry
+- Status: implemented_flattened
+- Notes: Layer-specific flattened export for LT Mean Leaf.
+
+## `nl_pairs` - NL Pairs
+
+- Group: Halcyon/Ethos Hybrid v2
+- Symbol/short name: NL Pairs
+- Mathematical definition: NL Pairs = MU-weighted mean active leaf-pair count; identical to legacy NL
+- Physical meaning: MU-weighted number of active leaf pairs; the legacy NL key is an alias value.
+- Unit: active leaf pairs
+- Inputs required: MLC leaf positions, jaw positions, gantry angle, and control-point meterset weights
+- Status: implemented
+- Notes: For Halcyon/Ethos-style plans, the workflow also exports per-layer MLCX1 and MLCX2 variants.
+
+## `nl_pairs_mlcx1` - NL Pairs MLCX1
+
+- Group: Halcyon/Ethos Hybrid v2
+- Symbol/short name: NL Pairs MLCX1
+- Mathematical definition: Same formula as NL Pairs, but computed using MLCX1 apertures only.
+- Physical meaning: MU-weighted number of active leaf pairs; the legacy NL key is an alias value. Reported for MLCX1.
+- Unit: active leaf pairs
+- Inputs required: MLCX1 leaf positions, control-point weights, and beam geometry
+- Status: implemented_flattened
+- Notes: Layer-specific flattened export for NL Pairs.
+
+## `nl_pairs_mlcx2` - NL Pairs MLCX2
+
+- Group: Halcyon/Ethos Hybrid v2
+- Symbol/short name: NL Pairs MLCX2
+- Mathematical definition: Same formula as NL Pairs, but computed using MLCX2 apertures only.
+- Physical meaning: MU-weighted number of active leaf pairs; the legacy NL key is an alias value. Reported for MLCX2.
+- Unit: active leaf pairs
+- Inputs required: MLCX2 leaf positions, control-point weights, and beam geometry
+- Status: implemented_flattened
+- Notes: Layer-specific flattened export for NL Pairs.
+
+## `nl_leaves` - NL Leaves
+
+- Group: Halcyon/Ethos Hybrid v2
+- Symbol/short name: NL Leaves
+- Mathematical definition: NL Leaves = 2 * NL Pairs
+- Physical meaning: MU-weighted number of active physical leaves, exactly twice NL Pairs.
+- Unit: active physical leaves
+- Inputs required: MLC leaf positions, jaw positions, gantry angle, and control-point meterset weights
+- Status: implemented
+- Notes: For Halcyon/Ethos-style plans, the workflow also exports per-layer MLCX1 and MLCX2 variants.
+
+## `nl_leaves_mlcx1` - NL Leaves MLCX1
+
+- Group: Halcyon/Ethos Hybrid v2
+- Symbol/short name: NL Leaves MLCX1
+- Mathematical definition: Same formula as NL Leaves, but computed using MLCX1 apertures only.
+- Physical meaning: MU-weighted number of active physical leaves, exactly twice NL Pairs. Reported for MLCX1.
+- Unit: active physical leaves
+- Inputs required: MLCX1 leaf positions, control-point weights, and beam geometry
+- Status: implemented_flattened
+- Notes: Layer-specific flattened export for NL Leaves.
+
+## `nl_leaves_mlcx2` - NL Leaves MLCX2
+
+- Group: Halcyon/Ethos Hybrid v2
+- Symbol/short name: NL Leaves MLCX2
+- Mathematical definition: Same formula as NL Leaves, but computed using MLCX2 apertures only.
+- Physical meaning: MU-weighted number of active physical leaves, exactly twice NL Pairs. Reported for MLCX2.
+- Unit: active physical leaves
+- Inputs required: MLCX2 leaf positions, control-point weights, and beam geometry
+- Status: implemented_flattened
+- Notes: Layer-specific flattened export for NL Leaves.
+
+## `mcsv_effective` - MCSv Effective
+
+- Group: Halcyon/Ethos Hybrid v2
+- Symbol/short name: MCSv Effective
+- Mathematical definition: MCSv = weighted mean[((AAV_i + AAV_{i+1}) / 2) * ((LSV_i + LSV_{i+1}) / 2)], computed on the physical effective dual-layer aperture
+- Physical meaning: MCSv computed on the physical effective dual-layer aperture.
+- Unit: dimensionless
+- Inputs required: Aligned Halcyon/Ethos MLCX1 and MLCX2 apertures with control-point and beam MU
+- Status: implemented
+- Notes: Physical effective aperture formed by intersecting the aligned dual-layer openings.
+
+## `aav_effective` - AAV Effective
+
+- Group: Halcyon/Ethos Hybrid v2
+- Symbol/short name: AAV Effective
+- Mathematical definition: AAV = aperture area / arc-level union aperture area, then weighted over the arc, computed on the physical effective dual-layer aperture
+- Physical meaning: AAV computed on the physical effective dual-layer aperture.
+- Unit: dimensionless
+- Inputs required: Aligned Halcyon/Ethos MLCX1 and MLCX2 apertures with control-point and beam MU
+- Status: implemented
+- Notes: Physical effective aperture formed by intersecting the aligned dual-layer openings.
+
+## `lsv_effective` - LSV Effective
+
+- Group: Halcyon/Ethos Hybrid v2
+- Symbol/short name: LSV Effective
+- Mathematical definition: LSV = bank_LSV(left) * bank_LSV(right), then weighted over the arc, computed on the physical effective dual-layer aperture
+- Physical meaning: LSV computed on the physical effective dual-layer aperture.
+- Unit: dimensionless
+- Inputs required: Aligned Halcyon/Ethos MLCX1 and MLCX2 apertures with control-point and beam MU
+- Status: implemented
+- Notes: Physical effective aperture formed by intersecting the aligned dual-layer openings.
+
+## `pa_effective` - PA Effective
+
+- Group: Halcyon/Ethos Hybrid v2
+- Symbol/short name: PA Effective
+- Mathematical definition: PA = weighted mean(aperture area), computed on the physical effective dual-layer aperture
+- Physical meaning: PA computed on the physical effective dual-layer aperture.
+- Unit: mm^2
+- Inputs required: Aligned Halcyon/Ethos MLCX1 and MLCX2 apertures with control-point and beam MU
+- Status: implemented
+- Notes: Physical effective aperture formed by intersecting the aligned dual-layer openings.
+
+## `mad_effective` - MAD Effective
+
+- Group: Halcyon/Ethos Hybrid v2
+- Symbol/short name: MAD Effective
+- Mathematical definition: MAD = MU-weighted mean(abs((left + right) / 2)) over jaw-active positive gaps, computed on the physical effective dual-layer aperture
+- Physical meaning: MAD computed on the physical effective dual-layer aperture.
+- Unit: mm
+- Inputs required: Aligned Halcyon/Ethos MLCX1 and MLCX2 apertures with control-point and beam MU
+- Status: implemented
+- Notes: Physical effective aperture formed by intersecting the aligned dual-layer openings.
+
+## `alg_effective` - ALG Effective
+
+- Group: Halcyon/Ethos Hybrid v2
+- Symbol/short name: ALG Effective
+- Mathematical definition: ALG = control-point-MU-weighted mean active gap, then beam-MU weighted, computed on the physical effective dual-layer aperture
+- Physical meaning: ALG computed on the physical effective dual-layer aperture.
+- Unit: mm
+- Inputs required: Aligned Halcyon/Ethos MLCX1 and MLCX2 apertures with control-point and beam MU
+- Status: implemented
+- Notes: Physical effective aperture formed by intersecting the aligned dual-layer openings.
+
+## `alg_sd_effective` - ALG SD Effective
+
+- Group: Halcyon/Ethos Hybrid v2
+- Symbol/short name: ALG SD Effective
+- Mathematical definition: ALG SD = control-point-balanced weighted population SD of active gaps, computed on the physical effective dual-layer aperture
+- Physical meaning: ALG SD computed on the physical effective dual-layer aperture.
+- Unit: mm
+- Inputs required: Aligned Halcyon/Ethos MLCX1 and MLCX2 apertures with control-point and beam MU
+- Status: implemented
+- Notes: Physical effective aperture formed by intersecting the aligned dual-layer openings.
+
+## `sas_5mm_effective` - SAS5mm Effective
+
+- Group: Halcyon/Ethos Hybrid v2
+- Symbol/short name: SAS5mm Effective
+- Mathematical definition: SAS5mm = active leaf gaps below 5 mm / all active leaf gaps, computed on the physical effective dual-layer aperture
+- Physical meaning: SAS5mm computed on the physical effective dual-layer aperture.
+- Unit: dimensionless
+- Inputs required: Aligned Halcyon/Ethos MLCX1 and MLCX2 apertures with control-point and beam MU
+- Status: implemented
+- Notes: Physical effective aperture formed by intersecting the aligned dual-layer openings.
+
+## `sas_10mm_effective` - SAS10mm Effective
+
+- Group: Halcyon/Ethos Hybrid v2
+- Symbol/short name: SAS10mm Effective
+- Mathematical definition: SAS10mm = active leaf gaps below 10 mm / all active leaf gaps, computed on the physical effective dual-layer aperture
+- Physical meaning: SAS10mm computed on the physical effective dual-layer aperture.
+- Unit: dimensionless
+- Inputs required: Aligned Halcyon/Ethos MLCX1 and MLCX2 apertures with control-point and beam MU
+- Status: implemented
+- Notes: Physical effective aperture formed by intersecting the aligned dual-layer openings.
+
+## `sas_20mm_effective` - SAS20mm Effective
+
+- Group: Halcyon/Ethos Hybrid v2
+- Symbol/short name: SAS20mm Effective
+- Mathematical definition: SAS20mm = active leaf gaps below 20 mm / all active leaf gaps, computed on the physical effective dual-layer aperture
+- Physical meaning: SAS20mm computed on the physical effective dual-layer aperture.
+- Unit: dimensionless
+- Inputs required: Aligned Halcyon/Ethos MLCX1 and MLCX2 apertures with control-point and beam MU
+- Status: implemented
+- Notes: Physical effective aperture formed by intersecting the aligned dual-layer openings.
+
+## `lt_effective` - LT Effective
+
+- Group: Halcyon/Ethos Hybrid v2
+- Symbol/short name: LT Effective
+- Mathematical definition: LT = weighted mean over control arcs of total leaf travel between adjacent apertures, computed on the physical effective dual-layer aperture
+- Physical meaning: LT computed on the physical effective dual-layer aperture.
+- Unit: mm
+- Inputs required: Aligned Halcyon/Ethos MLCX1 and MLCX2 apertures with control-point and beam MU
+- Status: implemented
+- Notes: Physical effective aperture formed by intersecting the aligned dual-layer openings.
+
+## `lt_mean_leaf_effective` - LT Mean Leaf Effective
+
+- Group: Halcyon/Ethos Hybrid v2
+- Symbol/short name: LT Mean Leaf Effective
+- Mathematical definition: LT Mean Leaf = total raw geometric trajectory travel / number of moving physical leaves, computed on the physical effective dual-layer aperture
+- Physical meaning: LT Mean Leaf computed on the physical effective dual-layer aperture.
+- Unit: mm/moving leaf
+- Inputs required: Aligned Halcyon/Ethos MLCX1 and MLCX2 apertures with control-point and beam MU
+- Status: implemented
+- Notes: Physical effective aperture formed by intersecting the aligned dual-layer openings.
+
+## `nl_pairs_effective` - NL Pairs Effective
+
+- Group: Halcyon/Ethos Hybrid v2
+- Symbol/short name: NL Pairs Effective
+- Mathematical definition: NL Pairs = MU-weighted mean active leaf-pair count; identical to legacy NL, computed on the physical effective dual-layer aperture
+- Physical meaning: NL Pairs computed on the physical effective dual-layer aperture.
+- Unit: active leaf pairs
+- Inputs required: Aligned Halcyon/Ethos MLCX1 and MLCX2 apertures with control-point and beam MU
+- Status: implemented
+- Notes: Physical effective aperture formed by intersecting the aligned dual-layer openings.
+
+## `nl_leaves_effective` - NL Leaves Effective
+
+- Group: Halcyon/Ethos Hybrid v2
+- Symbol/short name: NL Leaves Effective
+- Mathematical definition: NL Leaves = 2 * NL Pairs, computed on the physical effective dual-layer aperture
+- Physical meaning: NL Leaves computed on the physical effective dual-layer aperture.
+- Unit: active physical leaves
+- Inputs required: Aligned Halcyon/Ethos MLCX1 and MLCX2 apertures with control-point and beam MU
+- Status: implemented
+- Notes: Physical effective aperture formed by intersecting the aligned dual-layer openings.
+
+## `mcsv_stacked` - MCSv Stacked
+
+- Group: Halcyon/Ethos Hybrid v2
+- Symbol/short name: MCSv Stacked
+- Mathematical definition: MCSv = weighted mean[((AAV_i + AAV_{i+1}) / 2) * ((LSV_i + LSV_{i+1}) / 2)], computed on the non-physical stacked dual-layer diagnostic geometry
+- Physical meaning: MCSv computed on the non-physical stacked dual-layer diagnostic geometry.
+- Unit: dimensionless
+- Inputs required: Aligned Halcyon/Ethos MLCX1 and MLCX2 apertures with control-point and beam MU
+- Status: implemented
+- Notes: Non-physical stacked diagnostic geometry for algorithm comparison; not a transmission aperture.
+
+## `aav_stacked` - AAV Stacked
+
+- Group: Halcyon/Ethos Hybrid v2
+- Symbol/short name: AAV Stacked
+- Mathematical definition: AAV = aperture area / arc-level union aperture area, then weighted over the arc, computed on the non-physical stacked dual-layer diagnostic geometry
+- Physical meaning: AAV computed on the non-physical stacked dual-layer diagnostic geometry.
+- Unit: dimensionless
+- Inputs required: Aligned Halcyon/Ethos MLCX1 and MLCX2 apertures with control-point and beam MU
+- Status: implemented
+- Notes: Non-physical stacked diagnostic geometry for algorithm comparison; not a transmission aperture.
+
+## `lsv_stacked` - LSV Stacked
+
+- Group: Halcyon/Ethos Hybrid v2
+- Symbol/short name: LSV Stacked
+- Mathematical definition: LSV = bank_LSV(left) * bank_LSV(right), then weighted over the arc, computed on the non-physical stacked dual-layer diagnostic geometry
+- Physical meaning: LSV computed on the non-physical stacked dual-layer diagnostic geometry.
+- Unit: dimensionless
+- Inputs required: Aligned Halcyon/Ethos MLCX1 and MLCX2 apertures with control-point and beam MU
+- Status: implemented
+- Notes: Non-physical stacked diagnostic geometry for algorithm comparison; not a transmission aperture.
+
+## `pa_stacked` - PA Stacked
+
+- Group: Halcyon/Ethos Hybrid v2
+- Symbol/short name: PA Stacked
+- Mathematical definition: PA = weighted mean(aperture area), computed on the non-physical stacked dual-layer diagnostic geometry
+- Physical meaning: PA computed on the non-physical stacked dual-layer diagnostic geometry.
+- Unit: mm^2
+- Inputs required: Aligned Halcyon/Ethos MLCX1 and MLCX2 apertures with control-point and beam MU
+- Status: implemented
+- Notes: Non-physical stacked diagnostic geometry for algorithm comparison; not a transmission aperture.
+
+## `mad_stacked` - MAD Stacked
+
+- Group: Halcyon/Ethos Hybrid v2
+- Symbol/short name: MAD Stacked
+- Mathematical definition: MAD = MU-weighted mean(abs((left + right) / 2)) over jaw-active positive gaps, computed on the non-physical stacked dual-layer diagnostic geometry
+- Physical meaning: MAD computed on the non-physical stacked dual-layer diagnostic geometry.
+- Unit: mm
+- Inputs required: Aligned Halcyon/Ethos MLCX1 and MLCX2 apertures with control-point and beam MU
+- Status: implemented
+- Notes: Non-physical stacked diagnostic geometry for algorithm comparison; not a transmission aperture.
+
+## `alg_stacked` - ALG Stacked
+
+- Group: Halcyon/Ethos Hybrid v2
+- Symbol/short name: ALG Stacked
+- Mathematical definition: ALG = control-point-MU-weighted mean active gap, then beam-MU weighted, computed on the non-physical stacked dual-layer diagnostic geometry
+- Physical meaning: ALG computed on the non-physical stacked dual-layer diagnostic geometry.
+- Unit: mm
+- Inputs required: Aligned Halcyon/Ethos MLCX1 and MLCX2 apertures with control-point and beam MU
+- Status: implemented
+- Notes: Non-physical stacked diagnostic geometry for algorithm comparison; not a transmission aperture.
+
+## `alg_sd_stacked` - ALG SD Stacked
+
+- Group: Halcyon/Ethos Hybrid v2
+- Symbol/short name: ALG SD Stacked
+- Mathematical definition: ALG SD = control-point-balanced weighted population SD of active gaps, computed on the non-physical stacked dual-layer diagnostic geometry
+- Physical meaning: ALG SD computed on the non-physical stacked dual-layer diagnostic geometry.
+- Unit: mm
+- Inputs required: Aligned Halcyon/Ethos MLCX1 and MLCX2 apertures with control-point and beam MU
+- Status: implemented
+- Notes: Non-physical stacked diagnostic geometry for algorithm comparison; not a transmission aperture.
+
+## `sas_5mm_stacked` - SAS5mm Stacked
+
+- Group: Halcyon/Ethos Hybrid v2
+- Symbol/short name: SAS5mm Stacked
+- Mathematical definition: SAS5mm = active leaf gaps below 5 mm / all active leaf gaps, computed on the non-physical stacked dual-layer diagnostic geometry
+- Physical meaning: SAS5mm computed on the non-physical stacked dual-layer diagnostic geometry.
+- Unit: dimensionless
+- Inputs required: Aligned Halcyon/Ethos MLCX1 and MLCX2 apertures with control-point and beam MU
+- Status: implemented
+- Notes: Non-physical stacked diagnostic geometry for algorithm comparison; not a transmission aperture.
+
+## `sas_10mm_stacked` - SAS10mm Stacked
+
+- Group: Halcyon/Ethos Hybrid v2
+- Symbol/short name: SAS10mm Stacked
+- Mathematical definition: SAS10mm = active leaf gaps below 10 mm / all active leaf gaps, computed on the non-physical stacked dual-layer diagnostic geometry
+- Physical meaning: SAS10mm computed on the non-physical stacked dual-layer diagnostic geometry.
+- Unit: dimensionless
+- Inputs required: Aligned Halcyon/Ethos MLCX1 and MLCX2 apertures with control-point and beam MU
+- Status: implemented
+- Notes: Non-physical stacked diagnostic geometry for algorithm comparison; not a transmission aperture.
+
+## `sas_20mm_stacked` - SAS20mm Stacked
+
+- Group: Halcyon/Ethos Hybrid v2
+- Symbol/short name: SAS20mm Stacked
+- Mathematical definition: SAS20mm = active leaf gaps below 20 mm / all active leaf gaps, computed on the non-physical stacked dual-layer diagnostic geometry
+- Physical meaning: SAS20mm computed on the non-physical stacked dual-layer diagnostic geometry.
+- Unit: dimensionless
+- Inputs required: Aligned Halcyon/Ethos MLCX1 and MLCX2 apertures with control-point and beam MU
+- Status: implemented
+- Notes: Non-physical stacked diagnostic geometry for algorithm comparison; not a transmission aperture.
+
+## `lt_stacked` - LT Stacked
+
+- Group: Halcyon/Ethos Hybrid v2
+- Symbol/short name: LT Stacked
+- Mathematical definition: LT = weighted mean over control arcs of total leaf travel between adjacent apertures, computed on the non-physical stacked dual-layer diagnostic geometry
+- Physical meaning: LT computed on the non-physical stacked dual-layer diagnostic geometry.
+- Unit: mm
+- Inputs required: Aligned Halcyon/Ethos MLCX1 and MLCX2 apertures with control-point and beam MU
+- Status: implemented
+- Notes: Non-physical stacked diagnostic geometry for algorithm comparison; not a transmission aperture.
+
+## `lt_mean_leaf_stacked` - LT Mean Leaf Stacked
+
+- Group: Halcyon/Ethos Hybrid v2
+- Symbol/short name: LT Mean Leaf Stacked
+- Mathematical definition: LT Mean Leaf = total raw geometric trajectory travel / number of moving physical leaves, computed on the non-physical stacked dual-layer diagnostic geometry
+- Physical meaning: LT Mean Leaf computed on the non-physical stacked dual-layer diagnostic geometry.
+- Unit: mm/moving leaf
+- Inputs required: Aligned Halcyon/Ethos MLCX1 and MLCX2 apertures with control-point and beam MU
+- Status: implemented
+- Notes: Non-physical stacked diagnostic geometry for algorithm comparison; not a transmission aperture.
+
+## `nl_pairs_stacked` - NL Pairs Stacked
+
+- Group: Halcyon/Ethos Hybrid v2
+- Symbol/short name: NL Pairs Stacked
+- Mathematical definition: NL Pairs = MU-weighted mean active leaf-pair count; identical to legacy NL, computed on the non-physical stacked dual-layer diagnostic geometry
+- Physical meaning: NL Pairs computed on the non-physical stacked dual-layer diagnostic geometry.
+- Unit: active leaf pairs
+- Inputs required: Aligned Halcyon/Ethos MLCX1 and MLCX2 apertures with control-point and beam MU
+- Status: implemented
+- Notes: Non-physical stacked diagnostic geometry for algorithm comparison; not a transmission aperture.
+
+## `nl_leaves_stacked` - NL Leaves Stacked
+
+- Group: Halcyon/Ethos Hybrid v2
+- Symbol/short name: NL Leaves Stacked
+- Mathematical definition: NL Leaves = 2 * NL Pairs, computed on the non-physical stacked dual-layer diagnostic geometry
+- Physical meaning: NL Leaves computed on the non-physical stacked dual-layer diagnostic geometry.
+- Unit: active physical leaves
+- Inputs required: Aligned Halcyon/Ethos MLCX1 and MLCX2 apertures with control-point and beam MU
+- Status: implemented
+- Notes: Non-physical stacked diagnostic geometry for algorithm comparison; not a transmission aperture.
 
 ## `sport` - SPORT Modulation Index (Li and Xing 2013)
 

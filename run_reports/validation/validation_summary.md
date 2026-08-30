@@ -1,5 +1,10 @@
 # Unified Complexity Validation Summary
 
+> Formula-version notice (2026-08-30): the current VMAT/IMRT engine uses `hybrid-v2`. This
+> historical validation artifact predates that migration and must be rebuilt before it is used as
+> evidence for corrected MAD, MU-weighted LG/SAS, explicit LT/NL outputs, or Halcyon effective and
+> stacked families. The stacked family is non-physical diagnostic geometry.
+
 Research validation profile: research
 
 Generated at: 2026-04-28T15:52:13Z

@@ -49,6 +49,16 @@ and Quintero et al. 2021:
 - Tamura-style weighted layer metrics: `MCSw`, `PAw`, `PIw`, and `PMw`, with proximal/distal
   component outputs.
 - Quintero-style Halcyon-v2 metrics: `MUcp`, `UL`, `MCSUL`, and `NP`.
+- Hybrid-v2 physical effective-aperture metrics use the `*_effective` suffix.
+- RT Complexity Lens-inspired stacked diagnostics use the `*_stacked` suffix. This geometry is
+  deliberately non-physical: it concatenates jaw-evaluated MLCX1 and MLCX2 slots for algorithm
+  comparison and must not be interpreted as a transmitted aperture.
+
+VMAT/IMRT analyses record `metric_formula_version=hybrid-v2`. The migration and formula contract,
+including corrected MAD, MU-weighted LG/SAS, `lt_mean_leaf`, explicit leaf counts, and Halcyon
+alignment behavior, is documented in [`docs/hybrid_v2_metrics.md`](docs/hybrid_v2_metrics.md).
+The project does not provide an `RT_LENS` mode or vendor the upstream implementation; independent
+comparisons may call `matteomaspero/rt-complexity-lens` directly.
 
 Use `--recursive` if the input directory contains nested folders.
 
@@ -153,10 +163,13 @@ The Aurora prototype is for research use only. Clinical use is strongly forbidde
 - Folder batch analysis now uses light parallelism for independent RT Plan files, and
   beam-level geometry/meterset objects are cached during a single-file analysis pass.
 - Code paths have been standardized on `snake_case` module and API naming.
-- Several VMAT/IMRT metrics were aligned with the UCoMX manual formulas, including:
-  - `Leaf Gap` aggregation over all active leaf pairs.
-  - `Small Aperture Score` as a whole-plan fraction of active leaf gaps below threshold.
-  - `Mean Asymmetry Distance` using the UCoMX Eq. (5) leaf-end distance definition.
+- VMAT/IMRT default formulas use the `hybrid-v2` contract:
+  - `MAD` is the MU-weighted mean absolute aperture-center distance from the beam central axis.
+  - `ALG`/`ALG SD` and `SAS` are calculated per control point and then MU weighted; SAS includes
+    only jaw-overlapping, strictly positive gaps in its denominator.
+  - Legacy dose-weighted `LT` remains unchanged; `LT Mean Leaf` reports raw trajectory travel per
+    moving physical leaf.
+  - Legacy `NL` remains and equals `NL Pairs`; `NL Leaves` is exactly twice that value.
 - `MLC Speed and Acceleration Proportions (Park 2015)` follow:
   - Park JM, et al. Br J Radiol 2015;88(1049):20140698.
   - DOI: `10.1259/bjr.20140698`
