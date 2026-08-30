@@ -58,6 +58,11 @@ metric_groups:
   label: Halcyon/Ethos Quintero 2021
   description: Canonical research validation family for Halcyon/Ethos dual-layer
     Quintero 2021 metrics.
+- group_key: vmat_imrt_halcyon_ethos_hybrid_v2
+  platform: VMAT_IMRT
+  label: Halcyon/Ethos Hybrid v2
+  description: Hybrid-v2 leaf travel, active-leaf counts, physical effective apertures,
+    and non-physical stacked dual-layer diagnostic metrics.
 - group_key: tomo_delivery
   platform: TOMO
   label: Delivery

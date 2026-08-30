@@ -187,6 +187,9 @@ VMAT_METRIC_SPECS += tuple(
     for representation in ("effective", "stacked")
     for key, label in _HYBRID_REPRESENTATION_LABELS.items()
 )
+VMAT_METRIC_SPECS = tuple(spec for spec in VMAT_METRIC_SPECS if spec.key != "sport") + tuple(
+    spec for spec in VMAT_METRIC_SPECS if spec.key == "sport"
+)
 
 CYBERKNIFE_METRIC_SPECS = (
     MetricSpec("mcs", "MCS", "10.1002/mp.14667", gui_label="MCS (CyberKnife MLC)", description="Overall modulation complexity of the delivered CyberKnife MLC apertures."),

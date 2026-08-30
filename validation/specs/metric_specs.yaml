@@ -8337,3 +8337,190 @@ metric_specs:
   label: MUcp
   unit: "%"
   expected_range: *halcyon_nonnegative
+- &hybrid_v2_metric
+  key: lt_mean_leaf
+  platform: VMAT_IMRT
+  mode: VMAT_IMRT
+  group_key: vmat_imrt_halcyon_ethos_hybrid_v2
+  metric_key: lt_mean_leaf
+  label: LT Mean Leaf
+  unit: mm/moving leaf
+  aggregation_scope: plan
+  normalization_basis: formula_defined
+  validation_level: Formula-exact
+  comparison_class: exact-equivalent
+  default_tolerance_abs: 1.0e-06
+  default_tolerance_rel: 0.0001
+  expected_range: &hybrid_v2_nonnegative
+    kind: nonnegative
+    minimum: 0.0
+    maximum: null
+  clinical_readiness: research
+  known_noncomparability: []
+  comparable_to: []
+  assumptions: []
+  exclusions: []
+- <<: *hybrid_v2_metric
+  key: lt_mean_leaf_mlcx1
+  metric_key: lt_mean_leaf_mlcx1
+  label: LT Mean Leaf MLCX1
+- <<: *hybrid_v2_metric
+  key: lt_mean_leaf_mlcx2
+  metric_key: lt_mean_leaf_mlcx2
+  label: LT Mean Leaf MLCX2
+- <<: *hybrid_v2_metric
+  key: nl_pairs
+  metric_key: nl_pairs
+  label: NL Pairs
+  unit: active leaf pairs
+- <<: *hybrid_v2_metric
+  key: nl_pairs_mlcx1
+  metric_key: nl_pairs_mlcx1
+  label: NL Pairs MLCX1
+  unit: active leaf pairs
+- <<: *hybrid_v2_metric
+  key: nl_pairs_mlcx2
+  metric_key: nl_pairs_mlcx2
+  label: NL Pairs MLCX2
+  unit: active leaf pairs
+- <<: *hybrid_v2_metric
+  key: nl_leaves
+  metric_key: nl_leaves
+  label: NL Leaves
+  unit: active physical leaves
+- <<: *hybrid_v2_metric
+  key: nl_leaves_mlcx1
+  metric_key: nl_leaves_mlcx1
+  label: NL Leaves MLCX1
+  unit: active physical leaves
+- <<: *hybrid_v2_metric
+  key: nl_leaves_mlcx2
+  metric_key: nl_leaves_mlcx2
+  label: NL Leaves MLCX2
+  unit: active physical leaves
+- <<: *hybrid_v2_metric
+  key: mcsv_effective
+  metric_key: mcsv_effective
+  label: MCSv Effective
+- <<: *hybrid_v2_metric
+  key: aav_effective
+  metric_key: aav_effective
+  label: AAV Effective
+- <<: *hybrid_v2_metric
+  key: lsv_effective
+  metric_key: lsv_effective
+  label: LSV Effective
+- <<: *hybrid_v2_metric
+  key: pa_effective
+  metric_key: pa_effective
+  label: PA Effective
+  unit: mm^2
+- <<: *hybrid_v2_metric
+  key: mad_effective
+  metric_key: mad_effective
+  label: MAD Effective
+  unit: mm
+- <<: *hybrid_v2_metric
+  key: alg_effective
+  metric_key: alg_effective
+  label: ALG Effective
+  unit: mm
+- <<: *hybrid_v2_metric
+  key: alg_sd_effective
+  metric_key: alg_sd_effective
+  label: ALG SD Effective
+  unit: mm
+- <<: *hybrid_v2_metric
+  key: sas_5mm_effective
+  metric_key: sas_5mm_effective
+  label: SAS5mm Effective
+- <<: *hybrid_v2_metric
+  key: sas_10mm_effective
+  metric_key: sas_10mm_effective
+  label: SAS10mm Effective
+- <<: *hybrid_v2_metric
+  key: sas_20mm_effective
+  metric_key: sas_20mm_effective
+  label: SAS20mm Effective
+- <<: *hybrid_v2_metric
+  key: lt_effective
+  metric_key: lt_effective
+  label: LT Effective
+  unit: mm
+- <<: *hybrid_v2_metric
+  key: lt_mean_leaf_effective
+  metric_key: lt_mean_leaf_effective
+  label: LT Mean Leaf Effective
+- <<: *hybrid_v2_metric
+  key: nl_pairs_effective
+  metric_key: nl_pairs_effective
+  label: NL Pairs Effective
+  unit: active leaf pairs
+- <<: *hybrid_v2_metric
+  key: nl_leaves_effective
+  metric_key: nl_leaves_effective
+  label: NL Leaves Effective
+  unit: active physical leaves
+- <<: *hybrid_v2_metric
+  key: mcsv_stacked
+  metric_key: mcsv_stacked
+  label: MCSv Stacked
+- <<: *hybrid_v2_metric
+  key: aav_stacked
+  metric_key: aav_stacked
+  label: AAV Stacked
+- <<: *hybrid_v2_metric
+  key: lsv_stacked
+  metric_key: lsv_stacked
+  label: LSV Stacked
+- <<: *hybrid_v2_metric
+  key: pa_stacked
+  metric_key: pa_stacked
+  label: PA Stacked
+  unit: mm^2
+- <<: *hybrid_v2_metric
+  key: mad_stacked
+  metric_key: mad_stacked
+  label: MAD Stacked
+  unit: mm
+- <<: *hybrid_v2_metric
+  key: alg_stacked
+  metric_key: alg_stacked
+  label: ALG Stacked
+  unit: mm
+- <<: *hybrid_v2_metric
+  key: alg_sd_stacked
+  metric_key: alg_sd_stacked
+  label: ALG SD Stacked
+  unit: mm
+- <<: *hybrid_v2_metric
+  key: sas_5mm_stacked
+  metric_key: sas_5mm_stacked
+  label: SAS5mm Stacked
+- <<: *hybrid_v2_metric
+  key: sas_10mm_stacked
+  metric_key: sas_10mm_stacked
+  label: SAS10mm Stacked
+- <<: *hybrid_v2_metric
+  key: sas_20mm_stacked
+  metric_key: sas_20mm_stacked
+  label: SAS20mm Stacked
+- <<: *hybrid_v2_metric
+  key: lt_stacked
+  metric_key: lt_stacked
+  label: LT Stacked
+  unit: mm
+- <<: *hybrid_v2_metric
+  key: lt_mean_leaf_stacked
+  metric_key: lt_mean_leaf_stacked
+  label: LT Mean Leaf Stacked
+- <<: *hybrid_v2_metric
+  key: nl_pairs_stacked
+  metric_key: nl_pairs_stacked
+  label: NL Pairs Stacked
+  unit: active leaf pairs
+- <<: *hybrid_v2_metric
+  key: nl_leaves_stacked
+  metric_key: nl_leaves_stacked
+  label: NL Leaves Stacked
+  unit: active physical leaves

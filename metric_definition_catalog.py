@@ -466,6 +466,10 @@ def _write_platform_appendices(records: Sequence[MetricDefinitionRecord], output
 
 
 def _vmat_group(metric_key: str) -> str:
+    if metric_key in {"lt_mean_leaf", "nl_pairs", "nl_leaves"} or metric_key.endswith(
+        ("_effective", "_stacked")
+    ):
+        return "Halcyon/Ethos Hybrid v2"
     if metric_key in {
         "mcs5", "pa5", "pi5", "pm5", "eds", "mcsw", "paw", "piw", "pmw",
         "proximal_mcs", "distal_mcs", "proximal_pa", "distal_pa",

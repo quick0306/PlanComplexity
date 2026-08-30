@@ -19,6 +19,7 @@ validation_profiles:
   - vmat_imrt_sport
   - vmat_imrt_halcyon_ethos_tamura_2020
   - vmat_imrt_halcyon_ethos_quintero_2021
+  - vmat_imrt_halcyon_ethos_hybrid_v2
   - tomo_delivery
   - tomo_leaf_open_time
   - tomo_sinogram_geometry
