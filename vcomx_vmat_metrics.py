@@ -10,15 +10,19 @@ from ApertureMetric.aperture_geometry import PyAperture
 from ApertureMetric.aperture_creator import AperturesFromBeamCreator
 from ApertureMetric.meterset_creator import MetersetsFromMetersetWeightsCreator
 from ApertureMetric.mlc_attributes import MLCAttributes
+from ComplexityMetric.aperture_series_metrics import mean_leaf_travel
 from DicomParse.utilities import divide_or_default
 
 
 TIME_DEPENDENT_KEYS = ("mdrv", "mgsv", "dr", "gs", "ls", "dt")
 MLC_DEPENDENT_KEYS = (
     "lt",
+    "lt_mean_leaf",
     "ltmu",
     "ltnlmu",
     "nl",
+    "nl_pairs",
+    "nl_leaves",
     "ltnl",
     "lna",
     "ltal",
@@ -84,12 +88,14 @@ def calculate_vcomx_supplemental_metrics(plan_dict: Dict[str, object]) -> Dict[s
             mlcx1 = _weighted_mean([summary[0].metrics.get(key, 0.0) for summary in beam_summaries], beam_weights)
             mlcx2 = _weighted_mean([summary[1].metrics.get(key, 0.0) for summary in beam_summaries], beam_weights)
             metrics[key] = (_round_metric(mlcx1), _round_metric(mlcx2))
+        metrics["nl"] = metrics["nl_pairs"]
     else:
         beam_summaries = [_summarize_single_layer_beam(beam) for beam in beams]
         for key in MLC_DEPENDENT_KEYS + TIME_DEPENDENT_KEYS:
             metrics[key] = _round_metric(
                 _weighted_mean([summary.metrics.get(key, 0.0) for summary in beam_summaries], beam_weights)
             )
+        metrics["nl"] = metrics["nl_pairs"]
 
     return metrics
 
@@ -139,9 +145,12 @@ def _summarize_aperture_series(
 
     metrics = {
         "lt": _weighted_mean(ca_lt, ca_weights),
+        "lt_mean_leaf": mean_leaf_travel(apertures),
         "ltmu": divide_or_default(float(np.sum(ca_lt)), float(beam.get("MU", 0.0) or 0.0)),
         "ltnlmu": divide_or_default(float(np.sum(_safe_divide(ca_lt, ca_nl))), float(beam.get("MU", 0.0) or 0.0)),
         "nl": _weighted_mean(cp_leaf_counts, cp_weights),
+        "nl_pairs": _weighted_mean(cp_leaf_counts, cp_weights),
+        "nl_leaves": 2.0 * _weighted_mean(cp_leaf_counts, cp_weights),
         "ltnl": _weighted_mean(_safe_divide(ca_lt, ca_nl), ca_weights),
         "lna": _weighted_mean(_safe_divide(ca_lt, ca_nl * gantry_diffs), ca_weights),
         "ltal": _weighted_mean(_safe_divide(ca_lt, gantry_diffs), ca_weights),

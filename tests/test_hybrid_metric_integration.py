@@ -8,6 +8,7 @@ from ComplexityMetric.leaf_gap import LeafGap
 from ComplexityMetric.mean_asymmetry_distance import MeanAsymmetryDistance
 from ComplexityMetric.small_aperture_score import SmallApertureScore
 from ucomx_service import analyze_plan_file
+from vcomx_vmat_metrics import calculate_vcomx_supplemental_metrics
 
 
 TRUEBEAM_BASELINE_PLAN = Path(
@@ -82,3 +83,15 @@ def test_dual_layer_public_metrics_keep_layer_tuple_shape():
     assert isinstance(MeanAsymmetryDistance().calculate_for_plan(plan), tuple)
     assert isinstance(LeafGap().calculate_for_plan(plan), tuple)
     assert isinstance(SmallApertureScore().calculate_for_plan(plan, x=5), tuple)
+
+
+def test_supplemental_metrics_distinguish_leaf_travel_and_leaf_counts():
+    first = _aperture([0.0, 1.0], [2.0, 5.0])
+    second = _aperture([-1.0, 0.0], [9.0, 0.0])
+
+    metrics = calculate_vcomx_supplemental_metrics(_plan([first, second]))
+
+    assert metrics["lt"] == 14.0
+    assert metrics["lt_mean_leaf"] == 3.5
+    assert metrics["nl"] == metrics["nl_pairs"] == 1.25
+    assert metrics["nl_leaves"] == 2.5
