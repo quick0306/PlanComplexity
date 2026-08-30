@@ -52,6 +52,8 @@ Expected branch: `codex/hybrid-complexity-metrics`. Compare status with the pre-
 - `ApertureMetric/stacked_aperture.py` — layer-aware stacked leaf-pair/aperture views that retain original jaw state and width.
 - `tests/test_hybrid_metric_formulas.py` — hand-calculated formula tests.
 - `tests/test_hybrid_metric_integration.py` — plan/service/export integration and backward-compatibility tests.
+- `validation/hybrid_v2_formula_oracles.py` — standalone hybrid-v2 hand-calculated validation oracles.
+- `tests/validation/test_hybrid_v2_formula_oracles.py` — oracle regression tests without altering pre-existing untracked oracle work.
 - `docs/hybrid_v2_migration.md` — user-facing formula migration and output-key guide.
 
 ### Modify
@@ -69,7 +71,6 @@ Expected branch: `codex/hybrid-complexity-metrics`. Compare status with the pre-
 - `tests/test_metric_formulas.py` — replace old MAD/LG/SAS expectations with hybrid-v2 expectations.
 - `tests/test_halcyon_dual_layer_paper_metrics.py` — three-representation coverage.
 - `tests/test_analysis_helpers.py` — registry/flatten/export/provenance coverage.
-- `tests/validation/test_formula_oracles.py` and `validation/formula_oracles.py` — hybrid-v2 hand-calculated validation oracles.
 - `.github/workflows/validation.yml` — include new focused tests only if current discovery would otherwise miss them.
 - `README.md`, living files under `docs/`, and generated metric definition outputs — post-implementation documentation synchronization.
 
@@ -77,6 +78,7 @@ Expected branch: `codex/hybrid-complexity-metrics`. Compare status with the pre-
 
 **Files:**
 - Create: `tests/test_hybrid_metric_formulas.py`
+- Create: `tests/test_hybrid_metric_integration.py`
 - Inspect only: `run_reports/real_rtplan_metrics_all.csv`
 - Inspect only: `tests/test_metric_formulas.py`
 
@@ -101,11 +103,13 @@ $plannedPaths = @(
   'metric_registry.py',
   'metric_definition_catalog.py',
   'validation/formula_oracles.py',
+  'validation/hybrid_v2_formula_oracles.py',
   'tests/test_metric_formulas.py',
   'tests/test_motion_metrics.py',
   'tests/test_halcyon_dual_layer_paper_metrics.py',
   'tests/test_analysis_helpers.py',
   'tests/validation/test_formula_oracles.py',
+  'tests/validation/test_hybrid_v2_formula_oracles.py',
   'README.md',
   'docs/clinical_implementation_sop.md',
   'docs/reference_pack_v1.md',
@@ -143,9 +147,9 @@ From the status snapshot, produce two lists in the execution transcript:
 
 Use these lists for every later commit. Recompute status before staging and stop if a path's classification is unclear.
 
-- [ ] **Step 2: Capture representative preserved values**
+- [ ] **Step 2: Create the integration test file and capture representative preserved values**
 
-Select one available conventional VMAT plan and calculate the current `mcsv`, `aav`, `lsv`, `pa`, `ja`, `lt`, and `nl`. Store expected values only in the new integration test fixture; do not alter the plan or existing result CSV.
+Create `tests/test_hybrid_metric_integration.py`. Select one available conventional VMAT plan and calculate the current `mcsv`, `aav`, `lsv`, `pa`, `ja`, `lt`, and `nl`. Store expected values in a regression test in that file; skip with an explicit reason when the local real-plan fixture is unavailable. Do not alter the plan or existing result CSV.
 
 - [ ] **Step 3: Write failing pure-formula tests**
 
@@ -165,6 +169,7 @@ def test_gap_moments_balance_each_control_point_before_mu_weighting(): ...
 def test_sas_is_per_control_point_then_mu_weighted(): ...
 def test_sas_keeps_strict_threshold_boundary(): ...
 def test_mean_leaf_travel_uses_raw_trajectory_and_moving_physical_leaves(): ...
+def test_mean_leaf_travel_counts_interval_when_pair_is_inside_jaw_at_either_endpoint(): ...
 def test_active_pair_count_includes_zero_as_valid_observation(): ...
 def test_invalid_weights_use_uniform_fallback_and_report_it(): ...
 ```
@@ -218,7 +223,7 @@ def active_pair_count(apertures, cp_weights) -> MetricValue: ...
 def mean_leaf_travel(apertures) -> float: ...
 ```
 
-MAD/LG/SAS exclude CPs with no active pairs and renormalize. NL includes zero-count CPs. Mean leaf travel performs no interval-MU weighting and counts left/right leaves separately only when accumulated travel is positive.
+MAD/LG/SAS exclude CPs with no active pairs and renormalize. NL includes zero-count CPs. Mean leaf travel performs no interval-MU weighting, counts left/right leaves separately only when accumulated travel is positive, and includes an interval whenever the source pair overlaps the jaw at either endpoint.
 
 - [ ] **Step 3: Verify GREEN and refactor**
 
@@ -414,10 +419,10 @@ Run the Halcyon test file. If `data/Halcyon` exists, analyze at least one real p
 - Modify: `metric_registry.py`
 - Modify: `metric_definition_catalog.py`
 - Modify: `analysis_exports.py`
-- Modify: `validation/formula_oracles.py`
+- Create: `validation/hybrid_v2_formula_oracles.py`
 - Modify: `tests/test_metric_definition_exports.py`
 - Modify: `tests/test_analysis_helpers.py`
-- Modify: `tests/validation/test_formula_oracles.py`
+- Create: `tests/validation/test_hybrid_v2_formula_oracles.py`
 
 - [ ] **Step 1: Write failing registry/export tests**
 
@@ -433,7 +438,7 @@ Register `lt_mean_leaf`, `nl_pairs`, `nl_leaves`, all `*_effective`, and all `*_
 
 - [ ] **Step 4: Extend formula oracles**
 
-Add hand-calculated oracles for corrected MAD, weighted LG/SAS, mean-leaf LT, NL aliases, and stacked/effective divergence. Do not modify unrelated existing oracle expected values.
+Add the hand-calculated oracles for corrected MAD, weighted LG/SAS, mean-leaf LT, NL aliases, and stacked/effective divergence in the new standalone `hybrid_v2_formula_oracles.py` module. Leave the pre-existing untracked `validation/formula_oracles.py` and `tests/validation/test_formula_oracles.py` files untouched and unstaged.
 
 - [ ] **Step 5: Verify GREEN**
 
