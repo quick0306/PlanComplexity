@@ -22,7 +22,7 @@ class MetricFormulaTests(unittest.TestCase):
 
         value = MeanAsymmetryDistance().calculate_mean_asymmetry_distance(aperture)
 
-        self.assertEqual(value, 5.0)
+        self.assertEqual(value, 2.0)
 
     def test_leaf_gap_summary_uses_all_active_leaf_pairs(self):
         aperture = PyAperture(

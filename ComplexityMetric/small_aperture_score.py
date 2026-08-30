@@ -1,70 +1,78 @@
-﻿from typing import Dict, List, Tuple, Union
+from typing import Dict, List, Tuple, Union
 
-from ApertureMetric.aperture_geometry import PyAperture
 from ApertureMetric.aperture_creator import AperturesFromBeamCreator
+from ApertureMetric.aperture_geometry import PyAperture
+from ComplexityMetric.aperture_series_metrics import active_leaf_pairs, small_aperture_score, weighted_mean
 from ComplexityMetric.complexity_metric import ComplexityMetric
 
 
+PlanValue = Union[float, Tuple[float, float]]
+
+
 class SmallApertureScore(ComplexityMetric):
-    """Small aperture score (SASn).
+    """MU-weighted fraction of active gaps strictly smaller than a threshold."""
 
-    Reference:
-        Crowe SB, et al. Examination of the properties of IMRT and VMAT beams and evaluation
-        against pre-treatment quality assurance results. Physics in Medicine & Biology, 2015.
-        DOI: 10.1088/0031-9155/60/6/2587
-    """
+    def calculate_for_plan(self, plan: Dict[str, str] = None, x=5) -> PlanValue:
+        value, _ = self.calculate_for_plan_with_warnings(plan, x=x)
+        return value
 
-    def calculate_for_plan(self, plan: Dict[str, str] = None, x=5):
-        if "halcyon" in plan["machine_id"].lower() or "ethos" in plan["machine_id"].lower():
-            mlcx1_small = mlcx1_total = 0
-            mlcx2_small = mlcx2_total = 0
-            for _, beam in plan["beams"].items():
-                if beam["TreatmentDeliveryType"] != "TREATMENT" or beam["MU"] <= 0.0:
-                    continue
-                (beam_small_1, beam_total_1), (beam_small_2, beam_total_2) = self.count_beam_leaf_gaps(beam, x)
-                mlcx1_small += beam_small_1
-                mlcx1_total += beam_total_1
-                mlcx2_small += beam_small_2
-                mlcx2_total += beam_total_2
-            return (
-                round(mlcx1_small / mlcx1_total, 2) if mlcx1_total else 0.0,
-                round(mlcx2_small / mlcx2_total, 2) if mlcx2_total else 0.0,
-            )
+    def calculate_for_plan_with_warnings(
+        self, plan: Dict[str, str], x=5
+    ) -> Tuple[PlanValue, List[str]]:
+        dual_layer = "halcyon" in plan["machine_id"].lower() or "ethos" in plan[
+            "machine_id"
+        ].lower()
+        layer_values: List[List[float]] = [[], []] if dual_layer else [[]]
+        layer_weights: List[List[float]] = [[], []] if dual_layer else [[]]
+        warnings: List[str] = []
 
-        small_count = 0
-        total_count = 0
-        for _, beam in plan["beams"].items():
+        for beam in plan["beams"].values():
             if beam["TreatmentDeliveryType"] != "TREATMENT" or beam["MU"] <= 0.0:
                 continue
-            beam_small_count, beam_total_count = self.count_beam_leaf_gaps(beam, x)
-            small_count += beam_small_count
-            total_count += beam_total_count
+            apertures = AperturesFromBeamCreator().create(beam)
+            aperture_layers = [apertures[0::2], apertures[1::2]] if dual_layer else [apertures]
+            cp_weights = self.get_weights_beam(beam)
+            for layer_index, layer_apertures in enumerate(aperture_layers):
+                if not any(active_leaf_pairs(aperture) for aperture in layer_apertures):
+                    continue
+                result = small_aperture_score(layer_apertures, cp_weights, float(x))
+                if result.used_uniform_weights:
+                    warnings.append(
+                        "[METRIC_WEIGHT_FALLBACK] SAS used uniform control-point weights because "
+                        "MU increments were missing or invalid."
+                    )
+                layer_values[layer_index].append(result.value)
+                layer_weights[layer_index].append(float(beam["MU"]))
 
-        return round(small_count / total_count, 2) if total_count else 0.0
+        results = []
+        for values, weights in zip(layer_values, layer_weights):
+            result = weighted_mean(values, weights)
+            if result.used_uniform_weights:
+                warnings.append(
+                    "[METRIC_WEIGHT_FALLBACK] SAS used uniform beam weights because beam MU "
+                    "values were missing or invalid."
+                )
+            results.append(round(result.value, self.round_digits))
+        return (tuple(results) if dual_layer else results[0]), list(dict.fromkeys(warnings))
 
-    def count_beam_leaf_gaps(self, beam: Dict[str, str], x=5) -> Union[Tuple[int, int], Tuple[Tuple[int, int], Tuple[int, int]]]:
+    def count_beam_leaf_gaps(
+        self, beam: Dict[str, str], x=5
+    ) -> Union[Tuple[int, int], Tuple[Tuple[int, int], Tuple[int, int]]]:
         apertures = AperturesFromBeamCreator().create(beam)
-        if "halcyon" in beam["TreatmentMachineName"].lower() or "ethos" in beam["TreatmentMachineName"].lower():
-            return self.count_aperture_leaf_gaps(apertures[0::2], x), self.count_aperture_leaf_gaps(apertures[1::2], x)
+        if "halcyon" in beam["TreatmentMachineName"].lower() or "ethos" in beam[
+            "TreatmentMachineName"
+        ].lower():
+            return self.count_aperture_leaf_gaps(apertures[0::2], x), self.count_aperture_leaf_gaps(
+                apertures[1::2], x
+            )
         return self.count_aperture_leaf_gaps(apertures, x)
 
     @staticmethod
     def count_aperture_leaf_gaps(apertures: List[PyAperture], x=5) -> Tuple[int, int]:
-        # SASn is the fraction of active gaps smaller than the threshold n.
         small_count = 0
         total_count = 0
         for aperture in apertures:
-            for leaf_pair in aperture.leaf_pairs:
-                if leaf_pair.is_outside_jaw():
-                    continue
-                gap = leaf_pair.field_size()
-                if gap <= 0:
-                    continue
-                total_count += 1
-                if gap < x:
-                    small_count += 1
+            active_pairs = active_leaf_pairs(aperture)
+            total_count += len(active_pairs)
+            small_count += sum(leaf_pair.field_size() < x for leaf_pair in active_pairs)
         return small_count, total_count
-
-
-
-
