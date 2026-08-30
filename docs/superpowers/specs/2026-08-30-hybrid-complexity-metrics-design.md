@@ -46,7 +46,7 @@ For Halcyon/Ethos results, flattened exports add the suffix families described u
 
 ### Formula provenance
 
-VMAT/IMRT results expose a non-metric metadata field identifying the formula set, initially `hybrid-v2`. This field is available in structured results and documentation. It does not replace individual metric DOI/reference metadata.
+Every VMAT/IMRT `PlanAnalysisResult.metadata` mapping contains the string field `metric_formula_version`, initially `hybrid-v2`. Fixed CSV exports include it in a `Formula_Version` column. This field does not replace individual metric DOI/reference metadata.
 
 ## Default Hybrid Metric Definitions
 
@@ -104,7 +104,9 @@ Threshold comparison remains strict (`gap < x`) to preserve the current boundary
 3. Divide total accumulated travel by the number of participating physical leaves.
 4. Aggregate beam values to the plan using beam MU.
 
-If no physical leaf moves, return `0.0`. The unit is millimetres per participating physical leaf.
+The interval travel in this traditional metric is a raw geometric trajectory sum and is not multiplied by control-arc MU. Only the plan-level aggregation of per-beam means uses beam MU. If no physical leaf moves, return `0.0`. The unit is millimetres per participating physical leaf.
+
+For example, if two participating physical leaves accumulate 4 mm and 6 mm over a beam, `lt_mean_leaf` is 5 mm regardless of the relative interval MU values.
 
 ### Active leaf counts
 
@@ -116,7 +118,7 @@ At each control point, an active pair overlaps the Y-jaw opening and has a stric
 
 ## Control-point and Plan Weighting
 
-Control-point metrics use the repository's existing centered per-control-point MU weights. Control-arc metrics continue to use interval MU derived from adjacent cumulative meterset weights.
+Control-point metrics use the repository's existing centered per-control-point MU weights. Existing dose-weighted control-arc metrics, including legacy `lt`, continue to use interval MU derived from adjacent cumulative meterset weights. Traditional `lt_mean_leaf` is the explicit exception: it sums raw geometric interval travel before dividing by participating leaves.
 
 Only valid observations participate in metric-specific weighted denominators. When a required weight vector is missing, misaligned, non-finite, or has a non-positive total, the calculation uses uniform weights over valid observations and emits a structured warning. Metric functions must never emit `NaN` or infinity.
 
@@ -144,6 +146,8 @@ The effective aperture series produces:
 
 `mcsv_effective` and `pa_effective` are explicit aliases of the equivalent existing `mcs5` and `pa5` values. Existing Tamura and Quintero keys remain unchanged. JA is jaw-defined and is not duplicated as an effective-aperture metric.
 
+For effective geometry, the denominator of `lt_mean_leaf_effective` is the number of synthesized 5 mm effective virtual leaves with strictly positive accumulated travel. It is not a count of underlying physical leaves. Its documented unit is millimetres per moving effective virtual leaf.
+
 ### Stacked diagnostic geometry
 
 The stacked representation is inspired by the RT Complexity Lens dual-layer parser behavior but is implemented as an internal diagnostic representation, not as an RT Lens compatibility mode.
@@ -157,6 +161,8 @@ For each control point, the MLCX1 and MLCX2 leaf-pair collections are concatenat
 
 The implementation must not place the two layers consecutively along a fabricated extended Y axis. Jaw inclusion is evaluated before concatenation, or through an equivalent layer-aware abstraction.
 
+The ordered stacked sequence is all jaw-evaluated MLCX1 slots in their native leaf order followed by all jaw-evaluated MLCX2 slots in their native leaf order. LSV deliberately includes one artificial adjacency between the final MLCX1 slot and the first MLCX2 slot when both layers contribute slots. That cross-layer term is part of the stacked diagnostic definition and must be disclosed as non-physical. AAV normalization treats each layer/leaf-index slot as a distinct slot across the arc. Stacked PA is the sum of the two layer aperture areas and therefore double-counts overlapping transmission regions by design. Stacked MAD, LG, SAS, LT, and NL operate on the concatenated slot collection after each slot's original jaw-overlap state has been resolved.
+
 The stacked series produces:
 
 - `mcsv_stacked`, `aav_stacked`, `lsv_stacked`, and `pa_stacked`;
@@ -167,9 +173,15 @@ The stacked series produces:
 
 JA is not duplicated. Documentation and result descriptions must state that stacked geometry is an algorithm-comparison and dual-layer modulation descriptor, not a physical transmission aperture.
 
+At every paired control point:
+
+`nl_pairs_stacked,c = nl_pairs_mlcx1,c + nl_pairs_mlcx2,c`.
+
+Active-pair count is defined even when the count is zero, so NL uses the shared control-point weight vector without excluding empty control points. Consequently, the equality also holds after beam and plan aggregation when the dual-layer series is aligned. This invariant does not apply to LG, MAD, or SAS, whose empty observations are excluded and independently renormalized.
+
 ### Dual-layer alignment failures
 
-Layer-specific metrics remain calculable when a layer has valid data. Effective and stacked series require paired control points for both layers. If layer control-point counts do not match, effective and stacked outputs are unavailable and a structured warning explains the mismatch. The implementation must not silently truncate to the shorter layer.
+Layer-specific metrics remain calculable when a layer has valid data. Effective and stacked series require paired control points for both layers. If layer control-point counts do not match in any treatment beam, the entire plan-level effective and stacked families are set to `None`; valid layer-specific metrics remain available. Flattened results retain the affected keys with `None`, and fixed CSV exports render those values as blank cells. `PlanAnalysisResult.warnings` receives a human-readable string beginning with `[HALCYON_LAYER_ALIGNMENT]`. The implementation must not silently truncate to the shorter layer or aggregate only the valid beams.
 
 ## Architecture
 
@@ -180,6 +192,7 @@ The implementation uses focused reusable helpers rather than calculation-profile
 - `vcomx_vmat_metrics.py` consumes the shared helpers for supplemental `lt`, `lt_mean_leaf`, `nl`, `nl_pairs`, and `nl_leaves` outputs while preserving its current MCS/LSV/AAV/PA/JA path.
 - MAD, LG, and SAS classes use the shared control-point aggregation behavior.
 - `halcyon_dual_layer_metrics.py` remains responsible for constructing layer-specific snapshots and the physical effective aperture, and gains a layer-aware stacked metric series.
+- A new internal `calculate_core_metrics_with_warnings(plan_dict)` returns `(metrics, warnings)` for the service path. The existing `calculate_core_metrics(plan_dict)` remains a metrics-only wrapper for backward-compatible callers. `ucomx_service.py` merges calculation warnings into `PlanAnalysisResult.warnings`.
 - The metric registry, definition catalog, flattened-output logic, CSV exports, and user documentation are updated together.
 
 No new external dependency is introduced.
@@ -188,8 +201,8 @@ No new external dependency is introduced.
 
 - Inherited DICOM machine parameters continue to use the repository's existing prior-control-point behavior.
 - Empty active-pair sets are excluded from metric-specific weighted denominators.
-- Missing or invalid weights use uniform fallback with a warning.
-- Dual-layer count mismatches disable only effective and stacked calculations; layer-specific calculations remain available.
+- Missing or invalid weights use uniform fallback and append a warning string beginning with `[METRIC_WEIGHT_FALLBACK]` to `PlanAnalysisResult.warnings`.
+- Dual-layer count mismatches disable only effective and stacked calculations; layer-specific calculations remain available. Unavailable structured and exported values follow the `None`/blank policy above.
 - Metric results are finite. Invalid intermediate arithmetic resolves to a documented zero or unavailable output, never `NaN`/infinity.
 - Unsupported non-VMAT calculation paths are unaffected.
 
@@ -206,6 +219,23 @@ Migration notes explicitly identify intentional result changes for:
 They also identify the new `lt_mean_leaf`, `nl_pairs`, `nl_leaves`, effective, and stacked outputs. Existing `lt` and `nl` keys remain available as described above.
 
 Generated formula documentation and CSV headers must reflect the new keys and units. Stacked results must carry a visible non-physical-geometry warning in metric descriptions.
+
+## Output Schema Summary
+
+| Key family | Unit | Applicability | Unavailable representation | Provenance |
+|---|---|---|---|---|
+| `mad`, `alg`, `alg_sd` | mm | VMAT/IMRT aperture series | `0.0` only when no valid observation exists | `metric_formula_version=hybrid-v2` plus metric DOI |
+| `sas_*` | proportion | VMAT/IMRT aperture series | `0.0` only when no valid observation exists | `metric_formula_version=hybrid-v2` plus metric DOI |
+| `lt` | mm per control arc, dose weighted | VMAT/IMRT | `0.0` when no interval exists | preserved legacy definition |
+| `lt_mean_leaf` | mm per moving physical leaf | Physical single-layer or layer-specific series | `0.0` when no leaf moves | `metric_formula_version=hybrid-v2` plus Masi reference |
+| `nl`, `nl_pairs` | active leaf pairs | VMAT/IMRT | `0.0` for a closed series | `metric_formula_version=hybrid-v2` |
+| `nl_leaves` | active physical leaves | VMAT/IMRT | `0.0` for a closed series | `2 * nl_pairs` |
+| `*_effective` | base metric unit; effective LT is per virtual leaf | Aligned Halcyon/Ethos dual-layer series | `None` structured/flattened, blank fixed CSV | effective 5 mm representation and paper-specific references |
+| `*_stacked` | base metric unit | Aligned Halcyon/Ethos dual-layer series | `None` structured/flattened, blank fixed CSV | internal stacked diagnostic definition, explicitly non-physical |
+
+For a weighted-gap example, suppose control point A has gaps `[2, 4]` with weight 1 and control point B has gap `[10]` with weight 3. `alg` is `(1 * 3 + 3 * 10) / 4 = 8.25`. For `alg_sd`, A's weight is divided equally across its two gaps, producing gap weights `[0.5, 0.5, 3]`; the weighted population variance around 8.25 is 9.4375 and `alg_sd` is approximately 3.072.
+
+For a stacked example, if MLCX1 contributes two ordered active slots and MLCX2 contributes one, the stacked series contains three slots in order `[X1_0, X1_1, X2_0]`. LSV evaluates the native `X1_0-X1_1` adjacency and the artificial `X1_1-X2_0` boundary; NL reports three active pairs at that control point.
 
 ## Verification Strategy
 
