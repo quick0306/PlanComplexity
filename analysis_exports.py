@@ -11,7 +11,7 @@ BASE_HEADER = [
     "Calculation_Model",
     "Prescribed_Dose",
     "MU",
-    "Metric_Formula_Version",
+    "Formula_Version",
 ]
 
 

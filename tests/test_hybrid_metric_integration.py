@@ -123,5 +123,5 @@ def test_vmat_analysis_and_exports_include_formula_provenance():
 
     assert result.metadata["metric_formula_version"] == "hybrid-v2"
     assert export_record["metric_formula_version"] == "hybrid-v2"
-    assert "Metric_Formula_Version" in BASE_HEADER
+    assert "Formula_Version" in BASE_HEADER
     assert build_standard_row(result.metadata, {})[7] == "hybrid-v2"
