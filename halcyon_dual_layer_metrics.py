@@ -9,6 +9,14 @@ import numpy as np
 from ApertureMetric.aperture_creator import AperturesFromBeamCreator
 from ApertureMetric.aperture_geometry import PyAperture
 from ApertureMetric.meterset_creator import MetersetsFromMetersetWeightsCreator
+from ApertureMetric.stacked_aperture import StackedAperture, stack_dual_layer_apertures
+from ComplexityMetric.aperture_series_metrics import (
+    active_pair_count,
+    mean_asymmetry_distance,
+    mean_leaf_travel,
+    small_aperture_score,
+    weighted_gap_moments,
+)
 from DicomParse.utilities import divide_or_default
 
 
@@ -23,6 +31,7 @@ class LayerControlPoint:
     distal_aperture: PyAperture
     proximal_aperture: PyAperture
     effective_aperture: PyAperture
+    stacked_aperture: StackedAperture
     distal_weight: float
     proximal_weight: float
     distal_uncovered: float
@@ -35,20 +44,35 @@ class LayerControlPoint:
 class BeamPaperMetrics:
     values: Dict[str, float]
     mu: float
+    warnings: tuple[str, ...] = ()
 
 
 def calculate_halcyon_dual_layer_paper_metrics(plan_dict: Dict[str, Any]) -> Dict[str, float]:
     """Return Tamura 2020 and Quintero 2021 metrics for Halcyon/Ethos dual-layer MLC plans."""
-    if not _is_dual_layer_plan(plan_dict):
-        return {}
+    metrics, _ = calculate_halcyon_dual_layer_metrics_with_warnings(plan_dict)
+    return metrics
 
+
+def calculate_halcyon_dual_layer_metrics_with_warnings(
+    plan_dict: Dict[str, Any]
+) -> tuple[Dict[str, float], list[str]]:
+    if not _is_dual_layer_plan(plan_dict):
+        return {}, []
+
+    beams = list(_treatment_beams(plan_dict))
+    alignment_failed = any(not _dual_layer_alignment_ok(beam) for beam in beams)
     beam_results = [
         _calculate_beam_paper_metrics(beam)
-        for beam in _treatment_beams(plan_dict)
+        for beam in beams
     ]
     beam_results = [result for result in beam_results if result is not None and result.mu > 0.0]
     if not beam_results:
-        return {}
+        if alignment_failed:
+            return {key: None for key in HYBRID_REPRESENTATION_KEYS}, [
+                "[HALCYON_LAYER_ALIGNMENT] Effective and stacked metrics are unavailable because "
+                "the dual-layer control-point series are not aligned."
+            ]
+        return {}, []
 
     total_mu = sum(result.mu for result in beam_results)
     metric_keys = list(beam_results[0].values.keys())
@@ -57,7 +81,25 @@ def calculate_halcyon_dual_layer_paper_metrics(plan_dict: Dict[str, Any]) -> Dic
         metrics[key] = _round_metric(
             sum(result.values.get(key, 0.0) * result.mu for result in beam_results) / total_mu
         )
-    return metrics
+    warnings = list(dict.fromkeys(warning for result in beam_results for warning in result.warnings))
+    if alignment_failed:
+        for key in HYBRID_REPRESENTATION_KEYS:
+            metrics[key] = None
+        warnings.append(
+            "[HALCYON_LAYER_ALIGNMENT] Effective and stacked metrics are unavailable because "
+            "the dual-layer control-point series are not aligned."
+        )
+    return metrics, warnings
+
+
+HYBRID_REPRESENTATION_KEYS = tuple(
+    f"{metric}_{representation}"
+    for representation in ("effective", "stacked")
+    for metric in (
+        "mcsv", "aav", "lsv", "pa", "mad", "alg", "alg_sd", "sas_5mm",
+        "sas_10mm", "sas_20mm", "lt", "lt_mean_leaf", "nl_pairs", "nl_leaves",
+    )
+)
 
 
 def _is_dual_layer_plan(plan_dict: Dict[str, Any]) -> bool:
@@ -79,6 +121,20 @@ def _has_dual_layer_devices(beam: Dict[str, Any]) -> bool:
         for device in beam.get("BeamLimitingDeviceSequence", [])
     }
     return DISTAL_DEVICE in device_types and PROXIMAL_DEVICE in device_types
+
+
+def _dual_layer_alignment_ok(beam: Dict[str, Any]) -> bool:
+    creator = AperturesFromBeamCreator()
+    distal_count = 0
+    proximal_count = 0
+    for control_point in beam.get("ControlPointSequence", []):
+        has_distal = creator.get_halcyon_leaf_positions(control_point, DISTAL_DEVICE) is not None
+        has_proximal = creator.get_halcyon_leaf_positions(control_point, PROXIMAL_DEVICE) is not None
+        distal_count += int(has_distal)
+        proximal_count += int(has_proximal)
+        if has_distal != has_proximal:
+            return False
+    return distal_count == proximal_count
 
 
 def _calculate_beam_paper_metrics(beam: Dict[str, Any]) -> BeamPaperMetrics | None:
@@ -103,6 +159,7 @@ def _calculate_beam_paper_metrics(beam: Dict[str, Any]) -> BeamPaperMetrics | No
     distal_apertures = [snapshot.distal_aperture for snapshot in snapshots]
     proximal_apertures = [snapshot.proximal_aperture for snapshot in snapshots]
     effective_apertures = [snapshot.effective_aperture for snapshot in snapshots]
+    stacked_apertures = [snapshot.stacked_aperture for snapshot in snapshots]
     distal_weights = np.array([snapshot.distal_weight for snapshot in snapshots], dtype=float)
     proximal_weights = np.array([snapshot.proximal_weight for snapshot in snapshots], dtype=float)
     distal_uncovered = np.array([snapshot.distal_uncovered for snapshot in snapshots], dtype=float)
@@ -200,7 +257,93 @@ def _calculate_beam_paper_metrics(beam: Dict[str, Any]) -> BeamPaperMetrics | No
         "proximal_weight_mean": _weighted_cp_mean(proximal_weights, cp_mu),
         "distal_weight_mean": _weighted_cp_mean(distal_weights, cp_mu),
     }
-    return BeamPaperMetrics(values=values, mu=float(beam.get("MU", beam_mu) or beam_mu))
+    effective_values, effective_warnings = _hybrid_representation_values(
+        effective_apertures, cp_mu, interval_mu, "effective"
+    )
+    stacked_values, stacked_warnings = _hybrid_representation_values(
+        stacked_apertures, cp_mu, interval_mu, "stacked"
+    )
+    values.update(effective_values)
+    values.update(stacked_values)
+    values["mcsv_effective"] = values["mcs5"]
+    values["pa_effective"] = values["pa5"]
+    return BeamPaperMetrics(
+        values=values,
+        mu=float(beam.get("MU", beam_mu) or beam_mu),
+        warnings=tuple(dict.fromkeys(effective_warnings + stacked_warnings)),
+    )
+
+
+def _hybrid_representation_values(
+    apertures: Sequence[Any],
+    cp_mu: Sequence[float],
+    interval_mu: Sequence[float],
+    suffix: str,
+) -> tuple[Dict[str, float], list[str]]:
+    gap_moments = weighted_gap_moments(apertures, cp_mu)
+    mad = mean_asymmetry_distance(apertures, cp_mu)
+    sas_values = {
+        threshold: small_aperture_score(apertures, cp_mu, float(threshold))
+        for threshold in (5, 10, 20)
+    }
+    pair_count = active_pair_count(apertures, cp_mu)
+    aav, lsv = _beam_aav_lsv(apertures, interval_mu)
+    travel_terms = [
+        _leaf_travel_total(first, second)
+        for first, second in zip(apertures[:-1], apertures[1:])
+    ]
+    values = {
+        f"mcsv_{suffix}": _beam_mcs(apertures, interval_mu),
+        f"aav_{suffix}": aav,
+        f"lsv_{suffix}": lsv,
+        f"pa_{suffix}": _weighted_cp_mean([aperture.area() for aperture in apertures], cp_mu),
+        f"mad_{suffix}": mad.value,
+        f"alg_{suffix}": gap_moments.mean,
+        f"alg_sd_{suffix}": gap_moments.standard_deviation,
+        f"sas_5mm_{suffix}": sas_values[5].value,
+        f"sas_10mm_{suffix}": sas_values[10].value,
+        f"sas_20mm_{suffix}": sas_values[20].value,
+        f"lt_{suffix}": _weighted_interval_mean(travel_terms, interval_mu),
+        f"lt_mean_leaf_{suffix}": mean_leaf_travel(apertures),
+        f"nl_pairs_{suffix}": pair_count.value,
+        f"nl_leaves_{suffix}": 2.0 * pair_count.value,
+    }
+    fallback = gap_moments.used_uniform_weights or mad.used_uniform_weights or pair_count.used_uniform_weights
+    fallback = fallback or any(result.used_uniform_weights for result in sas_values.values())
+    warnings = []
+    if fallback:
+        warnings.append(
+            f"[METRIC_WEIGHT_FALLBACK] Halcyon {suffix} metrics used uniform control-point "
+            "weights because MU increments were missing or invalid."
+        )
+    return values, warnings
+
+
+def _beam_aav_lsv(
+    apertures: Sequence[Any], interval_mu: Sequence[float]
+) -> tuple[float, float]:
+    if len(apertures) < 2:
+        return 0.0, 0.0
+    normalization = _arc_aav_normalization(apertures)
+    aav_cp = np.asarray(
+        [divide_or_default(aperture.area(), normalization) for aperture in apertures],
+        dtype=float,
+    )
+    lsv_cp = np.asarray([_leaf_sequence_variability(aperture) for aperture in apertures])
+    return (
+        _weighted_interval_mean(_adjacent_mean(aav_cp), interval_mu),
+        _weighted_interval_mean(_adjacent_mean(lsv_cp), interval_mu),
+    )
+
+
+def _leaf_travel_total(first: Any, second: Any) -> float:
+    total = 0.0
+    for first_pair, second_pair in zip(first.leaf_pairs, second.leaf_pairs):
+        if first_pair.is_outside_jaw() and second_pair.is_outside_jaw():
+            continue
+        total += abs(float(first_pair.left) - float(second_pair.left))
+        total += abs(float(first_pair.right) - float(second_pair.right))
+    return total
 
 
 def _build_layer_control_points(beam: Dict[str, Any]) -> list[LayerControlPoint]:
@@ -225,6 +368,7 @@ def _build_layer_control_points(beam: Dict[str, Any]) -> list[LayerControlPoint]
         effective_positions, aligned_distal, aligned_proximal = _effective_positions(distal_positions, proximal_positions)
         effective_widths = _effective_widths(distal_widths, len(effective_positions[0]))
         effective_aperture = PyAperture(effective_positions, effective_widths, jaw, gantry_angle)
+        stacked_aperture = stack_dual_layer_apertures(distal_aperture, proximal_aperture)
         distal_weight, proximal_weight, distal_uncovered, proximal_uncovered = _layer_contributions(
             effective_aperture,
             aligned_distal,
@@ -235,6 +379,7 @@ def _build_layer_control_points(beam: Dict[str, Any]) -> list[LayerControlPoint]
                 distal_aperture=distal_aperture,
                 proximal_aperture=proximal_aperture,
                 effective_aperture=effective_aperture,
+                stacked_aperture=stacked_aperture,
                 distal_weight=distal_weight,
                 proximal_weight=proximal_weight,
                 distal_uncovered=distal_uncovered,
