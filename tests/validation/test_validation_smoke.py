@@ -12,6 +12,12 @@ class ValidationSmokeTests(unittest.TestCase):
         import validation
         import validation_runtime  # noqa: F401
         import validation_models  # noqa: F401
+        import validation.clinical_endpoints  # noqa: F401
+        import validation.clinical_readiness  # noqa: F401
+        import validation.comparator_matrix  # noqa: F401
+        import validation.formula_oracles  # noqa: F401
+        import validation.paper_reproduction  # noqa: F401
+        import validation.psqa_spc  # noqa: F401
         self.assertEqual(validation.PACKAGE_SENTINEL, "real-validation-package")
 
 

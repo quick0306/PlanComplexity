@@ -49,6 +49,11 @@ def _first_treatment_beam(beam_sequence: Sequence[Any]) -> Any | None:
     return None
 
 
+def _is_tomo_identity(*values: Any) -> bool:
+    text = " ".join(str(value or "").lower() for value in values)
+    return any(token in text for token in ("tomo", "tomotherapy", "radixact", "hi-art"))
+
+
 def detect_mode(metadata: Dict[str, Any]) -> AnalysisMode:
     machine_id = str(metadata.get("machine_id", "")).lower()
     model = str(metadata.get("calculation_model", "")).lower()
@@ -65,11 +70,7 @@ def detect_mode(metadata: Dict[str, Any]) -> AnalysisMode:
         or "aurora" in plan_label
     ):
         return AnalysisMode.AURORA
-    if any(token in machine_id for token in ("tomo", "tomotherapy", "radixact")):
-        return AnalysisMode.TOMO
-    if any(token in model for token in ("tomo", "tomotherapy", "radixact")):
-        return AnalysisMode.TOMO
-    if "tomo" in plan_name:
+    if _is_tomo_identity(machine_id, model, manufacturer_model, manufacturer, plan_name, plan_label):
         return AnalysisMode.TOMO
     if (
         ("accuray" in manufacturer or "cyberknife" in machine_id or "cyberknife" in model)
@@ -93,7 +94,7 @@ def detect_mode_from_file(source_path: str) -> AnalysisMode:
         return AnalysisMode.VMAT_IMRT
 
     machine_id = str(getattr(treatment_beam, "TreatmentMachineName", "")).lower()
-    if any(token in machine_id for token in ("tomo", "tomotherapy", "radixact")):
+    if _is_tomo_identity(manufacturer, model, machine_id, plan_name, plan_label):
         return AnalysisMode.TOMO
 
     beam_types = {str(getattr(item, "RTBeamLimitingDeviceType", "")).upper() for item in getattr(treatment_beam, "BeamLimitingDeviceSequence", [])}

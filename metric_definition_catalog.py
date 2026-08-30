@@ -40,6 +40,14 @@ class MetricGroupCatalogRecord:
     group_key: str
 
 
+PARK_TIMING_LIMITATION_NOTE = (
+    "Requires a valid control-point time model. RTPLAN-only exact calculation is "
+    "unavailable when dose-rate/gantry-speed timing inputs are absent, zero, or "
+    "machine-specific limits cannot be identified; Elekta values should be labeled "
+    "estimated unless validated site timing or delivery-log timestamps are supplied."
+)
+
+
 def build_metric_definition_catalog() -> list[MetricDefinitionRecord]:
     records: list[MetricDefinitionRecord] = []
     records.extend(_build_vmat_metric_records())
@@ -181,9 +189,9 @@ def _build_vmat_flattened_records(metric_key: str, label: str, description: str)
                     mathematical_definition=f"mean_leaf [ proportion(intervals with speed in {bucket_text}) ]",
                     physical_meaning=SPECIAL_FLATTENED_DESCRIPTIONS.get(bucket_key, description),
                     unit="proportion",
-                    inputs_required="Per-leaf MLC speed over valid control-point intervals",
+                    inputs_required="Per-leaf MLC speed over valid control-point intervals with a valid control-point time model",
                     implementation_status="implemented_flattened",
-                    notes="Park 2015 speed-bin proportion, averaged over leaves.",
+                    notes=f"Park 2015 speed-bin proportion, averaged over leaves. {PARK_TIMING_LIMITATION_NOTE}",
                 )
             )
         for bucket_key, bucket_text in (
@@ -203,9 +211,9 @@ def _build_vmat_flattened_records(metric_key: str, label: str, description: str)
                     mathematical_definition=f"mean_leaf [ proportion(intervals with acceleration in {bucket_text}) ]",
                     physical_meaning=SPECIAL_FLATTENED_DESCRIPTIONS.get(bucket_key, description),
                     unit="proportion",
-                    inputs_required="Per-leaf MLC acceleration over valid control-point intervals",
+                    inputs_required="Per-leaf MLC acceleration over valid control-point intervals with a valid control-point time model",
                     implementation_status="implemented_flattened",
-                    notes="Park 2015 acceleration-bin proportion, averaged over leaves.",
+                    notes=f"Park 2015 acceleration-bin proportion, averaged over leaves. {PARK_TIMING_LIMITATION_NOTE}",
                 )
             )
         for summary_key, summary_formula, summary_unit in (
@@ -224,9 +232,9 @@ def _build_vmat_flattened_records(metric_key: str, label: str, description: str)
                     mathematical_definition=summary_formula,
                     physical_meaning=SPECIAL_FLATTENED_DESCRIPTIONS.get(summary_key, description),
                     unit=summary_unit,
-                    inputs_required="Per-leaf motion time series",
+                    inputs_required="Per-leaf motion time series with a valid control-point time model",
                     implementation_status="implemented_flattened",
-                    notes="Park 2015 summary statistic flattened for export.",
+                    notes=f"Park 2015 summary statistic flattened for export. {PARK_TIMING_LIMITATION_NOTE}",
                 )
             )
         for layer in ("mlcx1", "mlcx2"):
@@ -260,9 +268,9 @@ def _build_vmat_flattened_records(metric_key: str, label: str, description: str)
                         mathematical_definition=f"{formula}, restricted to {layer_label} leaf positions.",
                         physical_meaning=SPECIAL_FLATTENED_DESCRIPTIONS.get(metric_name, f"{layer_label}-only Park 2015 derived motion statistic."),
                         unit=unit,
-                        inputs_required=f"{layer_label} motion traces only",
+                        inputs_required=f"{layer_label} motion traces with a valid control-point time model",
                         implementation_status="implemented_flattened",
-                        notes=f"Layer-specific Park 2015 flattened export for {layer_label}.",
+                        notes=f"Layer-specific Park 2015 flattened export for {layer_label}. {PARK_TIMING_LIMITATION_NOTE}",
                     )
                 )
         return records
@@ -963,7 +971,10 @@ def _notes_for_metric(metric_key: str, *, dual_mlc: bool) -> str:
     if metric_key.startswith("mi_"):
         return "The base key returns a tuple of speed, acceleration, and total MI components before flattening."
     if metric_key == "mlc_speed_acc":
-        return "The base key returns binned speed/acceleration proportions and summary statistics before flattening."
+        return (
+            "The base key returns binned speed/acceleration proportions and summary "
+            f"statistics before flattening. {PARK_TIMING_LIMITATION_NOTE}"
+        )
     if dual_mlc:
         return "For Halcyon/Ethos-style plans, the workflow also exports per-layer MLCX1 and MLCX2 variants."
     return ""

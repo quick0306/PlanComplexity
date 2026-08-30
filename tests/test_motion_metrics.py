@@ -1,7 +1,9 @@
 ﻿import unittest
 
 import numpy as np
+from pydicom.dataset import Dataset
 
+from ApertureMetric.aperture_creator import AperturesFromBeamCreator
 from ApertureMetric.aperture_geometry import PyAperture
 from ApertureMetric.mlc_attributes import MLCAttributes
 from ComplexityMetric.proportion_mlc_speed_acceleration import ProportionMLCSpeedAcceleration
@@ -11,6 +13,36 @@ from ComplexityMetric.station_parameter_optimized_radiation_therapy import (
 
 
 class MotionMetricTests(unittest.TestCase):
+    def test_aperture_creator_inherits_mlc_positions_when_control_point_omits_them(self):
+        beam_limit = Dataset()
+        beam_limit.RTBeamLimitingDeviceType = "MLCX"
+        beam_limit.NumberOfLeafJawPairs = 1
+        beam_limit.LeafPositionBoundaries = [-5.0, 5.0]
+
+        mlc_positions = Dataset()
+        mlc_positions.RTBeamLimitingDeviceType = "MLCX"
+        mlc_positions.LeafJawPositions = [-1.0, 1.0]
+
+        cp0 = Dataset()
+        cp0.GantryAngle = 0.0
+        cp0.BeamLimitingDevicePositionSequence = [mlc_positions]
+
+        cp1 = Dataset()
+        cp1.GantryAngle = 0.0
+
+        beam = {
+            "TreatmentMachineName": "Synergy",
+            "GantryAngle": 0.0,
+            "BeamLimitingDeviceSequence": [beam_limit],
+            "ControlPointSequence": [cp0, cp1],
+        }
+
+        apertures = AperturesFromBeamCreator().create(beam)
+
+        self.assertEqual(len(apertures), 2)
+        self.assertEqual(apertures[0].leaf_pairs[0].left, apertures[1].leaf_pairs[0].left)
+        self.assertEqual(apertures[0].leaf_pairs[0].right, apertures[1].leaf_pairs[0].right)
+
     def test_mlc_speed_and_acceleration_use_park_bins(self):
         metric = ProportionMLCSpeedAcceleration()
         speed = np.array(

@@ -1,0 +1,43 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "PSQA outcome record",
+  "type": "object",
+  "required": ["plan_id", "platform", "machine_id", "metric_key", "metric_value"],
+  "properties": {
+    "plan_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "platform": {
+      "type": "string",
+      "enum": ["VMAT_IMRT", "TOMO", "CYBERKNIFE_MLC", "AURORA"]
+    },
+    "site_id": {
+      "type": "string"
+    },
+    "machine_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "metric_key": {
+      "type": "string",
+      "minLength": 1
+    },
+    "metric_value": {
+      "type": ["number", "string"]
+    },
+    "gamma_3_3": {
+      "type": ["number", "string", "null"]
+    },
+    "gamma_2_2": {
+      "type": ["number", "string", "null"]
+    },
+    "qa_system": {
+      "type": "string"
+    },
+    "qa_date": {
+      "type": "string"
+    }
+  },
+  "additionalProperties": true
+}

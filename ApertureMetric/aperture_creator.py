@@ -29,21 +29,38 @@ class AperturesFromBeamCreator:
 
         if "halcyon" in machine_name or "ethos" in machine_name:
             leaf_widths = self.get_leaf_widths(beam)
+            last_mlcx1_positions = None
+            last_mlcx2_positions = None
             for control_point in beam["ControlPointSequence"]:
                 gantry_angle = float(control_point.GantryAngle) if "GantryAngle" in control_point else beam["GantryAngle"]
                 leaf_mlcx1_positions = self.get_halcyon_leaf_positions(control_point, "MLCX1")
                 leaf_mlcx2_positions = self.get_halcyon_leaf_positions(control_point, "MLCX2")
+                if leaf_mlcx1_positions is None and last_mlcx1_positions is not None:
+                    leaf_mlcx1_positions = last_mlcx1_positions.copy()
+                if leaf_mlcx2_positions is None and last_mlcx2_positions is not None:
+                    leaf_mlcx2_positions = last_mlcx2_positions.copy()
                 jaw = self.get_halcyon_jaw_positions(beam, control_point)
                 if leaf_mlcx1_positions is not None and leaf_mlcx2_positions is not None:
+                    # DICOM control points inherit unchanged machine parameters; some
+                    # TPS exports write final meterset control points without repeating
+                    # the unchanged MLC positions.
+                    last_mlcx1_positions = leaf_mlcx1_positions.copy()
+                    last_mlcx2_positions = leaf_mlcx2_positions.copy()
                     apertures.append(PyAperture(leaf_mlcx1_positions, leaf_widths, jaw, gantry_angle))
                     apertures.append(PyAperture(leaf_mlcx2_positions, leaf_widths, jaw, gantry_angle))
         else:
             leaf_widths = self.get_leaf_widths(beam)
+            last_leaf_positions = None
             for control_point in beam["ControlPointSequence"]:
                 gantry_angle = float(control_point.GantryAngle) if "GantryAngle" in control_point else beam["GantryAngle"]
                 leaf_positions = self.get_leaf_positions(control_point)
+                if leaf_positions is None and last_leaf_positions is not None:
+                    # DICOM omits unchanged values after the first control point; keep
+                    # aperture count aligned with cumulative meterset weights.
+                    leaf_positions = last_leaf_positions.copy()
                 jaw = self.get_jaw_positions(beam, control_point)
                 if leaf_positions is not None:
+                    last_leaf_positions = leaf_positions.copy()
                     apertures.append(PyAperture(leaf_positions, leaf_widths, jaw, gantry_angle))
 
         beam["_cached_apertures"] = apertures

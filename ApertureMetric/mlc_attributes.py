@@ -70,6 +70,12 @@ class MLCAttributes:
         For Eclipse/Varian plans the control-point interval is limited by the slower of:
         1. gantry rotation at the machine maximum speed
         2. dose delivery at the planned dose rate
+
+        DICOM RTPLAN does not guarantee a complete time axis. Elekta Monaco/Oncentra
+        exports may provide CumulativeMetersetWeight but omit DoseRateSet or write it
+        as zero, and local machine IDs such as "2819" do not identify the mechanical
+        limits needed for a Park-style timing estimate. In that case we leave motion
+        metrics unavailable instead of inventing delivery-accurate speed/acceleration.
         """
         if pd.isna(delta_mu) or pd.isna(delta_gantry):
             return np.nan

@@ -84,28 +84,28 @@ cases:
       notes: PRECISION export intentionally kept without auxiliary beam-path XML.
     notes: Edge CyberKnife case expected to remain unsupported until XML sidecars are present.
   - case_id: aurora_canonical
-    source_path: data/Aurora/RTPLAN_57661.dcm
+    source_path: data/Aurora/HS-PCI017.dcm
     domain: AURORA
     device_or_tps: Aurora
     expected_mode: AURORA
     case_class: canonical
     expected_metrics_source: checked_in_json
     tolerance_overrides: {}
-    checksum: 883a5b3fac085e6b9f57d66ec1f0dd335f49ae65637d293457fb2ec4d3878af6
+    checksum: e64ed0e3b449677a0fca0a22c3912354f3168e975edd09ed75e8aaaa71b96353
     provenance:
       source_kind: clinical_rtplan
       version: phase1
       notes: Canonical Aurora SVMAT research plan aligned with the v2/v3 metric inventory.
     notes: Canonical Aurora case for projection-physics and dual-layer research metrics.
   - case_id: aurora_research_edge
-    source_path: data/Aurora/RTPLAN_001.dcm
+    source_path: data/Aurora/UCC001.dcm
     domain: AURORA
     device_or_tps: Aurora
     expected_mode: AURORA
     case_class: edge
     expected_metrics_source: checked_in_json
     tolerance_overrides: {}
-    checksum: da8c0ff7625677e89fb9ed6d7b52c8ba97a0f5cee4cb9892ac5ca77a2268ea5c
+    checksum: 38e8d9f0eb7dfd489616696c59b546ba85be7538d42239b35e8ccd29e1091ab4
     provenance:
       source_kind: research_rtplan
       version: phase1

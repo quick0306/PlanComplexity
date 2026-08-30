@@ -2108,11 +2108,11 @@ This appendix is generated from the shared metric-definition catalog.
 - Group: Delivery dynamics
 - Symbol/short name: MLC Speed/Acceleration Profile
 - Mathematical definition: For each leaf, compute the proportion of valid intervals falling into each Park 2015 speed/acceleration bin; then average over leaves and beams.
-- Physical meaning: Leaf-wise mean proportions for Park et al. VMAT delivery bins. Speed bins: 0-4, 4-8, 8-12, 12-16, 16-20 mm/s. Acceleration bins: 0-40, 40-80, 80-120, 120-160, 160-200 mm/s^2.
+- Physical meaning: Leaf-wise mean proportions for Park et al. VMAT delivery bins. Speed bins: 0-4, 4-8, 8-12, 12-16, 16-20 mm/s. Acceleration bins: 0-40, 40-80, 80-120, 120-160, 160-200 mm/s^2. Requires a valid control-point time model; RTPLAN-only Elekta exports without usable timing inputs are reported as unavailable.
 - Unit: dimensionless
 - Inputs required: Control-point MLC motion, dose rate, gantry angle, and meterset timing
 - Status: implemented
-- Notes: The base key returns binned speed/acceleration proportions and summary statistics before flattening.
+- Notes: The base key returns binned speed/acceleration proportions and summary statistics before flattening. Requires a valid control-point time model. RTPLAN-only exact calculation is unavailable when dose-rate/gantry-speed timing inputs are absent, zero, or machine-specific limits cannot be identified; Elekta values should be labeled estimated unless validated site timing or delivery-log timestamps are supplied.
 
 ## `speed_0_4` - Park Speed 0-4 mm/s
 
@@ -2121,9 +2121,9 @@ This appendix is generated from the shared metric-definition catalog.
 - Mathematical definition: mean_leaf [ proportion(intervals with speed in 0-4 mm/s) ]
 - Physical meaning: Leaf-wise mean proportion of valid control-point intervals with speed in 0-4 mm/s.
 - Unit: proportion
-- Inputs required: Per-leaf MLC speed over valid control-point intervals
+- Inputs required: Per-leaf MLC speed over valid control-point intervals with a valid control-point time model
 - Status: implemented_flattened
-- Notes: Park 2015 speed-bin proportion, averaged over leaves.
+- Notes: Park 2015 speed-bin proportion, averaged over leaves. Requires a valid control-point time model. RTPLAN-only exact calculation is unavailable when dose-rate/gantry-speed timing inputs are absent, zero, or machine-specific limits cannot be identified; Elekta values should be labeled estimated unless validated site timing or delivery-log timestamps are supplied.
 
 ## `speed_4_8` - Park Speed 4-8 mm/s
 
@@ -2132,9 +2132,9 @@ This appendix is generated from the shared metric-definition catalog.
 - Mathematical definition: mean_leaf [ proportion(intervals with speed in 4-8 mm/s) ]
 - Physical meaning: Leaf-wise mean proportion of valid control-point intervals with speed in 4-8 mm/s.
 - Unit: proportion
-- Inputs required: Per-leaf MLC speed over valid control-point intervals
+- Inputs required: Per-leaf MLC speed over valid control-point intervals with a valid control-point time model
 - Status: implemented_flattened
-- Notes: Park 2015 speed-bin proportion, averaged over leaves.
+- Notes: Park 2015 speed-bin proportion, averaged over leaves. Requires a valid control-point time model. RTPLAN-only exact calculation is unavailable when dose-rate/gantry-speed timing inputs are absent, zero, or machine-specific limits cannot be identified; Elekta values should be labeled estimated unless validated site timing or delivery-log timestamps are supplied.
 
 ## `speed_8_12` - Park Speed 8-12 mm/s
 
@@ -2143,9 +2143,9 @@ This appendix is generated from the shared metric-definition catalog.
 - Mathematical definition: mean_leaf [ proportion(intervals with speed in 8-12 mm/s) ]
 - Physical meaning: Leaf-wise mean proportion of valid control-point intervals with speed in 8-12 mm/s.
 - Unit: proportion
-- Inputs required: Per-leaf MLC speed over valid control-point intervals
+- Inputs required: Per-leaf MLC speed over valid control-point intervals with a valid control-point time model
 - Status: implemented_flattened
-- Notes: Park 2015 speed-bin proportion, averaged over leaves.
+- Notes: Park 2015 speed-bin proportion, averaged over leaves. Requires a valid control-point time model. RTPLAN-only exact calculation is unavailable when dose-rate/gantry-speed timing inputs are absent, zero, or machine-specific limits cannot be identified; Elekta values should be labeled estimated unless validated site timing or delivery-log timestamps are supplied.
 
 ## `speed_12_16` - Park Speed 12-16 mm/s
 
@@ -2154,9 +2154,9 @@ This appendix is generated from the shared metric-definition catalog.
 - Mathematical definition: mean_leaf [ proportion(intervals with speed in 12-16 mm/s) ]
 - Physical meaning: Leaf-wise mean proportion of valid control-point intervals with speed in 12-16 mm/s.
 - Unit: proportion
-- Inputs required: Per-leaf MLC speed over valid control-point intervals
+- Inputs required: Per-leaf MLC speed over valid control-point intervals with a valid control-point time model
 - Status: implemented_flattened
-- Notes: Park 2015 speed-bin proportion, averaged over leaves.
+- Notes: Park 2015 speed-bin proportion, averaged over leaves. Requires a valid control-point time model. RTPLAN-only exact calculation is unavailable when dose-rate/gantry-speed timing inputs are absent, zero, or machine-specific limits cannot be identified; Elekta values should be labeled estimated unless validated site timing or delivery-log timestamps are supplied.
 
 ## `speed_16_20` - Park Speed 16-20 mm/s
 
@@ -2165,9 +2165,9 @@ This appendix is generated from the shared metric-definition catalog.
 - Mathematical definition: mean_leaf [ proportion(intervals with speed in 16-20 mm/s) ]
 - Physical meaning: Leaf-wise mean proportion of valid control-point intervals with speed in 16-20 mm/s.
 - Unit: proportion
-- Inputs required: Per-leaf MLC speed over valid control-point intervals
+- Inputs required: Per-leaf MLC speed over valid control-point intervals with a valid control-point time model
 - Status: implemented_flattened
-- Notes: Park 2015 speed-bin proportion, averaged over leaves.
+- Notes: Park 2015 speed-bin proportion, averaged over leaves. Requires a valid control-point time model. RTPLAN-only exact calculation is unavailable when dose-rate/gantry-speed timing inputs are absent, zero, or machine-specific limits cannot be identified; Elekta values should be labeled estimated unless validated site timing or delivery-log timestamps are supplied.
 
 ## `acc_0_40` - Park Acceleration 0-40 mm/s^2
 
@@ -2176,9 +2176,9 @@ This appendix is generated from the shared metric-definition catalog.
 - Mathematical definition: mean_leaf [ proportion(intervals with acceleration in 0-40 mm/s^2) ]
 - Physical meaning: Leaf-wise mean proportion of valid control-point intervals with acceleration in 0-40 mm/s^2.
 - Unit: proportion
-- Inputs required: Per-leaf MLC acceleration over valid control-point intervals
+- Inputs required: Per-leaf MLC acceleration over valid control-point intervals with a valid control-point time model
 - Status: implemented_flattened
-- Notes: Park 2015 acceleration-bin proportion, averaged over leaves.
+- Notes: Park 2015 acceleration-bin proportion, averaged over leaves. Requires a valid control-point time model. RTPLAN-only exact calculation is unavailable when dose-rate/gantry-speed timing inputs are absent, zero, or machine-specific limits cannot be identified; Elekta values should be labeled estimated unless validated site timing or delivery-log timestamps are supplied.
 
 ## `acc_40_80` - Park Acceleration 40-80 mm/s^2
 
@@ -2187,9 +2187,9 @@ This appendix is generated from the shared metric-definition catalog.
 - Mathematical definition: mean_leaf [ proportion(intervals with acceleration in 40-80 mm/s^2) ]
 - Physical meaning: Leaf-wise mean proportion of valid control-point intervals with acceleration in 40-80 mm/s^2.
 - Unit: proportion
-- Inputs required: Per-leaf MLC acceleration over valid control-point intervals
+- Inputs required: Per-leaf MLC acceleration over valid control-point intervals with a valid control-point time model
 - Status: implemented_flattened
-- Notes: Park 2015 acceleration-bin proportion, averaged over leaves.
+- Notes: Park 2015 acceleration-bin proportion, averaged over leaves. Requires a valid control-point time model. RTPLAN-only exact calculation is unavailable when dose-rate/gantry-speed timing inputs are absent, zero, or machine-specific limits cannot be identified; Elekta values should be labeled estimated unless validated site timing or delivery-log timestamps are supplied.
 
 ## `acc_80_120` - Park Acceleration 80-120 mm/s^2
 
@@ -2198,9 +2198,9 @@ This appendix is generated from the shared metric-definition catalog.
 - Mathematical definition: mean_leaf [ proportion(intervals with acceleration in 80-120 mm/s^2) ]
 - Physical meaning: Leaf-wise mean proportion of valid control-point intervals with acceleration in 80-120 mm/s^2.
 - Unit: proportion
-- Inputs required: Per-leaf MLC acceleration over valid control-point intervals
+- Inputs required: Per-leaf MLC acceleration over valid control-point intervals with a valid control-point time model
 - Status: implemented_flattened
-- Notes: Park 2015 acceleration-bin proportion, averaged over leaves.
+- Notes: Park 2015 acceleration-bin proportion, averaged over leaves. Requires a valid control-point time model. RTPLAN-only exact calculation is unavailable when dose-rate/gantry-speed timing inputs are absent, zero, or machine-specific limits cannot be identified; Elekta values should be labeled estimated unless validated site timing or delivery-log timestamps are supplied.
 
 ## `acc_120_160` - Park Acceleration 120-160 mm/s^2
 
@@ -2209,9 +2209,9 @@ This appendix is generated from the shared metric-definition catalog.
 - Mathematical definition: mean_leaf [ proportion(intervals with acceleration in 120-160 mm/s^2) ]
 - Physical meaning: Leaf-wise mean proportion of valid control-point intervals with acceleration in 120-160 mm/s^2.
 - Unit: proportion
-- Inputs required: Per-leaf MLC acceleration over valid control-point intervals
+- Inputs required: Per-leaf MLC acceleration over valid control-point intervals with a valid control-point time model
 - Status: implemented_flattened
-- Notes: Park 2015 acceleration-bin proportion, averaged over leaves.
+- Notes: Park 2015 acceleration-bin proportion, averaged over leaves. Requires a valid control-point time model. RTPLAN-only exact calculation is unavailable when dose-rate/gantry-speed timing inputs are absent, zero, or machine-specific limits cannot be identified; Elekta values should be labeled estimated unless validated site timing or delivery-log timestamps are supplied.
 
 ## `acc_160_200` - Park Acceleration 160-200 mm/s^2
 
@@ -2220,53 +2220,53 @@ This appendix is generated from the shared metric-definition catalog.
 - Mathematical definition: mean_leaf [ proportion(intervals with acceleration in 160-200 mm/s^2) ]
 - Physical meaning: Leaf-wise mean proportion of valid control-point intervals with acceleration in 160-200 mm/s^2.
 - Unit: proportion
-- Inputs required: Per-leaf MLC acceleration over valid control-point intervals
+- Inputs required: Per-leaf MLC acceleration over valid control-point intervals with a valid control-point time model
 - Status: implemented_flattened
-- Notes: Park 2015 acceleration-bin proportion, averaged over leaves.
+- Notes: Park 2015 acceleration-bin proportion, averaged over leaves. Requires a valid control-point time model. RTPLAN-only exact calculation is unavailable when dose-rate/gantry-speed timing inputs are absent, zero, or machine-specific limits cannot be identified; Elekta values should be labeled estimated unless validated site timing or delivery-log timestamps are supplied.
 
 ## `speed_average` - Mean Leaf Speed (mm/s)
 
 - Group: Motion bins
 - Symbol/short name: Mean Leaf Speed (mm/s)
 - Mathematical definition: mean_leaf(mean_interval(speed))
-- Physical meaning: Leaf-wise mean proportions for Park et al. VMAT delivery bins. Speed bins: 0-4, 4-8, 8-12, 12-16, 16-20 mm/s. Acceleration bins: 0-40, 40-80, 80-120, 120-160, 160-200 mm/s^2.
+- Physical meaning: Leaf-wise mean proportions for Park et al. VMAT delivery bins. Speed bins: 0-4, 4-8, 8-12, 12-16, 16-20 mm/s. Acceleration bins: 0-40, 40-80, 80-120, 120-160, 160-200 mm/s^2. Requires a valid control-point time model; RTPLAN-only Elekta exports without usable timing inputs are reported as unavailable.
 - Unit: mm/s
-- Inputs required: Per-leaf motion time series
+- Inputs required: Per-leaf motion time series with a valid control-point time model
 - Status: implemented_flattened
-- Notes: Park 2015 summary statistic flattened for export.
+- Notes: Park 2015 summary statistic flattened for export. Requires a valid control-point time model. RTPLAN-only exact calculation is unavailable when dose-rate/gantry-speed timing inputs are absent, zero, or machine-specific limits cannot be identified; Elekta values should be labeled estimated unless validated site timing or delivery-log timestamps are supplied.
 
 ## `acc_average` - Mean Leaf Acceleration (mm/s^2)
 
 - Group: Motion bins
 - Symbol/short name: Mean Leaf Acceleration (mm/s^2)
 - Mathematical definition: mean_leaf(mean_interval(acceleration))
-- Physical meaning: Leaf-wise mean proportions for Park et al. VMAT delivery bins. Speed bins: 0-4, 4-8, 8-12, 12-16, 16-20 mm/s. Acceleration bins: 0-40, 40-80, 80-120, 120-160, 160-200 mm/s^2.
+- Physical meaning: Leaf-wise mean proportions for Park et al. VMAT delivery bins. Speed bins: 0-4, 4-8, 8-12, 12-16, 16-20 mm/s. Acceleration bins: 0-40, 40-80, 80-120, 120-160, 160-200 mm/s^2. Requires a valid control-point time model; RTPLAN-only Elekta exports without usable timing inputs are reported as unavailable.
 - Unit: mm/s^2
-- Inputs required: Per-leaf motion time series
+- Inputs required: Per-leaf motion time series with a valid control-point time model
 - Status: implemented_flattened
-- Notes: Park 2015 summary statistic flattened for export.
+- Notes: Park 2015 summary statistic flattened for export. Requires a valid control-point time model. RTPLAN-only exact calculation is unavailable when dose-rate/gantry-speed timing inputs are absent, zero, or machine-specific limits cannot be identified; Elekta values should be labeled estimated unless validated site timing or delivery-log timestamps are supplied.
 
 ## `speed_std` - Mean Leaf Speed SD (mm/s)
 
 - Group: Motion bins
 - Symbol/short name: Mean Leaf Speed SD (mm/s)
 - Mathematical definition: mean_leaf(std_interval(speed))
-- Physical meaning: Leaf-wise mean proportions for Park et al. VMAT delivery bins. Speed bins: 0-4, 4-8, 8-12, 12-16, 16-20 mm/s. Acceleration bins: 0-40, 40-80, 80-120, 120-160, 160-200 mm/s^2.
+- Physical meaning: Leaf-wise mean proportions for Park et al. VMAT delivery bins. Speed bins: 0-4, 4-8, 8-12, 12-16, 16-20 mm/s. Acceleration bins: 0-40, 40-80, 80-120, 120-160, 160-200 mm/s^2. Requires a valid control-point time model; RTPLAN-only Elekta exports without usable timing inputs are reported as unavailable.
 - Unit: mm/s
-- Inputs required: Per-leaf motion time series
+- Inputs required: Per-leaf motion time series with a valid control-point time model
 - Status: implemented_flattened
-- Notes: Park 2015 summary statistic flattened for export.
+- Notes: Park 2015 summary statistic flattened for export. Requires a valid control-point time model. RTPLAN-only exact calculation is unavailable when dose-rate/gantry-speed timing inputs are absent, zero, or machine-specific limits cannot be identified; Elekta values should be labeled estimated unless validated site timing or delivery-log timestamps are supplied.
 
 ## `acc_std` - Mean Leaf Acceleration SD (mm/s^2)
 
 - Group: Motion bins
 - Symbol/short name: Mean Leaf Acceleration SD (mm/s^2)
 - Mathematical definition: mean_leaf(std_interval(acceleration))
-- Physical meaning: Leaf-wise mean proportions for Park et al. VMAT delivery bins. Speed bins: 0-4, 4-8, 8-12, 12-16, 16-20 mm/s. Acceleration bins: 0-40, 40-80, 80-120, 120-160, 160-200 mm/s^2.
+- Physical meaning: Leaf-wise mean proportions for Park et al. VMAT delivery bins. Speed bins: 0-4, 4-8, 8-12, 12-16, 16-20 mm/s. Acceleration bins: 0-40, 40-80, 80-120, 120-160, 160-200 mm/s^2. Requires a valid control-point time model; RTPLAN-only Elekta exports without usable timing inputs are reported as unavailable.
 - Unit: mm/s^2
-- Inputs required: Per-leaf motion time series
+- Inputs required: Per-leaf motion time series with a valid control-point time model
 - Status: implemented_flattened
-- Notes: Park 2015 summary statistic flattened for export.
+- Notes: Park 2015 summary statistic flattened for export. Requires a valid control-point time model. RTPLAN-only exact calculation is unavailable when dose-rate/gantry-speed timing inputs are absent, zero, or machine-specific limits cannot be identified; Elekta values should be labeled estimated unless validated site timing or delivery-log timestamps are supplied.
 
 ## `mlcx1_speed_0_4` - MLCX1 Park Speed 0-4 mm/s
 
@@ -2275,9 +2275,9 @@ This appendix is generated from the shared metric-definition catalog.
 - Mathematical definition: mean_leaf [ proportion(intervals with speed in 0-4 mm/s) ], restricted to MLCX1 leaf positions.
 - Physical meaning: MLCX1-only Park 2015 derived motion statistic.
 - Unit: proportion
-- Inputs required: MLCX1 motion traces only
+- Inputs required: MLCX1 motion traces with a valid control-point time model
 - Status: implemented_flattened
-- Notes: Layer-specific Park 2015 flattened export for MLCX1.
+- Notes: Layer-specific Park 2015 flattened export for MLCX1. Requires a valid control-point time model. RTPLAN-only exact calculation is unavailable when dose-rate/gantry-speed timing inputs are absent, zero, or machine-specific limits cannot be identified; Elekta values should be labeled estimated unless validated site timing or delivery-log timestamps are supplied.
 
 ## `mlcx1_speed_4_8` - MLCX1 Park Speed 4-8 mm/s
 
@@ -2286,9 +2286,9 @@ This appendix is generated from the shared metric-definition catalog.
 - Mathematical definition: mean_leaf [ proportion(intervals with speed in 4-8 mm/s) ], restricted to MLCX1 leaf positions.
 - Physical meaning: MLCX1-only Park 2015 derived motion statistic.
 - Unit: proportion
-- Inputs required: MLCX1 motion traces only
+- Inputs required: MLCX1 motion traces with a valid control-point time model
 - Status: implemented_flattened
-- Notes: Layer-specific Park 2015 flattened export for MLCX1.
+- Notes: Layer-specific Park 2015 flattened export for MLCX1. Requires a valid control-point time model. RTPLAN-only exact calculation is unavailable when dose-rate/gantry-speed timing inputs are absent, zero, or machine-specific limits cannot be identified; Elekta values should be labeled estimated unless validated site timing or delivery-log timestamps are supplied.
 
 ## `mlcx1_speed_8_12` - MLCX1 Park Speed 8-12 mm/s
 
@@ -2297,9 +2297,9 @@ This appendix is generated from the shared metric-definition catalog.
 - Mathematical definition: mean_leaf [ proportion(intervals with speed in 8-12 mm/s) ], restricted to MLCX1 leaf positions.
 - Physical meaning: MLCX1-only Park 2015 derived motion statistic.
 - Unit: proportion
-- Inputs required: MLCX1 motion traces only
+- Inputs required: MLCX1 motion traces with a valid control-point time model
 - Status: implemented_flattened
-- Notes: Layer-specific Park 2015 flattened export for MLCX1.
+- Notes: Layer-specific Park 2015 flattened export for MLCX1. Requires a valid control-point time model. RTPLAN-only exact calculation is unavailable when dose-rate/gantry-speed timing inputs are absent, zero, or machine-specific limits cannot be identified; Elekta values should be labeled estimated unless validated site timing or delivery-log timestamps are supplied.
 
 ## `mlcx1_speed_12_16` - MLCX1 Park Speed 12-16 mm/s
 
@@ -2308,9 +2308,9 @@ This appendix is generated from the shared metric-definition catalog.
 - Mathematical definition: mean_leaf [ proportion(intervals with speed in 12-16 mm/s) ], restricted to MLCX1 leaf positions.
 - Physical meaning: MLCX1-only Park 2015 derived motion statistic.
 - Unit: proportion
-- Inputs required: MLCX1 motion traces only
+- Inputs required: MLCX1 motion traces with a valid control-point time model
 - Status: implemented_flattened
-- Notes: Layer-specific Park 2015 flattened export for MLCX1.
+- Notes: Layer-specific Park 2015 flattened export for MLCX1. Requires a valid control-point time model. RTPLAN-only exact calculation is unavailable when dose-rate/gantry-speed timing inputs are absent, zero, or machine-specific limits cannot be identified; Elekta values should be labeled estimated unless validated site timing or delivery-log timestamps are supplied.
 
 ## `mlcx1_speed_16_20` - MLCX1 Park Speed 16-20 mm/s
 
@@ -2319,9 +2319,9 @@ This appendix is generated from the shared metric-definition catalog.
 - Mathematical definition: mean_leaf [ proportion(intervals with speed in 16-20 mm/s) ], restricted to MLCX1 leaf positions.
 - Physical meaning: MLCX1-only Park 2015 derived motion statistic.
 - Unit: proportion
-- Inputs required: MLCX1 motion traces only
+- Inputs required: MLCX1 motion traces with a valid control-point time model
 - Status: implemented_flattened
-- Notes: Layer-specific Park 2015 flattened export for MLCX1.
+- Notes: Layer-specific Park 2015 flattened export for MLCX1. Requires a valid control-point time model. RTPLAN-only exact calculation is unavailable when dose-rate/gantry-speed timing inputs are absent, zero, or machine-specific limits cannot be identified; Elekta values should be labeled estimated unless validated site timing or delivery-log timestamps are supplied.
 
 ## `mlcx1_acc_0_40` - MLCX1 Park Acceleration 0-40 mm/s^2
 
@@ -2330,9 +2330,9 @@ This appendix is generated from the shared metric-definition catalog.
 - Mathematical definition: mean_leaf [ proportion(intervals with acceleration in 0-40 mm/s^2) ], restricted to MLCX1 leaf positions.
 - Physical meaning: MLCX1-only Park 2015 derived motion statistic.
 - Unit: proportion
-- Inputs required: MLCX1 motion traces only
+- Inputs required: MLCX1 motion traces with a valid control-point time model
 - Status: implemented_flattened
-- Notes: Layer-specific Park 2015 flattened export for MLCX1.
+- Notes: Layer-specific Park 2015 flattened export for MLCX1. Requires a valid control-point time model. RTPLAN-only exact calculation is unavailable when dose-rate/gantry-speed timing inputs are absent, zero, or machine-specific limits cannot be identified; Elekta values should be labeled estimated unless validated site timing or delivery-log timestamps are supplied.
 
 ## `mlcx1_acc_40_80` - MLCX1 Park Acceleration 40-80 mm/s^2
 
@@ -2341,9 +2341,9 @@ This appendix is generated from the shared metric-definition catalog.
 - Mathematical definition: mean_leaf [ proportion(intervals with acceleration in 40-80 mm/s^2) ], restricted to MLCX1 leaf positions.
 - Physical meaning: MLCX1-only Park 2015 derived motion statistic.
 - Unit: proportion
-- Inputs required: MLCX1 motion traces only
+- Inputs required: MLCX1 motion traces with a valid control-point time model
 - Status: implemented_flattened
-- Notes: Layer-specific Park 2015 flattened export for MLCX1.
+- Notes: Layer-specific Park 2015 flattened export for MLCX1. Requires a valid control-point time model. RTPLAN-only exact calculation is unavailable when dose-rate/gantry-speed timing inputs are absent, zero, or machine-specific limits cannot be identified; Elekta values should be labeled estimated unless validated site timing or delivery-log timestamps are supplied.
 
 ## `mlcx1_acc_80_120` - MLCX1 Park Acceleration 80-120 mm/s^2
 
@@ -2352,9 +2352,9 @@ This appendix is generated from the shared metric-definition catalog.
 - Mathematical definition: mean_leaf [ proportion(intervals with acceleration in 80-120 mm/s^2) ], restricted to MLCX1 leaf positions.
 - Physical meaning: MLCX1-only Park 2015 derived motion statistic.
 - Unit: proportion
-- Inputs required: MLCX1 motion traces only
+- Inputs required: MLCX1 motion traces with a valid control-point time model
 - Status: implemented_flattened
-- Notes: Layer-specific Park 2015 flattened export for MLCX1.
+- Notes: Layer-specific Park 2015 flattened export for MLCX1. Requires a valid control-point time model. RTPLAN-only exact calculation is unavailable when dose-rate/gantry-speed timing inputs are absent, zero, or machine-specific limits cannot be identified; Elekta values should be labeled estimated unless validated site timing or delivery-log timestamps are supplied.
 
 ## `mlcx1_acc_120_160` - MLCX1 Park Acceleration 120-160 mm/s^2
 
@@ -2363,9 +2363,9 @@ This appendix is generated from the shared metric-definition catalog.
 - Mathematical definition: mean_leaf [ proportion(intervals with acceleration in 120-160 mm/s^2) ], restricted to MLCX1 leaf positions.
 - Physical meaning: MLCX1-only Park 2015 derived motion statistic.
 - Unit: proportion
-- Inputs required: MLCX1 motion traces only
+- Inputs required: MLCX1 motion traces with a valid control-point time model
 - Status: implemented_flattened
-- Notes: Layer-specific Park 2015 flattened export for MLCX1.
+- Notes: Layer-specific Park 2015 flattened export for MLCX1. Requires a valid control-point time model. RTPLAN-only exact calculation is unavailable when dose-rate/gantry-speed timing inputs are absent, zero, or machine-specific limits cannot be identified; Elekta values should be labeled estimated unless validated site timing or delivery-log timestamps are supplied.
 
 ## `mlcx1_acc_160_200` - MLCX1 Park Acceleration 160-200 mm/s^2
 
@@ -2374,9 +2374,9 @@ This appendix is generated from the shared metric-definition catalog.
 - Mathematical definition: mean_leaf [ proportion(intervals with acceleration in 160-200 mm/s^2) ], restricted to MLCX1 leaf positions.
 - Physical meaning: MLCX1-only Park 2015 derived motion statistic.
 - Unit: proportion
-- Inputs required: MLCX1 motion traces only
+- Inputs required: MLCX1 motion traces with a valid control-point time model
 - Status: implemented_flattened
-- Notes: Layer-specific Park 2015 flattened export for MLCX1.
+- Notes: Layer-specific Park 2015 flattened export for MLCX1. Requires a valid control-point time model. RTPLAN-only exact calculation is unavailable when dose-rate/gantry-speed timing inputs are absent, zero, or machine-specific limits cannot be identified; Elekta values should be labeled estimated unless validated site timing or delivery-log timestamps are supplied.
 
 ## `mlcx1_speed_average` - MLCX1 Mean Leaf Speed (mm/s)
 
@@ -2385,9 +2385,9 @@ This appendix is generated from the shared metric-definition catalog.
 - Mathematical definition: mean_leaf(mean_interval(speed)), restricted to MLCX1 leaf positions.
 - Physical meaning: MLCX1-only Park 2015 derived motion statistic.
 - Unit: mm/s
-- Inputs required: MLCX1 motion traces only
+- Inputs required: MLCX1 motion traces with a valid control-point time model
 - Status: implemented_flattened
-- Notes: Layer-specific Park 2015 flattened export for MLCX1.
+- Notes: Layer-specific Park 2015 flattened export for MLCX1. Requires a valid control-point time model. RTPLAN-only exact calculation is unavailable when dose-rate/gantry-speed timing inputs are absent, zero, or machine-specific limits cannot be identified; Elekta values should be labeled estimated unless validated site timing or delivery-log timestamps are supplied.
 
 ## `mlcx1_acc_average` - MLCX1 Mean Leaf Acceleration (mm/s^2)
 
@@ -2396,9 +2396,9 @@ This appendix is generated from the shared metric-definition catalog.
 - Mathematical definition: mean_leaf(mean_interval(acceleration)), restricted to MLCX1 leaf positions.
 - Physical meaning: MLCX1-only Park 2015 derived motion statistic.
 - Unit: mm/s^2
-- Inputs required: MLCX1 motion traces only
+- Inputs required: MLCX1 motion traces with a valid control-point time model
 - Status: implemented_flattened
-- Notes: Layer-specific Park 2015 flattened export for MLCX1.
+- Notes: Layer-specific Park 2015 flattened export for MLCX1. Requires a valid control-point time model. RTPLAN-only exact calculation is unavailable when dose-rate/gantry-speed timing inputs are absent, zero, or machine-specific limits cannot be identified; Elekta values should be labeled estimated unless validated site timing or delivery-log timestamps are supplied.
 
 ## `mlcx1_speed_std` - MLCX1 Mean Leaf Speed SD (mm/s)
 
@@ -2407,9 +2407,9 @@ This appendix is generated from the shared metric-definition catalog.
 - Mathematical definition: mean_leaf(std_interval(speed)), restricted to MLCX1 leaf positions.
 - Physical meaning: MLCX1-only Park 2015 derived motion statistic.
 - Unit: mm/s
-- Inputs required: MLCX1 motion traces only
+- Inputs required: MLCX1 motion traces with a valid control-point time model
 - Status: implemented_flattened
-- Notes: Layer-specific Park 2015 flattened export for MLCX1.
+- Notes: Layer-specific Park 2015 flattened export for MLCX1. Requires a valid control-point time model. RTPLAN-only exact calculation is unavailable when dose-rate/gantry-speed timing inputs are absent, zero, or machine-specific limits cannot be identified; Elekta values should be labeled estimated unless validated site timing or delivery-log timestamps are supplied.
 
 ## `mlcx1_acc_std` - MLCX1 Mean Leaf Acceleration SD (mm/s^2)
 
@@ -2418,9 +2418,9 @@ This appendix is generated from the shared metric-definition catalog.
 - Mathematical definition: mean_leaf(std_interval(acceleration)), restricted to MLCX1 leaf positions.
 - Physical meaning: MLCX1-only Park 2015 derived motion statistic.
 - Unit: mm/s^2
-- Inputs required: MLCX1 motion traces only
+- Inputs required: MLCX1 motion traces with a valid control-point time model
 - Status: implemented_flattened
-- Notes: Layer-specific Park 2015 flattened export for MLCX1.
+- Notes: Layer-specific Park 2015 flattened export for MLCX1. Requires a valid control-point time model. RTPLAN-only exact calculation is unavailable when dose-rate/gantry-speed timing inputs are absent, zero, or machine-specific limits cannot be identified; Elekta values should be labeled estimated unless validated site timing or delivery-log timestamps are supplied.
 
 ## `mlcx2_speed_0_4` - MLCX2 Park Speed 0-4 mm/s
 
@@ -2429,9 +2429,9 @@ This appendix is generated from the shared metric-definition catalog.
 - Mathematical definition: mean_leaf [ proportion(intervals with speed in 0-4 mm/s) ], restricted to MLCX2 leaf positions.
 - Physical meaning: MLCX2-only Park 2015 derived motion statistic.
 - Unit: proportion
-- Inputs required: MLCX2 motion traces only
+- Inputs required: MLCX2 motion traces with a valid control-point time model
 - Status: implemented_flattened
-- Notes: Layer-specific Park 2015 flattened export for MLCX2.
+- Notes: Layer-specific Park 2015 flattened export for MLCX2. Requires a valid control-point time model. RTPLAN-only exact calculation is unavailable when dose-rate/gantry-speed timing inputs are absent, zero, or machine-specific limits cannot be identified; Elekta values should be labeled estimated unless validated site timing or delivery-log timestamps are supplied.
 
 ## `mlcx2_speed_4_8` - MLCX2 Park Speed 4-8 mm/s
 
@@ -2440,9 +2440,9 @@ This appendix is generated from the shared metric-definition catalog.
 - Mathematical definition: mean_leaf [ proportion(intervals with speed in 4-8 mm/s) ], restricted to MLCX2 leaf positions.
 - Physical meaning: MLCX2-only Park 2015 derived motion statistic.
 - Unit: proportion
-- Inputs required: MLCX2 motion traces only
+- Inputs required: MLCX2 motion traces with a valid control-point time model
 - Status: implemented_flattened
-- Notes: Layer-specific Park 2015 flattened export for MLCX2.
+- Notes: Layer-specific Park 2015 flattened export for MLCX2. Requires a valid control-point time model. RTPLAN-only exact calculation is unavailable when dose-rate/gantry-speed timing inputs are absent, zero, or machine-specific limits cannot be identified; Elekta values should be labeled estimated unless validated site timing or delivery-log timestamps are supplied.
 
 ## `mlcx2_speed_8_12` - MLCX2 Park Speed 8-12 mm/s
 
@@ -2451,9 +2451,9 @@ This appendix is generated from the shared metric-definition catalog.
 - Mathematical definition: mean_leaf [ proportion(intervals with speed in 8-12 mm/s) ], restricted to MLCX2 leaf positions.
 - Physical meaning: MLCX2-only Park 2015 derived motion statistic.
 - Unit: proportion
-- Inputs required: MLCX2 motion traces only
+- Inputs required: MLCX2 motion traces with a valid control-point time model
 - Status: implemented_flattened
-- Notes: Layer-specific Park 2015 flattened export for MLCX2.
+- Notes: Layer-specific Park 2015 flattened export for MLCX2. Requires a valid control-point time model. RTPLAN-only exact calculation is unavailable when dose-rate/gantry-speed timing inputs are absent, zero, or machine-specific limits cannot be identified; Elekta values should be labeled estimated unless validated site timing or delivery-log timestamps are supplied.
 
 ## `mlcx2_speed_12_16` - MLCX2 Park Speed 12-16 mm/s
 
@@ -2462,9 +2462,9 @@ This appendix is generated from the shared metric-definition catalog.
 - Mathematical definition: mean_leaf [ proportion(intervals with speed in 12-16 mm/s) ], restricted to MLCX2 leaf positions.
 - Physical meaning: MLCX2-only Park 2015 derived motion statistic.
 - Unit: proportion
-- Inputs required: MLCX2 motion traces only
+- Inputs required: MLCX2 motion traces with a valid control-point time model
 - Status: implemented_flattened
-- Notes: Layer-specific Park 2015 flattened export for MLCX2.
+- Notes: Layer-specific Park 2015 flattened export for MLCX2. Requires a valid control-point time model. RTPLAN-only exact calculation is unavailable when dose-rate/gantry-speed timing inputs are absent, zero, or machine-specific limits cannot be identified; Elekta values should be labeled estimated unless validated site timing or delivery-log timestamps are supplied.
 
 ## `mlcx2_speed_16_20` - MLCX2 Park Speed 16-20 mm/s
 
@@ -2473,9 +2473,9 @@ This appendix is generated from the shared metric-definition catalog.
 - Mathematical definition: mean_leaf [ proportion(intervals with speed in 16-20 mm/s) ], restricted to MLCX2 leaf positions.
 - Physical meaning: MLCX2-only Park 2015 derived motion statistic.
 - Unit: proportion
-- Inputs required: MLCX2 motion traces only
+- Inputs required: MLCX2 motion traces with a valid control-point time model
 - Status: implemented_flattened
-- Notes: Layer-specific Park 2015 flattened export for MLCX2.
+- Notes: Layer-specific Park 2015 flattened export for MLCX2. Requires a valid control-point time model. RTPLAN-only exact calculation is unavailable when dose-rate/gantry-speed timing inputs are absent, zero, or machine-specific limits cannot be identified; Elekta values should be labeled estimated unless validated site timing or delivery-log timestamps are supplied.
 
 ## `mlcx2_acc_0_40` - MLCX2 Park Acceleration 0-40 mm/s^2
 
@@ -2484,9 +2484,9 @@ This appendix is generated from the shared metric-definition catalog.
 - Mathematical definition: mean_leaf [ proportion(intervals with acceleration in 0-40 mm/s^2) ], restricted to MLCX2 leaf positions.
 - Physical meaning: MLCX2-only Park 2015 derived motion statistic.
 - Unit: proportion
-- Inputs required: MLCX2 motion traces only
+- Inputs required: MLCX2 motion traces with a valid control-point time model
 - Status: implemented_flattened
-- Notes: Layer-specific Park 2015 flattened export for MLCX2.
+- Notes: Layer-specific Park 2015 flattened export for MLCX2. Requires a valid control-point time model. RTPLAN-only exact calculation is unavailable when dose-rate/gantry-speed timing inputs are absent, zero, or machine-specific limits cannot be identified; Elekta values should be labeled estimated unless validated site timing or delivery-log timestamps are supplied.
 
 ## `mlcx2_acc_40_80` - MLCX2 Park Acceleration 40-80 mm/s^2
 
@@ -2495,9 +2495,9 @@ This appendix is generated from the shared metric-definition catalog.
 - Mathematical definition: mean_leaf [ proportion(intervals with acceleration in 40-80 mm/s^2) ], restricted to MLCX2 leaf positions.
 - Physical meaning: MLCX2-only Park 2015 derived motion statistic.
 - Unit: proportion
-- Inputs required: MLCX2 motion traces only
+- Inputs required: MLCX2 motion traces with a valid control-point time model
 - Status: implemented_flattened
-- Notes: Layer-specific Park 2015 flattened export for MLCX2.
+- Notes: Layer-specific Park 2015 flattened export for MLCX2. Requires a valid control-point time model. RTPLAN-only exact calculation is unavailable when dose-rate/gantry-speed timing inputs are absent, zero, or machine-specific limits cannot be identified; Elekta values should be labeled estimated unless validated site timing or delivery-log timestamps are supplied.
 
 ## `mlcx2_acc_80_120` - MLCX2 Park Acceleration 80-120 mm/s^2
 
@@ -2506,9 +2506,9 @@ This appendix is generated from the shared metric-definition catalog.
 - Mathematical definition: mean_leaf [ proportion(intervals with acceleration in 80-120 mm/s^2) ], restricted to MLCX2 leaf positions.
 - Physical meaning: MLCX2-only Park 2015 derived motion statistic.
 - Unit: proportion
-- Inputs required: MLCX2 motion traces only
+- Inputs required: MLCX2 motion traces with a valid control-point time model
 - Status: implemented_flattened
-- Notes: Layer-specific Park 2015 flattened export for MLCX2.
+- Notes: Layer-specific Park 2015 flattened export for MLCX2. Requires a valid control-point time model. RTPLAN-only exact calculation is unavailable when dose-rate/gantry-speed timing inputs are absent, zero, or machine-specific limits cannot be identified; Elekta values should be labeled estimated unless validated site timing or delivery-log timestamps are supplied.
 
 ## `mlcx2_acc_120_160` - MLCX2 Park Acceleration 120-160 mm/s^2
 
@@ -2517,9 +2517,9 @@ This appendix is generated from the shared metric-definition catalog.
 - Mathematical definition: mean_leaf [ proportion(intervals with acceleration in 120-160 mm/s^2) ], restricted to MLCX2 leaf positions.
 - Physical meaning: MLCX2-only Park 2015 derived motion statistic.
 - Unit: proportion
-- Inputs required: MLCX2 motion traces only
+- Inputs required: MLCX2 motion traces with a valid control-point time model
 - Status: implemented_flattened
-- Notes: Layer-specific Park 2015 flattened export for MLCX2.
+- Notes: Layer-specific Park 2015 flattened export for MLCX2. Requires a valid control-point time model. RTPLAN-only exact calculation is unavailable when dose-rate/gantry-speed timing inputs are absent, zero, or machine-specific limits cannot be identified; Elekta values should be labeled estimated unless validated site timing or delivery-log timestamps are supplied.
 
 ## `mlcx2_acc_160_200` - MLCX2 Park Acceleration 160-200 mm/s^2
 
@@ -2528,9 +2528,9 @@ This appendix is generated from the shared metric-definition catalog.
 - Mathematical definition: mean_leaf [ proportion(intervals with acceleration in 160-200 mm/s^2) ], restricted to MLCX2 leaf positions.
 - Physical meaning: MLCX2-only Park 2015 derived motion statistic.
 - Unit: proportion
-- Inputs required: MLCX2 motion traces only
+- Inputs required: MLCX2 motion traces with a valid control-point time model
 - Status: implemented_flattened
-- Notes: Layer-specific Park 2015 flattened export for MLCX2.
+- Notes: Layer-specific Park 2015 flattened export for MLCX2. Requires a valid control-point time model. RTPLAN-only exact calculation is unavailable when dose-rate/gantry-speed timing inputs are absent, zero, or machine-specific limits cannot be identified; Elekta values should be labeled estimated unless validated site timing or delivery-log timestamps are supplied.
 
 ## `mlcx2_speed_average` - MLCX2 Mean Leaf Speed (mm/s)
 
@@ -2539,9 +2539,9 @@ This appendix is generated from the shared metric-definition catalog.
 - Mathematical definition: mean_leaf(mean_interval(speed)), restricted to MLCX2 leaf positions.
 - Physical meaning: MLCX2-only Park 2015 derived motion statistic.
 - Unit: mm/s
-- Inputs required: MLCX2 motion traces only
+- Inputs required: MLCX2 motion traces with a valid control-point time model
 - Status: implemented_flattened
-- Notes: Layer-specific Park 2015 flattened export for MLCX2.
+- Notes: Layer-specific Park 2015 flattened export for MLCX2. Requires a valid control-point time model. RTPLAN-only exact calculation is unavailable when dose-rate/gantry-speed timing inputs are absent, zero, or machine-specific limits cannot be identified; Elekta values should be labeled estimated unless validated site timing or delivery-log timestamps are supplied.
 
 ## `mlcx2_acc_average` - MLCX2 Mean Leaf Acceleration (mm/s^2)
 
@@ -2550,9 +2550,9 @@ This appendix is generated from the shared metric-definition catalog.
 - Mathematical definition: mean_leaf(mean_interval(acceleration)), restricted to MLCX2 leaf positions.
 - Physical meaning: MLCX2-only Park 2015 derived motion statistic.
 - Unit: mm/s^2
-- Inputs required: MLCX2 motion traces only
+- Inputs required: MLCX2 motion traces with a valid control-point time model
 - Status: implemented_flattened
-- Notes: Layer-specific Park 2015 flattened export for MLCX2.
+- Notes: Layer-specific Park 2015 flattened export for MLCX2. Requires a valid control-point time model. RTPLAN-only exact calculation is unavailable when dose-rate/gantry-speed timing inputs are absent, zero, or machine-specific limits cannot be identified; Elekta values should be labeled estimated unless validated site timing or delivery-log timestamps are supplied.
 
 ## `mlcx2_speed_std` - MLCX2 Mean Leaf Speed SD (mm/s)
 
@@ -2561,9 +2561,9 @@ This appendix is generated from the shared metric-definition catalog.
 - Mathematical definition: mean_leaf(std_interval(speed)), restricted to MLCX2 leaf positions.
 - Physical meaning: MLCX2-only Park 2015 derived motion statistic.
 - Unit: mm/s
-- Inputs required: MLCX2 motion traces only
+- Inputs required: MLCX2 motion traces with a valid control-point time model
 - Status: implemented_flattened
-- Notes: Layer-specific Park 2015 flattened export for MLCX2.
+- Notes: Layer-specific Park 2015 flattened export for MLCX2. Requires a valid control-point time model. RTPLAN-only exact calculation is unavailable when dose-rate/gantry-speed timing inputs are absent, zero, or machine-specific limits cannot be identified; Elekta values should be labeled estimated unless validated site timing or delivery-log timestamps are supplied.
 
 ## `mlcx2_acc_std` - MLCX2 Mean Leaf Acceleration SD (mm/s^2)
 

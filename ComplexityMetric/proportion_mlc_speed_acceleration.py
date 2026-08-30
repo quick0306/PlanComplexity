@@ -20,6 +20,12 @@ class ProportionMLCSpeedAcceleration(ComplexityMetric):
         The paper reports speed bins in cm/s and acceleration bins in cm/s^2.
         This implementation works in mm/s and mm/s^2 because DICOM leaf positions
         are already expressed in mm.
+
+        The bins are delivery-time dependent. An RTPLAN-only exact calculation is
+        possible only when control-point time can be inferred from usable dose-rate
+        and gantry-speed inputs. Elekta Monaco/Oncentra exports with absent/zero
+        DoseRateSet and local-only machine IDs should remain NaN unless a validated
+        site-specific timing model or delivery log is supplied.
     """
 
     SPEED_BINS_MM_PER_S = (

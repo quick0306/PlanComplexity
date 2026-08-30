@@ -34,9 +34,27 @@ jobs:
           tests.validation.test_reference_manifest
           tests.validation.test_freeze_reference_outputs
           tests.validation.test_reference_suite
+          tests.validation.test_formula_oracles
+          tests.validation.test_paper_reproduction
           tests.validation.test_tool_comparison
+          tests.validation.test_comparator_matrix
           tests.validation.test_validation_report
+          tests.validation.test_psqa_spc
+          tests.validation.test_clinical_endpoints
+          tests.validation.test_clinical_readiness
           -v
+
+      - name: Run formula oracle gate
+        run: python tools/run_formula_oracles.py --output-dir run_reports/validation
+
+      - name: Build comparator coverage matrix
+        run: python tools/build_comparator_matrix.py --output-dir run_reports/validation
+
+      - name: Build paper reproduction table
+        run: python tools/build_paper_reproduction_table.py --output-dir run_reports/validation
+
+      - name: Run non-strict clinical readiness guardrails
+        run: python tools/run_clinical_readiness_gate.py --output-dir run_reports/validation
 
       - name: Check reference data availability
         id: reference_data

@@ -126,7 +126,9 @@ VMAT_METRIC_SPECS = (
         description=(
             "Leaf-wise mean proportions for Park et al. VMAT delivery bins. "
             "Speed bins: 0-4, 4-8, 8-12, 12-16, 16-20 mm/s. "
-            "Acceleration bins: 0-40, 40-80, 80-120, 120-160, 160-200 mm/s^2."
+            "Acceleration bins: 0-40, 40-80, 80-120, 120-160, 160-200 mm/s^2. "
+            "Requires a valid control-point time model; RTPLAN-only Elekta exports "
+            "without usable timing inputs are reported as unavailable."
         ),
     ),
     MetricSpec(

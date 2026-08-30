@@ -154,8 +154,14 @@ class ReadmeValidationDocsTests(unittest.TestCase):
     def test_readme_mentions_validation_commands(self):
         readme = Path("README.md").read_text(encoding="utf-8")
         self.assertIn("run_reference_suite.py", readme)
+        self.assertIn("run_formula_oracles.py", readme)
+        self.assertIn("build_paper_reproduction_table.py", readme)
         self.assertIn("run_tool_comparison.py", readme)
+        self.assertIn("build_comparator_matrix.py", readme)
         self.assertIn("build_validation_report.py", readme)
+        self.assertIn("run_psqa_spc_analysis.py", readme)
+        self.assertIn("run_clinical_endpoint_association.py", readme)
+        self.assertIn("run_clinical_readiness_gate.py", readme)
         self.assertIn("test_freeze_reference_outputs", readme)
 
 

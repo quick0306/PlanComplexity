@@ -85,17 +85,37 @@ python -m unittest tests.validation.test_validation_smoke tests.validation.test_
 Rebuild the Phase 1 research validation evidence bundle:
 
 ```bash
+python tools/run_formula_oracles.py --output-dir run_reports/validation
+python tools/build_paper_reproduction_table.py --output-dir run_reports/validation
 python tools/run_reference_suite.py --profile research --output-dir run_reports/validation
 python tools/run_tool_comparison.py --profile research --output-dir run_reports/validation
+python tools/build_comparator_matrix.py --output-dir run_reports/validation
 python tools/build_validation_report.py --profile research --output-dir run_reports/validation
+python tools/run_clinical_readiness_gate.py --output-dir run_reports/validation
 ```
 
 These commands produce `reference_case_results.json`, `reference_case_results.csv`,
 `comparator_statistics.csv`, `validation_summary.md`, `validation_report.json`,
+`formula_oracles.json`, `paper_reproduction_table.json`, `comparator_matrix.json`, `clinical_readiness_gate.json`,
 `supplement_tables/`, and `manifest_lock.json` under `run_reports/validation/`.
 The full artifact rebuild requires the referenced RTPLAN files under `data/`; when running
 from a separate worktree, pass `--source-root path/to/PlanComplexity` to point at the data root.
 The validation bundle is research/publication evidence support and is not clinical deployment ready.
+
+Optional PSQA/SPC and endpoint association scaffolds are available for institution-approved,
+de-identified local datasets:
+
+```bash
+python tools/run_psqa_spc_analysis.py --input-csv psqa_metrics.csv --metric-key mcs --output-dir run_reports/validation
+python tools/run_clinical_endpoint_association.py --input-csv endpoints.csv --metric-key mcs --endpoint-key qa_fail --output-dir run_reports/validation
+```
+
+These tools provide harmonization/control-chart and association-only evidence layers. They do not
+make clinical deployment claims without approved local QA and endpoint data.
+
+Reference Pack v1 details and open-source packaging constraints are documented in
+`docs/reference_pack_v1.md`. Clinical implementation controls are documented in
+`docs/clinical_implementation_sop.md` and `docs/deployment_rollback.md`.
 
 Build a standalone Windows GUI executable:
 
@@ -176,6 +196,17 @@ The Aurora prototype is for research use only. Clinical use is strongly forbidde
   - Speed bins in the program are reported in `mm/s`: `0-4`, `4-8`, `8-12`, `12-16`, `16-20`.
   - Acceleration bins in the program are reported in `mm/s^2`: `0-40`, `40-80`, `80-120`, `120-160`, `160-200`.
   - Each proportion is computed as the mean of per-leaf proportions over valid control-point intervals.
+  - These bins require a valid control-point time model. RTPLAN-only exact calculation is
+    unavailable when the plan does not provide usable timing inputs, such as nonzero
+    dose rate, known machine maximum gantry speed, or delivery timestamps.
+  - For the current Elekta Monaco/Oncentra RTPLAN exports, `CumulativeMetersetWeight`
+    is present but `DoseRateSet` is absent or zero and the machine is identified only
+    by local IDs. In that state the Park speed/acceleration bins are intentionally
+    reported as unavailable/`NaN` rather than treated as delivery-accurate values.
+  - Elekta Park-style values can be added only as explicitly labeled estimates if a
+    site-specific machine profile supplies the missing timing assumptions.
+    Delivery-accurate values require treatment delivery logs or another timestamped
+    machine record.
 - `SPORT Modulation Index (Li and Xing 2013)` follows:
   - Li R, Xing L. Med Phys. 2013;40(5):050701.
   - DOI: `10.1118/1.4802748`

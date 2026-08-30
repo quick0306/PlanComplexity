@@ -460,6 +460,28 @@ class AnalysisHelpersTests(unittest.TestCase):
 
         self.assertEqual(ucomx_service.detect_mode_from_file("aurora.dcm"), AnalysisMode.AURORA)
 
+    @patch.object(ucomx_service, "is_aurora_rtplan", return_value=False)
+    @patch.object(ucomx_service, "pydicom")
+    def test_detect_mode_from_file_identifies_hi_art_tomo_rtplan(self, pydicom_mock, _aurora_mock):
+        pydicom_mock.dcmread.return_value = SimpleNamespace(
+            Manufacturer="TomoTherapy Incorporated",
+            ManufacturerModelName="Hi-Art",
+            RTPlanName="Plan",
+            RTPlanLabel="Plan",
+            BeamSequence=[
+                SimpleNamespace(
+                    TreatmentDeliveryType="TREATMENT",
+                    TreatmentMachineName="0210531",
+                    BeamLimitingDeviceSequence=[
+                        SimpleNamespace(RTBeamLimitingDeviceType="ASYMY"),
+                        SimpleNamespace(RTBeamLimitingDeviceType="X"),
+                    ],
+                )
+            ],
+        )
+
+        self.assertEqual(ucomx_service.detect_mode_from_file("tomo.dcm"), AnalysisMode.TOMO)
+
     @patch.object(ucomx_service, "analyze_aurora_plan_file")
     @patch.object(ucomx_service, "detect_mode_from_file", return_value=AnalysisMode.AURORA)
     def test_analyze_plan_file_auto_routes_aurora_into_unified_result(
