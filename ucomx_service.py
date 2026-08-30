@@ -7,7 +7,12 @@ from typing import Any, Dict, Iterable, List, Sequence
 
 import pydicom
 
-from analysis_helpers import calculate_core_metrics, calculate_cyberknife_mlc_metrics, get_plan_metadata
+from analysis_helpers import (
+    calculate_core_metrics,
+    calculate_core_metrics_with_warnings,
+    calculate_cyberknife_mlc_metrics,
+    get_plan_metadata,
+)
 from aurora_svmat_lab.parser import is_aurora_rtplan
 from aurora_svmat_lab.service import analyze_plan_file as analyze_aurora_plan_file
 from cyberknife_parser import build_cyberknife_plan_dict, parse_cyberknife_beams, resolve_referenced_xml_paths
@@ -221,12 +226,15 @@ def analyze_plan_file(source_path: str, requested_mode: AnalysisMode = AnalysisM
             warning="RT Plan does not contain usable MLC leaf geometry, so aperture-based complexity metrics cannot be computed.",
         )
 
+    metric_warnings = []
     try:
-        metrics = (
-            calculate_cyberknife_mlc_metrics(plan_dict, cyberknife_beams=cyberknife_beams)
-            if active_mode == AnalysisMode.CYBERKNIFE_MLC
-            else calculate_core_metrics(plan_dict)
-        )
+        if active_mode == AnalysisMode.CYBERKNIFE_MLC:
+            metrics = calculate_cyberknife_mlc_metrics(
+                plan_dict, cyberknife_beams=cyberknife_beams
+            )
+        else:
+            metrics, metric_warnings = calculate_core_metrics_with_warnings(plan_dict)
+            metadata["metric_formula_version"] = "hybrid-v2"
     except IndexError as exc:
         return _unsupported_result(
             source_path=source_path,
@@ -235,7 +243,7 @@ def analyze_plan_file(source_path: str, requested_mode: AnalysisMode = AnalysisM
             warning=f"Aperture geometry is empty or incomplete for this plan: {exc}",
         )
     flattened_metrics = flatten_metrics(metrics)
-    warnings = []
+    warnings = list(metric_warnings)
     if detected_mode != active_mode:
         warnings.append(f"Requested mode {active_mode.value} overrides detected mode {detected_mode.value}.")
 
@@ -412,6 +420,7 @@ def build_export_record(result: PlanAnalysisResult) -> Dict[str, Any]:
     record["rotation_direction"] = result.metadata.get("rotation_direction", "")
     record["prescribed_dose"] = result.metadata.get("prescribed_dose", "")
     record["mu"] = result.metadata.get("mu", "")
+    record["metric_formula_version"] = result.metadata.get("metric_formula_version", "")
     record["warnings"] = " | ".join(result.warnings)
     for key, value in result.flattened_metrics.items():
         record[key] = value
@@ -472,6 +481,7 @@ def build_metadata_rows(result: PlanAnalysisResult) -> List[List[str]]:
         "beam_type",
         "beam_number",
         "rotation_direction",
+        "metric_formula_version",
     ]
     rows = []
     metadata_view = dict(result.metadata)

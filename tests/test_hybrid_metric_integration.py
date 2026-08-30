@@ -3,11 +3,13 @@ from pathlib import Path
 import numpy as np
 import pytest
 
+from analysis_exports import BASE_HEADER, build_standard_row
+from analysis_helpers import calculate_core_metrics, calculate_core_metrics_with_warnings
 from ApertureMetric.aperture_geometry import PyAperture
 from ComplexityMetric.leaf_gap import LeafGap
 from ComplexityMetric.mean_asymmetry_distance import MeanAsymmetryDistance
 from ComplexityMetric.small_aperture_score import SmallApertureScore
-from ucomx_service import analyze_plan_file
+from ucomx_service import analyze_plan_file, build_export_record
 from vcomx_vmat_metrics import calculate_vcomx_supplemental_metrics
 
 
@@ -52,6 +54,8 @@ def _plan(apertures, *, machine="TrueBeam"):
         "TreatmentMachineName": machine,
         "MU": 4.0,
         "PrimaryDosimeterUnit": "MU",
+        "DoseRateSet": 600.0,
+        "GantryRotationAngle": 0.0,
         "ControlPointSequence": [object()] * control_point_count,
         "_cached_apertures": apertures,
         "_cached_cp_metersets": np.asarray([1.0, 3.0], dtype=float),
@@ -95,3 +99,29 @@ def test_supplemental_metrics_distinguish_leaf_travel_and_leaf_counts():
     assert metrics["lt_mean_leaf"] == 3.5
     assert metrics["nl"] == metrics["nl_pairs"] == 1.25
     assert metrics["nl_leaves"] == 2.5
+
+
+def test_core_metrics_keep_mapping_api_and_report_weight_fallbacks():
+    first = _aperture([0.0], [2.0])
+    second = _aperture([-1.0], [9.0])
+    plan = _plan([first, second])
+    plan["beams"][1]["_cached_cp_metersets"] = np.asarray([np.nan, np.nan])
+
+    assert isinstance(calculate_core_metrics(plan), dict)
+    metrics, warnings = calculate_core_metrics_with_warnings(plan)
+
+    assert isinstance(metrics, dict)
+    assert any(warning.startswith("[METRIC_WEIGHT_FALLBACK]") for warning in warnings)
+
+
+def test_vmat_analysis_and_exports_include_formula_provenance():
+    if not TRUEBEAM_BASELINE_PLAN.exists():
+        pytest.skip("Representative TrueBeam RTPLAN fixture is unavailable")
+
+    result = analyze_plan_file(str(TRUEBEAM_BASELINE_PLAN))
+    export_record = build_export_record(result)
+
+    assert result.metadata["metric_formula_version"] == "hybrid-v2"
+    assert export_record["metric_formula_version"] == "hybrid-v2"
+    assert "Metric_Formula_Version" in BASE_HEADER
+    assert build_standard_row(result.metadata, {})[7] == "hybrid-v2"

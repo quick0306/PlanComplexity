@@ -11,6 +11,7 @@ BASE_HEADER = [
     "Calculation_Model",
     "Prescribed_Dose",
     "MU",
+    "Metric_Formula_Version",
 ]
 
 
@@ -118,6 +119,7 @@ def build_standard_row(metadata, metrics):
         metadata["calculation_model"],
         metadata["prescribed_dose"],
         metadata["mu"],
+        metadata.get("metric_formula_version", ""),
     ]
     row.extend(_metric_values(metrics))
     return row
@@ -132,6 +134,7 @@ def build_dual_mlc_row(metadata, metrics):
         metadata["calculation_model"],
         metadata["prescribed_dose"],
         metadata["mu"],
+        metadata.get("metric_formula_version", ""),
     ]
     row.extend(_dual_metric_values(metrics))
     return row

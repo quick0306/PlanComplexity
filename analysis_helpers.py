@@ -44,18 +44,35 @@ def get_plan_metadata(plan_info, plan_dict):
 
 
 def calculate_core_metrics(plan_dict):
+    metrics, _ = calculate_core_metrics_with_warnings(plan_dict)
+    return metrics
+
+
+def calculate_core_metrics_with_warnings(plan_dict):
     small_aperture_score_obj = SmallApertureScore()
     modulation_index_score_obj = ModulationIndexScore()
+    warnings = []
+    sas_5mm, sas_5mm_warnings = _calculate_with_warnings(
+        small_aperture_score_obj, plan_dict, x=5
+    )
+    sas_10mm, sas_10mm_warnings = _calculate_with_warnings(
+        small_aperture_score_obj, plan_dict, x=10
+    )
+    sas_20mm, sas_20mm_warnings = _calculate_with_warnings(
+        small_aperture_score_obj, plan_dict, x=20
+    )
+    mad, mad_warnings = _calculate_with_warnings(MeanAsymmetryDistance(), plan_dict)
+    warnings.extend(sas_5mm_warnings + sas_10mm_warnings + sas_20mm_warnings + mad_warnings)
     metrics = {
         "em": EdgeMetric().calculate_for_plan(plan_dict),
         "pi": PlanIrregularity().calculate_for_plan(plan_dict),
         "pm": PlanModulation().calculate_for_plan(plan_dict),
         "mcsv": ModulationComplexityScore().calculate_for_plan(plan_dict),
-        "sas_5mm": small_aperture_score_obj.calculate_for_plan(plan_dict, x=5),
-        "sas_10mm": small_aperture_score_obj.calculate_for_plan(plan_dict, x=10),
-        "sas_20mm": small_aperture_score_obj.calculate_for_plan(plan_dict, x=20),
+        "sas_5mm": sas_5mm,
+        "sas_10mm": sas_10mm,
+        "sas_20mm": sas_20mm,
         "pa": MeanFieldArea().calculate_for_plan(plan_dict),
-        "mad": MeanAsymmetryDistance().calculate_for_plan(plan_dict),
+        "mad": mad,
         "bjar": ApertureAreaRatioJawArea().calculate_for_plan(plan_dict),
         "asr": ApertureSubRegions().calculate_for_plan(plan_dict),
         "axjd": ApertureXJaw().calculate_for_plan(plan_dict),
@@ -69,7 +86,8 @@ def calculate_core_metrics(plan_dict):
         "mi_1_0": modulation_index_score_obj.calculate_for_plan(plan_dict, k=1.0),
         "mi_2_0": modulation_index_score_obj.calculate_for_plan(plan_dict, k=2.0),
     }
-    leaf_gap_summary = LeafGap().calculate_for_plan(plan_dict)
+    leaf_gap_summary, leaf_gap_warnings = _calculate_with_warnings(LeafGap(), plan_dict)
+    warnings.extend(leaf_gap_warnings)
     if isinstance(leaf_gap_summary[0], tuple):
         metrics["alg"] = (leaf_gap_summary[0][0], leaf_gap_summary[1][0])
         metrics["alg_sd"] = (leaf_gap_summary[0][1], leaf_gap_summary[1][1])
@@ -77,7 +95,14 @@ def calculate_core_metrics(plan_dict):
         metrics["alg"], metrics["alg_sd"] = leaf_gap_summary
     metrics.update(calculate_vcomx_supplemental_metrics(plan_dict))
     metrics.update(calculate_halcyon_dual_layer_paper_metrics(plan_dict))
-    return metrics
+    return metrics, list(dict.fromkeys(warnings))
+
+
+def _calculate_with_warnings(metric, plan_dict, **kwargs):
+    warning_aware = getattr(metric, "calculate_for_plan_with_warnings", None)
+    if callable(warning_aware):
+        return warning_aware(plan_dict, **kwargs)
+    return metric.calculate_for_plan(plan_dict, **kwargs), []
 
 
 def calculate_cyberknife_mlc_metrics(plan_dict, cyberknife_beams=None):
