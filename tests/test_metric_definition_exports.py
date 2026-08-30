@@ -7,6 +7,37 @@ from pathlib import Path
 
 
 class MetricDefinitionExportTests(unittest.TestCase):
+    def test_hybrid_v2_metrics_are_uniquely_registered_and_documented(self):
+        from metric_definition_catalog import build_metric_definition_catalog
+        from metric_registry import VMAT_METRIC_SPECS
+
+        keys = [spec.key for spec in VMAT_METRIC_SPECS]
+        required = {
+            "lt_mean_leaf",
+            "nl_pairs",
+            "nl_leaves",
+            "mcsv_effective",
+            "lt_mean_leaf_effective",
+            "nl_pairs_effective",
+            "mcsv_stacked",
+            "lt_mean_leaf_stacked",
+            "nl_pairs_stacked",
+        }
+        self.assertEqual(len(keys), len(set(keys)))
+        self.assertTrue(required.issubset(keys), required - set(keys))
+        stacked = [spec for spec in VMAT_METRIC_SPECS if spec.key.endswith("_stacked")]
+        self.assertTrue(stacked)
+        self.assertTrue(all("non-physical" in spec.description.lower() for spec in stacked))
+
+        records = {
+            record.metric_key: record
+            for record in build_metric_definition_catalog()
+            if record.platform == "VMAT_IMRT"
+        }
+        for key in required:
+            self.assertTrue(records[key].mathematical_definition)
+            self.assertTrue(records[key].unit)
+
     def test_catalog_contains_all_supported_platforms_and_key_metrics(self):
         from metric_definition_catalog import build_metric_definition_catalog
 

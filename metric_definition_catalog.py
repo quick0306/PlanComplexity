@@ -499,6 +499,13 @@ def _vmat_group(metric_key: str) -> str:
 
 
 def _vmat_formula(metric_key: str) -> str:
+    for suffix, geometry in (
+        ("_effective", "physical effective dual-layer aperture"),
+        ("_stacked", "non-physical stacked dual-layer diagnostic geometry"),
+    ):
+        if metric_key.endswith(suffix):
+            base_key = metric_key[: -len(suffix)]
+            return f"{_vmat_formula(base_key)}, computed on the {geometry}"
     formulas = {
         "mus": "MUs = sum_beams(MU_beam)",
         "pmu": "PMU = MUs * (2 Gy / fraction dose in Gy)",
@@ -507,9 +514,12 @@ def _vmat_formula(metric_key: str) -> str:
         "fractions_count": "Fractions = N_fx",
         "mucgy": "MUcGy = MUs / prescribed dose in cGy",
         "lt": "LT = weighted mean over control arcs of total leaf travel between adjacent apertures",
+        "lt_mean_leaf": "LT Mean Leaf = total raw geometric trajectory travel / number of moving physical leaves",
         "ltmu": "LTMU = sum(control-arc leaf travel) / MU_beam",
         "ltnlmu": "LTNLMU = sum(leaf travel / active leaves) / MU_beam",
         "nl": "NL = weighted mean over control points of the number of active leaf pairs",
+        "nl_pairs": "NL Pairs = MU-weighted mean active leaf-pair count; identical to legacy NL",
+        "nl_leaves": "NL Leaves = 2 * NL Pairs",
         "ltnl": "LTNL = weighted mean of (leaf travel / active leaves)",
         "al": "AL = total gantry travel / N_beams",
         "lna": "LNA = weighted mean of (leaf travel / active leaves / gantry-step)",
@@ -578,9 +588,9 @@ def _vmat_formula(metric_key: str) -> str:
         "sas_20mm": "SAS20mm = active leaf gaps below 20 mm / all active leaf gaps",
         "em": "EM = aperture edge metric calculated from BEV perimeter relative to area",
         "bjar": "BJAR = aperture area / jaw-defined area",
-        "mad": "MAD = mean distance of open leaf ends from the beam central axis",
-        "alg": "ALG = mean(opposing leaf gap over active leaf pairs)",
-        "alg_sd": "ALG SD = std(opposing leaf gap over active leaf pairs)",
+        "mad": "MAD = MU-weighted mean(abs((left + right) / 2)) over jaw-active positive gaps",
+        "alg": "ALG = control-point-MU-weighted mean active gap, then beam-MU weighted",
+        "alg_sd": "ALG SD = control-point-balanced weighted population SD of active gaps",
         "perimeter": "P = mean aperture perimeter in beam's-eye view",
         "asr": "ASR = mean number of disconnected open aperture sub-regions",
         "axjd": "AXJD = mean distance between aperture extent and X jaws",
@@ -594,6 +604,10 @@ def _vmat_formula(metric_key: str) -> str:
 
 
 def _vmat_unit(metric_key: str) -> str:
+    if metric_key.endswith("_effective"):
+        return _vmat_unit(metric_key.removesuffix("_effective"))
+    if metric_key.endswith("_stacked"):
+        return _vmat_unit(metric_key.removesuffix("_stacked"))
     units = {
         "mus": "MU",
         "pmu": "MU",
@@ -602,9 +616,12 @@ def _vmat_unit(metric_key: str) -> str:
         "fractions_count": "count",
         "mucgy": "MU/cGy",
         "lt": "mm",
+        "lt_mean_leaf": "mm/moving leaf",
         "ltmu": "mm/MU",
         "ltnlmu": "mm/(leaf*MU)",
         "nl": "count",
+        "nl_pairs": "active leaf pairs",
+        "nl_leaves": "active physical leaves",
         "ltnl": "mm/leaf",
         "al": "deg",
         "lna": "mm/(leaf*deg)",
@@ -640,6 +657,8 @@ def _vmat_unit(metric_key: str) -> str:
 
 
 def _vmat_inputs(metric_key: str) -> str:
+    if metric_key.endswith(("_effective", "_stacked")):
+        return "Aligned Halcyon/Ethos MLCX1 and MLCX2 apertures with control-point and beam MU"
     if metric_key in {
         "mcs5", "pa5", "pi5", "pm5", "eds", "mcsw", "paw", "piw", "pmw",
         "proximal_mcs", "distal_mcs", "proximal_pa", "distal_pa",
@@ -914,6 +933,10 @@ def _aurora_unit(metric_key: str) -> str:
 
 
 def _notes_for_metric(metric_key: str, *, dual_mlc: bool) -> str:
+    if metric_key.endswith("_stacked"):
+        return "Non-physical stacked diagnostic geometry for algorithm comparison; not a transmission aperture."
+    if metric_key.endswith("_effective"):
+        return "Physical effective aperture formed by intersecting the aligned dual-layer openings."
     if metric_key.startswith("mi_"):
         return "The base key returns a tuple of speed, acceleration, and total MI components before flattening."
     if metric_key == "mlc_speed_acc":

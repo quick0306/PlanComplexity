@@ -136,6 +136,58 @@ VMAT_METRIC_SPECS = (
     ),
 )
 
+VMAT_METRIC_SPECS += (
+    MetricSpec(
+        "lt_mean_leaf",
+        "LT Mean Leaf",
+        "10.1118/1.4810969",
+        dual_mlc=True,
+        description="Raw trajectory travel averaged over moving physical leaves.",
+    ),
+    MetricSpec(
+        "nl_pairs",
+        "NL Pairs",
+        dual_mlc=True,
+        description="MU-weighted number of active leaf pairs; the legacy NL key is an alias value.",
+    ),
+    MetricSpec(
+        "nl_leaves",
+        "NL Leaves",
+        dual_mlc=True,
+        description="MU-weighted number of active physical leaves, exactly twice NL Pairs.",
+    ),
+)
+
+_HYBRID_REPRESENTATION_LABELS = {
+    "mcsv": "MCSv",
+    "aav": "AAV",
+    "lsv": "LSV",
+    "pa": "PA",
+    "mad": "MAD",
+    "alg": "ALG",
+    "alg_sd": "ALG SD",
+    "sas_5mm": "SAS5mm",
+    "sas_10mm": "SAS10mm",
+    "sas_20mm": "SAS20mm",
+    "lt": "LT",
+    "lt_mean_leaf": "LT Mean Leaf",
+    "nl_pairs": "NL Pairs",
+    "nl_leaves": "NL Leaves",
+}
+VMAT_METRIC_SPECS += tuple(
+    MetricSpec(
+        f"{key}_{representation}",
+        f"{label} {representation.title()}",
+        description=(
+            f"{label} computed on the physical effective dual-layer aperture."
+            if representation == "effective"
+            else f"{label} computed on the non-physical stacked dual-layer diagnostic geometry."
+        ),
+    )
+    for representation in ("effective", "stacked")
+    for key, label in _HYBRID_REPRESENTATION_LABELS.items()
+)
+
 CYBERKNIFE_METRIC_SPECS = (
     MetricSpec("mcs", "MCS", "10.1002/mp.14667", gui_label="MCS (CyberKnife MLC)", description="Overall modulation complexity of the delivered CyberKnife MLC apertures."),
     MetricSpec("em", "EM", "10.1118/1.4762566", description="Relative amount of aperture edge compared with open field area."),
