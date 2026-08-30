@@ -14,9 +14,9 @@
 
 ## Execution constraints
 
-- The current `main` worktree contains pre-existing user edits, including files this feature may also touch. Record the starting diff for every overlapping file and preserve it exactly.
+- The current `main` worktree contains pre-existing user edits, including tracked and untracked files this feature may also touch. Record status, hashes, tracked diffs, and complete untracked contents for every planned path before editing, and preserve that baseline exactly.
 - Do not use reset, checkout, broad staging, `git add .`, or `git add -A`.
-- Commit only files that were clean at the start or newly created. Leave overlapping pre-existing dirty files unstaged unless an exact patch containing only this feature's hunks can be proven safe.
+- Commit only files that were clean at the start or newly created by this feature. Leave every overlapping pre-existing dirty or untracked file unstaged unless an exact patch containing only this feature's hunks can be proven safe. Never commit a pre-existing untracked file merely because this feature added lines to it.
 - Historical files under `docs/superpowers/specs/` and `docs/superpowers/plans/` are archival records; audit them for context but do not rewrite older decisions.
 - Do not add an RT Lens calculation mode, source copy, package dependency, CLI option, or GUI setting.
 
@@ -85,11 +85,63 @@ Expected branch: `codex/hybrid-complexity-metrics`. Compare status with the pre-
 Run:
 
 ```powershell
-git status --short
-git diff -- ApertureMetric/aperture_creator.py metric_registry.py metric_definition_catalog.py ucomx_service.py README.md tests/test_motion_metrics.py
+$plannedPaths = @(
+  '.github/workflows/validation.yml',
+  'ApertureMetric/aperture_creator.py',
+  'ApertureMetric/stacked_aperture.py',
+  'ComplexityMetric/aperture_series_metrics.py',
+  'ComplexityMetric/mean_asymmetry_distance.py',
+  'ComplexityMetric/leaf_gap.py',
+  'ComplexityMetric/small_aperture_score.py',
+  'vcomx_vmat_metrics.py',
+  'halcyon_dual_layer_metrics.py',
+  'analysis_helpers.py',
+  'ucomx_service.py',
+  'analysis_exports.py',
+  'metric_registry.py',
+  'metric_definition_catalog.py',
+  'validation/formula_oracles.py',
+  'tests/test_metric_formulas.py',
+  'tests/test_motion_metrics.py',
+  'tests/test_halcyon_dual_layer_paper_metrics.py',
+  'tests/test_analysis_helpers.py',
+  'tests/validation/test_formula_oracles.py',
+  'README.md',
+  'docs/clinical_implementation_sop.md',
+  'docs/reference_pack_v1.md',
+  'docs/metric_definitions_all.md',
+  'docs/metric_definitions_vmat_imrt.md',
+  'docs/hybrid_v2_migration.md',
+  'output/metric_definitions_all.csv',
+  'run_reports/validation/validation_summary.md'
+)
+
+git status --porcelain=v1 --untracked-files=all
+foreach ($path in $plannedPaths) {
+  if (-not (Test-Path -LiteralPath $path)) { continue }
+  Write-Output "BASELINE_PATH $path"
+  Get-FileHash -Algorithm SHA256 -LiteralPath $path | Select-Object Path, Hash
+  git ls-files --error-unmatch -- $path 2>$null
+  if ($LASTEXITCODE -eq 0) {
+    git diff --binary -- $path
+  } else {
+    Write-Output "BASELINE_UNTRACKED_CONTENT_BEGIN $path"
+    Get-Content -Raw -LiteralPath $path
+    Write-Output "BASELINE_UNTRACKED_CONTENT_END $path"
+  }
+}
 ```
 
-Save the output outside the repository or retain it in the execution transcript. Expected: user edits are visible and no feature edits exist yet.
+Retain the complete output in the execution transcript. This read-only snapshot covers every planned overlapping path, including the current untracked formula-oracle, clinical, and reference-pack files. Expected: user edits are visible and no feature edits exist yet.
+
+- [ ] **Step 1b: Classify staging eligibility before editing**
+
+From the status snapshot, produce two lists in the execution transcript:
+
+- `FEATURE_STAGEABLE`: clean-at-start files and files newly created by this feature.
+- `PRESERVE_UNSTAGED`: every dirty-at-start or pre-existing untracked path.
+
+Use these lists for every later commit. Recompute status before staging and stop if a path's classification is unclear.
 
 - [ ] **Step 2: Capture representative preserved values**
 
