@@ -93,9 +93,7 @@ class LeafGap(ComplexityMetric):
         if not gaps:
             return 0.0, 0.0
         values = np.asarray(gaps, dtype=float)
-        return round(float(np.mean(values)), self.round_digits), round(
-            float(np.std(values)), self.round_digits
-        )
+        return self.format_result(float(np.mean(values))), self.format_result(float(np.std(values)))
 
     def _combine_moments(
         self, moments: List[GapMoments], weights: List[float]
@@ -108,6 +106,6 @@ class LeafGap(ComplexityMetric):
         )
         variance = max(second_result.value - mean_result.value**2, 0.0)
         return (
-            round(mean_result.value, self.round_digits),
-            round(float(np.sqrt(variance)), self.round_digits),
+            self.format_result(mean_result.value),
+            self.format_result(float(np.sqrt(variance))),
         ), mean_result.used_uniform_weights or second_result.used_uniform_weights

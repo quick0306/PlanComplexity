@@ -4,6 +4,7 @@ cases:
     domain: VMAT_IMRT
     device_or_tps: TrueBeam
     expected_mode: VMAT_IMRT
+    expected_formula_version: geometry-v4
     case_class: canonical
     expected_metrics_source: checked_in_json
     tolerance_overrides: {}
@@ -18,6 +19,7 @@ cases:
     domain: VMAT_IMRT
     device_or_tps: Halcyon
     expected_mode: VMAT_IMRT
+    expected_formula_version: geometry-v4
     case_class: edge
     expected_metrics_source: checked_in_json
     tolerance_overrides: {}
@@ -32,6 +34,7 @@ cases:
     domain: TOMO
     device_or_tps: Tomo
     expected_mode: TOMO
+    expected_formula_version: tomo-v3
     case_class: canonical
     expected_metrics_source: checked_in_json
     tolerance_overrides: {}
@@ -46,6 +49,7 @@ cases:
     domain: TOMO
     device_or_tps: Tomo
     expected_mode: TOMO
+    expected_formula_version: tomo-v3
     case_class: edge
     expected_metrics_source: checked_in_json
     tolerance_overrides: {}
@@ -53,13 +57,14 @@ cases:
     provenance:
       source_kind: clinical_rtplan
       version: phase1
-      notes: Tomo plan retained because runtime currently defaults projection time and pitch inference.
-    notes: Edge TOMO case used to preserve current warning-bearing inference behavior.
+      notes: Tomo plan retained to cover empty interior projections and documented private gantry timing.
+    notes: Edge TOMO case covers closed projections and unavailable fraction dose; historical case ID retained.
   - case_id: cyberknife_multiplan_canonical
     source_path: data/CyberKnife/RTPLAN-260302100746-1.2.840.114358.14038002808480.20260302101311.3687176168660.dcm
     domain: CYBERKNIFE_MLC
     device_or_tps: CyberKnife
     expected_mode: CYBERKNIFE_MLC
+    expected_formula_version: geometry-v4
     case_class: canonical
     expected_metrics_source: checked_in_json
     tolerance_overrides: {}
@@ -74,6 +79,8 @@ cases:
     domain: CYBERKNIFE_MLC
     device_or_tps: PRECISION
     expected_mode: CYBERKNIFE_MLC
+    expected_formula_version: geometry-v4
+    expected_supported: false
     case_class: edge
     expected_metrics_source: checked_in_json
     tolerance_overrides: {}

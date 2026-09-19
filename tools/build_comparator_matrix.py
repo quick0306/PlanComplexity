@@ -49,6 +49,8 @@ def build_comparator_matrix_report(output_dir: Path | str | None = None) -> dict
                         "comparison_class",
                         "coverage_status",
                         "comparator",
+                        "mapping_provenance",
+                        "verified_sample_count",
                         "comparator_metric",
                         "relationship",
                         "sample_count",

@@ -1,0 +1,10 @@
+{
+  "case_id": "tomo_default_inference_edge",
+  "domain": "TOMO",
+  "expected_metrics_checksum": "61e66168e6ff9df46d8b00ada49d88451af9cc6924cf766c58466bac7786cfa8",
+  "formula_version": "tomo-v2",
+  "generated_at": "2026-09-19T11:47:03Z",
+  "mode": "TOMO",
+  "schema_version": 1,
+  "source_checksum": "afdb4d429bd9e0019a5908bbe5f0fc0f675862d205bddd5c16eaadab17b6fbda"
+}

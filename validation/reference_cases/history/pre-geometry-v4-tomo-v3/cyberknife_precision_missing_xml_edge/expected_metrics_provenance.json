@@ -1,0 +1,10 @@
+{
+  "case_id": "cyberknife_precision_missing_xml_edge",
+  "domain": "CYBERKNIFE_MLC",
+  "expected_metrics_checksum": "ca3d163bab055381827226140568f3bef7eaac187cebd76878e0b63e9e442356",
+  "formula_version": "geometry-v3",
+  "generated_at": "2026-09-19T11:47:03Z",
+  "mode": "CYBERKNIFE_MLC",
+  "schema_version": 1,
+  "source_checksum": "1ef3410843e7f14753b7086415c1ce995160ada65a3c85297225d3e65bd84c23"
+}

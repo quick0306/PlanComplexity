@@ -128,9 +128,9 @@ def _build_vmat_flattened_records(metric_key: str, label: str, description: str)
     if metric_key.startswith("mi_"):
         threshold = label.replace("MI(", "").replace(")", "")
         for component_key, component_label, component_formula in (
-            (f"{metric_key}_mis", f"{label} Speed", f"MIs({threshold}) = mean_beams[ mean_CP min(v / sigma_v, {threshold}) ]"),
-            (f"{metric_key}_mia", f"{label} Acceleration", f"MIa({threshold}) = mean_beams[ mean_CP min(max(v / sigma_v, a / (alpha * sigma_a)), {threshold}) ]"),
-            (f"{metric_key}_mit", f"{label} Total", f"MIt({threshold}) = weighted mean over control points of min(max(v / sigma_v, a / (alpha * sigma_a)), {threshold})"),
+            (f"{metric_key}_mis", f"{label} Speed", f"MIs({threshold}) = sum_CP,leaf min(v / sigma_v, {threshold}) / max(Ncp-1,1); beam-MU mean"),
+            (f"{metric_key}_mia", f"{label} Acceleration", f"MIa({threshold}) = sum_CP,leaf min(max(v / sigma_v, a / (alpha_acc * sigma_a)), {threshold}) / max(Ncp-2,1); alpha_acc=1/mean(dt); beam-MU mean"),
+            (f"{metric_key}_mit", f"{label} Total", f"MIt({threshold}) = sum_CP WGA*WMU*sum_leaf min(max(v / sigma_v, a / (alpha_acc * sigma_a)), {threshold}) / max(Ncp-2,1); beam-MU mean"),
         ):
             records.append(
                 MetricDefinitionRecord(
@@ -161,7 +161,7 @@ def _build_vmat_flattened_records(metric_key: str, label: str, description: str)
                             metric_key=component_key,
                             display_name=SPECIAL_FLATTENED_LABELS.get(component_key, component_key),
                             symbol_or_short_name=f"{label} {mlc_layer.upper()} {component_label}",
-                            mathematical_definition=f"Same {component_label.lower()}-component MI formula as {label}, but restricted to {mlc_layer.upper()} leaf positions.",
+                            mathematical_definition=next(r.mathematical_definition for r in records if r.metric_key == f"{metric_key}_{component_key.rsplit('_', 1)[-1]}") + f"; native {mlc_layer.upper()} leaves only",
                             physical_meaning=SPECIAL_FLATTENED_DESCRIPTIONS.get(component_key, description),
                             unit="dimensionless",
                             inputs_required="Per-layer MLC speed and acceleration traces",
@@ -285,7 +285,7 @@ def _build_vmat_flattened_records(metric_key: str, label: str, description: str)
                     metric_key=key,
                     display_name=SPECIAL_FLATTENED_LABELS.get(key, key),
                     symbol_or_short_name=SPECIAL_FLATTENED_LABELS.get(key, key),
-                    mathematical_definition=f"Same formula as {label}, but computed using {layer.upper()} apertures only.",
+                    mathematical_definition=_vmat_formula(metric_key) + f"; native {layer.upper()} apertures only",
                     physical_meaning=SPECIAL_FLATTENED_DESCRIPTIONS.get(key, description),
                     unit=_vmat_unit(metric_key),
                     inputs_required=f"{layer.upper()} leaf positions, control-point weights, and beam geometry",
@@ -536,7 +536,7 @@ def _vmat_formula(metric_key: str) -> str:
         "muca": "MUCA = MUs / N_control_arcs",
         "fraction_dose_gy": "Fraction dose = prescribed dose / number of fractions",
         "fractions_count": "Fractions = N_fx",
-        "mucgy": "MUcGy = MUs / prescribed dose in cGy",
+        "mucgy": "MUcGy = MUs / dose per fraction in cGy",
         "lt": "LT = weighted mean over control arcs of total leaf travel between adjacent apertures",
         "lt_mean_leaf": "LT Mean Leaf = total raw geometric trajectory travel / number of moving physical leaves",
         "ltmu": "LTMU = sum(control-arc leaf travel) / MU_beam",
@@ -558,8 +558,8 @@ def _vmat_formula(metric_key: str) -> str:
         "gs": "GS = mean(control-point gantry speed)",
         "ls": "LS = mean(leaf speed)",
         "mcsv": "MCSv = weighted mean[((AAV_i + AAV_{i+1}) / 2) * ((LSV_i + LSV_{i+1}) / 2)]",
-        "aav": "AAV = aperture area / arc-level union aperture area, then weighted over the arc",
-        "lsv": "LSV = bank_LSV(left) * bank_LSV(right), then weighted over the arc",
+        "aav": "AAV_i = A_i / sum_slot[(max_CP raw_right - min_CP raw_left)_+ * max_CP jaw_exposed_height]; interval endpoint mean, then interval-MU and beam-MU means",
+        "lsv": "LSV_i = product_banks[1 - sum_adjacent abs(x[j+1]-x[j]) / ((n-1)*(max(x)-min(x)))]; bank=1 for constant/single-leaf bank, CP=0 when no active gaps; interval endpoint mean then MU means",
         "tg": "TG = weighted mean of adjacent-leaf left/right offset magnitudes",
         "mi_0_2": "MI(k=0.2) = (MIs, MIa, MIt) at threshold factor k = 0.2",
         "mi_0_5": "MI(k=0.5) = (MIs, MIa, MIt) at threshold factor k = 0.5",
@@ -567,11 +567,11 @@ def _vmat_formula(metric_key: str) -> str:
         "mi_2_0": "MI(k=2.0) = (MIs, MIa, MIt) at threshold factor k = 2.0",
         "dt": "dt = mean(control-point time increment) * N_control_points",
         "pi": "PI = perimeter^2 / (4 * pi * area), aggregated over apertures",
-        "pm": "PM = mean over adjacent control points of normalized aperture-area change",
+        "pm": "PM_beam = 1 - CP-MU-mean(A_i) / sum_slot max_CP(jaw-clipped slot area); beam-MU mean",
         "mcs5": "MCS5 = MCSv computed on the synthesized effective 5 mm dual-layer aperture",
         "pa5": "PA5 = weighted mean area of the synthesized effective 5 mm dual-layer aperture",
         "pi5": "PI5 = weighted mean perimeter^2 / (4*pi*area) on the synthesized effective 5 mm aperture",
-        "pm5": "PM5 = 1 - weighted effective aperture area / effective union aperture area",
+        "pm5": "PM5_beam = 1 - CP-MU-mean(A_effective_i) / sum_effective_slot max_CP(slot area); beam-MU mean",
         "eds": "EDS = weighted mean of the distal-layer contribution fraction to the effective field shape",
         "mcsw": "MCSw = pMCSw + dMCSw using proximal/distal field-shape contribution weights",
         "paw": "PAw = weighted proximal PA contribution + weighted distal PA contribution",
@@ -583,8 +583,8 @@ def _vmat_formula(metric_key: str) -> str:
         "distal_pa": "dPA = weighted mean aperture area for distal MLCX1",
         "proximal_pi": "pPI = weighted mean aperture irregularity for proximal MLCX2",
         "distal_pi": "dPI = weighted mean aperture irregularity for distal MLCX1",
-        "proximal_pm": "pPM = 1 - weighted proximal aperture area / proximal union area",
-        "distal_pm": "dPM = 1 - weighted distal aperture area / distal union area",
+        "proximal_pm": "pPM_beam = 1 - CP-MU-mean(A_proximal_i) / sum_proximal_slot max_CP(slot area); beam-MU mean",
+        "distal_pm": "dPM_beam = 1 - CP-MU-mean(A_distal_i) / sum_distal_slot max_CP(slot area); beam-MU mean",
         "proximal_mcsw": "pMCSw = proximal component of MCSw",
         "distal_mcsw": "dMCSw = distal component of MCSw",
         "proximal_paw": "pPAw = proximal component of PAw",
@@ -603,25 +603,26 @@ def _vmat_formula(metric_key: str) -> str:
         "mucp": "MUcp = 100 * mean over control arcs of delta MU / beam MU",
         "proximal_weight_mean": "Mean wp = weighted mean proximal field-shape contribution fraction",
         "distal_weight_mean": "Mean wd = weighted mean distal field-shape contribution fraction",
-        "md": "MD = union-area / weighted mean aperture area",
+        "md": "MD_beam = sum_slot max_CP(jaw-clipped slot area) / CP-MU-mean(A_i); beam-MU mean",
         "pa": "PA = weighted mean(aperture area)",
+        "ja": "JA = CP-MU mean(max(X2-X1,0)*max(Y2-Y1,0)); beam-MU mean",
         "efs": "EFS = weighted mean(4 * area / perimeter)",
         "psmall": "psmall = weighted fraction(EFS < 30 mm)",
-        "sas_5mm": "SAS5mm = active leaf gaps below 5 mm / all active leaf gaps",
-        "sas_10mm": "SAS10mm = active leaf gaps below 10 mm / all active leaf gaps",
-        "sas_20mm": "SAS20mm = active leaf gaps below 20 mm / all active leaf gaps",
-        "em": "EM = aperture edge metric calculated from BEV perimeter relative to area",
+        "sas_5mm": "SAS5mm = CP-MU mean of count(0<raw_gap<5 mm)/count(raw_gap>0), using Y-jaw-active slots; beam-MU mean",
+        "sas_10mm": "SAS10mm = CP-MU mean of count(0<raw_gap<10 mm)/count(raw_gap>0), using Y-jaw-active slots; beam-MU mean",
+        "sas_20mm": "SAS20mm = CP-MU mean of count(0<raw_gap<20 mm)/count(raw_gap>0), using Y-jaw-active slots; beam-MU mean",
+        "em": "EM_i = horizontal leaf-side boundary length / jaw-clipped area (C1=0,C2=1); CP-MU and beam-MU means; not full perimeter/(2*area)",
         "bjar": "BJAR = aperture area / jaw-defined area",
         "mad": "MAD = MU-weighted mean(abs((left + right) / 2)) over jaw-active positive gaps",
         "alg": "ALG = control-point-MU-weighted mean active gap, then beam-MU weighted",
         "alg_sd": "ALG SD = control-point-balanced weighted population SD of active gaps",
-        "perimeter": "P = mean aperture perimeter in beam's-eye view",
+        "perimeter": "P_i = horizontal boundary + 2*sum_positive_open_slots(jaw-exposed height); CP-MU and beam-MU means",
         "asr": "ASR = mean number of disconnected open aperture sub-regions",
-        "axjd": "AXJD = mean distance between aperture extent and X jaws",
-        "ayjd": "AYJD = mean distance between aperture extent and Y jaws",
-        "cam": "CAM = converted-aperture complexity metric from transformed field geometry",
-        "eam": "EAM = combined edge-and-area aperture complexity metric",
-        "sport": "SPORT = weighted aggregate of station-wise MI(s) over the plan",
+        "axjd": "AXJD = CP-MU mean(abs(X2-X1)); beam-MU mean (jaw span, not aperture clearance)",
+        "ayjd": "AYJD = CP-MU mean(abs(Y2-Y1)); beam-MU mean (jaw span, not aperture clearance)",
+        "cam": "CAM_i = 1 - mean_j(1-exp(-clipped_gap_j/10 mm))*(1-exp(-sqrt(A_i)/10 mm)); jaw-overlapping slots; CP-MU and beam-MU means",
+        "eam": "EAM_i = (10 mm*H_i)/(A_i+5 mm*H_i), H_i=one-bank jaw-exposed slot height including closed slots; CP-MU and beam-MU means",
+        "sport": "SPORT = CP-MU mean(sum_t sum_all_leaves abs(x_s-x_t)*abs(u_s-u_t)/shortest_angle(s,t)); t=s+-1,...,s+-10 within beam, skip zero angle; beam-MU mean",
         "mlc_speed_acc": "For each leaf, compute the proportion of valid intervals falling into each Park 2015 speed/acceleration bin; then average over leaves and beams.",
     }
     return formulas.get(metric_key, f"{metric_key} follows the current implementation-specific aggregation in the VMAT/IMRT workflow.")
@@ -649,21 +650,21 @@ def _vmat_unit(metric_key: str) -> str:
         "lt": "mm",
         "lt_mean_leaf": "mm/moving leaf",
         "ltmu": "mm/MU",
-        "ltnlmu": "mm/(leaf*MU)",
+        "ltnlmu": "mm/(pair*MU)",
         "nl": "count",
         "nl_pairs": "active leaf pairs",
         "nl_leaves": "active physical leaves",
-        "ltnl": "mm/leaf",
+        "ltnl": "mm/pair",
         "al": "deg",
-        "lna": "mm/(leaf*deg)",
+        "lna": "mm/(pair*deg)",
         "cal": "deg/control arc",
         "gt": "deg",
         "mudeg": "MU/deg",
         "ltal": "mm/deg",
         "narcs": "count",
-        "mdrv": "MU/(min*deg)",
+        "mdrv": "MU/(s*deg)",
         "mgsv": "deg/s/deg",
-        "dr": "MU/min",
+        "dr": "MU/s",
         "gs": "deg/s",
         "ls": "mm/s",
         "dt": "s",
@@ -681,8 +682,12 @@ def _vmat_unit(metric_key: str) -> str:
         "alg": "mm",
         "alg_sd": "mm",
         "perimeter": "mm",
+        "em": "mm^-1",
+        "axjd": "mm",
+        "ayjd": "mm",
         "np": "peaks/leaf",
         "mucp": "%",
+        "sport": "mm*MU/deg",
     }
     return units.get(metric_key, "dimensionless")
 
@@ -754,7 +759,7 @@ def _tomo_formula(metric_key: str) -> str:
         "lengthcc": "lengthCC = mean connected-component length in the sinogram",
         "fdisc": "fDISC = fraction(projections with more than one connected component)",
         "cls": "CLS = mean[(N_leaves - open leaves) / N_leaves] over projections",
-        "clsin": "CLSin = mean(closed leaves inside the treatment area)",
+        "clsin": "CLSin = mean_nonempty_rows(closed leaves inside treatment span / total number of leaf columns)",
         "clsinarea": "CLSinarea = mean(closed leaves inside the treatment area / treatment area)",
         "clsindisc": "CLSindisc = CLSin restricted to discontinuous projections",
         "clsinareadisc": "CLSinareadisc = area-normalized CLSin restricted to discontinuous projections",
@@ -776,12 +781,12 @@ def _tomo_formula(metric_key: str) -> str:
         "mdsi": "mdSI = median leaf-open intensity over leaves",
         "sdsi": "sdSI = std leaf-open intensity over leaves",
     }
-    if metric_key.startswith("clns_"):
-        threshold = metric_key.replace("clns_", "").replace("ms", "")
-        return f"CLNS{threshold} = count(LOT < {threshold} ms) / count(non-zero LOT)"
     if metric_key.startswith("clns_pt_"):
         threshold = metric_key.replace("clns_pt_", "").replace("ms", "")
         return f"CLNSpt{threshold} = count(LOT > projection time - {threshold} ms) / count(non-zero LOT)"
+    if metric_key.startswith("clns_"):
+        threshold = metric_key.replace("clns_", "").replace("ms", "")
+        return f"CLNS{threshold} = count(0 < LOT < {threshold} ms) / count(non-zero LOT)"
     if metric_key.startswith("cfns_"):
         threshold = metric_key.replace("cfns_", "").replace("_", ".")
         return f"CFNS{threshold} = count(FLOT < {threshold}) / count(non-zero FLOT)"
@@ -789,7 +794,17 @@ def _tomo_formula(metric_key: str) -> str:
 
 
 def _tomo_unit(metric_key: str) -> str:
-    if metric_key in {"nproj_rot", "nproj", "nrot", "ncc", "l0ns", "l1ns", "l2ns", "noc"}:
+    if metric_key == "couch_speed_mm_s":
+        return "mm/s"
+    if metric_key in {"lotv", "elotv_1", "elotv_5", "klot", "slot"}:
+        return "dimensionless"
+    if metric_key in {"ta", "lengthcc"}:
+        return "leaf slots"
+    if metric_key in {"centroid", "msa"}:
+        return "leaf-index displacement"
+    if metric_key in {"l0ns", "l1ns", "l2ns"}:
+        return "proportion"
+    if metric_key in {"nproj_rot", "nproj", "nrot", "ncc", "noc"}:
         return "count"
     if metric_key.endswith("_s") or metric_key in {"projection_time_s", "gantry_period_s", "treatment_time_s", "ttdf_s_cgy"}:
         return "s" if metric_key != "ttdf_s_cgy" else "s/cGy"
@@ -811,9 +826,9 @@ def _tomo_inputs(metric_key: str) -> str:
 def _cyberknife_formula(metric_key: str) -> str:
     formulas = {
         "mcs": "MCS = sum_segments[(MU_segment / MU_plan) * AAV_segment * LSV_segment]",
-        "em": "EM = sum_segments[(MU_segment / MU_plan) * aperture edge metric]",
+        "em": "EM = sum_segments[(MU_segment/MU_plan)*horizontal leaf-side boundary/A_segment], C1=0,C2=1; zero A gives 0",
         "pi": "PI = sum_segments[(MU_segment / MU_plan) * aperture irregularity]",
-        "pm": "PM = sum_intervals[(MU_interval / MU_plan) * (1 - weighted beam area / (MU_interval * union area_interval))]",
+        "pm": "PM = sum_beams[(MU_beam/MU_plan)*(1-sum_segments(MU_segment*A_segment)/(MU_beam*E_XML_interval))]; E is the raw-bank max-slot envelope across the XML interval, not geometric union",
         "lg": "LG = sum_segments[(MU_segment / MU_plan) * mean opposing leaf gap_segment]",
         "sas10": "SAS10 = count(open leaf gaps < 10 mm) / count(all open leaf gaps)",
     }
@@ -821,7 +836,7 @@ def _cyberknife_formula(metric_key: str) -> str:
 
 
 def _cyberknife_unit(metric_key: str) -> str:
-    return "mm" if metric_key == "lg" else "dimensionless"
+    return "mm" if metric_key == "lg" else "mm^-1" if metric_key == "em" else "dimensionless"
 
 
 def _aurora_group(metric_key: str) -> str:
@@ -853,8 +868,8 @@ def _aurora_formula(metric_key: str) -> str:
         "projection_pitch_cv": "std(projection pitch_i) / mean(projection pitch_i)",
         "projection_mu_density_mean_proxy": "mean_i(abs(delta w_i) / abs(delta z_i))",
         "projection_mu_density_cv_proxy": "std(abs(delta w_i) / abs(delta z_i)) / mean(abs(delta w_i) / abs(delta z_i))",
-        "projection_aperture_change_mean": "mean_i(abs(delta A_i) / abs(delta z_i))",
-        "projection_aperture_change_cv": "std(abs(delta A_i) / abs(delta z_i)) / mean(abs(delta A_i) / abs(delta z_i))",
+        "projection_aperture_change_mean": "mean_i(abs(delta W_i) / abs(delta z_i)); W=sum_zip max(MLCX2-MLCX1,0) is an opening-width proxy, not area",
+        "projection_aperture_change_cv": "population_std(abs(delta W_i)/abs(delta z_i))/abs(mean(abs(delta W_i)/abs(delta z_i))); W is opening-width proxy",
         "projection_leaf_travel_mean": "mean_i(delta L_i / abs(delta z_i)), with delta L_i summed across both MLC layers",
         "projection_leaf_travel_cv": "std(delta L_i / abs(delta z_i)) / mean(delta L_i / abs(delta z_i))",
         "projection_leaf_travel_mean_mlcx1": "mean_i(delta L_i_MLCX1 / abs(delta z_i))",
@@ -871,7 +886,7 @@ def _aurora_formula(metric_key: str) -> str:
         "beam_pair_balance_index": "1 - abs(sum_forward(coupled_modulation_index) - sum_backward(coupled_modulation_index)) / (sum_forward + sum_backward)",
         "small_opening_fraction": "weighted count(gap < 10 mm and gap > 0) / weighted count(gap > 0)",
         "near_closed_fraction": "weighted count(gap < 2 mm and gap > 0) / weighted count(gap > 0)",
-        "effective_small_gap_burden": "weighted mean of max(0, 1 - gap / 10 mm) over open effective gaps",
+        "effective_small_gap_burden": "weighted mean of max(0,1-gap/10 mm) over positive zipped-channel gap proxies; abs(delta CMW) weights, zero increment falls back to 1",
         "projection_pitch_p95": "nearest-rank 95th percentile of projection_pitch_i",
         "projection_pitch_max": "max(projection_pitch_i)",
         "projection_pitch_top3_mean": "mean of the three largest projection_pitch_i values",
@@ -912,9 +927,9 @@ def _aurora_formula(metric_key: str) -> str:
         "mm_per_rotation": "axial travel / (total rotation / 360)",
         "pitch_consistency": "std(abs(delta z_i) / abs(delta theta_i)) / mean(abs(delta z_i) / abs(delta theta_i))",
         "mu_per_mm": "MU_total / axial travel",
-        "aperture_change_per_mm": "sum_i abs(delta A_i) / sum_i abs(delta z_i)",
+        "aperture_change_per_mm": "sum_i abs(delta W_i)/sum_i abs(delta z_i), retaining dz>0; W is summed positive opening width, not area",
         "leaf_travel_per_mm": "sum_i delta L_i / sum_i abs(delta z_i)",
-        "coupled_modulation_index": "mean of normalized aperture-change/mm, leaf-travel/mm, MU-density variability, and pitch variability",
+        "coupled_modulation_index": "mean(x/(1+x)) over available aperture-change/mm, leaf-travel/mm, MU-density CV and pitch CV; equal component weights",
     }
     return formulas.get(metric_key, f"{metric_key} follows the current Aurora implementation.")
 

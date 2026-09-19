@@ -1,8 +1,10 @@
 from __future__ import annotations
 
 import argparse
+import hashlib
 import json
 import sys
+from datetime import datetime, timezone
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -10,6 +12,7 @@ if str(ROOT) not in sys.path:
     sys.path.insert(0, str(ROOT))
 
 from validation.utils.loaders import load_reference_manifest
+from validation.utils.loaders import load_expected_metrics_provenance
 from validation.utils.loaders import load_validation_profiles
 from validation.utils.loaders import verify_reference_source_checksum
 from validation_models import ReferenceCaseRecord
@@ -19,18 +22,74 @@ from validation_runtime import analyze_validation_case
 _CASE_SETS = {"all", "canonical", "edge"}
 
 
-def freeze_case(case: ReferenceCaseRecord, *, source_root: Path | str | None = None) -> Path:
+def freeze_case(
+    case: ReferenceCaseRecord,
+    *,
+    source_root: Path | str | None = None,
+    allow_formula_version_change: bool = False,
+    allow_metric_schema_change: bool = False,
+) -> Path:
     resolved_source_path = verify_reference_source_checksum(case, source_root=source_root)
+    previous_provenance = load_expected_metrics_provenance(case)
+    if previous_provenance != case.expected_metrics_provenance:
+        raise ValueError(f"Baseline provenance changed since loading '{case.case_id}'; reload the manifest.")
     record = analyze_validation_case(str(resolved_source_path), case.domain)
+    if record.domain != case.domain or record.mode != case.expected_mode:
+        raise ValueError(f"Analysis domain/mode mismatch for reference case '{case.case_id}'.")
+    if record.supported != case.expected_supported:
+        raise ValueError(f"Analysis supported state mismatch for reference case '{case.case_id}'.")
+    formula_version = record.metadata.get("metric_formula_version")
+    if formula_version is not None and (
+        not isinstance(formula_version, str) or not formula_version.strip()
+    ):
+        raise ValueError(f"Invalid runtime formula version for '{case.case_id}'.")
+    if case.expected_formula_version is not None and formula_version != case.expected_formula_version:
+        raise ValueError(
+            f"Runtime formula version {formula_version!r} does not match required formula version "
+            f"{case.expected_formula_version!r} for '{case.case_id}'."
+        )
+    previous_version = previous_provenance.formula_version if previous_provenance else None
+    if previous_version is not None and formula_version is None:
+        raise ValueError(f"Cannot remove formula-version provenance for '{case.case_id}'.")
+    if formula_version != previous_version and not allow_formula_version_change:
+        raise ValueError(
+            f"Refusing formula-version change for '{case.case_id}' from {previous_version!r} to "
+            f"{formula_version!r}; audit the migration and use --allow-formula-version-change."
+        )
     serializable_metrics = {
         key: _json_ready(value)
         for key, value in sorted(record.metrics.items())
     }
+    if case.expected_metrics_path.exists() and set(serializable_metrics) != set(case.expected_metrics):
+        if not allow_metric_schema_change:
+            added = sorted(set(serializable_metrics) - set(case.expected_metrics))
+            removed = sorted(set(case.expected_metrics) - set(serializable_metrics))
+            raise ValueError(
+                f"Refusing metric schema change for '{case.case_id}': added {added}, removed {removed}; "
+                "audit the migration and use --allow-metric-schema-change."
+            )
+    metrics_bytes = (json.dumps(serializable_metrics, indent=2, sort_keys=True, allow_nan=False) + "\n").encode("utf-8")
+    provenance_bytes = None
+    if formula_version is not None:
+        provenance = {
+            "schema_version": 1,
+            "formula_version": formula_version,
+            "case_id": case.case_id,
+            "domain": case.domain,
+            "mode": case.expected_mode,
+            "source_checksum": case.checksum.lower(),
+            "expected_metrics_checksum": hashlib.sha256(metrics_bytes).hexdigest(),
+            "generated_at": datetime.now(timezone.utc).replace(microsecond=0).isoformat().replace("+00:00", "Z"),
+        }
+        provenance_bytes = (json.dumps(provenance, indent=2, sort_keys=True) + "\n").encode("utf-8")
+    # Complete all validation and serialization before replacing either artifact.
+    # Write provenance first: an interrupted first-version migration must never
+    # leave changed scalars that still look like an unversioned legacy baseline.
+    # A mismatched pair is rejected by the loader rather than accepted as green.
     case.expected_metrics_path.parent.mkdir(parents=True, exist_ok=True)
-    case.expected_metrics_path.write_text(
-        json.dumps(serializable_metrics, indent=2, sort_keys=True) + "\n",
-        encoding="utf-8",
-    )
+    if provenance_bytes is not None:
+        case.expected_metrics_path.with_name("expected_metrics_provenance.json").write_bytes(provenance_bytes)
+    case.expected_metrics_path.write_bytes(metrics_bytes)
     return case.expected_metrics_path
 
 
@@ -115,6 +174,16 @@ def _parse_args() -> argparse.Namespace:
         help="Confirm that checked-in expected metrics should be overwritten.",
     )
     parser.add_argument(
+        "--allow-formula-version-change",
+        action="store_true",
+        help="Allow an independently audited formula-version migration, including first versioning.",
+    )
+    parser.add_argument(
+        "--allow-metric-schema-change",
+        action="store_true",
+        help="Allow an independently audited change to the expected metric key set.",
+    )
+    parser.add_argument(
         "--source-root",
         help="Optional repository root that contains the manifest source_path inputs.",
     )
@@ -138,7 +207,12 @@ def main() -> int:
         raise SystemExit(str(exc)) from exc
 
     for case in selected_cases:
-        output_path = freeze_case(case, source_root=args.source_root)
+        output_path = freeze_case(
+            case,
+            source_root=args.source_root,
+            allow_formula_version_change=args.allow_formula_version_change,
+            allow_metric_schema_change=args.allow_metric_schema_change,
+        )
         print(f"froze {case.case_id} -> {output_path}")
     return 0
 

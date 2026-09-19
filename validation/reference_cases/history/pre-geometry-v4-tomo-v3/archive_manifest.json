@@ -1,0 +1,57 @@
+{
+  "previous_formula_versions": [
+    "geometry-v3",
+    "tomo-v2"
+  ],
+  "reason": "Preserve prior audited baseline before couch-motion and full-precision migration.",
+  "files": [
+    {
+      "path": "cyberknife_multiplan_canonical/expected_metrics.json",
+      "sha256": "e85bf882d6a73117fc8d9f18e25c4ca592cf7d5b55d1350afbd95542d92fb3d8"
+    },
+    {
+      "path": "cyberknife_multiplan_canonical/expected_metrics_provenance.json",
+      "sha256": "516dc42f17ebc07e95c6b736e2fd2dab5812b0cdbd4772feef6757d4a8696368"
+    },
+    {
+      "path": "cyberknife_precision_missing_xml_edge/expected_metrics.json",
+      "sha256": "ca3d163bab055381827226140568f3bef7eaac187cebd76878e0b63e9e442356"
+    },
+    {
+      "path": "cyberknife_precision_missing_xml_edge/expected_metrics_provenance.json",
+      "sha256": "4abb5973032bb2e1d204c1d5650feb5e8f8e379538b9aa9fdff7dc464e206c88"
+    },
+    {
+      "path": "tomo_canonical/expected_metrics.json",
+      "sha256": "dab7025de45a178ef7fe68595125adf3c5d986cf49f0594d0ed022bcc87acf1b"
+    },
+    {
+      "path": "tomo_canonical/expected_metrics_provenance.json",
+      "sha256": "fc0ed85f86bea0f5c641f5737ef65735539b7d7bb46b4d4b5595b4233e7bd599"
+    },
+    {
+      "path": "tomo_default_inference_edge/expected_metrics.json",
+      "sha256": "61e66168e6ff9df46d8b00ada49d88451af9cc6924cf766c58466bac7786cfa8"
+    },
+    {
+      "path": "tomo_default_inference_edge/expected_metrics_provenance.json",
+      "sha256": "3d6f7bb216ad5c81f1c028aa92ed8fa8df113245cf8cb3a151dc8b389f684973"
+    },
+    {
+      "path": "vmat_halcyon_edge/expected_metrics.json",
+      "sha256": "94a95729a2825c81c5ee703ad28b344c5d53257f76f845993248d4cd1f7a44e7"
+    },
+    {
+      "path": "vmat_halcyon_edge/expected_metrics_provenance.json",
+      "sha256": "d62c141ebbd7b2b87dfa2e5ba8e38ad7a4f8e6fc2ed03dbaf97aeeb4fe1ac31b"
+    },
+    {
+      "path": "vmat_truebeam_canonical/expected_metrics.json",
+      "sha256": "26db8d24beb0a0e16cdfc15dc02b83b12deb87b484cff831e9b4b483e0dbf875"
+    },
+    {
+      "path": "vmat_truebeam_canonical/expected_metrics_provenance.json",
+      "sha256": "67eac16869d02d5b3522f09477bdb529f33e0ffe25a38f2e03d097b9f0aedf3e"
+    }
+  ]
+}

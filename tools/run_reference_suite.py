@@ -38,7 +38,25 @@ def run_reference_suite(
     for case in cases:
         resolved_source_path = verify_reference_source_checksum(case, source_root=source_root)
         observed = analyze_validation_case(str(resolved_source_path), case.domain)
+        formula_version = _evaluate_formula_version(case, observed)
+        analysis_errors = []
+        if observed.supported != case.expected_supported:
+            analysis_errors.append(
+                f"Analysis supported state mismatch: expected {case.expected_supported}, observed {observed.supported}."
+            )
+        if observed.domain != case.domain or observed.mode != case.expected_mode:
+            analysis_errors.append("Analysis domain/mode mismatch.")
         case_metric_rows = _evaluate_case_metrics(case, observed.metrics, spec_index, profile_record)
+        for row in case_metric_rows:
+            row.update(formula_version)
+            row["source_checksum"] = case.checksum
+            row["numeric_precision"] = observed.metadata.get("numeric_precision", "unrecorded")
+            if formula_version["formula_version_status"] == "fail" and row["gate_included"]:
+                row["status"] = "fail"
+                row["note"] = formula_version["formula_version_note"]
+            if analysis_errors and row["gate_included"]:
+                row["status"] = "fail"
+                row["note"] = " ".join(filter(None, [row["note"], *analysis_errors]))
         metric_rows.extend(case_metric_rows)
         exact_failures = sum(
             1
@@ -49,9 +67,15 @@ def run_reference_suite(
             {
                 "case_id": case.case_id,
                 "domain": case.domain,
+                "source_checksum": case.checksum,
+                "numeric_precision": observed.metadata.get("numeric_precision", "unrecorded"),
                 "case_class": case.case_class,
                 "device_or_tps": case.device_or_tps,
+                **formula_version,
                 "supported": observed.supported,
+                "expected_supported": case.expected_supported,
+                "analysis_status": "fail" if analysis_errors else "pass",
+                "analysis_note": " ".join(analysis_errors),
                 "reason": observed.reason,
                 "warnings": " | ".join(observed.warnings),
                 "total_metrics": len(case_metric_rows),
@@ -59,7 +83,9 @@ def run_reference_suite(
                 "failures": sum(1 for row in case_metric_rows if row["status"] == "fail"),
                 "skipped": sum(1 for row in case_metric_rows if row["status"] == "skipped"),
                 "reference_exact_green": (
-                    exact_failures == 0 if profile_record.require_reference_exact_green else None
+                    exact_failures == 0 and formula_version["formula_version_status"] != "fail"
+                    and not analysis_errors
+                    if profile_record.require_reference_exact_green else None
                 ),
             }
         )
@@ -70,6 +96,8 @@ def run_reference_suite(
         if row["comparison_class"] == "exact-equivalent"
     ]
     exact_failures = sum(1 for row in exact_metric_rows if row["status"] == "fail")
+    provenance_failures = sum(1 for row in case_rows if row["formula_version_status"] == "fail")
+    analysis_failures = sum(1 for row in case_rows if row["analysis_status"] == "fail")
     report = {
         "profile": profile_record.profile_key,
         "generated_at": _utc_now(),
@@ -78,8 +106,11 @@ def run_reference_suite(
             "metrics_total": len(metric_rows),
             "exact_metrics_total": len(exact_metric_rows),
             "exact_failures": exact_failures,
+            "provenance_failures": provenance_failures,
+            "analysis_failures": analysis_failures,
             "reference_exact_green": (
-                exact_failures == 0 if profile_record.require_reference_exact_green else None
+                exact_failures == 0 and provenance_failures == 0 and analysis_failures == 0
+                if profile_record.require_reference_exact_green else None
             ),
         },
         "cases": case_rows,
@@ -98,6 +129,40 @@ def run_reference_suite(
             ),
         }
     return report
+
+
+def _evaluate_formula_version(case, observed) -> dict[str, object]:
+    baseline_version = (
+        case.expected_metrics_provenance.formula_version
+        if case.expected_metrics_provenance is not None else None
+    )
+    required_version = case.expected_formula_version
+    observed_version = observed.metadata.get("metric_formula_version")
+    status = "legacy-unversioned"
+    note = "Legacy baseline has no formula-version provenance."
+    if required_version is not None or baseline_version is not None:
+        errors = []
+        if baseline_version is None:
+            errors.append("Missing expected-metrics formula-version provenance.")
+        elif required_version is not None and baseline_version != required_version:
+            errors.append(
+                f"Baseline formula version {baseline_version!r} does not match "
+                f"required formula version {required_version!r}."
+            )
+        if observed_version != (required_version or baseline_version):
+            errors.append(
+                f"Observed formula version {observed_version!r} does not match "
+                f"expected formula version {(required_version or baseline_version)!r}."
+            )
+        status = "fail" if errors else "pass"
+        note = " ".join(errors)
+    return {
+        "required_formula_version": required_version,
+        "expected_formula_version": baseline_version,
+        "observed_formula_version": observed_version,
+        "formula_version_status": status,
+        "formula_version_note": note,
+    }
 
 
 def _evaluate_case_metrics(case, observed_metrics, spec_index, profile_record):
@@ -171,7 +236,7 @@ def _evaluate_case_metrics(case, observed_metrics, spec_index, profile_record):
                 "case_id": case.case_id,
                 "domain": case.domain,
                 "metric_key": metric_key,
-                "status": "pass" if comparison["pass"] else "fail",
+                "status": "pass" if comparison["pass"] and metric_key in observed_metrics else "fail",
                 "expected": comparison["expected"],
                 "observed": comparison["observed"],
                 "abs_tol": tolerance["abs_tol"],
@@ -182,7 +247,7 @@ def _evaluate_case_metrics(case, observed_metrics, spec_index, profile_record):
                 "validation_level": metric_spec.validation_level,
                 "group_key": metric_spec.group_key,
                 "gate_included": True,
-                "note": "",
+                "note": "" if metric_key in observed_metrics else f"Expected metric '{metric_key}' is missing from observed analysis.",
             }
         )
     return rows
@@ -200,6 +265,13 @@ def _metric_fieldnames() -> list[str]:
     return [
         "case_id",
         "domain",
+        "source_checksum",
+        "numeric_precision",
+        "required_formula_version",
+        "expected_formula_version",
+        "observed_formula_version",
+        "formula_version_status",
+        "formula_version_note",
         "metric_key",
         "status",
         "expected",
@@ -247,12 +319,12 @@ def _parse_args() -> argparse.Namespace:
 
 def main() -> int:
     args = _parse_args()
-    run_reference_suite(
+    report = run_reference_suite(
         profile=args.profile,
         output_dir=args.output_dir,
         source_root=args.source_root,
     )
-    return 0
+    return 1 if report["summary"]["reference_exact_green"] is False else 0
 
 
 if __name__ == "__main__":

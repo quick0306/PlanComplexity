@@ -1,5 +1,9 @@
 from __future__ import annotations
 
+from ComplexityMetric.aperture_shape_metrics import (
+    maximum_aperture_area, leaf_sequence_variability,
+)
+
 import math
 from dataclasses import dataclass
 from typing import Any, Dict, Iterable, Sequence
@@ -56,7 +60,7 @@ def calculate_halcyon_dual_layer_paper_metrics(plan_dict: Dict[str, Any]) -> Dic
 
 
 def calculate_halcyon_dual_layer_metrics_with_warnings(
-    plan_dict: Dict[str, Any]
+    plan_dict: Dict[str, Any], *, full_precision: bool = False
 ) -> tuple[Dict[str, float], list[str]]:
     if not _is_dual_layer_plan(plan_dict):
         return {}, []
@@ -76,7 +80,7 @@ def calculate_halcyon_dual_layer_metrics_with_warnings(
             ]
         return {}, []
 
-    metrics = _aggregate_beam_results(beam_results)
+    metrics = _aggregate_beam_results(beam_results, full_precision=full_precision)
     warnings = list(dict.fromkeys(warning for result in beam_results for warning in result.warnings))
     if alignment_failed:
         for key in HYBRID_REPRESENTATION_KEYS:
@@ -88,7 +92,7 @@ def calculate_halcyon_dual_layer_metrics_with_warnings(
     return metrics, warnings
 
 
-def _aggregate_beam_results(beam_results: Sequence[BeamPaperMetrics]) -> Dict[str, float]:
+def _aggregate_beam_results(beam_results: Sequence[BeamPaperMetrics], *, full_precision: bool = False) -> Dict[str, float]:
     """Aggregate each metric over beams that contain a valid observation for it."""
     metric_keys = list(beam_results[0].values.keys())
     metrics: Dict[str, float] = {}
@@ -99,11 +103,12 @@ def _aggregate_beam_results(beam_results: Sequence[BeamPaperMetrics]) -> Dict[st
             if (value := result.values.get(key)) is not None
         ]
         observation_mu = sum(mu for _, mu in observations)
-        metrics[key] = _round_metric(
+        value = (
             sum(value * mu for value, mu in observations) / observation_mu
             if observation_mu > 0.0
             else 0.0
         )
+        metrics[key] = float(value) if full_precision else _round_metric(value)
     return metrics
 
 
@@ -378,9 +383,13 @@ def _build_layer_control_points(beam: Dict[str, Any]) -> list[LayerControlPoint]
 
     snapshots: list[LayerControlPoint] = []
     creator = AperturesFromBeamCreator()
+    distal_boundaries = creator.get_leaf_boundaries(beam, DISTAL_DEVICE)
+    proximal_boundaries = creator.get_leaf_boundaries(beam, PROXIMAL_DEVICE)
     last_distal_positions = None
     last_proximal_positions = None
+    jaw = None
     for control_point in beam.get("ControlPointSequence", []):
+        jaw = creator.get_halcyon_jaw_positions(beam, control_point, previous_jaw=jaw)
         distal_positions = creator.get_halcyon_leaf_positions(control_point, DISTAL_DEVICE)
         proximal_positions = creator.get_halcyon_leaf_positions(control_point, PROXIMAL_DEVICE)
         if distal_positions is None and last_distal_positions is not None:
@@ -393,9 +402,10 @@ def _build_layer_control_points(beam: Dict[str, Any]) -> list[LayerControlPoint]
         last_proximal_positions = np.asarray(proximal_positions, dtype=float).copy()
 
         gantry_angle = float(control_point.GantryAngle) if "GantryAngle" in control_point else float(beam.get("GantryAngle", 0.0))
-        jaw = creator.get_halcyon_jaw_positions(beam, control_point)
-        distal_aperture = PyAperture(distal_positions, distal_widths, jaw, gantry_angle)
-        proximal_aperture = PyAperture(proximal_positions, proximal_widths, jaw, gantry_angle)
+        distal_aperture = PyAperture(distal_positions, distal_widths, jaw, gantry_angle,
+                                   leaf_position_boundaries=distal_boundaries)
+        proximal_aperture = PyAperture(proximal_positions, proximal_widths, jaw, gantry_angle,
+                                     leaf_position_boundaries=proximal_boundaries)
 
         effective_positions, aligned_distal, aligned_proximal = _effective_positions(distal_positions, proximal_positions)
         effective_widths = _effective_widths(distal_widths, len(effective_positions[0]))
@@ -582,41 +592,16 @@ def _mcs_interval_terms(apertures: Sequence[PyAperture]) -> np.ndarray:
 
 
 def _arc_aav_normalization(apertures: Sequence[PyAperture]) -> float:
-    left_min: dict[int, float] = {}
-    right_max: dict[int, float] = {}
-    widths: dict[int, float] = {}
-    for aperture in apertures:
-        for index, leaf_pair in enumerate(aperture.leaf_pairs):
-            if leaf_pair.is_outside_jaw():
-                continue
-            left_min[index] = min(left_min.get(index, leaf_pair.left), leaf_pair.left)
-            right_max[index] = max(right_max.get(index, leaf_pair.right), leaf_pair.right)
-            widths[index] = leaf_pair.open_leaf_width()
-    return sum(max(right_max[index] - left_min[index], 0.0) * widths.get(index, 0.0) for index in left_min)
+    return maximum_aperture_area(apertures)
 
 
 def _leaf_sequence_variability(aperture: PyAperture) -> float:
-    active_leaf_pairs = [leaf_pair for leaf_pair in aperture.leaf_pairs if not leaf_pair.is_outside_jaw() and leaf_pair.field_size() > 0.0]
-    if len(active_leaf_pairs) < 2:
-        return 1.0 if active_leaf_pairs else 0.0
-    left_positions = [leaf_pair.left for leaf_pair in active_leaf_pairs]
-    right_positions = [leaf_pair.right for leaf_pair in active_leaf_pairs]
-    return _bank_lsv(left_positions) * _bank_lsv(right_positions)
-
-
-def _bank_lsv(positions: Sequence[float]) -> float:
-    if len(positions) < 2:
-        return 1.0
-    position_range = max(positions) - min(positions)
-    if position_range == 0.0:
-        return 1.0
-    variation_sum = sum(position_range - abs(current - next_position) for current, next_position in zip(positions[:-1], positions[1:]))
-    return variation_sum / ((len(positions) - 1) * position_range)
+    return leaf_sequence_variability(aperture)
 
 
 def _aperture_irregularity(aperture: PyAperture) -> float:
     area = aperture.area()
-    perimeter = aperture.side_perimeter_horizontal() + aperture.side_perimeter_vertical()
+    perimeter = aperture.perimeter()
     return divide_or_default(perimeter ** 2, 4.0 * math.pi * area)
 
 

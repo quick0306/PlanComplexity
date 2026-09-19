@@ -1,0 +1,65 @@
+{
+  "checks": [
+    {
+      "blocking": true,
+      "check_id": "metric_specs_load",
+      "message": "Loaded 424 metric specs.",
+      "status": "pass"
+    },
+    {
+      "blocking": true,
+      "check_id": "reference_manifest_load",
+      "message": "Loaded 8 reference cases.",
+      "status": "pass"
+    },
+    {
+      "blocking": true,
+      "check_id": "ci_validation_workflow",
+      "message": "Validation workflow exists.",
+      "status": "pass"
+    },
+    {
+      "blocking": true,
+      "check_id": "no_tracked_csv_reports",
+      "message": "No tracked CSV files.",
+      "status": "pass"
+    },
+    {
+      "blocking": true,
+      "check_id": "csv_history_phi_review",
+      "message": "CSV history exists; rewrite history or publish from a clean repository before open-source release.",
+      "status": "fail"
+    },
+    {
+      "blocking": false,
+      "check_id": "clinical_sop_documented",
+      "message": "Clinical implementation SOP exists.",
+      "status": "pass"
+    },
+    {
+      "blocking": false,
+      "check_id": "deployment_rollback_documented",
+      "message": "Deployment and rollback procedure exists.",
+      "status": "pass"
+    },
+    {
+      "blocking": false,
+      "check_id": "audit_log_schema_documented",
+      "message": "Audit log schema exists.",
+      "status": "pass"
+    },
+    {
+      "blocking": false,
+      "check_id": "research_only_clinical_claims",
+      "message": "Clinical readiness values: research.",
+      "status": "pass"
+    }
+  ],
+  "generated_at": "2026-09-19T14:10:29Z",
+  "summary": {
+    "blocking_failures": 1,
+    "checks_total": 9,
+    "clinical_ready": false,
+    "open_source_ready": false
+  }
+}

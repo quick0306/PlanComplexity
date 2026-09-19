@@ -32,12 +32,12 @@ class ModulationIndexScore(ComplexityMetric):
                 mlcx1_mi_weight.append(self.weighted_sum(weights, tmp))
             for tmp in np.array(mlcx2_mi).T:
                 mlcx2_mi_weight.append(self.weighted_sum(weights, tmp))
-            return np.round(mlcx1_mi_weight, 2), np.round(mlcx2_mi_weight, 2)
+            return self.format_result(mlcx1_mi_weight), self.format_result(mlcx2_mi_weight)
 
         mi_weight = []
         for tmp in np.array(mi).T:
             mi_weight.append(self.weighted_sum(weights, tmp))
-        return np.round(mi_weight, 2)
+        return self.format_result(mi_weight)
 
     def calculate_for_beam(self, beam, k=0.02):
         cumulative_metersets = MetersetsFromMetersetWeightsCreator().get_cumulative_metersets(beam)

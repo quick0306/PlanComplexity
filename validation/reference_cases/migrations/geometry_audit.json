@@ -1,0 +1,184 @@
+{
+  "audit": "raw-dicom-sweep-geometry-v3",
+  "cases": [
+    {
+      "beam_count": 2,
+      "case_id": "vmat_truebeam_canonical",
+      "control_point_count": 356,
+      "geometry_checks": {
+        "native": {
+          "area_max_abs_error": 9.094947017729282e-13,
+          "count": 356,
+          "perimeter_max_abs_error": 4.547473508864641e-13
+        }
+      },
+      "metric_checks": {
+        "alg": {
+          "abs_error_after_declared_rounding": 0.0,
+          "independent_unrounded": 31.657120964808247,
+          "pre_migration_expected": 31.73,
+          "production": 31.66
+        },
+        "alg_sd": {
+          "abs_error_after_declared_rounding": 0.0,
+          "independent_unrounded": 16.58734254185472,
+          "pre_migration_expected": 16.56,
+          "production": 16.59
+        },
+        "mad": {
+          "abs_error_after_declared_rounding": 0.0,
+          "independent_unrounded": 27.834298557166075,
+          "pre_migration_expected": 30.74,
+          "production": 27.83
+        },
+        "sas_10mm": {
+          "abs_error_after_declared_rounding": 0.0,
+          "independent_unrounded": 0.1013184674552892,
+          "pre_migration_expected": 0.1,
+          "production": 0.1
+        },
+        "sas_20mm": {
+          "abs_error_after_declared_rounding": 0.0,
+          "independent_unrounded": 0.30926517857966407,
+          "pre_migration_expected": 0.31,
+          "production": 0.31
+        },
+        "sas_5mm": {
+          "abs_error_after_declared_rounding": 0.0,
+          "independent_unrounded": 0.03584926893526612,
+          "pre_migration_expected": 0.04,
+          "production": 0.04
+        }
+      },
+      "positive_gap_observations": 7710
+    },
+    {
+      "beam_count": 4,
+      "case_id": "vmat_halcyon_edge",
+      "control_point_count": 332,
+      "geometry_checks": {
+        "effective": {
+          "area_max_abs_error": 9.094947017729282e-13,
+          "count": 332,
+          "perimeter_max_abs_error": 3.410605131648481e-13
+        },
+        "native": {
+          "area_max_abs_error": 9.094947017729282e-13,
+          "count": 664,
+          "perimeter_max_abs_error": 4.547473508864641e-13
+        }
+      },
+      "metric_checks": {
+        "alg_mlcx1": {
+          "abs_error_after_declared_rounding": 0.0,
+          "independent_unrounded": 20.615194409727362,
+          "pre_migration_expected": 19.62,
+          "production": 20.62
+        },
+        "alg_mlcx2": {
+          "abs_error_after_declared_rounding": 0.0,
+          "independent_unrounded": 26.913187214053362,
+          "pre_migration_expected": 25.95,
+          "production": 26.91
+        },
+        "alg_sd_mlcx1": {
+          "abs_error_after_declared_rounding": 0.0,
+          "independent_unrounded": 15.516293929303364,
+          "pre_migration_expected": 15.12,
+          "production": 15.52
+        },
+        "alg_sd_mlcx2": {
+          "abs_error_after_declared_rounding": 0.0,
+          "independent_unrounded": 20.16254917130183,
+          "pre_migration_expected": 19.73,
+          "production": 20.16
+        },
+        "mad_mlcx1": {
+          "abs_error_after_declared_rounding": 0.0,
+          "independent_unrounded": 23.38576664724548,
+          "pre_migration_expected": 27.15,
+          "production": 23.39
+        },
+        "mad_mlcx2": {
+          "abs_error_after_declared_rounding": 0.0,
+          "independent_unrounded": 22.465256347451902,
+          "pre_migration_expected": 27.91,
+          "production": 22.47
+        },
+        "pi5": {
+          "abs_error_after_declared_rounding": 0.0,
+          "independent_unrounded": 10.45765051979346,
+          "pre_migration_expected": 11.374771,
+          "production": 10.457651
+        },
+        "sas_10mm_mlcx1": {
+          "abs_error_after_declared_rounding": 0.0,
+          "independent_unrounded": 0.2909462779499817,
+          "pre_migration_expected": 0.31,
+          "production": 0.29
+        },
+        "sas_10mm_mlcx2": {
+          "abs_error_after_declared_rounding": 0.0,
+          "independent_unrounded": 0.2012385193854982,
+          "pre_migration_expected": 0.22,
+          "production": 0.2
+        },
+        "sas_20mm_mlcx1": {
+          "abs_error_after_declared_rounding": 0.0,
+          "independent_unrounded": 0.5435081312175669,
+          "pre_migration_expected": 0.56,
+          "production": 0.54
+        },
+        "sas_20mm_mlcx2": {
+          "abs_error_after_declared_rounding": 0.0,
+          "independent_unrounded": 0.41021981018992415,
+          "pre_migration_expected": 0.43,
+          "production": 0.41
+        },
+        "sas_5mm_mlcx1": {
+          "abs_error_after_declared_rounding": 0.0,
+          "independent_unrounded": 0.16615348705263283,
+          "pre_migration_expected": 0.18,
+          "production": 0.17
+        },
+        "sas_5mm_mlcx2": {
+          "abs_error_after_declared_rounding": 0.0,
+          "independent_unrounded": 0.1249660625253008,
+          "pre_migration_expected": 0.14,
+          "production": 0.12
+        }
+      },
+      "perimeter_counterfactual": {
+        "closed_slots_inside_jaws": 8708,
+        "negative_cp_pi_change_contribution": -2.018626968902574,
+        "new_independent_pi5": 10.45765051979346,
+        "old_formula_replay_pi5": 11.374770548853979,
+        "perimeter_decreased_cp_count": 79,
+        "positive_cp_pi_change_contribution": 1.1015069398420552,
+        "weighted_correct_horizontal_mm": 252.51867370094354,
+        "weighted_correct_two_banks_positive_slots_mm": 302.8376441425863,
+        "weighted_old_closed_slot_vertical_contribution_mm": 128.58117792870672,
+        "weighted_old_horizontal_mm": 252.51867370094345,
+        "weighted_old_one_bank_all_slots_mm": 279.99999999999994
+      },
+      "positive_gap_observations_mlcx1": 5714,
+      "positive_gap_observations_mlcx2": 6090
+    }
+  ],
+  "counterfactual_geometry_revision": "be93062484277b362948d959a2044c72c8543dcc",
+  "counterfactual_limit": "Pinned prior aperture code is replayed only to explain the change; it is not the independent geometry oracle.",
+  "cyberknife_pi_check": {
+    "area_max_abs_error": 4.547473508864641e-13,
+    "case_id": "cyberknife_multiplan_canonical",
+    "independent_pi_unrounded": 1.802385162638103,
+    "perimeter_max_abs_error": 8.526512829121202e-14,
+    "pre_migration_expected_pi": 1.07,
+    "production_pi": 1.8,
+    "scope": "Existing DICOM/XML segment parser reused; X-sweep union boundary and segment-MU aggregation independently recomputed.",
+    "segment_count": 65
+  },
+  "gap_formula": "Positive raw gap with positive Y-jaw overlap. Equal leaf-pair weighting within CP; adjacent half-interval MU weighting over nonempty CPs; beam-MU mixture of first and second moments. MAD uses absolute raw bank midpoint.",
+  "oracle": "Physical rectangles from raw IEC boundaries; X-sweep union area and perimeter; native-layer intersection for effective geometry.",
+  "pydicom_version": "3.0.1",
+  "shared_edge_coordinate_tolerance_mm": 1e-09
+}

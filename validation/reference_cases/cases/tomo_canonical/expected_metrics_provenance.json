@@ -1,0 +1,10 @@
+{
+  "case_id": "tomo_canonical",
+  "domain": "TOMO",
+  "expected_metrics_checksum": "a7d672d5af94509fb3c3b63ce019a3d0c56ac86ec40146439245624e881a095e",
+  "formula_version": "tomo-v3",
+  "generated_at": "2026-09-19T13:57:53Z",
+  "mode": "TOMO",
+  "schema_version": 1,
+  "source_checksum": "c0804684e11fb3064a0980969d8e98a94e9f82266504aee92dd0cd73d9c6426b"
+}

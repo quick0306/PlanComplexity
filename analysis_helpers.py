@@ -46,14 +46,14 @@ def get_plan_metadata(plan_info, plan_dict):
     }
 
 
-def calculate_core_metrics(plan_dict):
-    metrics, _ = calculate_core_metrics_with_warnings(plan_dict)
+def calculate_core_metrics(plan_dict, *, full_precision=False):
+    metrics, _ = calculate_core_metrics_with_warnings(plan_dict, full_precision=full_precision)
     return metrics
 
 
-def calculate_core_metrics_with_warnings(plan_dict):
-    small_aperture_score_obj = SmallApertureScore()
-    modulation_index_score_obj = ModulationIndexScore()
+def calculate_core_metrics_with_warnings(plan_dict, *, full_precision=False):
+    small_aperture_score_obj = SmallApertureScore(full_precision=full_precision)
+    modulation_index_score_obj = ModulationIndexScore(full_precision=full_precision)
     warnings = []
     sas_5mm, sas_5mm_warnings = _calculate_with_warnings(
         small_aperture_score_obj, plan_dict, x=5
@@ -64,42 +64,42 @@ def calculate_core_metrics_with_warnings(plan_dict):
     sas_20mm, sas_20mm_warnings = _calculate_with_warnings(
         small_aperture_score_obj, plan_dict, x=20
     )
-    mad, mad_warnings = _calculate_with_warnings(MeanAsymmetryDistance(), plan_dict)
+    mad, mad_warnings = _calculate_with_warnings(MeanAsymmetryDistance(full_precision=full_precision), plan_dict)
     warnings.extend(sas_5mm_warnings + sas_10mm_warnings + sas_20mm_warnings + mad_warnings)
     metrics = {
-        "em": EdgeMetric().calculate_for_plan(plan_dict),
-        "pi": PlanIrregularity().calculate_for_plan(plan_dict),
-        "pm": PlanModulation().calculate_for_plan(plan_dict),
-        "mcsv": ModulationComplexityScore().calculate_for_plan(plan_dict),
+        "em": EdgeMetric(full_precision=full_precision).calculate_for_plan(plan_dict),
+        "pi": PlanIrregularity(full_precision=full_precision).calculate_for_plan(plan_dict),
+        "pm": PlanModulation(full_precision=full_precision).calculate_for_plan(plan_dict),
+        "mcsv": ModulationComplexityScore(full_precision=full_precision).calculate_for_plan(plan_dict),
         "sas_5mm": sas_5mm,
         "sas_10mm": sas_10mm,
         "sas_20mm": sas_20mm,
-        "pa": MeanFieldArea().calculate_for_plan(plan_dict),
+        "pa": MeanFieldArea(full_precision=full_precision).calculate_for_plan(plan_dict),
         "mad": mad,
-        "bjar": ApertureAreaRatioJawArea().calculate_for_plan(plan_dict),
-        "asr": ApertureSubRegions().calculate_for_plan(plan_dict),
-        "axjd": ApertureXJaw().calculate_for_plan(plan_dict),
-        "ayjd": ApertureYJaw().calculate_for_plan(plan_dict),
-        "cam": ConvertedApertureMetric().calculate_for_plan(plan_dict),
-        "eam": EdgeAreaMetric().calculate_for_plan(plan_dict),
-        "sport": StationParameterOptimizedRadiationTherapy().calculate_for_plan(plan_dict),
-        "mlc_speed_acc": ProportionMLCSpeedAcceleration().calculate_for_plan(plan_dict),
+        "bjar": ApertureAreaRatioJawArea(full_precision=full_precision).calculate_for_plan(plan_dict),
+        "asr": ApertureSubRegions(full_precision=full_precision).calculate_for_plan(plan_dict),
+        "axjd": ApertureXJaw(full_precision=full_precision).calculate_for_plan(plan_dict),
+        "ayjd": ApertureYJaw(full_precision=full_precision).calculate_for_plan(plan_dict),
+        "cam": ConvertedApertureMetric(full_precision=full_precision).calculate_for_plan(plan_dict),
+        "eam": EdgeAreaMetric(full_precision=full_precision).calculate_for_plan(plan_dict),
+        "sport": StationParameterOptimizedRadiationTherapy(full_precision=full_precision).calculate_for_plan(plan_dict),
+        "mlc_speed_acc": ProportionMLCSpeedAcceleration(full_precision=full_precision).calculate_for_plan(plan_dict),
         "mi_0_2": modulation_index_score_obj.calculate_for_plan(plan_dict, k=0.2),
         "mi_0_5": modulation_index_score_obj.calculate_for_plan(plan_dict, k=0.5),
         "mi_1_0": modulation_index_score_obj.calculate_for_plan(plan_dict, k=1.0),
         "mi_2_0": modulation_index_score_obj.calculate_for_plan(plan_dict, k=2.0),
     }
-    leaf_gap_summary, leaf_gap_warnings = _calculate_with_warnings(LeafGap(), plan_dict)
+    leaf_gap_summary, leaf_gap_warnings = _calculate_with_warnings(LeafGap(full_precision=full_precision), plan_dict)
     warnings.extend(leaf_gap_warnings)
     if isinstance(leaf_gap_summary[0], tuple):
         metrics["alg"] = (leaf_gap_summary[0][0], leaf_gap_summary[1][0])
         metrics["alg_sd"] = (leaf_gap_summary[0][1], leaf_gap_summary[1][1])
     else:
         metrics["alg"], metrics["alg_sd"] = leaf_gap_summary
-    metrics.update(calculate_vcomx_supplemental_metrics(plan_dict))
+    metrics.update(calculate_vcomx_supplemental_metrics(plan_dict, full_precision=full_precision))
     warnings.extend(supplemental_metric_weight_warnings(plan_dict))
     halcyon_metrics, halcyon_warnings = calculate_halcyon_dual_layer_metrics_with_warnings(
-        plan_dict
+        plan_dict, full_precision=full_precision
     )
     metrics.update(halcyon_metrics)
     warnings.extend(halcyon_warnings)
@@ -113,19 +113,19 @@ def _calculate_with_warnings(metric, plan_dict, **kwargs):
     return metric.calculate_for_plan(plan_dict, **kwargs), []
 
 
-def calculate_cyberknife_mlc_metrics(plan_dict, cyberknife_beams=None):
+def calculate_cyberknife_mlc_metrics(plan_dict, cyberknife_beams=None, *, full_precision=False):
     """Return the six MLC-based CyberKnife metrics reported by Masi et al. (2021)."""
     if cyberknife_beams is not None:
-        return calculate_cyberknife_metrics(cyberknife_beams)
+        return calculate_cyberknife_metrics(cyberknife_beams, full_precision=full_precision)
 
-    leaf_gap_summary = LeafGap().calculate_for_plan(plan_dict)
+    leaf_gap_summary = LeafGap(full_precision=full_precision).calculate_for_plan(plan_dict)
     lg_value = leaf_gap_summary[0] if isinstance(leaf_gap_summary, tuple) else leaf_gap_summary
 
     return {
-        "mcs": ModulationComplexityScore().calculate_for_plan(plan_dict),
-        "em": EdgeMetric().calculate_for_plan(plan_dict),
-        "pi": PlanIrregularity().calculate_for_plan(plan_dict),
-        "pm": PlanModulation().calculate_for_plan(plan_dict),
+        "mcs": ModulationComplexityScore(full_precision=full_precision).calculate_for_plan(plan_dict),
+        "em": EdgeMetric(full_precision=full_precision).calculate_for_plan(plan_dict),
+        "pi": PlanIrregularity(full_precision=full_precision).calculate_for_plan(plan_dict),
+        "pm": PlanModulation(full_precision=full_precision).calculate_for_plan(plan_dict),
         "lg": lg_value,
-        "sas10": SmallApertureScore().calculate_for_plan(plan_dict, x=10),
+        "sas10": SmallApertureScore(full_precision=full_precision).calculate_for_plan(plan_dict, x=10),
     }

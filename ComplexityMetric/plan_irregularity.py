@@ -24,7 +24,7 @@ class PlanIrregularity(ComplexityMetric):
     def calculate_aperture_irregularity(self, aperture: PyAperture) -> float:
         # PI is defined as P^2 / (4*pi*A) in Du et al.
         area = aperture.area()
-        perimeter = aperture.side_perimeter_horizontal() + aperture.side_perimeter_vertical()
+        perimeter = aperture.perimeter()
         return divide_or_default(perimeter ** 2, 4 * np.pi * area)
 
 

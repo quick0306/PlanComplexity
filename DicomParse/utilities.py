@@ -1,10 +1,6 @@
 import os
 import os.path as osp
-from shutil import copy2
-
-import pydicom
-
-from typing import Callable, List, Union, Tuple
+from typing import Callable, List
 
 
 def retrieve_dcm_filenames(directory: str, recursive: bool = True) -> List:
@@ -57,65 +53,3 @@ def retrieve_filenames(directory: str, func: Callable = None, recursive: bool = 
         if not recursive:
             break
     return filenames
-
-
-def dcm_retrieve(directory: str):
-    filepaths = retrieve_dcm_filenames(directory, recursive=True)
-    for pfile in filepaths:
-        ds = pydicom.dcmread(pfile, force=True)
-        try:
-            if (str(ds.Modality).upper() == 'RTPLAN') and ('CRT' not in str(ds.RTPlanLabel).upper()):
-                if ds.BeamSequence[0].TreatmentMachineName == '2819':
-                    copy2(pfile, r"D:\RT_Plan\Axesse")
-                elif ds.BeamSequence[0].TreatmentMachineName == '2776':
-                    copy2(pfile, r"D:\RT_Plan\Synergy")
-                elif ds.BeamSequence[0].TreatmentMachineName == 'TRILOGY-SN5602':
-                    copy2(pfile, r"D:\RT_Plan\Trilogy")
-                elif ds.BeamSequence[0].TreatmentMachineName == 'TrueBeamSN1352':
-                    copy2(pfile, r"D:\RT_Plan\TrueBeam")
-                elif ds.BeamSequence[0].TreatmentMachineName == '0210531':
-                    copy2(pfile, r"D:\RT_Plan\Tomo")
-                elif ds.BeamSequence[0].TreatmentMachineName == '4076':
-                    copy2(pfile, r"D:\RT_Plan\VersaHD")
-                elif ds.BeamSequence[0].TreatmentMachineName == 'TrueBeamSN2716':
-                    copy2(pfile, r"D:\RT_Plan\EDGE")
-        except:
-            print("RT Plan file has a error: ", pfile)
-
-
-def ethos_dcm_classify(directory: str):
-    """
-    通过rtdose找到rtplan, 再由rtplan找到rtss
-    :param directory:
-    :return:
-    """
-    filepaths = retrieve_dcm_filenames(directory, recursive=True)
-    for rtdose_pfile in filepaths:
-        rtdose_ds = pydicom.dcmread(rtdose_pfile, force=True)
-        if 'Modality' in rtdose_ds:
-            if str(rtdose_ds.Modality).upper() == 'RTDOSE':
-                rtplan_uid = rtdose_ds.ReferencedRTPlanSequence[0].ReferencedSOPInstanceUID
-                rtplan_file = 'RTPLAN.' + rtplan_uid + '.dcm'
-                file_dir = os.path.dirname(rtdose_pfile)
-                rtplan_filepth = osp.join(file_dir, rtplan_file)
-
-                if rtplan_filepth in filepaths:
-                    rtplan_ds = pydicom.dcmread(rtplan_filepth, force=True)
-
-                    if 'Modality' in rtplan_ds and 'RTPlanName' in rtplan_ds:
-                        if str(rtplan_ds.Modality).upper() == 'RTPLAN' and 'reconstructed' not in str(
-                                rtplan_ds.RTPlanName).lower():
-                            rtss_uid = rtplan_ds.ReferencedStructureSetSequence[0].ReferencedSOPInstanceUID
-                            rtss_file = 'RTSTRUCT.' + rtss_uid + '.dcm'
-                            rtss_filepath = osp.join(file_dir, rtss_file)
-
-                            drive, path_and_file = os.path.splitdrive(file_dir)
-                            ndir = osp.join('D:', path_and_file, rtplan_ds.RTPlanLabel)
-                            print(ndir)
-                            try:
-                                os.makedirs(ndir)
-                                copy2(rtdose_pfile, ndir)
-                                copy2(rtplan_filepth, ndir)
-                                copy2(rtss_filepath, ndir)
-                            except OSError as error:
-                                print(error)

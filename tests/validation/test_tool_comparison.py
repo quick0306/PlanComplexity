@@ -6,7 +6,16 @@ from unittest.mock import patch
 
 
 class ToolComparisonTests(unittest.TestCase):
-    def test_tool_comparison_emits_agreement_statistics(self):
+    def test_tool_comparison_reuses_raw_reference_report_and_writes_external_evidence(self):
+        from tools.run_tool_comparison import run_tool_comparison
+        reference = {"profile": "research", "metrics": []}
+        with TemporaryDirectory() as tmp, patch("tools.run_tool_comparison.run_reference_suite") as analyze:
+            report = run_tool_comparison("research", output_dir=tmp, reference_report=reference)
+            analyze.assert_not_called()
+            self.assertIn("external_benchmarks", report)
+            self.assertTrue((Path(tmp) / "external_benchmarks.json").exists())
+
+    def test_tool_comparison_excludes_unproven_legacy_samples(self):
         from tools.run_tool_comparison import run_tool_comparison
 
         fake_reference_report = {
@@ -70,7 +79,8 @@ class ToolComparisonTests(unittest.TestCase):
                 report = run_tool_comparison(profile="research", output_dir=output_dir)
 
             self.assertIn("comparisons", report)
-            self.assertTrue(any(comparison.get("mae") is not None for comparison in report["comparisons"]))
+            self.assertTrue(all(comparison.get("mae") is None for comparison in report["comparisons"]))
+            self.assertTrue(all(comparison["sample_count"] == 0 for comparison in report["comparisons"]))
             statuses = {row["internal_metric"]: row["status"] for row in report["comparisons"]}
             self.assertEqual("skipped", statuses["projection_pitch_mean"])
             self.assertTrue((output_dir / "comparator_statistics.csv").exists())

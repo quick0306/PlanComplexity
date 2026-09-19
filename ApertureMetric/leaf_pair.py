@@ -42,7 +42,7 @@ class LeafPair:
 
         left = max(self.jaw.left, self.left)
         right = min(self.jaw.right, self.right)
-        return right - left
+        return max(right - left, 0.0)
 
     def open_leaf_width(self):
         """Returns the amount of leaf width that is open, considering the Position of the jaw"""

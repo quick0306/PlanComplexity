@@ -1,4 +1,5 @@
 import csv
+import hashlib
 import json
 import unittest
 from pathlib import Path
@@ -141,6 +142,11 @@ class ValidationReportTests(unittest.TestCase):
             self.assertEqual(2, validation_report["summary"]["total_metrics"])
             self.assertEqual(1, validation_report["summary"]["exact_passes"])
             self.assertEqual(0, validation_report["summary"]["exact_failures"])
+            self.assertTrue(validation_report["summary"]["reference_exact_green"])
+            self.assertEqual(0, validation_report["summary"]["analysis_failures"])
+            self.assertEqual(0, validation_report["summary"]["provenance_failures"])
+            self.assertEqual("legacy-unversioned", validation_report["cases"][0]["formula_version_status"])
+            self.assertEqual("vmat_truebeam_canonical", validation_report["results"][0]["case_id"])
 
             manifest_lock = json.loads(Path(artifact_paths["manifest_lock"]).read_text(encoding="utf-8"))
             self.assertEqual("research", manifest_lock["profile_key"])
@@ -148,6 +154,114 @@ class ValidationReportTests(unittest.TestCase):
             self.assertTrue((expected_keys - {"manifest_lock"}).issubset(locked_keys))
             for artifact in manifest_lock["artifacts"]:
                 self.assertRegex(artifact["sha256"], r"^[0-9a-f]{64}$")
+
+    def test_compact_report_preserves_failed_case_gates_with_no_metric_rows(self):
+        from tools.build_validation_report import render_validation_artifacts
+
+        reference = {
+            "profile": "research",
+            "summary": {
+                "reference_exact_green": False, "analysis_failures": 1,
+                "provenance_failures": 1,
+            },
+            "cases": [{
+                "case_id": "synthetic", "domain": "VMAT_IMRT",
+                "supported": False, "expected_supported": True,
+                "analysis_status": "fail", "analysis_note": "Unexpected unsupported analysis.",
+                "required_formula_version": "geometry-v3",
+                "expected_formula_version": "geometry-v3",
+                "observed_formula_version": "geometry-v2",
+                "formula_version_status": "fail", "formula_version_note": "Formula version mismatch.",
+                "reference_exact_green": False,
+            }],
+            "metrics": [],
+        }
+        with TemporaryDirectory() as temp_dir:
+            paths = render_validation_artifacts(reference, {"comparisons": []}, temp_dir)
+            report = json.loads(Path(paths["validation_report_json"]).read_text())
+            self.assertIs(False, report["summary"]["reference_exact_green"])
+            self.assertEqual(1, report["summary"]["analysis_failures"])
+            self.assertEqual(1, report["summary"]["provenance_failures"])
+            self.assertEqual(0, report["summary"]["exact_failures"])
+            self.assertEqual(reference["cases"], report["cases"])
+            markdown = Path(paths["summary_markdown"]).read_text()
+            self.assertIn("Analysis failures: 1", markdown)
+            self.assertIn("Formula provenance failures: 1", markdown)
+            self.assertIn("geometry-v3", markdown)
+            self.assertIn("geometry-v2", markdown)
+            self.assertIn("Reference exact green: False", markdown)
+
+    def test_missing_summary_gate_is_derived_from_case_failures(self):
+        from tools.build_validation_report import _build_validation_report_json
+
+        report = _build_validation_report_json(
+            {"cases": [{"analysis_status": "fail", "formula_version_status": "fail"}], "metrics": []},
+            profile_key="research", generated_at="2026-09-19T10:00:00Z", report_id="synthetic",
+        )
+        self.assertIs(False, report["summary"]["reference_exact_green"])
+        self.assertEqual(1, report["summary"]["analysis_failures"])
+        self.assertEqual(1, report["summary"]["provenance_failures"])
+
+    def test_compact_report_preserves_unrequired_gate_as_null(self):
+        from tools.build_validation_report import _build_validation_report_json
+
+        report = _build_validation_report_json(
+            {"summary": {"reference_exact_green": None}, "metrics": []},
+            profile_key="relaxed", generated_at="2026-09-19T10:00:00Z", report_id="synthetic",
+        )
+        self.assertIsNone(report["summary"]["reference_exact_green"])
+
+    def test_render_overwrites_existing_json_csv_and_locks_fresh_content(self):
+        from tools.build_validation_report import render_validation_artifacts
+
+        for explicit_paths in (False, True):
+            with self.subTest(explicit_paths=explicit_paths), TemporaryDirectory() as temp_dir:
+                root = Path(temp_dir)
+                reference = {
+                    "profile": "research", "summary": {"reference_exact_green": False},
+                    "cases": [], "metrics": [{
+                        "case_id": "synthetic", "domain": "TOMO", "metric_key": "ttdf_s_cgy",
+                        "status": "fail", "comparison_class": "exact-equivalent",
+                    }],
+                }
+                comparison = {"comparisons": [{
+                    "platform": "TOMO", "internal_metric": "mf", "comparator": "Synthetic",
+                    "comparator_metric": "MF", "relationship": "derived-equivalent",
+                    "status": "compared", "sample_count": 2, "mae": 0.2, "bias": 0.1,
+                    "rmse": 0.3, "notes": "Fresh synthetic comparison.",
+                }]}
+                names = {
+                    "reference_json": "reference_case_results.json",
+                    "reference_csv": "reference_case_results.csv",
+                    "comparison_json": "comparator_statistics.json",
+                    "comparison_csv": "comparator_statistics.csv",
+                }
+                for name in names.values():
+                    (root / name).write_text('{"stale": true}' if name.endswith("json") else "stale\nold\n")
+                if explicit_paths:
+                    reference["artifacts"] = {suffix: str(root / names[f"reference_{suffix}"]) for suffix in ("json", "csv")}
+                    comparison["artifacts"] = {suffix: str(root / names[f"comparison_{suffix}"]) for suffix in ("json", "csv")}
+
+                paths = render_validation_artifacts(reference, comparison, root)
+                for key, expected in (("reference_json", reference), ("comparison_json", comparison)):
+                    with self.subTest(artifact=key):
+                        self.assertEqual(expected, json.loads(Path(paths[key]).read_text()))
+                with self.subTest(artifact="reference_csv"):
+                    with Path(paths["reference_csv"]).open(newline="") as handle:
+                        row = next(csv.DictReader(handle))
+                    self.assertIn("metric_key", row)
+                    self.assertEqual("ttdf_s_cgy", row["metric_key"])
+                    self.assertEqual("fail", row["status"])
+                with self.subTest(artifact="comparison_csv"):
+                    with Path(paths["comparison_csv"]).open(newline="") as handle:
+                        row = next(csv.DictReader(handle))
+                    self.assertIn("internal_metric", row)
+                    self.assertEqual("mf", row["internal_metric"])
+                    self.assertEqual("0.2", row["mae"])
+                lock = json.loads(Path(paths["manifest_lock"]).read_text())
+                for artifact in lock["artifacts"]:
+                    content = Path(paths[artifact["key"]]).read_bytes()
+                    self.assertEqual(hashlib.sha256(content).hexdigest(), artifact["sha256"])
 
 
 class ReadmeValidationDocsTests(unittest.TestCase):

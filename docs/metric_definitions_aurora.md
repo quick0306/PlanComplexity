@@ -94,7 +94,7 @@ This appendix is generated from the shared metric-definition catalog.
 
 - Group: V2 paper-style physics
 - Symbol/short name: projection_aperture_change_mean
-- Mathematical definition: mean_i(abs(delta A_i) / abs(delta z_i))
+- Mathematical definition: mean_i(abs(delta W_i) / abs(delta z_i)); W=sum_zip max(MLCX2-MLCX1,0) is an opening-width proxy, not area
 - Physical meaning: Mean projection aperture-change rate, defined as absolute aperture-width change per millimeter of longitudinal travel.
 - Unit: mm/mm
 - Inputs required: Aurora RTPLAN control points: gantry angle, isocenter z, cumulative meterset weight, MLCX1 and MLCX2
@@ -105,7 +105,7 @@ This appendix is generated from the shared metric-definition catalog.
 
 - Group: V2 paper-style physics
 - Symbol/short name: projection_aperture_change_cv
-- Mathematical definition: std(abs(delta A_i) / abs(delta z_i)) / mean(abs(delta A_i) / abs(delta z_i))
+- Mathematical definition: population_std(abs(delta W_i)/abs(delta z_i))/abs(mean(abs(delta W_i)/abs(delta z_i))); W is opening-width proxy
 - Physical meaning: Coefficient of variation of the projection aperture-change rate.
 - Unit: dimensionless
 - Inputs required: Aurora RTPLAN control points: gantry angle, isocenter z, cumulative meterset weight, MLCX1 and MLCX2
@@ -292,7 +292,7 @@ This appendix is generated from the shared metric-definition catalog.
 
 - Group: V3 small-opening burden
 - Symbol/short name: effective_small_gap_burden
-- Mathematical definition: weighted mean of max(0, 1 - gap / 10 mm) over open effective gaps
+- Mathematical definition: weighted mean of max(0,1-gap/10 mm) over positive zipped-channel gap proxies; abs(delta CMW) weights, zero increment falls back to 1
 - Physical meaning: Weighted severity score for narrow effective openings, with smaller openings contributing more burden.
 - Unit: dimensionless
 - Inputs required: Aurora RTPLAN control points: gantry angle, isocenter z, cumulative meterset weight, MLCX1 and MLCX2
@@ -743,7 +743,7 @@ This appendix is generated from the shared metric-definition catalog.
 
 - Group: Legacy engineering
 - Symbol/short name: aperture_change_per_mm
-- Mathematical definition: sum_i abs(delta A_i) / sum_i abs(delta z_i)
+- Mathematical definition: sum_i abs(delta W_i)/sum_i abs(delta z_i), retaining dz>0; W is summed positive opening width, not area
 - Physical meaning: Legacy engineering metric for total absolute aperture-width change normalized by total axial travel.
 - Unit: mm/mm
 - Inputs required: Aurora RTPLAN control points: gantry angle, isocenter z, cumulative meterset weight, MLCX1 and MLCX2
@@ -765,7 +765,7 @@ This appendix is generated from the shared metric-definition catalog.
 
 - Group: Legacy engineering
 - Symbol/short name: coupled_modulation_index
-- Mathematical definition: mean of normalized aperture-change/mm, leaf-travel/mm, MU-density variability, and pitch variability
+- Mathematical definition: mean(x/(1+x)) over available aperture-change/mm, leaf-travel/mm, MU-density CV and pitch CV; equal component weights
 - Physical meaning: Legacy engineering aggregate of normalized aperture change, leaf travel, MU-density variability, and pitch variability.
 - Unit: dimensionless
 - Inputs required: Aurora RTPLAN control points: gantry angle, isocenter z, cumulative meterset weight, MLCX1 and MLCX2

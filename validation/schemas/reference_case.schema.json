@@ -51,6 +51,13 @@
           "expected_metrics_source": {
             "type": "string"
           },
+          "expected_formula_version": {
+            "type": "string",
+            "pattern": "\\S"
+          },
+          "expected_supported": {
+            "type": "boolean"
+          },
           "tolerance_overrides": {
             "type": "object",
             "additionalProperties": {

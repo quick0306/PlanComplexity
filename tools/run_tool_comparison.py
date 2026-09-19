@@ -13,18 +13,21 @@ from tools.run_reference_suite import run_reference_suite
 from validation.utils.comparators import summarize_comparator_mapping
 from validation.utils.loaders import load_comparator_mappings
 from validation.utils.serializers import write_csv_artifact, write_json_artifact
+from validation.external_benchmarks import run_external_benchmarks
 
 
 def run_tool_comparison(
     profile: str,
     output_dir: Path | str | None = None,
     source_root: Path | str | None = None,
+    *, reference_report: dict[str, object] | None = None,
 ) -> dict[str, object]:
-    reference_report = run_reference_suite(
-        profile=profile,
-        output_dir=output_dir,
-        source_root=source_root,
-    )
+    if reference_report is None:
+        reference_report = run_reference_suite(
+            profile=profile,
+            output_dir=output_dir,
+            source_root=source_root,
+        )
     mappings = load_comparator_mappings()
     comparisons = [
         summarize_comparator_mapping(mapping, reference_report["metrics"])
@@ -34,10 +37,12 @@ def run_tool_comparison(
         "profile": profile,
         "generated_at": _utc_now(),
         "comparisons": comparisons,
+        "external_benchmarks": run_external_benchmarks(reference_report),
     }
     if output_dir is not None:
         output_root = Path(output_dir)
         report["artifacts"] = {
+            "external_json": str(write_json_artifact(output_root / "external_benchmarks.json", report["external_benchmarks"])),
             "json": str(write_json_artifact(output_root / "comparator_statistics.json", report)),
             "csv": str(
                 write_csv_artifact(

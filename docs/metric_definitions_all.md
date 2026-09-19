@@ -65,7 +65,7 @@ Definitions are written to match the current code implementation. They are not a
 
 - Group: Plan prescription
 - Symbol/short name: MUcGy
-- Mathematical definition: MUcGy = MUs / prescribed dose in cGy
+- Mathematical definition: MUcGy = MUs / dose per fraction in cGy
 - Physical meaning: Monitor units delivered per centigray of prescribed dose.
 - Unit: MU/cGy
 - Inputs required: Plan MU, prescription, fraction count, beam list
@@ -87,7 +87,7 @@ Definitions are written to match the current code implementation. They are not a
 
 - Group: Leaf travel
 - Symbol/short name: LT MLCX1
-- Mathematical definition: Same formula as LT, but computed using MLCX1 apertures only.
+- Mathematical definition: LT = weighted mean over control arcs of total leaf travel between adjacent apertures; native MLCX1 apertures only
 - Physical meaning: Average total leaf travel across a control arc. Reported for MLCX1.
 - Unit: mm
 - Inputs required: MLCX1 leaf positions, control-point weights, and beam geometry
@@ -98,7 +98,7 @@ Definitions are written to match the current code implementation. They are not a
 
 - Group: Leaf travel
 - Symbol/short name: LT MLCX2
-- Mathematical definition: Same formula as LT, but computed using MLCX2 apertures only.
+- Mathematical definition: LT = weighted mean over control arcs of total leaf travel between adjacent apertures; native MLCX2 apertures only
 - Physical meaning: Average total leaf travel across a control arc. Reported for MLCX2.
 - Unit: mm
 - Inputs required: MLCX2 leaf positions, control-point weights, and beam geometry
@@ -120,7 +120,7 @@ Definitions are written to match the current code implementation. They are not a
 
 - Group: Leaf travel
 - Symbol/short name: LTMU MLCX1
-- Mathematical definition: Same formula as LTMU, but computed using MLCX1 apertures only.
+- Mathematical definition: LTMU = sum(control-arc leaf travel) / MU_beam; native MLCX1 apertures only
 - Physical meaning: Leaf travel normalized by delivered monitor units. Reported for MLCX1.
 - Unit: mm/MU
 - Inputs required: MLCX1 leaf positions, control-point weights, and beam geometry
@@ -131,7 +131,7 @@ Definitions are written to match the current code implementation. They are not a
 
 - Group: Leaf travel
 - Symbol/short name: LTMU MLCX2
-- Mathematical definition: Same formula as LTMU, but computed using MLCX2 apertures only.
+- Mathematical definition: LTMU = sum(control-arc leaf travel) / MU_beam; native MLCX2 apertures only
 - Physical meaning: Leaf travel normalized by delivered monitor units. Reported for MLCX2.
 - Unit: mm/MU
 - Inputs required: MLCX2 leaf positions, control-point weights, and beam geometry
@@ -144,7 +144,7 @@ Definitions are written to match the current code implementation. They are not a
 - Symbol/short name: LTNLMU
 - Mathematical definition: LTNLMU = sum(leaf travel / active leaves) / MU_beam
 - Physical meaning: Leaf travel per involved leaf, normalized by monitor units.
-- Unit: mm/(leaf*MU)
+- Unit: mm/(pair*MU)
 - Inputs required: MLC leaf positions, jaw positions, gantry angle, and control-point meterset weights
 - Status: implemented
 - Notes: For Halcyon/Ethos-style plans, the workflow also exports per-layer MLCX1 and MLCX2 variants.
@@ -153,9 +153,9 @@ Definitions are written to match the current code implementation. They are not a
 
 - Group: Leaf travel
 - Symbol/short name: LTNLMU MLCX1
-- Mathematical definition: Same formula as LTNLMU, but computed using MLCX1 apertures only.
+- Mathematical definition: LTNLMU = sum(leaf travel / active leaves) / MU_beam; native MLCX1 apertures only
 - Physical meaning: Leaf travel per involved leaf, normalized by monitor units. Reported for MLCX1.
-- Unit: mm/(leaf*MU)
+- Unit: mm/(pair*MU)
 - Inputs required: MLCX1 leaf positions, control-point weights, and beam geometry
 - Status: implemented_flattened
 - Notes: Layer-specific flattened export for LTNLMU.
@@ -164,9 +164,9 @@ Definitions are written to match the current code implementation. They are not a
 
 - Group: Leaf travel
 - Symbol/short name: LTNLMU MLCX2
-- Mathematical definition: Same formula as LTNLMU, but computed using MLCX2 apertures only.
+- Mathematical definition: LTNLMU = sum(leaf travel / active leaves) / MU_beam; native MLCX2 apertures only
 - Physical meaning: Leaf travel per involved leaf, normalized by monitor units. Reported for MLCX2.
-- Unit: mm/(leaf*MU)
+- Unit: mm/(pair*MU)
 - Inputs required: MLCX2 leaf positions, control-point weights, and beam geometry
 - Status: implemented_flattened
 - Notes: Layer-specific flattened export for LTNLMU.
@@ -186,7 +186,7 @@ Definitions are written to match the current code implementation. They are not a
 
 - Group: Leaf travel
 - Symbol/short name: NL MLCX1
-- Mathematical definition: Same formula as NL, but computed using MLCX1 apertures only.
+- Mathematical definition: NL = weighted mean over control points of the number of active leaf pairs; native MLCX1 apertures only
 - Physical meaning: Legacy alias of the MU-weighted active leaf-pair count (NL Pairs). Reported for MLCX1.
 - Unit: count
 - Inputs required: MLCX1 leaf positions, control-point weights, and beam geometry
@@ -197,7 +197,7 @@ Definitions are written to match the current code implementation. They are not a
 
 - Group: Leaf travel
 - Symbol/short name: NL MLCX2
-- Mathematical definition: Same formula as NL, but computed using MLCX2 apertures only.
+- Mathematical definition: NL = weighted mean over control points of the number of active leaf pairs; native MLCX2 apertures only
 - Physical meaning: Legacy alias of the MU-weighted active leaf-pair count (NL Pairs). Reported for MLCX2.
 - Unit: count
 - Inputs required: MLCX2 leaf positions, control-point weights, and beam geometry
@@ -210,7 +210,7 @@ Definitions are written to match the current code implementation. They are not a
 - Symbol/short name: LTNL
 - Mathematical definition: LTNL = weighted mean of (leaf travel / active leaves)
 - Physical meaning: Leaf travel normalized by the number of involved leaves.
-- Unit: mm/leaf
+- Unit: mm/pair
 - Inputs required: MLC leaf positions, jaw positions, gantry angle, and control-point meterset weights
 - Status: implemented
 - Notes: For Halcyon/Ethos-style plans, the workflow also exports per-layer MLCX1 and MLCX2 variants.
@@ -219,9 +219,9 @@ Definitions are written to match the current code implementation. They are not a
 
 - Group: Leaf travel
 - Symbol/short name: LTNL MLCX1
-- Mathematical definition: Same formula as LTNL, but computed using MLCX1 apertures only.
+- Mathematical definition: LTNL = weighted mean of (leaf travel / active leaves); native MLCX1 apertures only
 - Physical meaning: Leaf travel normalized by the number of involved leaves. Reported for MLCX1.
-- Unit: mm/leaf
+- Unit: mm/pair
 - Inputs required: MLCX1 leaf positions, control-point weights, and beam geometry
 - Status: implemented_flattened
 - Notes: Layer-specific flattened export for LTNL.
@@ -230,9 +230,9 @@ Definitions are written to match the current code implementation. They are not a
 
 - Group: Leaf travel
 - Symbol/short name: LTNL MLCX2
-- Mathematical definition: Same formula as LTNL, but computed using MLCX2 apertures only.
+- Mathematical definition: LTNL = weighted mean of (leaf travel / active leaves); native MLCX2 apertures only
 - Physical meaning: Leaf travel normalized by the number of involved leaves. Reported for MLCX2.
-- Unit: mm/leaf
+- Unit: mm/pair
 - Inputs required: MLCX2 leaf positions, control-point weights, and beam geometry
 - Status: implemented_flattened
 - Notes: Layer-specific flattened export for LTNL.
@@ -254,7 +254,7 @@ Definitions are written to match the current code implementation. They are not a
 - Symbol/short name: LNA
 - Mathematical definition: LNA = weighted mean of (leaf travel / active leaves / gantry-step)
 - Physical meaning: Leaf travel per involved leaf and per unit gantry travel.
-- Unit: mm/(leaf*deg)
+- Unit: mm/(pair*deg)
 - Inputs required: MLC leaf positions, jaw positions, gantry angle, and control-point meterset weights
 - Status: implemented
 - Notes: For Halcyon/Ethos-style plans, the workflow also exports per-layer MLCX1 and MLCX2 variants.
@@ -263,9 +263,9 @@ Definitions are written to match the current code implementation. They are not a
 
 - Group: Leaf travel
 - Symbol/short name: LNA MLCX1
-- Mathematical definition: Same formula as LNA, but computed using MLCX1 apertures only.
+- Mathematical definition: LNA = weighted mean of (leaf travel / active leaves / gantry-step); native MLCX1 apertures only
 - Physical meaning: Leaf travel per involved leaf and per unit gantry travel. Reported for MLCX1.
-- Unit: mm/(leaf*deg)
+- Unit: mm/(pair*deg)
 - Inputs required: MLCX1 leaf positions, control-point weights, and beam geometry
 - Status: implemented_flattened
 - Notes: Layer-specific flattened export for LNA.
@@ -274,9 +274,9 @@ Definitions are written to match the current code implementation. They are not a
 
 - Group: Leaf travel
 - Symbol/short name: LNA MLCX2
-- Mathematical definition: Same formula as LNA, but computed using MLCX2 apertures only.
+- Mathematical definition: LNA = weighted mean of (leaf travel / active leaves / gantry-step); native MLCX2 apertures only
 - Physical meaning: Leaf travel per involved leaf and per unit gantry travel. Reported for MLCX2.
-- Unit: mm/(leaf*deg)
+- Unit: mm/(pair*deg)
 - Inputs required: MLCX2 leaf positions, control-point weights, and beam geometry
 - Status: implemented_flattened
 - Notes: Layer-specific flattened export for LNA.
@@ -329,7 +329,7 @@ Definitions are written to match the current code implementation. They are not a
 
 - Group: Leaf travel
 - Symbol/short name: LTAL MLCX1
-- Mathematical definition: Same formula as LTAL, but computed using MLCX1 apertures only.
+- Mathematical definition: LTAL = weighted mean of (leaf travel / gantry-step); native MLCX1 apertures only
 - Physical meaning: Leaf travel normalized by unit gantry angle. Reported for MLCX1.
 - Unit: mm/deg
 - Inputs required: MLCX1 leaf positions, control-point weights, and beam geometry
@@ -340,7 +340,7 @@ Definitions are written to match the current code implementation. They are not a
 
 - Group: Leaf travel
 - Symbol/short name: LTAL MLCX2
-- Mathematical definition: Same formula as LTAL, but computed using MLCX2 apertures only.
+- Mathematical definition: LTAL = weighted mean of (leaf travel / gantry-step); native MLCX2 apertures only
 - Physical meaning: Leaf travel normalized by unit gantry angle. Reported for MLCX2.
 - Unit: mm/deg
 - Inputs required: MLCX2 leaf positions, control-point weights, and beam geometry
@@ -364,7 +364,7 @@ Definitions are written to match the current code implementation. They are not a
 - Symbol/short name: mDRV
 - Mathematical definition: mDRV = mean(delta dose-rate / delta gantry)
 - Physical meaning: Mean variation of dose rate during delivery.
-- Unit: MU/(min*deg)
+- Unit: MU/(s*deg)
 - Inputs required: Control-point MLC motion, dose rate, gantry angle, and meterset timing
 - Status: implemented
 - Notes: For Halcyon/Ethos-style plans, the workflow also exports per-layer MLCX1 and MLCX2 variants.
@@ -373,9 +373,9 @@ Definitions are written to match the current code implementation. They are not a
 
 - Group: Delivery dynamics
 - Symbol/short name: mDRV MLCX1
-- Mathematical definition: Same formula as mDRV, but computed using MLCX1 apertures only.
+- Mathematical definition: mDRV = mean(delta dose-rate / delta gantry); native MLCX1 apertures only
 - Physical meaning: Mean variation of dose rate during delivery. Reported for MLCX1.
-- Unit: MU/(min*deg)
+- Unit: MU/(s*deg)
 - Inputs required: MLCX1 leaf positions, control-point weights, and beam geometry
 - Status: implemented_flattened
 - Notes: Layer-specific flattened export for mDRV.
@@ -384,9 +384,9 @@ Definitions are written to match the current code implementation. They are not a
 
 - Group: Delivery dynamics
 - Symbol/short name: mDRV MLCX2
-- Mathematical definition: Same formula as mDRV, but computed using MLCX2 apertures only.
+- Mathematical definition: mDRV = mean(delta dose-rate / delta gantry); native MLCX2 apertures only
 - Physical meaning: Mean variation of dose rate during delivery. Reported for MLCX2.
-- Unit: MU/(min*deg)
+- Unit: MU/(s*deg)
 - Inputs required: MLCX2 leaf positions, control-point weights, and beam geometry
 - Status: implemented_flattened
 - Notes: Layer-specific flattened export for mDRV.
@@ -406,7 +406,7 @@ Definitions are written to match the current code implementation. They are not a
 
 - Group: Delivery dynamics
 - Symbol/short name: mGSV MLCX1
-- Mathematical definition: Same formula as mGSV, but computed using MLCX1 apertures only.
+- Mathematical definition: mGSV = mean(delta gantry-speed / delta gantry); native MLCX1 apertures only
 - Physical meaning: Mean variation of gantry speed during delivery. Reported for MLCX1.
 - Unit: deg/s/deg
 - Inputs required: MLCX1 leaf positions, control-point weights, and beam geometry
@@ -417,7 +417,7 @@ Definitions are written to match the current code implementation. They are not a
 
 - Group: Delivery dynamics
 - Symbol/short name: mGSV MLCX2
-- Mathematical definition: Same formula as mGSV, but computed using MLCX2 apertures only.
+- Mathematical definition: mGSV = mean(delta gantry-speed / delta gantry); native MLCX2 apertures only
 - Physical meaning: Mean variation of gantry speed during delivery. Reported for MLCX2.
 - Unit: deg/s/deg
 - Inputs required: MLCX2 leaf positions, control-point weights, and beam geometry
@@ -430,7 +430,7 @@ Definitions are written to match the current code implementation. They are not a
 - Symbol/short name: DR
 - Mathematical definition: DR = mean(control-point dose rate)
 - Physical meaning: Average dose rate used during delivery.
-- Unit: MU/min
+- Unit: MU/s
 - Inputs required: Control-point MLC motion, dose rate, gantry angle, and meterset timing
 - Status: implemented
 - Notes: For Halcyon/Ethos-style plans, the workflow also exports per-layer MLCX1 and MLCX2 variants.
@@ -439,9 +439,9 @@ Definitions are written to match the current code implementation. They are not a
 
 - Group: Delivery dynamics
 - Symbol/short name: DR MLCX1
-- Mathematical definition: Same formula as DR, but computed using MLCX1 apertures only.
+- Mathematical definition: DR = mean(control-point dose rate); native MLCX1 apertures only
 - Physical meaning: Average dose rate used during delivery. Reported for MLCX1.
-- Unit: MU/min
+- Unit: MU/s
 - Inputs required: MLCX1 leaf positions, control-point weights, and beam geometry
 - Status: implemented_flattened
 - Notes: Layer-specific flattened export for DR.
@@ -450,9 +450,9 @@ Definitions are written to match the current code implementation. They are not a
 
 - Group: Delivery dynamics
 - Symbol/short name: DR MLCX2
-- Mathematical definition: Same formula as DR, but computed using MLCX2 apertures only.
+- Mathematical definition: DR = mean(control-point dose rate); native MLCX2 apertures only
 - Physical meaning: Average dose rate used during delivery. Reported for MLCX2.
-- Unit: MU/min
+- Unit: MU/s
 - Inputs required: MLCX2 leaf positions, control-point weights, and beam geometry
 - Status: implemented_flattened
 - Notes: Layer-specific flattened export for DR.
@@ -472,7 +472,7 @@ Definitions are written to match the current code implementation. They are not a
 
 - Group: Delivery dynamics
 - Symbol/short name: GS MLCX1
-- Mathematical definition: Same formula as GS, but computed using MLCX1 apertures only.
+- Mathematical definition: GS = mean(control-point gantry speed); native MLCX1 apertures only
 - Physical meaning: Average gantry speed during arc delivery. Reported for MLCX1.
 - Unit: deg/s
 - Inputs required: MLCX1 leaf positions, control-point weights, and beam geometry
@@ -483,7 +483,7 @@ Definitions are written to match the current code implementation. They are not a
 
 - Group: Delivery dynamics
 - Symbol/short name: GS MLCX2
-- Mathematical definition: Same formula as GS, but computed using MLCX2 apertures only.
+- Mathematical definition: GS = mean(control-point gantry speed); native MLCX2 apertures only
 - Physical meaning: Average gantry speed during arc delivery. Reported for MLCX2.
 - Unit: deg/s
 - Inputs required: MLCX2 leaf positions, control-point weights, and beam geometry
@@ -505,7 +505,7 @@ Definitions are written to match the current code implementation. They are not a
 
 - Group: Delivery dynamics
 - Symbol/short name: LS MLCX1
-- Mathematical definition: Same formula as LS, but computed using MLCX1 apertures only.
+- Mathematical definition: LS = mean(leaf speed); native MLCX1 apertures only
 - Physical meaning: Average leaf speed during delivery. Reported for MLCX1.
 - Unit: mm/s
 - Inputs required: MLCX1 leaf positions, control-point weights, and beam geometry
@@ -516,7 +516,7 @@ Definitions are written to match the current code implementation. They are not a
 
 - Group: Delivery dynamics
 - Symbol/short name: LS MLCX2
-- Mathematical definition: Same formula as LS, but computed using MLCX2 apertures only.
+- Mathematical definition: LS = mean(leaf speed); native MLCX2 apertures only
 - Physical meaning: Average leaf speed during delivery. Reported for MLCX2.
 - Unit: mm/s
 - Inputs required: MLCX2 leaf positions, control-point weights, and beam geometry
@@ -538,7 +538,7 @@ Definitions are written to match the current code implementation. They are not a
 
 - Group: McNiven-style modulation
 - Symbol/short name: MCSv MLCX1
-- Mathematical definition: Same formula as MCSv, but computed using MLCX1 apertures only.
+- Mathematical definition: MCSv = weighted mean[((AAV_i + AAV_{i+1}) / 2) * ((LSV_i + LSV_{i+1}) / 2)]; native MLCX1 apertures only
 - Physical meaning: Overall aperture modulation score combining area and leaf sequence variability. For Halcyon/Ethos dual-layer plans this is also reported on the synthesized effective aperture used by Quintero et al. 2021. Reported for MLCX1.
 - Unit: dimensionless
 - Inputs required: MLCX1 leaf positions, control-point weights, and beam geometry
@@ -549,7 +549,7 @@ Definitions are written to match the current code implementation. They are not a
 
 - Group: McNiven-style modulation
 - Symbol/short name: MCSv MLCX2
-- Mathematical definition: Same formula as MCSv, but computed using MLCX2 apertures only.
+- Mathematical definition: MCSv = weighted mean[((AAV_i + AAV_{i+1}) / 2) * ((LSV_i + LSV_{i+1}) / 2)]; native MLCX2 apertures only
 - Physical meaning: Overall aperture modulation score combining area and leaf sequence variability. For Halcyon/Ethos dual-layer plans this is also reported on the synthesized effective aperture used by Quintero et al. 2021. Reported for MLCX2.
 - Unit: dimensionless
 - Inputs required: MLCX2 leaf positions, control-point weights, and beam geometry
@@ -560,7 +560,7 @@ Definitions are written to match the current code implementation. They are not a
 
 - Group: McNiven-style modulation
 - Symbol/short name: AAV
-- Mathematical definition: AAV = aperture area / arc-level union aperture area, then weighted over the arc
+- Mathematical definition: AAV_i = A_i / sum_slot[(max_CP raw_right - min_CP raw_left)_+ * max_CP jaw_exposed_height]; interval endpoint mean, then interval-MU and beam-MU means
 - Physical meaning: Variability of aperture area across control points.
 - Unit: dimensionless
 - Inputs required: MLC leaf positions, jaw positions, gantry angle, and control-point meterset weights
@@ -571,7 +571,7 @@ Definitions are written to match the current code implementation. They are not a
 
 - Group: McNiven-style modulation
 - Symbol/short name: AAV MLCX1
-- Mathematical definition: Same formula as AAV, but computed using MLCX1 apertures only.
+- Mathematical definition: AAV_i = A_i / sum_slot[(max_CP raw_right - min_CP raw_left)_+ * max_CP jaw_exposed_height]; interval endpoint mean, then interval-MU and beam-MU means; native MLCX1 apertures only
 - Physical meaning: Variability of aperture area across control points. Reported for MLCX1.
 - Unit: dimensionless
 - Inputs required: MLCX1 leaf positions, control-point weights, and beam geometry
@@ -582,7 +582,7 @@ Definitions are written to match the current code implementation. They are not a
 
 - Group: McNiven-style modulation
 - Symbol/short name: AAV MLCX2
-- Mathematical definition: Same formula as AAV, but computed using MLCX2 apertures only.
+- Mathematical definition: AAV_i = A_i / sum_slot[(max_CP raw_right - min_CP raw_left)_+ * max_CP jaw_exposed_height]; interval endpoint mean, then interval-MU and beam-MU means; native MLCX2 apertures only
 - Physical meaning: Variability of aperture area across control points. Reported for MLCX2.
 - Unit: dimensionless
 - Inputs required: MLCX2 leaf positions, control-point weights, and beam geometry
@@ -593,7 +593,7 @@ Definitions are written to match the current code implementation. They are not a
 
 - Group: McNiven-style modulation
 - Symbol/short name: LSV
-- Mathematical definition: LSV = bank_LSV(left) * bank_LSV(right), then weighted over the arc
+- Mathematical definition: LSV_i = product_banks[1 - sum_adjacent abs(x[j+1]-x[j]) / ((n-1)*(max(x)-min(x)))]; bank=1 for constant/single-leaf bank, CP=0 when no active gaps; interval endpoint mean then MU means
 - Physical meaning: Variability of the leaf sequence pattern across the aperture.
 - Unit: dimensionless
 - Inputs required: MLC leaf positions, jaw positions, gantry angle, and control-point meterset weights
@@ -604,7 +604,7 @@ Definitions are written to match the current code implementation. They are not a
 
 - Group: McNiven-style modulation
 - Symbol/short name: LSV MLCX1
-- Mathematical definition: Same formula as LSV, but computed using MLCX1 apertures only.
+- Mathematical definition: LSV_i = product_banks[1 - sum_adjacent abs(x[j+1]-x[j]) / ((n-1)*(max(x)-min(x)))]; bank=1 for constant/single-leaf bank, CP=0 when no active gaps; interval endpoint mean then MU means; native MLCX1 apertures only
 - Physical meaning: Variability of the leaf sequence pattern across the aperture. Reported for MLCX1.
 - Unit: dimensionless
 - Inputs required: MLCX1 leaf positions, control-point weights, and beam geometry
@@ -615,7 +615,7 @@ Definitions are written to match the current code implementation. They are not a
 
 - Group: McNiven-style modulation
 - Symbol/short name: LSV MLCX2
-- Mathematical definition: Same formula as LSV, but computed using MLCX2 apertures only.
+- Mathematical definition: LSV_i = product_banks[1 - sum_adjacent abs(x[j+1]-x[j]) / ((n-1)*(max(x)-min(x)))]; bank=1 for constant/single-leaf bank, CP=0 when no active gaps; interval endpoint mean then MU means; native MLCX2 apertures only
 - Physical meaning: Variability of the leaf sequence pattern across the aperture. Reported for MLCX2.
 - Unit: dimensionless
 - Inputs required: MLCX2 leaf positions, control-point weights, and beam geometry
@@ -637,7 +637,7 @@ Definitions are written to match the current code implementation. They are not a
 
 - Group: McNiven-style modulation
 - Symbol/short name: TG MLCX1
-- Mathematical definition: Same formula as TG, but computed using MLCX1 apertures only.
+- Mathematical definition: TG = weighted mean of adjacent-leaf left/right offset magnitudes; native MLCX1 apertures only
 - Physical meaning: Average tongue-and-groove offset between neighboring leaves. Reported for MLCX1.
 - Unit: mm
 - Inputs required: MLCX1 leaf positions, control-point weights, and beam geometry
@@ -648,7 +648,7 @@ Definitions are written to match the current code implementation. They are not a
 
 - Group: McNiven-style modulation
 - Symbol/short name: TG MLCX2
-- Mathematical definition: Same formula as TG, but computed using MLCX2 apertures only.
+- Mathematical definition: TG = weighted mean of adjacent-leaf left/right offset magnitudes; native MLCX2 apertures only
 - Physical meaning: Average tongue-and-groove offset between neighboring leaves. Reported for MLCX2.
 - Unit: mm
 - Inputs required: MLCX2 leaf positions, control-point weights, and beam geometry
@@ -670,7 +670,7 @@ Definitions are written to match the current code implementation. They are not a
 
 - Group: MI components
 - Symbol/short name: MI(0.2) Speed
-- Mathematical definition: MIs(0.2) = mean_beams[ mean_CP min(v / sigma_v, 0.2) ]
+- Mathematical definition: MIs(0.2) = sum_CP,leaf min(v / sigma_v, 0.2) / max(Ncp-1,1); beam-MU mean
 - Physical meaning: Leaf speed contribution to the modulation index with threshold factor 0.2.
 - Unit: dimensionless
 - Inputs required: MLC speed, MLC acceleration, speed/acceleration spread, gantry and dose-rate weights
@@ -681,7 +681,7 @@ Definitions are written to match the current code implementation. They are not a
 
 - Group: MI components
 - Symbol/short name: MI(0.2) Acceleration
-- Mathematical definition: MIa(0.2) = mean_beams[ mean_CP min(max(v / sigma_v, a / (alpha * sigma_a)), 0.2) ]
+- Mathematical definition: MIa(0.2) = sum_CP,leaf min(max(v / sigma_v, a / (alpha_acc * sigma_a)), 0.2) / max(Ncp-2,1); alpha_acc=1/mean(dt); beam-MU mean
 - Physical meaning: Leaf acceleration contribution to the modulation index with threshold factor 0.2.
 - Unit: dimensionless
 - Inputs required: MLC speed, MLC acceleration, speed/acceleration spread, gantry and dose-rate weights
@@ -692,7 +692,7 @@ Definitions are written to match the current code implementation. They are not a
 
 - Group: MI components
 - Symbol/short name: MI(0.2) Total
-- Mathematical definition: MIt(0.2) = weighted mean over control points of min(max(v / sigma_v, a / (alpha * sigma_a)), 0.2)
+- Mathematical definition: MIt(0.2) = sum_CP WGA*WMU*sum_leaf min(max(v / sigma_v, a / (alpha_acc * sigma_a)), 0.2) / max(Ncp-2,1); beam-MU mean
 - Physical meaning: Total modulation index with threshold factor 0.2.
 - Unit: dimensionless
 - Inputs required: MLC speed, MLC acceleration, speed/acceleration spread, gantry and dose-rate weights
@@ -703,7 +703,7 @@ Definitions are written to match the current code implementation. They are not a
 
 - Group: MI components
 - Symbol/short name: MI(0.2) MLCX1 Speed
-- Mathematical definition: Same speed-component MI formula as MI(0.2), but restricted to MLCX1 leaf positions.
+- Mathematical definition: MIs(0.2) = sum_CP,leaf min(v / sigma_v, 0.2) / max(Ncp-1,1); beam-MU mean; native MLCX1 leaves only
 - Physical meaning: Leaf speed contribution to the modulation index with threshold factor 0.2 for MLCX1.
 - Unit: dimensionless
 - Inputs required: Per-layer MLC speed and acceleration traces
@@ -714,7 +714,7 @@ Definitions are written to match the current code implementation. They are not a
 
 - Group: MI components
 - Symbol/short name: MI(0.2) MLCX1 Acceleration
-- Mathematical definition: Same acceleration-component MI formula as MI(0.2), but restricted to MLCX1 leaf positions.
+- Mathematical definition: MIa(0.2) = sum_CP,leaf min(max(v / sigma_v, a / (alpha_acc * sigma_a)), 0.2) / max(Ncp-2,1); alpha_acc=1/mean(dt); beam-MU mean; native MLCX1 leaves only
 - Physical meaning: Leaf acceleration contribution to the modulation index with threshold factor 0.2 for MLCX1.
 - Unit: dimensionless
 - Inputs required: Per-layer MLC speed and acceleration traces
@@ -725,7 +725,7 @@ Definitions are written to match the current code implementation. They are not a
 
 - Group: MI components
 - Symbol/short name: MI(0.2) MLCX1 Total
-- Mathematical definition: Same total-component MI formula as MI(0.2), but restricted to MLCX1 leaf positions.
+- Mathematical definition: MIt(0.2) = sum_CP WGA*WMU*sum_leaf min(max(v / sigma_v, a / (alpha_acc * sigma_a)), 0.2) / max(Ncp-2,1); beam-MU mean; native MLCX1 leaves only
 - Physical meaning: Total modulation index with threshold factor 0.2 for MLCX1.
 - Unit: dimensionless
 - Inputs required: Per-layer MLC speed and acceleration traces
@@ -736,7 +736,7 @@ Definitions are written to match the current code implementation. They are not a
 
 - Group: MI components
 - Symbol/short name: MI(0.2) MLCX2 Speed
-- Mathematical definition: Same speed-component MI formula as MI(0.2), but restricted to MLCX2 leaf positions.
+- Mathematical definition: MIs(0.2) = sum_CP,leaf min(v / sigma_v, 0.2) / max(Ncp-1,1); beam-MU mean; native MLCX2 leaves only
 - Physical meaning: Leaf speed contribution to the modulation index with threshold factor 0.2 for MLCX2.
 - Unit: dimensionless
 - Inputs required: Per-layer MLC speed and acceleration traces
@@ -747,7 +747,7 @@ Definitions are written to match the current code implementation. They are not a
 
 - Group: MI components
 - Symbol/short name: MI(0.2) MLCX2 Acceleration
-- Mathematical definition: Same acceleration-component MI formula as MI(0.2), but restricted to MLCX2 leaf positions.
+- Mathematical definition: MIa(0.2) = sum_CP,leaf min(max(v / sigma_v, a / (alpha_acc * sigma_a)), 0.2) / max(Ncp-2,1); alpha_acc=1/mean(dt); beam-MU mean; native MLCX2 leaves only
 - Physical meaning: Leaf acceleration contribution to the modulation index with threshold factor 0.2 for MLCX2.
 - Unit: dimensionless
 - Inputs required: Per-layer MLC speed and acceleration traces
@@ -758,7 +758,7 @@ Definitions are written to match the current code implementation. They are not a
 
 - Group: MI components
 - Symbol/short name: MI(0.2) MLCX2 Total
-- Mathematical definition: Same total-component MI formula as MI(0.2), but restricted to MLCX2 leaf positions.
+- Mathematical definition: MIt(0.2) = sum_CP WGA*WMU*sum_leaf min(max(v / sigma_v, a / (alpha_acc * sigma_a)), 0.2) / max(Ncp-2,1); beam-MU mean; native MLCX2 leaves only
 - Physical meaning: Total modulation index with threshold factor 0.2 for MLCX2.
 - Unit: dimensionless
 - Inputs required: Per-layer MLC speed and acceleration traces
@@ -780,7 +780,7 @@ Definitions are written to match the current code implementation. They are not a
 
 - Group: MI components
 - Symbol/short name: MI(0.5) Speed
-- Mathematical definition: MIs(0.5) = mean_beams[ mean_CP min(v / sigma_v, 0.5) ]
+- Mathematical definition: MIs(0.5) = sum_CP,leaf min(v / sigma_v, 0.5) / max(Ncp-1,1); beam-MU mean
 - Physical meaning: Leaf speed contribution to the modulation index with threshold factor 0.5.
 - Unit: dimensionless
 - Inputs required: MLC speed, MLC acceleration, speed/acceleration spread, gantry and dose-rate weights
@@ -791,7 +791,7 @@ Definitions are written to match the current code implementation. They are not a
 
 - Group: MI components
 - Symbol/short name: MI(0.5) Acceleration
-- Mathematical definition: MIa(0.5) = mean_beams[ mean_CP min(max(v / sigma_v, a / (alpha * sigma_a)), 0.5) ]
+- Mathematical definition: MIa(0.5) = sum_CP,leaf min(max(v / sigma_v, a / (alpha_acc * sigma_a)), 0.5) / max(Ncp-2,1); alpha_acc=1/mean(dt); beam-MU mean
 - Physical meaning: Leaf acceleration contribution to the modulation index with threshold factor 0.5.
 - Unit: dimensionless
 - Inputs required: MLC speed, MLC acceleration, speed/acceleration spread, gantry and dose-rate weights
@@ -802,7 +802,7 @@ Definitions are written to match the current code implementation. They are not a
 
 - Group: MI components
 - Symbol/short name: MI(0.5) Total
-- Mathematical definition: MIt(0.5) = weighted mean over control points of min(max(v / sigma_v, a / (alpha * sigma_a)), 0.5)
+- Mathematical definition: MIt(0.5) = sum_CP WGA*WMU*sum_leaf min(max(v / sigma_v, a / (alpha_acc * sigma_a)), 0.5) / max(Ncp-2,1); beam-MU mean
 - Physical meaning: Total modulation index with threshold factor 0.5.
 - Unit: dimensionless
 - Inputs required: MLC speed, MLC acceleration, speed/acceleration spread, gantry and dose-rate weights
@@ -813,7 +813,7 @@ Definitions are written to match the current code implementation. They are not a
 
 - Group: MI components
 - Symbol/short name: MI(0.5) MLCX1 Speed
-- Mathematical definition: Same speed-component MI formula as MI(0.5), but restricted to MLCX1 leaf positions.
+- Mathematical definition: MIs(0.5) = sum_CP,leaf min(v / sigma_v, 0.5) / max(Ncp-1,1); beam-MU mean; native MLCX1 leaves only
 - Physical meaning: Leaf speed contribution to the modulation index with threshold factor 0.5 for MLCX1.
 - Unit: dimensionless
 - Inputs required: Per-layer MLC speed and acceleration traces
@@ -824,7 +824,7 @@ Definitions are written to match the current code implementation. They are not a
 
 - Group: MI components
 - Symbol/short name: MI(0.5) MLCX1 Acceleration
-- Mathematical definition: Same acceleration-component MI formula as MI(0.5), but restricted to MLCX1 leaf positions.
+- Mathematical definition: MIa(0.5) = sum_CP,leaf min(max(v / sigma_v, a / (alpha_acc * sigma_a)), 0.5) / max(Ncp-2,1); alpha_acc=1/mean(dt); beam-MU mean; native MLCX1 leaves only
 - Physical meaning: Leaf acceleration contribution to the modulation index with threshold factor 0.5 for MLCX1.
 - Unit: dimensionless
 - Inputs required: Per-layer MLC speed and acceleration traces
@@ -835,7 +835,7 @@ Definitions are written to match the current code implementation. They are not a
 
 - Group: MI components
 - Symbol/short name: MI(0.5) MLCX1 Total
-- Mathematical definition: Same total-component MI formula as MI(0.5), but restricted to MLCX1 leaf positions.
+- Mathematical definition: MIt(0.5) = sum_CP WGA*WMU*sum_leaf min(max(v / sigma_v, a / (alpha_acc * sigma_a)), 0.5) / max(Ncp-2,1); beam-MU mean; native MLCX1 leaves only
 - Physical meaning: Total modulation index with threshold factor 0.5 for MLCX1.
 - Unit: dimensionless
 - Inputs required: Per-layer MLC speed and acceleration traces
@@ -846,7 +846,7 @@ Definitions are written to match the current code implementation. They are not a
 
 - Group: MI components
 - Symbol/short name: MI(0.5) MLCX2 Speed
-- Mathematical definition: Same speed-component MI formula as MI(0.5), but restricted to MLCX2 leaf positions.
+- Mathematical definition: MIs(0.5) = sum_CP,leaf min(v / sigma_v, 0.5) / max(Ncp-1,1); beam-MU mean; native MLCX2 leaves only
 - Physical meaning: Leaf speed contribution to the modulation index with threshold factor 0.5 for MLCX2.
 - Unit: dimensionless
 - Inputs required: Per-layer MLC speed and acceleration traces
@@ -857,7 +857,7 @@ Definitions are written to match the current code implementation. They are not a
 
 - Group: MI components
 - Symbol/short name: MI(0.5) MLCX2 Acceleration
-- Mathematical definition: Same acceleration-component MI formula as MI(0.5), but restricted to MLCX2 leaf positions.
+- Mathematical definition: MIa(0.5) = sum_CP,leaf min(max(v / sigma_v, a / (alpha_acc * sigma_a)), 0.5) / max(Ncp-2,1); alpha_acc=1/mean(dt); beam-MU mean; native MLCX2 leaves only
 - Physical meaning: Leaf acceleration contribution to the modulation index with threshold factor 0.5 for MLCX2.
 - Unit: dimensionless
 - Inputs required: Per-layer MLC speed and acceleration traces
@@ -868,7 +868,7 @@ Definitions are written to match the current code implementation. They are not a
 
 - Group: MI components
 - Symbol/short name: MI(0.5) MLCX2 Total
-- Mathematical definition: Same total-component MI formula as MI(0.5), but restricted to MLCX2 leaf positions.
+- Mathematical definition: MIt(0.5) = sum_CP WGA*WMU*sum_leaf min(max(v / sigma_v, a / (alpha_acc * sigma_a)), 0.5) / max(Ncp-2,1); beam-MU mean; native MLCX2 leaves only
 - Physical meaning: Total modulation index with threshold factor 0.5 for MLCX2.
 - Unit: dimensionless
 - Inputs required: Per-layer MLC speed and acceleration traces
@@ -890,7 +890,7 @@ Definitions are written to match the current code implementation. They are not a
 
 - Group: MI components
 - Symbol/short name: MI(1.0) Speed
-- Mathematical definition: MIs(1.0) = mean_beams[ mean_CP min(v / sigma_v, 1.0) ]
+- Mathematical definition: MIs(1.0) = sum_CP,leaf min(v / sigma_v, 1.0) / max(Ncp-1,1); beam-MU mean
 - Physical meaning: Leaf speed contribution to the modulation index with threshold factor 1.0.
 - Unit: dimensionless
 - Inputs required: MLC speed, MLC acceleration, speed/acceleration spread, gantry and dose-rate weights
@@ -901,7 +901,7 @@ Definitions are written to match the current code implementation. They are not a
 
 - Group: MI components
 - Symbol/short name: MI(1.0) Acceleration
-- Mathematical definition: MIa(1.0) = mean_beams[ mean_CP min(max(v / sigma_v, a / (alpha * sigma_a)), 1.0) ]
+- Mathematical definition: MIa(1.0) = sum_CP,leaf min(max(v / sigma_v, a / (alpha_acc * sigma_a)), 1.0) / max(Ncp-2,1); alpha_acc=1/mean(dt); beam-MU mean
 - Physical meaning: Leaf acceleration contribution to the modulation index with threshold factor 1.0.
 - Unit: dimensionless
 - Inputs required: MLC speed, MLC acceleration, speed/acceleration spread, gantry and dose-rate weights
@@ -912,7 +912,7 @@ Definitions are written to match the current code implementation. They are not a
 
 - Group: MI components
 - Symbol/short name: MI(1.0) Total
-- Mathematical definition: MIt(1.0) = weighted mean over control points of min(max(v / sigma_v, a / (alpha * sigma_a)), 1.0)
+- Mathematical definition: MIt(1.0) = sum_CP WGA*WMU*sum_leaf min(max(v / sigma_v, a / (alpha_acc * sigma_a)), 1.0) / max(Ncp-2,1); beam-MU mean
 - Physical meaning: Total modulation index with threshold factor 1.0.
 - Unit: dimensionless
 - Inputs required: MLC speed, MLC acceleration, speed/acceleration spread, gantry and dose-rate weights
@@ -923,7 +923,7 @@ Definitions are written to match the current code implementation. They are not a
 
 - Group: MI components
 - Symbol/short name: MI(1.0) MLCX1 Speed
-- Mathematical definition: Same speed-component MI formula as MI(1.0), but restricted to MLCX1 leaf positions.
+- Mathematical definition: MIs(1.0) = sum_CP,leaf min(v / sigma_v, 1.0) / max(Ncp-1,1); beam-MU mean; native MLCX1 leaves only
 - Physical meaning: Leaf speed contribution to the modulation index with threshold factor 1.0 for MLCX1.
 - Unit: dimensionless
 - Inputs required: Per-layer MLC speed and acceleration traces
@@ -934,7 +934,7 @@ Definitions are written to match the current code implementation. They are not a
 
 - Group: MI components
 - Symbol/short name: MI(1.0) MLCX1 Acceleration
-- Mathematical definition: Same acceleration-component MI formula as MI(1.0), but restricted to MLCX1 leaf positions.
+- Mathematical definition: MIa(1.0) = sum_CP,leaf min(max(v / sigma_v, a / (alpha_acc * sigma_a)), 1.0) / max(Ncp-2,1); alpha_acc=1/mean(dt); beam-MU mean; native MLCX1 leaves only
 - Physical meaning: Leaf acceleration contribution to the modulation index with threshold factor 1.0 for MLCX1.
 - Unit: dimensionless
 - Inputs required: Per-layer MLC speed and acceleration traces
@@ -945,7 +945,7 @@ Definitions are written to match the current code implementation. They are not a
 
 - Group: MI components
 - Symbol/short name: MI(1.0) MLCX1 Total
-- Mathematical definition: Same total-component MI formula as MI(1.0), but restricted to MLCX1 leaf positions.
+- Mathematical definition: MIt(1.0) = sum_CP WGA*WMU*sum_leaf min(max(v / sigma_v, a / (alpha_acc * sigma_a)), 1.0) / max(Ncp-2,1); beam-MU mean; native MLCX1 leaves only
 - Physical meaning: Total modulation index with threshold factor 1.0 for MLCX1.
 - Unit: dimensionless
 - Inputs required: Per-layer MLC speed and acceleration traces
@@ -956,7 +956,7 @@ Definitions are written to match the current code implementation. They are not a
 
 - Group: MI components
 - Symbol/short name: MI(1.0) MLCX2 Speed
-- Mathematical definition: Same speed-component MI formula as MI(1.0), but restricted to MLCX2 leaf positions.
+- Mathematical definition: MIs(1.0) = sum_CP,leaf min(v / sigma_v, 1.0) / max(Ncp-1,1); beam-MU mean; native MLCX2 leaves only
 - Physical meaning: Leaf speed contribution to the modulation index with threshold factor 1.0 for MLCX2.
 - Unit: dimensionless
 - Inputs required: Per-layer MLC speed and acceleration traces
@@ -967,7 +967,7 @@ Definitions are written to match the current code implementation. They are not a
 
 - Group: MI components
 - Symbol/short name: MI(1.0) MLCX2 Acceleration
-- Mathematical definition: Same acceleration-component MI formula as MI(1.0), but restricted to MLCX2 leaf positions.
+- Mathematical definition: MIa(1.0) = sum_CP,leaf min(max(v / sigma_v, a / (alpha_acc * sigma_a)), 1.0) / max(Ncp-2,1); alpha_acc=1/mean(dt); beam-MU mean; native MLCX2 leaves only
 - Physical meaning: Leaf acceleration contribution to the modulation index with threshold factor 1.0 for MLCX2.
 - Unit: dimensionless
 - Inputs required: Per-layer MLC speed and acceleration traces
@@ -978,7 +978,7 @@ Definitions are written to match the current code implementation. They are not a
 
 - Group: MI components
 - Symbol/short name: MI(1.0) MLCX2 Total
-- Mathematical definition: Same total-component MI formula as MI(1.0), but restricted to MLCX2 leaf positions.
+- Mathematical definition: MIt(1.0) = sum_CP WGA*WMU*sum_leaf min(max(v / sigma_v, a / (alpha_acc * sigma_a)), 1.0) / max(Ncp-2,1); beam-MU mean; native MLCX2 leaves only
 - Physical meaning: Total modulation index with threshold factor 1.0 for MLCX2.
 - Unit: dimensionless
 - Inputs required: Per-layer MLC speed and acceleration traces
@@ -1000,7 +1000,7 @@ Definitions are written to match the current code implementation. They are not a
 
 - Group: MI components
 - Symbol/short name: MI(2.0) Speed
-- Mathematical definition: MIs(2.0) = mean_beams[ mean_CP min(v / sigma_v, 2.0) ]
+- Mathematical definition: MIs(2.0) = sum_CP,leaf min(v / sigma_v, 2.0) / max(Ncp-1,1); beam-MU mean
 - Physical meaning: Leaf speed contribution to the modulation index with threshold factor 2.0.
 - Unit: dimensionless
 - Inputs required: MLC speed, MLC acceleration, speed/acceleration spread, gantry and dose-rate weights
@@ -1011,7 +1011,7 @@ Definitions are written to match the current code implementation. They are not a
 
 - Group: MI components
 - Symbol/short name: MI(2.0) Acceleration
-- Mathematical definition: MIa(2.0) = mean_beams[ mean_CP min(max(v / sigma_v, a / (alpha * sigma_a)), 2.0) ]
+- Mathematical definition: MIa(2.0) = sum_CP,leaf min(max(v / sigma_v, a / (alpha_acc * sigma_a)), 2.0) / max(Ncp-2,1); alpha_acc=1/mean(dt); beam-MU mean
 - Physical meaning: Leaf acceleration contribution to the modulation index with threshold factor 2.0.
 - Unit: dimensionless
 - Inputs required: MLC speed, MLC acceleration, speed/acceleration spread, gantry and dose-rate weights
@@ -1022,7 +1022,7 @@ Definitions are written to match the current code implementation. They are not a
 
 - Group: MI components
 - Symbol/short name: MI(2.0) Total
-- Mathematical definition: MIt(2.0) = weighted mean over control points of min(max(v / sigma_v, a / (alpha * sigma_a)), 2.0)
+- Mathematical definition: MIt(2.0) = sum_CP WGA*WMU*sum_leaf min(max(v / sigma_v, a / (alpha_acc * sigma_a)), 2.0) / max(Ncp-2,1); beam-MU mean
 - Physical meaning: Total modulation index with threshold factor 2.0.
 - Unit: dimensionless
 - Inputs required: MLC speed, MLC acceleration, speed/acceleration spread, gantry and dose-rate weights
@@ -1033,7 +1033,7 @@ Definitions are written to match the current code implementation. They are not a
 
 - Group: MI components
 - Symbol/short name: MI(2.0) MLCX1 Speed
-- Mathematical definition: Same speed-component MI formula as MI(2.0), but restricted to MLCX1 leaf positions.
+- Mathematical definition: MIs(2.0) = sum_CP,leaf min(v / sigma_v, 2.0) / max(Ncp-1,1); beam-MU mean; native MLCX1 leaves only
 - Physical meaning: Leaf speed contribution to the modulation index with threshold factor 2.0 for MLCX1.
 - Unit: dimensionless
 - Inputs required: Per-layer MLC speed and acceleration traces
@@ -1044,7 +1044,7 @@ Definitions are written to match the current code implementation. They are not a
 
 - Group: MI components
 - Symbol/short name: MI(2.0) MLCX1 Acceleration
-- Mathematical definition: Same acceleration-component MI formula as MI(2.0), but restricted to MLCX1 leaf positions.
+- Mathematical definition: MIa(2.0) = sum_CP,leaf min(max(v / sigma_v, a / (alpha_acc * sigma_a)), 2.0) / max(Ncp-2,1); alpha_acc=1/mean(dt); beam-MU mean; native MLCX1 leaves only
 - Physical meaning: Leaf acceleration contribution to the modulation index with threshold factor 2.0 for MLCX1.
 - Unit: dimensionless
 - Inputs required: Per-layer MLC speed and acceleration traces
@@ -1055,7 +1055,7 @@ Definitions are written to match the current code implementation. They are not a
 
 - Group: MI components
 - Symbol/short name: MI(2.0) MLCX1 Total
-- Mathematical definition: Same total-component MI formula as MI(2.0), but restricted to MLCX1 leaf positions.
+- Mathematical definition: MIt(2.0) = sum_CP WGA*WMU*sum_leaf min(max(v / sigma_v, a / (alpha_acc * sigma_a)), 2.0) / max(Ncp-2,1); beam-MU mean; native MLCX1 leaves only
 - Physical meaning: Total modulation index with threshold factor 2.0 for MLCX1.
 - Unit: dimensionless
 - Inputs required: Per-layer MLC speed and acceleration traces
@@ -1066,7 +1066,7 @@ Definitions are written to match the current code implementation. They are not a
 
 - Group: MI components
 - Symbol/short name: MI(2.0) MLCX2 Speed
-- Mathematical definition: Same speed-component MI formula as MI(2.0), but restricted to MLCX2 leaf positions.
+- Mathematical definition: MIs(2.0) = sum_CP,leaf min(v / sigma_v, 2.0) / max(Ncp-1,1); beam-MU mean; native MLCX2 leaves only
 - Physical meaning: Leaf speed contribution to the modulation index with threshold factor 2.0 for MLCX2.
 - Unit: dimensionless
 - Inputs required: Per-layer MLC speed and acceleration traces
@@ -1077,7 +1077,7 @@ Definitions are written to match the current code implementation. They are not a
 
 - Group: MI components
 - Symbol/short name: MI(2.0) MLCX2 Acceleration
-- Mathematical definition: Same acceleration-component MI formula as MI(2.0), but restricted to MLCX2 leaf positions.
+- Mathematical definition: MIa(2.0) = sum_CP,leaf min(max(v / sigma_v, a / (alpha_acc * sigma_a)), 2.0) / max(Ncp-2,1); alpha_acc=1/mean(dt); beam-MU mean; native MLCX2 leaves only
 - Physical meaning: Leaf acceleration contribution to the modulation index with threshold factor 2.0 for MLCX2.
 - Unit: dimensionless
 - Inputs required: Per-layer MLC speed and acceleration traces
@@ -1088,7 +1088,7 @@ Definitions are written to match the current code implementation. They are not a
 
 - Group: MI components
 - Symbol/short name: MI(2.0) MLCX2 Total
-- Mathematical definition: Same total-component MI formula as MI(2.0), but restricted to MLCX2 leaf positions.
+- Mathematical definition: MIt(2.0) = sum_CP WGA*WMU*sum_leaf min(max(v / sigma_v, a / (alpha_acc * sigma_a)), 2.0) / max(Ncp-2,1); beam-MU mean; native MLCX2 leaves only
 - Physical meaning: Total modulation index with threshold factor 2.0 for MLCX2.
 - Unit: dimensionless
 - Inputs required: Per-layer MLC speed and acceleration traces
@@ -1110,7 +1110,7 @@ Definitions are written to match the current code implementation. They are not a
 
 - Group: Delivery dynamics
 - Symbol/short name: dt MLCX1
-- Mathematical definition: Same formula as dt, but computed using MLCX1 apertures only.
+- Mathematical definition: dt = mean(control-point time increment) * N_control_points; native MLCX1 apertures only
 - Physical meaning: Beam-on delivery time. Reported for MLCX1.
 - Unit: s
 - Inputs required: MLCX1 leaf positions, control-point weights, and beam geometry
@@ -1121,7 +1121,7 @@ Definitions are written to match the current code implementation. They are not a
 
 - Group: Delivery dynamics
 - Symbol/short name: dt MLCX2
-- Mathematical definition: Same formula as dt, but computed using MLCX2 apertures only.
+- Mathematical definition: dt = mean(control-point time increment) * N_control_points; native MLCX2 apertures only
 - Physical meaning: Beam-on delivery time. Reported for MLCX2.
 - Unit: s
 - Inputs required: MLCX2 leaf positions, control-point weights, and beam geometry
@@ -1143,7 +1143,7 @@ Definitions are written to match the current code implementation. They are not a
 
 - Group: Shape modulation
 - Symbol/short name: PI MLCX1
-- Mathematical definition: Same formula as PI, but computed using MLCX1 apertures only.
+- Mathematical definition: PI = perimeter^2 / (4 * pi * area), aggregated over apertures; native MLCX1 apertures only
 - Physical meaning: Irregularity of the aperture shape relative to its area. Reported for MLCX1.
 - Unit: dimensionless
 - Inputs required: MLCX1 leaf positions, control-point weights, and beam geometry
@@ -1154,7 +1154,7 @@ Definitions are written to match the current code implementation. They are not a
 
 - Group: Shape modulation
 - Symbol/short name: PI MLCX2
-- Mathematical definition: Same formula as PI, but computed using MLCX2 apertures only.
+- Mathematical definition: PI = perimeter^2 / (4 * pi * area), aggregated over apertures; native MLCX2 apertures only
 - Physical meaning: Irregularity of the aperture shape relative to its area. Reported for MLCX2.
 - Unit: dimensionless
 - Inputs required: MLCX2 leaf positions, control-point weights, and beam geometry
@@ -1165,7 +1165,7 @@ Definitions are written to match the current code implementation. They are not a
 
 - Group: Shape modulation
 - Symbol/short name: PM
-- Mathematical definition: PM = mean over adjacent control points of normalized aperture-area change
+- Mathematical definition: PM_beam = 1 - CP-MU-mean(A_i) / sum_slot max_CP(jaw-clipped slot area); beam-MU mean
 - Physical meaning: Variation in aperture area between successive control points.
 - Unit: dimensionless
 - Inputs required: MLC leaf positions, jaw positions, gantry angle, and control-point meterset weights
@@ -1176,7 +1176,7 @@ Definitions are written to match the current code implementation. They are not a
 
 - Group: Shape modulation
 - Symbol/short name: PM MLCX1
-- Mathematical definition: Same formula as PM, but computed using MLCX1 apertures only.
+- Mathematical definition: PM_beam = 1 - CP-MU-mean(A_i) / sum_slot max_CP(jaw-clipped slot area); beam-MU mean; native MLCX1 apertures only
 - Physical meaning: Variation in aperture area between successive control points. Reported for MLCX1.
 - Unit: dimensionless
 - Inputs required: MLCX1 leaf positions, control-point weights, and beam geometry
@@ -1187,7 +1187,7 @@ Definitions are written to match the current code implementation. They are not a
 
 - Group: Shape modulation
 - Symbol/short name: PM MLCX2
-- Mathematical definition: Same formula as PM, but computed using MLCX2 apertures only.
+- Mathematical definition: PM_beam = 1 - CP-MU-mean(A_i) / sum_slot max_CP(jaw-clipped slot area); beam-MU mean; native MLCX2 apertures only
 - Physical meaning: Variation in aperture area between successive control points. Reported for MLCX2.
 - Unit: dimensionless
 - Inputs required: MLCX2 leaf positions, control-point weights, and beam geometry
@@ -1231,7 +1231,7 @@ Definitions are written to match the current code implementation. They are not a
 
 - Group: Halcyon/Ethos Tamura 2020
 - Symbol/short name: PM5
-- Mathematical definition: PM5 = 1 - weighted effective aperture area / effective union aperture area
+- Mathematical definition: PM5_beam = 1 - CP-MU-mean(A_effective_i) / sum_effective_slot max_CP(slot area); beam-MU mean
 - Physical meaning: Tamura et al. plan averaged beam modulation for the synthesized effective 5 mm Halcyon/Ethos aperture.
 - Unit: dimensionless
 - Inputs required: Halcyon/Ethos MLCX1 and MLCX2 leaf positions, jaw positions, and control-point meterset weights
@@ -1363,7 +1363,7 @@ Definitions are written to match the current code implementation. They are not a
 
 - Group: Halcyon/Ethos Tamura 2020
 - Symbol/short name: pPM
-- Mathematical definition: pPM = 1 - weighted proximal aperture area / proximal union area
+- Mathematical definition: pPM_beam = 1 - CP-MU-mean(A_proximal_i) / sum_proximal_slot max_CP(slot area); beam-MU mean
 - Physical meaning: Tamura et al. proximal-layer PM for Halcyon/Ethos MLCX2.
 - Unit: dimensionless
 - Inputs required: Halcyon/Ethos MLCX1 and MLCX2 leaf positions, jaw positions, and control-point meterset weights
@@ -1374,7 +1374,7 @@ Definitions are written to match the current code implementation. They are not a
 
 - Group: Halcyon/Ethos Tamura 2020
 - Symbol/short name: dPM
-- Mathematical definition: dPM = 1 - weighted distal aperture area / distal union area
+- Mathematical definition: dPM_beam = 1 - CP-MU-mean(A_distal_i) / sum_distal_slot max_CP(slot area); beam-MU mean
 - Physical meaning: Tamura et al. distal-layer PM for Halcyon/Ethos MLCX1.
 - Unit: dimensionless
 - Inputs required: Halcyon/Ethos MLCX1 and MLCX2 leaf positions, jaw positions, and control-point meterset weights
@@ -1583,7 +1583,7 @@ Definitions are written to match the current code implementation. They are not a
 
 - Group: Shape modulation
 - Symbol/short name: MD
-- Mathematical definition: MD = union-area / weighted mean aperture area
+- Mathematical definition: MD_beam = sum_slot max_CP(jaw-clipped slot area) / CP-MU-mean(A_i); beam-MU mean
 - Physical meaning: Degree of modulation present in the delivered field shapes.
 - Unit: dimensionless
 - Inputs required: MLC leaf positions, jaw positions, gantry angle, and control-point meterset weights
@@ -1594,7 +1594,7 @@ Definitions are written to match the current code implementation. They are not a
 
 - Group: Shape modulation
 - Symbol/short name: MD MLCX1
-- Mathematical definition: Same formula as MD, but computed using MLCX1 apertures only.
+- Mathematical definition: MD_beam = sum_slot max_CP(jaw-clipped slot area) / CP-MU-mean(A_i); beam-MU mean; native MLCX1 apertures only
 - Physical meaning: Degree of modulation present in the delivered field shapes. Reported for MLCX1.
 - Unit: dimensionless
 - Inputs required: MLCX1 leaf positions, control-point weights, and beam geometry
@@ -1605,7 +1605,7 @@ Definitions are written to match the current code implementation. They are not a
 
 - Group: Shape modulation
 - Symbol/short name: MD MLCX2
-- Mathematical definition: Same formula as MD, but computed using MLCX2 apertures only.
+- Mathematical definition: MD_beam = sum_slot max_CP(jaw-clipped slot area) / CP-MU-mean(A_i); beam-MU mean; native MLCX2 apertures only
 - Physical meaning: Degree of modulation present in the delivered field shapes. Reported for MLCX2.
 - Unit: dimensionless
 - Inputs required: MLCX2 leaf positions, control-point weights, and beam geometry
@@ -1627,7 +1627,7 @@ Definitions are written to match the current code implementation. They are not a
 
 - Group: Aperture geometry
 - Symbol/short name: PA MLCX1
-- Mathematical definition: Same formula as PA, but computed using MLCX1 apertures only.
+- Mathematical definition: PA = weighted mean(aperture area); native MLCX1 apertures only
 - Physical meaning: Average beam's-eye-view aperture area. Reported for MLCX1.
 - Unit: mm^2
 - Inputs required: MLCX1 leaf positions, control-point weights, and beam geometry
@@ -1638,7 +1638,7 @@ Definitions are written to match the current code implementation. They are not a
 
 - Group: Aperture geometry
 - Symbol/short name: PA MLCX2
-- Mathematical definition: Same formula as PA, but computed using MLCX2 apertures only.
+- Mathematical definition: PA = weighted mean(aperture area); native MLCX2 apertures only
 - Physical meaning: Average beam's-eye-view aperture area. Reported for MLCX2.
 - Unit: mm^2
 - Inputs required: MLCX2 leaf positions, control-point weights, and beam geometry
@@ -1660,7 +1660,7 @@ Definitions are written to match the current code implementation. They are not a
 
 - Group: Aperture geometry
 - Symbol/short name: EFS MLCX1
-- Mathematical definition: Same formula as EFS, but computed using MLCX1 apertures only.
+- Mathematical definition: EFS = weighted mean(4 * area / perimeter); native MLCX1 apertures only
 - Physical meaning: Equivalent square field size of the aperture. Reported for MLCX1.
 - Unit: mm
 - Inputs required: MLCX1 leaf positions, control-point weights, and beam geometry
@@ -1671,7 +1671,7 @@ Definitions are written to match the current code implementation. They are not a
 
 - Group: Aperture geometry
 - Symbol/short name: EFS MLCX2
-- Mathematical definition: Same formula as EFS, but computed using MLCX2 apertures only.
+- Mathematical definition: EFS = weighted mean(4 * area / perimeter); native MLCX2 apertures only
 - Physical meaning: Equivalent square field size of the aperture. Reported for MLCX2.
 - Unit: mm
 - Inputs required: MLCX2 leaf positions, control-point weights, and beam geometry
@@ -1693,7 +1693,7 @@ Definitions are written to match the current code implementation. They are not a
 
 - Group: Aperture geometry
 - Symbol/short name: psmall MLCX1
-- Mathematical definition: Same formula as psmall, but computed using MLCX1 apertures only.
+- Mathematical definition: psmall = weighted fraction(EFS < 30 mm); native MLCX1 apertures only
 - Physical meaning: Fraction of apertures classified as small fields. Reported for MLCX1.
 - Unit: dimensionless
 - Inputs required: MLCX1 leaf positions, control-point weights, and beam geometry
@@ -1704,7 +1704,7 @@ Definitions are written to match the current code implementation. They are not a
 
 - Group: Aperture geometry
 - Symbol/short name: psmall MLCX2
-- Mathematical definition: Same formula as psmall, but computed using MLCX2 apertures only.
+- Mathematical definition: psmall = weighted fraction(EFS < 30 mm); native MLCX2 apertures only
 - Physical meaning: Fraction of apertures classified as small fields. Reported for MLCX2.
 - Unit: dimensionless
 - Inputs required: MLCX2 leaf positions, control-point weights, and beam geometry
@@ -1715,7 +1715,7 @@ Definitions are written to match the current code implementation. They are not a
 
 - Group: Aperture geometry
 - Symbol/short name: SAS5mm
-- Mathematical definition: SAS5mm = active leaf gaps below 5 mm / all active leaf gaps
+- Mathematical definition: SAS5mm = CP-MU mean of count(0<raw_gap<5 mm)/count(raw_gap>0), using Y-jaw-active slots; beam-MU mean
 - Physical meaning: Fraction of leaf gaps smaller than 5 mm.
 - Unit: dimensionless
 - Inputs required: MLC leaf positions, jaw positions, gantry angle, and control-point meterset weights
@@ -1726,7 +1726,7 @@ Definitions are written to match the current code implementation. They are not a
 
 - Group: Aperture geometry
 - Symbol/short name: SAS5mm MLCX1
-- Mathematical definition: Same formula as SAS5mm, but computed using MLCX1 apertures only.
+- Mathematical definition: SAS5mm = CP-MU mean of count(0<raw_gap<5 mm)/count(raw_gap>0), using Y-jaw-active slots; beam-MU mean; native MLCX1 apertures only
 - Physical meaning: Fraction of leaf gaps smaller than 5 mm. Reported for MLCX1.
 - Unit: dimensionless
 - Inputs required: MLCX1 leaf positions, control-point weights, and beam geometry
@@ -1737,7 +1737,7 @@ Definitions are written to match the current code implementation. They are not a
 
 - Group: Aperture geometry
 - Symbol/short name: SAS5mm MLCX2
-- Mathematical definition: Same formula as SAS5mm, but computed using MLCX2 apertures only.
+- Mathematical definition: SAS5mm = CP-MU mean of count(0<raw_gap<5 mm)/count(raw_gap>0), using Y-jaw-active slots; beam-MU mean; native MLCX2 apertures only
 - Physical meaning: Fraction of leaf gaps smaller than 5 mm. Reported for MLCX2.
 - Unit: dimensionless
 - Inputs required: MLCX2 leaf positions, control-point weights, and beam geometry
@@ -1748,7 +1748,7 @@ Definitions are written to match the current code implementation. They are not a
 
 - Group: Aperture geometry
 - Symbol/short name: SAS10mm
-- Mathematical definition: SAS10mm = active leaf gaps below 10 mm / all active leaf gaps
+- Mathematical definition: SAS10mm = CP-MU mean of count(0<raw_gap<10 mm)/count(raw_gap>0), using Y-jaw-active slots; beam-MU mean
 - Physical meaning: Fraction of leaf gaps smaller than 10 mm.
 - Unit: dimensionless
 - Inputs required: MLC leaf positions, jaw positions, gantry angle, and control-point meterset weights
@@ -1759,7 +1759,7 @@ Definitions are written to match the current code implementation. They are not a
 
 - Group: Aperture geometry
 - Symbol/short name: SAS10mm MLCX1
-- Mathematical definition: Same formula as SAS10mm, but computed using MLCX1 apertures only.
+- Mathematical definition: SAS10mm = CP-MU mean of count(0<raw_gap<10 mm)/count(raw_gap>0), using Y-jaw-active slots; beam-MU mean; native MLCX1 apertures only
 - Physical meaning: Fraction of leaf gaps smaller than 10 mm. Reported for MLCX1.
 - Unit: dimensionless
 - Inputs required: MLCX1 leaf positions, control-point weights, and beam geometry
@@ -1770,7 +1770,7 @@ Definitions are written to match the current code implementation. They are not a
 
 - Group: Aperture geometry
 - Symbol/short name: SAS10mm MLCX2
-- Mathematical definition: Same formula as SAS10mm, but computed using MLCX2 apertures only.
+- Mathematical definition: SAS10mm = CP-MU mean of count(0<raw_gap<10 mm)/count(raw_gap>0), using Y-jaw-active slots; beam-MU mean; native MLCX2 apertures only
 - Physical meaning: Fraction of leaf gaps smaller than 10 mm. Reported for MLCX2.
 - Unit: dimensionless
 - Inputs required: MLCX2 leaf positions, control-point weights, and beam geometry
@@ -1781,7 +1781,7 @@ Definitions are written to match the current code implementation. They are not a
 
 - Group: Aperture geometry
 - Symbol/short name: SAS20mm
-- Mathematical definition: SAS20mm = active leaf gaps below 20 mm / all active leaf gaps
+- Mathematical definition: SAS20mm = CP-MU mean of count(0<raw_gap<20 mm)/count(raw_gap>0), using Y-jaw-active slots; beam-MU mean
 - Physical meaning: Fraction of leaf gaps smaller than 20 mm.
 - Unit: dimensionless
 - Inputs required: MLC leaf positions, jaw positions, gantry angle, and control-point meterset weights
@@ -1792,7 +1792,7 @@ Definitions are written to match the current code implementation. They are not a
 
 - Group: Aperture geometry
 - Symbol/short name: SAS20mm MLCX1
-- Mathematical definition: Same formula as SAS20mm, but computed using MLCX1 apertures only.
+- Mathematical definition: SAS20mm = CP-MU mean of count(0<raw_gap<20 mm)/count(raw_gap>0), using Y-jaw-active slots; beam-MU mean; native MLCX1 apertures only
 - Physical meaning: Fraction of leaf gaps smaller than 20 mm. Reported for MLCX1.
 - Unit: dimensionless
 - Inputs required: MLCX1 leaf positions, control-point weights, and beam geometry
@@ -1803,7 +1803,7 @@ Definitions are written to match the current code implementation. They are not a
 
 - Group: Aperture geometry
 - Symbol/short name: SAS20mm MLCX2
-- Mathematical definition: Same formula as SAS20mm, but computed using MLCX2 apertures only.
+- Mathematical definition: SAS20mm = CP-MU mean of count(0<raw_gap<20 mm)/count(raw_gap>0), using Y-jaw-active slots; beam-MU mean; native MLCX2 apertures only
 - Physical meaning: Fraction of leaf gaps smaller than 20 mm. Reported for MLCX2.
 - Unit: dimensionless
 - Inputs required: MLCX2 leaf positions, control-point weights, and beam geometry
@@ -1814,9 +1814,9 @@ Definitions are written to match the current code implementation. They are not a
 
 - Group: Aperture geometry
 - Symbol/short name: EM
-- Mathematical definition: EM = aperture edge metric calculated from BEV perimeter relative to area
+- Mathematical definition: EM_i = horizontal leaf-side boundary length / jaw-clipped area (C1=0,C2=1); CP-MU and beam-MU means; not full perimeter/(2*area)
 - Physical meaning: Relative amount of aperture edge compared with open field area.
-- Unit: dimensionless
+- Unit: mm^-1
 - Inputs required: MLC leaf positions, jaw positions, gantry angle, and control-point meterset weights
 - Status: implemented
 - Notes: For Halcyon/Ethos-style plans, the workflow also exports per-layer MLCX1 and MLCX2 variants.
@@ -1825,9 +1825,9 @@ Definitions are written to match the current code implementation. They are not a
 
 - Group: Aperture geometry
 - Symbol/short name: EM MLCX1
-- Mathematical definition: Same formula as EM, but computed using MLCX1 apertures only.
+- Mathematical definition: EM_i = horizontal leaf-side boundary length / jaw-clipped area (C1=0,C2=1); CP-MU and beam-MU means; not full perimeter/(2*area); native MLCX1 apertures only
 - Physical meaning: Relative amount of aperture edge compared with open field area. Reported for MLCX1.
-- Unit: dimensionless
+- Unit: mm^-1
 - Inputs required: MLCX1 leaf positions, control-point weights, and beam geometry
 - Status: implemented_flattened
 - Notes: Layer-specific flattened export for EM.
@@ -1836,9 +1836,9 @@ Definitions are written to match the current code implementation. They are not a
 
 - Group: Aperture geometry
 - Symbol/short name: EM MLCX2
-- Mathematical definition: Same formula as EM, but computed using MLCX2 apertures only.
+- Mathematical definition: EM_i = horizontal leaf-side boundary length / jaw-clipped area (C1=0,C2=1); CP-MU and beam-MU means; not full perimeter/(2*area); native MLCX2 apertures only
 - Physical meaning: Relative amount of aperture edge compared with open field area. Reported for MLCX2.
-- Unit: dimensionless
+- Unit: mm^-1
 - Inputs required: MLCX2 leaf positions, control-point weights, and beam geometry
 - Status: implemented_flattened
 - Notes: Layer-specific flattened export for EM.
@@ -1852,7 +1852,29 @@ Definitions are written to match the current code implementation. They are not a
 - Unit: dimensionless
 - Inputs required: MLC leaf positions, jaw positions, gantry angle, and control-point meterset weights
 - Status: implemented
-- Notes: None
+- Notes: For Halcyon/Ethos-style plans, the workflow also exports per-layer MLCX1 and MLCX2 variants.
+
+### `bjar_mlcx1` - BJAR MLCX1
+
+- Group: Aperture geometry
+- Symbol/short name: BJAR MLCX1
+- Mathematical definition: BJAR = aperture area / jaw-defined area; native MLCX1 apertures only
+- Physical meaning: Ratio between aperture area and jaw-defined area. Reported for MLCX1.
+- Unit: dimensionless
+- Inputs required: MLCX1 leaf positions, control-point weights, and beam geometry
+- Status: implemented_flattened
+- Notes: Layer-specific flattened export for BJAR.
+
+### `bjar_mlcx2` - BJAR MLCX2
+
+- Group: Aperture geometry
+- Symbol/short name: BJAR MLCX2
+- Mathematical definition: BJAR = aperture area / jaw-defined area; native MLCX2 apertures only
+- Physical meaning: Ratio between aperture area and jaw-defined area. Reported for MLCX2.
+- Unit: dimensionless
+- Inputs required: MLCX2 leaf positions, control-point weights, and beam geometry
+- Status: implemented_flattened
+- Notes: Layer-specific flattened export for BJAR.
 
 ### `mad` - MAD
 
@@ -1869,7 +1891,7 @@ Definitions are written to match the current code implementation. They are not a
 
 - Group: Aperture geometry
 - Symbol/short name: MAD MLCX1
-- Mathematical definition: Same formula as MAD, but computed using MLCX1 apertures only.
+- Mathematical definition: MAD = MU-weighted mean(abs((left + right) / 2)) over jaw-active positive gaps; native MLCX1 apertures only
 - Physical meaning: Average distance of the aperture opening from the beam central axis. Reported for MLCX1.
 - Unit: mm
 - Inputs required: MLCX1 leaf positions, control-point weights, and beam geometry
@@ -1880,7 +1902,7 @@ Definitions are written to match the current code implementation. They are not a
 
 - Group: Aperture geometry
 - Symbol/short name: MAD MLCX2
-- Mathematical definition: Same formula as MAD, but computed using MLCX2 apertures only.
+- Mathematical definition: MAD = MU-weighted mean(abs((left + right) / 2)) over jaw-active positive gaps; native MLCX2 apertures only
 - Physical meaning: Average distance of the aperture opening from the beam central axis. Reported for MLCX2.
 - Unit: mm
 - Inputs required: MLCX2 leaf positions, control-point weights, and beam geometry
@@ -1902,7 +1924,7 @@ Definitions are written to match the current code implementation. They are not a
 
 - Group: Aperture geometry
 - Symbol/short name: ALG MLCX1
-- Mathematical definition: Same formula as ALG, but computed using MLCX1 apertures only.
+- Mathematical definition: ALG = control-point-MU-weighted mean active gap, then beam-MU weighted; native MLCX1 apertures only
 - Physical meaning: Average gap between opposing leaf pairs. Reported for MLCX1.
 - Unit: mm
 - Inputs required: MLCX1 leaf positions, control-point weights, and beam geometry
@@ -1913,7 +1935,7 @@ Definitions are written to match the current code implementation. They are not a
 
 - Group: Aperture geometry
 - Symbol/short name: ALG MLCX2
-- Mathematical definition: Same formula as ALG, but computed using MLCX2 apertures only.
+- Mathematical definition: ALG = control-point-MU-weighted mean active gap, then beam-MU weighted; native MLCX2 apertures only
 - Physical meaning: Average gap between opposing leaf pairs. Reported for MLCX2.
 - Unit: mm
 - Inputs required: MLCX2 leaf positions, control-point weights, and beam geometry
@@ -1935,7 +1957,7 @@ Definitions are written to match the current code implementation. They are not a
 
 - Group: Aperture geometry
 - Symbol/short name: ALG SD MLCX1
-- Mathematical definition: Same formula as ALG SD, but computed using MLCX1 apertures only.
+- Mathematical definition: ALG SD = control-point-balanced weighted population SD of active gaps; native MLCX1 apertures only
 - Physical meaning: Standard deviation of the opposing leaf gap. Reported for MLCX1.
 - Unit: mm
 - Inputs required: MLCX1 leaf positions, control-point weights, and beam geometry
@@ -1946,7 +1968,7 @@ Definitions are written to match the current code implementation. They are not a
 
 - Group: Aperture geometry
 - Symbol/short name: ALG SD MLCX2
-- Mathematical definition: Same formula as ALG SD, but computed using MLCX2 apertures only.
+- Mathematical definition: ALG SD = control-point-balanced weighted population SD of active gaps; native MLCX2 apertures only
 - Physical meaning: Standard deviation of the opposing leaf gap. Reported for MLCX2.
 - Unit: mm
 - Inputs required: MLCX2 leaf positions, control-point weights, and beam geometry
@@ -1957,7 +1979,7 @@ Definitions are written to match the current code implementation. They are not a
 
 - Group: Aperture geometry
 - Symbol/short name: P
-- Mathematical definition: P = mean aperture perimeter in beam's-eye view
+- Mathematical definition: P_i = horizontal boundary + 2*sum_positive_open_slots(jaw-exposed height); CP-MU and beam-MU means
 - Physical meaning: Average perimeter of the beam's-eye-view aperture.
 - Unit: mm
 - Inputs required: MLC leaf positions, jaw positions, gantry angle, and control-point meterset weights
@@ -1968,7 +1990,7 @@ Definitions are written to match the current code implementation. They are not a
 
 - Group: Aperture geometry
 - Symbol/short name: P MLCX1
-- Mathematical definition: Same formula as P, but computed using MLCX1 apertures only.
+- Mathematical definition: P_i = horizontal boundary + 2*sum_positive_open_slots(jaw-exposed height); CP-MU and beam-MU means; native MLCX1 apertures only
 - Physical meaning: Average perimeter of the beam's-eye-view aperture. Reported for MLCX1.
 - Unit: mm
 - Inputs required: MLCX1 leaf positions, control-point weights, and beam geometry
@@ -1979,7 +2001,7 @@ Definitions are written to match the current code implementation. They are not a
 
 - Group: Aperture geometry
 - Symbol/short name: P MLCX2
-- Mathematical definition: Same formula as P, but computed using MLCX2 apertures only.
+- Mathematical definition: P_i = horizontal boundary + 2*sum_positive_open_slots(jaw-exposed height); CP-MU and beam-MU means; native MLCX2 apertures only
 - Physical meaning: Average perimeter of the beam's-eye-view aperture. Reported for MLCX2.
 - Unit: mm
 - Inputs required: MLCX2 leaf positions, control-point weights, and beam geometry
@@ -2001,7 +2023,7 @@ Definitions are written to match the current code implementation. They are not a
 
 - Group: Aperture geometry
 - Symbol/short name: ASR MLCX1
-- Mathematical definition: Same formula as ASR, but computed using MLCX1 apertures only.
+- Mathematical definition: ASR = mean number of disconnected open aperture sub-regions; native MLCX1 apertures only
 - Physical meaning: Average number of disconnected open sub-regions in the aperture. Reported for MLCX1.
 - Unit: dimensionless
 - Inputs required: MLCX1 leaf positions, control-point weights, and beam geometry
@@ -2012,7 +2034,7 @@ Definitions are written to match the current code implementation. They are not a
 
 - Group: Aperture geometry
 - Symbol/short name: ASR MLCX2
-- Mathematical definition: Same formula as ASR, but computed using MLCX2 apertures only.
+- Mathematical definition: ASR = mean number of disconnected open aperture sub-regions; native MLCX2 apertures only
 - Physical meaning: Average number of disconnected open sub-regions in the aperture. Reported for MLCX2.
 - Unit: dimensionless
 - Inputs required: MLCX2 leaf positions, control-point weights, and beam geometry
@@ -2023,29 +2045,106 @@ Definitions are written to match the current code implementation. They are not a
 
 - Group: Aperture geometry
 - Symbol/short name: AXJD
-- Mathematical definition: AXJD = mean distance between aperture extent and X jaws
-- Physical meaning: Distance between aperture extent and X jaws.
-- Unit: dimensionless
+- Mathematical definition: AXJD = CP-MU mean(abs(X2-X1)); beam-MU mean (jaw span, not aperture clearance)
+- Physical meaning: MU-weighted X-jaw opening width.
+- Unit: mm
 - Inputs required: MLC leaf positions, jaw positions, gantry angle, and control-point meterset weights
 - Status: implemented
-- Notes: None
+- Notes: For Halcyon/Ethos-style plans, the workflow also exports per-layer MLCX1 and MLCX2 variants.
+
+### `axjd_mlcx1` - AXJD MLCX1
+
+- Group: Aperture geometry
+- Symbol/short name: AXJD MLCX1
+- Mathematical definition: AXJD = CP-MU mean(abs(X2-X1)); beam-MU mean (jaw span, not aperture clearance); native MLCX1 apertures only
+- Physical meaning: MU-weighted X-jaw opening width. Reported for MLCX1.
+- Unit: mm
+- Inputs required: MLCX1 leaf positions, control-point weights, and beam geometry
+- Status: implemented_flattened
+- Notes: Layer-specific flattened export for AXJD.
+
+### `axjd_mlcx2` - AXJD MLCX2
+
+- Group: Aperture geometry
+- Symbol/short name: AXJD MLCX2
+- Mathematical definition: AXJD = CP-MU mean(abs(X2-X1)); beam-MU mean (jaw span, not aperture clearance); native MLCX2 apertures only
+- Physical meaning: MU-weighted X-jaw opening width. Reported for MLCX2.
+- Unit: mm
+- Inputs required: MLCX2 leaf positions, control-point weights, and beam geometry
+- Status: implemented_flattened
+- Notes: Layer-specific flattened export for AXJD.
 
 ### `ayjd` - AYJD
 
 - Group: Aperture geometry
 - Symbol/short name: AYJD
-- Mathematical definition: AYJD = mean distance between aperture extent and Y jaws
-- Physical meaning: Distance between aperture extent and Y jaws.
-- Unit: dimensionless
+- Mathematical definition: AYJD = CP-MU mean(abs(Y2-Y1)); beam-MU mean (jaw span, not aperture clearance)
+- Physical meaning: MU-weighted Y-jaw opening width.
+- Unit: mm
 - Inputs required: MLC leaf positions, jaw positions, gantry angle, and control-point meterset weights
 - Status: implemented
-- Notes: None
+- Notes: For Halcyon/Ethos-style plans, the workflow also exports per-layer MLCX1 and MLCX2 variants.
+
+### `ayjd_mlcx1` - AYJD MLCX1
+
+- Group: Aperture geometry
+- Symbol/short name: AYJD MLCX1
+- Mathematical definition: AYJD = CP-MU mean(abs(Y2-Y1)); beam-MU mean (jaw span, not aperture clearance); native MLCX1 apertures only
+- Physical meaning: MU-weighted Y-jaw opening width. Reported for MLCX1.
+- Unit: mm
+- Inputs required: MLCX1 leaf positions, control-point weights, and beam geometry
+- Status: implemented_flattened
+- Notes: Layer-specific flattened export for AYJD.
+
+### `ayjd_mlcx2` - AYJD MLCX2
+
+- Group: Aperture geometry
+- Symbol/short name: AYJD MLCX2
+- Mathematical definition: AYJD = CP-MU mean(abs(Y2-Y1)); beam-MU mean (jaw span, not aperture clearance); native MLCX2 apertures only
+- Physical meaning: MU-weighted Y-jaw opening width. Reported for MLCX2.
+- Unit: mm
+- Inputs required: MLCX2 leaf positions, control-point weights, and beam geometry
+- Status: implemented_flattened
+- Notes: Layer-specific flattened export for AYJD.
+
+### `ja` - JA
+
+- Group: Aperture geometry
+- Symbol/short name: JA
+- Mathematical definition: JA = CP-MU mean(max(X2-X1,0)*max(Y2-Y1,0)); beam-MU mean
+- Physical meaning: MU-weighted jaw-defined rectangular area.
+- Unit: mm^2
+- Inputs required: MLC leaf positions, jaw positions, gantry angle, and control-point meterset weights
+- Status: implemented
+- Notes: For Halcyon/Ethos-style plans, the workflow also exports per-layer MLCX1 and MLCX2 variants.
+
+### `ja_mlcx1` - JA MLCX1
+
+- Group: Aperture geometry
+- Symbol/short name: JA MLCX1
+- Mathematical definition: JA = CP-MU mean(max(X2-X1,0)*max(Y2-Y1,0)); beam-MU mean; native MLCX1 apertures only
+- Physical meaning: MU-weighted jaw-defined rectangular area. Reported for MLCX1.
+- Unit: mm^2
+- Inputs required: MLCX1 leaf positions, control-point weights, and beam geometry
+- Status: implemented_flattened
+- Notes: Layer-specific flattened export for JA.
+
+### `ja_mlcx2` - JA MLCX2
+
+- Group: Aperture geometry
+- Symbol/short name: JA MLCX2
+- Mathematical definition: JA = CP-MU mean(max(X2-X1,0)*max(Y2-Y1,0)); beam-MU mean; native MLCX2 apertures only
+- Physical meaning: MU-weighted jaw-defined rectangular area. Reported for MLCX2.
+- Unit: mm^2
+- Inputs required: MLCX2 leaf positions, control-point weights, and beam geometry
+- Status: implemented_flattened
+- Notes: Layer-specific flattened export for JA.
 
 ### `cam` - CAM
 
 - Group: Aperture geometry
 - Symbol/short name: CAM
-- Mathematical definition: CAM = converted-aperture complexity metric from transformed field geometry
+- Mathematical definition: CAM_i = 1 - mean_j(1-exp(-clipped_gap_j/10 mm))*(1-exp(-sqrt(A_i)/10 mm)); jaw-overlapping slots; CP-MU and beam-MU means
 - Physical meaning: Aperture complexity score based on converted field geometry.
 - Unit: dimensionless
 - Inputs required: MLC leaf positions, jaw positions, gantry angle, and control-point meterset weights
@@ -2056,7 +2155,7 @@ Definitions are written to match the current code implementation. They are not a
 
 - Group: Aperture geometry
 - Symbol/short name: CAM MLCX1
-- Mathematical definition: Same formula as CAM, but computed using MLCX1 apertures only.
+- Mathematical definition: CAM_i = 1 - mean_j(1-exp(-clipped_gap_j/10 mm))*(1-exp(-sqrt(A_i)/10 mm)); jaw-overlapping slots; CP-MU and beam-MU means; native MLCX1 apertures only
 - Physical meaning: Aperture complexity score based on converted field geometry. Reported for MLCX1.
 - Unit: dimensionless
 - Inputs required: MLCX1 leaf positions, control-point weights, and beam geometry
@@ -2067,7 +2166,7 @@ Definitions are written to match the current code implementation. They are not a
 
 - Group: Aperture geometry
 - Symbol/short name: CAM MLCX2
-- Mathematical definition: Same formula as CAM, but computed using MLCX2 apertures only.
+- Mathematical definition: CAM_i = 1 - mean_j(1-exp(-clipped_gap_j/10 mm))*(1-exp(-sqrt(A_i)/10 mm)); jaw-overlapping slots; CP-MU and beam-MU means; native MLCX2 apertures only
 - Physical meaning: Aperture complexity score based on converted field geometry. Reported for MLCX2.
 - Unit: dimensionless
 - Inputs required: MLCX2 leaf positions, control-point weights, and beam geometry
@@ -2078,7 +2177,7 @@ Definitions are written to match the current code implementation. They are not a
 
 - Group: Aperture geometry
 - Symbol/short name: EAM
-- Mathematical definition: EAM = combined edge-and-area aperture complexity metric
+- Mathematical definition: EAM_i = (10 mm*H_i)/(A_i+5 mm*H_i), H_i=one-bank jaw-exposed slot height including closed slots; CP-MU and beam-MU means
 - Physical meaning: Combined edge-and-area measure of aperture complexity.
 - Unit: dimensionless
 - Inputs required: MLC leaf positions, jaw positions, gantry angle, and control-point meterset weights
@@ -2089,7 +2188,7 @@ Definitions are written to match the current code implementation. They are not a
 
 - Group: Aperture geometry
 - Symbol/short name: EAM MLCX1
-- Mathematical definition: Same formula as EAM, but computed using MLCX1 apertures only.
+- Mathematical definition: EAM_i = (10 mm*H_i)/(A_i+5 mm*H_i), H_i=one-bank jaw-exposed slot height including closed slots; CP-MU and beam-MU means; native MLCX1 apertures only
 - Physical meaning: Combined edge-and-area measure of aperture complexity. Reported for MLCX1.
 - Unit: dimensionless
 - Inputs required: MLCX1 leaf positions, control-point weights, and beam geometry
@@ -2100,7 +2199,7 @@ Definitions are written to match the current code implementation. They are not a
 
 - Group: Aperture geometry
 - Symbol/short name: EAM MLCX2
-- Mathematical definition: Same formula as EAM, but computed using MLCX2 apertures only.
+- Mathematical definition: EAM_i = (10 mm*H_i)/(A_i+5 mm*H_i), H_i=one-bank jaw-exposed slot height including closed slots; CP-MU and beam-MU means; native MLCX2 apertures only
 - Physical meaning: Combined edge-and-area measure of aperture complexity. Reported for MLCX2.
 - Unit: dimensionless
 - Inputs required: MLCX2 leaf positions, control-point weights, and beam geometry
@@ -2595,7 +2694,7 @@ Definitions are written to match the current code implementation. They are not a
 
 - Group: Halcyon/Ethos Hybrid v2
 - Symbol/short name: LT Mean Leaf MLCX1
-- Mathematical definition: Same formula as LT Mean Leaf, but computed using MLCX1 apertures only.
+- Mathematical definition: LT Mean Leaf = total raw geometric trajectory travel / number of moving physical leaves; native MLCX1 apertures only
 - Physical meaning: Raw trajectory travel averaged over moving physical leaves. Reported for MLCX1.
 - Unit: mm/moving leaf
 - Inputs required: MLCX1 leaf positions, control-point weights, and beam geometry
@@ -2606,7 +2705,7 @@ Definitions are written to match the current code implementation. They are not a
 
 - Group: Halcyon/Ethos Hybrid v2
 - Symbol/short name: LT Mean Leaf MLCX2
-- Mathematical definition: Same formula as LT Mean Leaf, but computed using MLCX2 apertures only.
+- Mathematical definition: LT Mean Leaf = total raw geometric trajectory travel / number of moving physical leaves; native MLCX2 apertures only
 - Physical meaning: Raw trajectory travel averaged over moving physical leaves. Reported for MLCX2.
 - Unit: mm/moving leaf
 - Inputs required: MLCX2 leaf positions, control-point weights, and beam geometry
@@ -2628,7 +2727,7 @@ Definitions are written to match the current code implementation. They are not a
 
 - Group: Halcyon/Ethos Hybrid v2
 - Symbol/short name: NL Pairs MLCX1
-- Mathematical definition: Same formula as NL Pairs, but computed using MLCX1 apertures only.
+- Mathematical definition: NL Pairs = MU-weighted mean active leaf-pair count; identical to legacy NL; native MLCX1 apertures only
 - Physical meaning: MU-weighted number of active leaf pairs; the legacy NL key is an alias value. Reported for MLCX1.
 - Unit: active leaf pairs
 - Inputs required: MLCX1 leaf positions, control-point weights, and beam geometry
@@ -2639,7 +2738,7 @@ Definitions are written to match the current code implementation. They are not a
 
 - Group: Halcyon/Ethos Hybrid v2
 - Symbol/short name: NL Pairs MLCX2
-- Mathematical definition: Same formula as NL Pairs, but computed using MLCX2 apertures only.
+- Mathematical definition: NL Pairs = MU-weighted mean active leaf-pair count; identical to legacy NL; native MLCX2 apertures only
 - Physical meaning: MU-weighted number of active leaf pairs; the legacy NL key is an alias value. Reported for MLCX2.
 - Unit: active leaf pairs
 - Inputs required: MLCX2 leaf positions, control-point weights, and beam geometry
@@ -2661,7 +2760,7 @@ Definitions are written to match the current code implementation. They are not a
 
 - Group: Halcyon/Ethos Hybrid v2
 - Symbol/short name: NL Leaves MLCX1
-- Mathematical definition: Same formula as NL Leaves, but computed using MLCX1 apertures only.
+- Mathematical definition: NL Leaves = 2 * NL Pairs; native MLCX1 apertures only
 - Physical meaning: MU-weighted number of active physical leaves, exactly twice NL Pairs. Reported for MLCX1.
 - Unit: active physical leaves
 - Inputs required: MLCX1 leaf positions, control-point weights, and beam geometry
@@ -2672,7 +2771,7 @@ Definitions are written to match the current code implementation. They are not a
 
 - Group: Halcyon/Ethos Hybrid v2
 - Symbol/short name: NL Leaves MLCX2
-- Mathematical definition: Same formula as NL Leaves, but computed using MLCX2 apertures only.
+- Mathematical definition: NL Leaves = 2 * NL Pairs; native MLCX2 apertures only
 - Physical meaning: MU-weighted number of active physical leaves, exactly twice NL Pairs. Reported for MLCX2.
 - Unit: active physical leaves
 - Inputs required: MLCX2 leaf positions, control-point weights, and beam geometry
@@ -2694,7 +2793,7 @@ Definitions are written to match the current code implementation. They are not a
 
 - Group: Halcyon/Ethos Hybrid v2
 - Symbol/short name: AAV Effective
-- Mathematical definition: AAV = aperture area / arc-level union aperture area, then weighted over the arc, computed on the physical effective dual-layer aperture
+- Mathematical definition: AAV_i = A_i / sum_slot[(max_CP raw_right - min_CP raw_left)_+ * max_CP jaw_exposed_height]; interval endpoint mean, then interval-MU and beam-MU means, computed on the physical effective dual-layer aperture
 - Physical meaning: AAV computed on the physical effective dual-layer aperture.
 - Unit: dimensionless
 - Inputs required: Aligned Halcyon/Ethos MLCX1 and MLCX2 apertures with control-point and beam MU
@@ -2705,7 +2804,7 @@ Definitions are written to match the current code implementation. They are not a
 
 - Group: Halcyon/Ethos Hybrid v2
 - Symbol/short name: LSV Effective
-- Mathematical definition: LSV = bank_LSV(left) * bank_LSV(right), then weighted over the arc, computed on the physical effective dual-layer aperture
+- Mathematical definition: LSV_i = product_banks[1 - sum_adjacent abs(x[j+1]-x[j]) / ((n-1)*(max(x)-min(x)))]; bank=1 for constant/single-leaf bank, CP=0 when no active gaps; interval endpoint mean then MU means, computed on the physical effective dual-layer aperture
 - Physical meaning: LSV computed on the physical effective dual-layer aperture.
 - Unit: dimensionless
 - Inputs required: Aligned Halcyon/Ethos MLCX1 and MLCX2 apertures with control-point and beam MU
@@ -2760,7 +2859,7 @@ Definitions are written to match the current code implementation. They are not a
 
 - Group: Halcyon/Ethos Hybrid v2
 - Symbol/short name: SAS5mm Effective
-- Mathematical definition: SAS5mm = active leaf gaps below 5 mm / all active leaf gaps, computed on the physical effective dual-layer aperture
+- Mathematical definition: SAS5mm = CP-MU mean of count(0<raw_gap<5 mm)/count(raw_gap>0), using Y-jaw-active slots; beam-MU mean, computed on the physical effective dual-layer aperture
 - Physical meaning: SAS5mm computed on the physical effective dual-layer aperture.
 - Unit: dimensionless
 - Inputs required: Aligned Halcyon/Ethos MLCX1 and MLCX2 apertures with control-point and beam MU
@@ -2771,7 +2870,7 @@ Definitions are written to match the current code implementation. They are not a
 
 - Group: Halcyon/Ethos Hybrid v2
 - Symbol/short name: SAS10mm Effective
-- Mathematical definition: SAS10mm = active leaf gaps below 10 mm / all active leaf gaps, computed on the physical effective dual-layer aperture
+- Mathematical definition: SAS10mm = CP-MU mean of count(0<raw_gap<10 mm)/count(raw_gap>0), using Y-jaw-active slots; beam-MU mean, computed on the physical effective dual-layer aperture
 - Physical meaning: SAS10mm computed on the physical effective dual-layer aperture.
 - Unit: dimensionless
 - Inputs required: Aligned Halcyon/Ethos MLCX1 and MLCX2 apertures with control-point and beam MU
@@ -2782,7 +2881,7 @@ Definitions are written to match the current code implementation. They are not a
 
 - Group: Halcyon/Ethos Hybrid v2
 - Symbol/short name: SAS20mm Effective
-- Mathematical definition: SAS20mm = active leaf gaps below 20 mm / all active leaf gaps, computed on the physical effective dual-layer aperture
+- Mathematical definition: SAS20mm = CP-MU mean of count(0<raw_gap<20 mm)/count(raw_gap>0), using Y-jaw-active slots; beam-MU mean, computed on the physical effective dual-layer aperture
 - Physical meaning: SAS20mm computed on the physical effective dual-layer aperture.
 - Unit: dimensionless
 - Inputs required: Aligned Halcyon/Ethos MLCX1 and MLCX2 apertures with control-point and beam MU
@@ -2848,7 +2947,7 @@ Definitions are written to match the current code implementation. They are not a
 
 - Group: Halcyon/Ethos Hybrid v2
 - Symbol/short name: AAV Stacked
-- Mathematical definition: AAV = aperture area / arc-level union aperture area, then weighted over the arc, computed on the non-physical stacked dual-layer diagnostic geometry
+- Mathematical definition: AAV_i = A_i / sum_slot[(max_CP raw_right - min_CP raw_left)_+ * max_CP jaw_exposed_height]; interval endpoint mean, then interval-MU and beam-MU means, computed on the non-physical stacked dual-layer diagnostic geometry
 - Physical meaning: AAV computed on the non-physical stacked dual-layer diagnostic geometry.
 - Unit: dimensionless
 - Inputs required: Aligned Halcyon/Ethos MLCX1 and MLCX2 apertures with control-point and beam MU
@@ -2859,7 +2958,7 @@ Definitions are written to match the current code implementation. They are not a
 
 - Group: Halcyon/Ethos Hybrid v2
 - Symbol/short name: LSV Stacked
-- Mathematical definition: LSV = bank_LSV(left) * bank_LSV(right), then weighted over the arc, computed on the non-physical stacked dual-layer diagnostic geometry
+- Mathematical definition: LSV_i = product_banks[1 - sum_adjacent abs(x[j+1]-x[j]) / ((n-1)*(max(x)-min(x)))]; bank=1 for constant/single-leaf bank, CP=0 when no active gaps; interval endpoint mean then MU means, computed on the non-physical stacked dual-layer diagnostic geometry
 - Physical meaning: LSV computed on the non-physical stacked dual-layer diagnostic geometry.
 - Unit: dimensionless
 - Inputs required: Aligned Halcyon/Ethos MLCX1 and MLCX2 apertures with control-point and beam MU
@@ -2914,7 +3013,7 @@ Definitions are written to match the current code implementation. They are not a
 
 - Group: Halcyon/Ethos Hybrid v2
 - Symbol/short name: SAS5mm Stacked
-- Mathematical definition: SAS5mm = active leaf gaps below 5 mm / all active leaf gaps, computed on the non-physical stacked dual-layer diagnostic geometry
+- Mathematical definition: SAS5mm = CP-MU mean of count(0<raw_gap<5 mm)/count(raw_gap>0), using Y-jaw-active slots; beam-MU mean, computed on the non-physical stacked dual-layer diagnostic geometry
 - Physical meaning: SAS5mm computed on the non-physical stacked dual-layer diagnostic geometry.
 - Unit: dimensionless
 - Inputs required: Aligned Halcyon/Ethos MLCX1 and MLCX2 apertures with control-point and beam MU
@@ -2925,7 +3024,7 @@ Definitions are written to match the current code implementation. They are not a
 
 - Group: Halcyon/Ethos Hybrid v2
 - Symbol/short name: SAS10mm Stacked
-- Mathematical definition: SAS10mm = active leaf gaps below 10 mm / all active leaf gaps, computed on the non-physical stacked dual-layer diagnostic geometry
+- Mathematical definition: SAS10mm = CP-MU mean of count(0<raw_gap<10 mm)/count(raw_gap>0), using Y-jaw-active slots; beam-MU mean, computed on the non-physical stacked dual-layer diagnostic geometry
 - Physical meaning: SAS10mm computed on the non-physical stacked dual-layer diagnostic geometry.
 - Unit: dimensionless
 - Inputs required: Aligned Halcyon/Ethos MLCX1 and MLCX2 apertures with control-point and beam MU
@@ -2936,7 +3035,7 @@ Definitions are written to match the current code implementation. They are not a
 
 - Group: Halcyon/Ethos Hybrid v2
 - Symbol/short name: SAS20mm Stacked
-- Mathematical definition: SAS20mm = active leaf gaps below 20 mm / all active leaf gaps, computed on the non-physical stacked dual-layer diagnostic geometry
+- Mathematical definition: SAS20mm = CP-MU mean of count(0<raw_gap<20 mm)/count(raw_gap>0), using Y-jaw-active slots; beam-MU mean, computed on the non-physical stacked dual-layer diagnostic geometry
 - Physical meaning: SAS20mm computed on the non-physical stacked dual-layer diagnostic geometry.
 - Unit: dimensionless
 - Inputs required: Aligned Halcyon/Ethos MLCX1 and MLCX2 apertures with control-point and beam MU
@@ -2991,12 +3090,34 @@ Definitions are written to match the current code implementation. They are not a
 
 - Group: SPORT
 - Symbol/short name: SPORT
-- Mathematical definition: SPORT = weighted aggregate of station-wise MI(s) over the plan
+- Mathematical definition: SPORT = CP-MU mean(sum_t sum_all_leaves abs(x_s-x_t)*abs(u_s-u_t)/shortest_angle(s,t)); t=s+-1,...,s+-10 within beam, skip zero angle; beam-MU mean
 - Physical meaning: Station-wise SPORT modulation index MI(s) from Li and Xing, reported here as the framework's beam/plan aggregate summary.
-- Unit: dimensionless
+- Unit: mm*MU/deg
 - Inputs required: MLC leaf positions, jaw positions, gantry angle, and control-point meterset weights
 - Status: implemented
-- Notes: None
+- Notes: For Halcyon/Ethos-style plans, the workflow also exports per-layer MLCX1 and MLCX2 variants.
+
+### `sport_mlcx1` - SPORT MLCX1
+
+- Group: SPORT
+- Symbol/short name: SPORT MLCX1
+- Mathematical definition: SPORT = CP-MU mean(sum_t sum_all_leaves abs(x_s-x_t)*abs(u_s-u_t)/shortest_angle(s,t)); t=s+-1,...,s+-10 within beam, skip zero angle; beam-MU mean; native MLCX1 apertures only
+- Physical meaning: Station-wise SPORT modulation index MI(s) from Li and Xing, reported here as the framework's beam/plan aggregate summary. Reported for MLCX1.
+- Unit: mm*MU/deg
+- Inputs required: MLCX1 leaf positions, control-point weights, and beam geometry
+- Status: implemented_flattened
+- Notes: Layer-specific flattened export for SPORT.
+
+### `sport_mlcx2` - SPORT MLCX2
+
+- Group: SPORT
+- Symbol/short name: SPORT MLCX2
+- Mathematical definition: SPORT = CP-MU mean(sum_t sum_all_leaves abs(x_s-x_t)*abs(u_s-u_t)/shortest_angle(s,t)); t=s+-1,...,s+-10 within beam, skip zero angle; beam-MU mean; native MLCX2 apertures only
+- Physical meaning: Station-wise SPORT modulation index MI(s) from Li and Xing, reported here as the framework's beam/plan aggregate summary. Reported for MLCX2.
+- Unit: mm*MU/deg
+- Inputs required: MLCX2 leaf positions, control-point weights, and beam geometry
+- Status: implemented_flattened
+- Notes: Layer-specific flattened export for SPORT.
 
 ## TOMO
 
@@ -3116,7 +3237,7 @@ Definitions are written to match the current code implementation. They are not a
 - Symbol/short name: CS
 - Mathematical definition: CS = CT / TT
 - Physical meaning: Average couch translation speed.
-- Unit: s
+- Unit: mm/s
 - Inputs required: Sinogram metadata: projection time, projections per rotation, field width, pitch, couch travel, dose
 - Status: implemented
 - Notes: Mathematical definition summarizes the current sinogram-based implementation.
@@ -3215,7 +3336,7 @@ Definitions are written to match the current code implementation. They are not a
 - Symbol/short name: kLOT
 - Mathematical definition: kLOT = kurtosis(LOT)
 - Physical meaning: Kurtosis of the leaf open time distribution.
-- Unit: ms
+- Unit: dimensionless
 - Inputs required: Sinogram matrix, non-zero leaf open times, and per-leaf open/closed topology
 - Status: implemented
 - Notes: Mathematical definition summarizes the current sinogram-based implementation.
@@ -3226,7 +3347,7 @@ Definitions are written to match the current code implementation. They are not a
 - Symbol/short name: sLOT
 - Mathematical definition: sLOT = skewness(LOT)
 - Physical meaning: Skewness of the leaf open time distribution.
-- Unit: ms
+- Unit: dimensionless
 - Inputs required: Sinogram matrix, non-zero leaf open times, and per-leaf open/closed topology
 - Status: implemented
 - Notes: Mathematical definition summarizes the current sinogram-based implementation.
@@ -3235,7 +3356,7 @@ Definitions are written to match the current code implementation. They are not a
 
 - Group: Leaf open time
 - Symbol/short name: CLNS10
-- Mathematical definition: CLNS10 = count(LOT < 10 ms) / count(non-zero LOT)
+- Mathematical definition: CLNS10 = count(0 < LOT < 10 ms) / count(non-zero LOT)
 - Physical meaning: Fraction of leaf open times shorter than 10 ms.
 - Unit: dimensionless
 - Inputs required: Sinogram matrix, non-zero leaf open times, and per-leaf open/closed topology
@@ -3246,7 +3367,7 @@ Definitions are written to match the current code implementation. They are not a
 
 - Group: Leaf open time
 - Symbol/short name: CLNS20
-- Mathematical definition: CLNS20 = count(LOT < 20 ms) / count(non-zero LOT)
+- Mathematical definition: CLNS20 = count(0 < LOT < 20 ms) / count(non-zero LOT)
 - Physical meaning: Fraction of leaf open times shorter than 20 ms.
 - Unit: dimensionless
 - Inputs required: Sinogram matrix, non-zero leaf open times, and per-leaf open/closed topology
@@ -3257,7 +3378,7 @@ Definitions are written to match the current code implementation. They are not a
 
 - Group: Leaf open time
 - Symbol/short name: CLNS30
-- Mathematical definition: CLNS30 = count(LOT < 30 ms) / count(non-zero LOT)
+- Mathematical definition: CLNS30 = count(0 < LOT < 30 ms) / count(non-zero LOT)
 - Physical meaning: Fraction of leaf open times shorter than 30 ms.
 - Unit: dimensionless
 - Inputs required: Sinogram matrix, non-zero leaf open times, and per-leaf open/closed topology
@@ -3268,7 +3389,7 @@ Definitions are written to match the current code implementation. They are not a
 
 - Group: Leaf open time
 - Symbol/short name: CLNS50
-- Mathematical definition: CLNS50 = count(LOT < 50 ms) / count(non-zero LOT)
+- Mathematical definition: CLNS50 = count(0 < LOT < 50 ms) / count(non-zero LOT)
 - Physical meaning: Fraction of leaf open times shorter than 50 ms.
 - Unit: dimensionless
 - Inputs required: Sinogram matrix, non-zero leaf open times, and per-leaf open/closed topology
@@ -3279,7 +3400,7 @@ Definitions are written to match the current code implementation. They are not a
 
 - Group: Leaf open time
 - Symbol/short name: CLNSpt10
-- Mathematical definition: CLNSpt_10 = count(LOT < pt_10 ms) / count(non-zero LOT)
+- Mathematical definition: CLNSpt10 = count(LOT > projection time - 10 ms) / count(non-zero LOT)
 - Physical meaning: Fraction of leaf open times within 10 ms of the projection time.
 - Unit: dimensionless
 - Inputs required: Sinogram matrix, non-zero leaf open times, and per-leaf open/closed topology
@@ -3290,7 +3411,7 @@ Definitions are written to match the current code implementation. They are not a
 
 - Group: Leaf open time
 - Symbol/short name: CLNSpt20
-- Mathematical definition: CLNSpt_20 = count(LOT < pt_20 ms) / count(non-zero LOT)
+- Mathematical definition: CLNSpt20 = count(LOT > projection time - 20 ms) / count(non-zero LOT)
 - Physical meaning: Fraction of leaf open times within 20 ms of the projection time.
 - Unit: dimensionless
 - Inputs required: Sinogram matrix, non-zero leaf open times, and per-leaf open/closed topology
@@ -3301,7 +3422,7 @@ Definitions are written to match the current code implementation. They are not a
 
 - Group: Leaf open time
 - Symbol/short name: CLNSpt30
-- Mathematical definition: CLNSpt_30 = count(LOT < pt_30 ms) / count(non-zero LOT)
+- Mathematical definition: CLNSpt30 = count(LOT > projection time - 30 ms) / count(non-zero LOT)
 - Physical meaning: Fraction of leaf open times within 30 ms of the projection time.
 - Unit: dimensionless
 - Inputs required: Sinogram matrix, non-zero leaf open times, and per-leaf open/closed topology
@@ -3312,7 +3433,7 @@ Definitions are written to match the current code implementation. They are not a
 
 - Group: Leaf open time
 - Symbol/short name: CLNSpt50
-- Mathematical definition: CLNSpt_50 = count(LOT < pt_50 ms) / count(non-zero LOT)
+- Mathematical definition: CLNSpt50 = count(LOT > projection time - 50 ms) / count(non-zero LOT)
 - Physical meaning: Fraction of leaf open times within 50 ms of the projection time.
 - Unit: dimensionless
 - Inputs required: Sinogram matrix, non-zero leaf open times, and per-leaf open/closed topology
@@ -3435,7 +3556,7 @@ Definitions are written to match the current code implementation. They are not a
 - Symbol/short name: TA
 - Mathematical definition: TA = mean projection treatment width across the sinogram
 - Physical meaning: Average width of the treated sinogram area per projection.
-- Unit: mm
+- Unit: leaf slots
 - Inputs required: Sinogram matrix, non-zero leaf open times, and per-leaf open/closed topology
 - Status: implemented
 - Notes: Mathematical definition summarizes the current sinogram-based implementation.
@@ -3457,7 +3578,7 @@ Definitions are written to match the current code implementation. They are not a
 - Symbol/short name: lengthCC
 - Mathematical definition: lengthCC = mean connected-component length in the sinogram
 - Physical meaning: Average length of connected open sinogram components.
-- Unit: mm
+- Unit: leaf slots
 - Inputs required: Sinogram matrix, non-zero leaf open times, and per-leaf open/closed topology
 - Status: implemented
 - Notes: Mathematical definition summarizes the current sinogram-based implementation.
@@ -3488,7 +3609,7 @@ Definitions are written to match the current code implementation. They are not a
 
 - Group: Sinogram geometry
 - Symbol/short name: CLSin
-- Mathematical definition: CLSin = mean(closed leaves inside the treatment area)
+- Mathematical definition: CLSin = mean_nonempty_rows(closed leaves inside treatment span / total number of leaf columns)
 - Physical meaning: Closed leaf score within the treatment area.
 - Unit: dimensionless
 - Inputs required: Sinogram matrix, non-zero leaf open times, and per-leaf open/closed topology
@@ -3534,7 +3655,7 @@ Definitions are written to match the current code implementation. They are not a
 - Symbol/short name: Centroid
 - Mathematical definition: Centroid = mean lateral centroid of open leaves over projections
 - Physical meaning: Average lateral position of the open sinogram barycenter.
-- Unit: mm
+- Unit: leaf-index displacement
 - Inputs required: Sinogram matrix, non-zero leaf open times, and per-leaf open/closed topology
 - Status: implemented
 - Notes: Mathematical definition summarizes the current sinogram-based implementation.
@@ -3545,7 +3666,7 @@ Definitions are written to match the current code implementation. They are not a
 - Symbol/short name: L0NS
 - Mathematical definition: L0NS = mean fraction of open leaves with 0 open nearest neighbors
 - Physical meaning: Fraction of open leaves with no open nearest neighbors.
-- Unit: count
+- Unit: proportion
 - Inputs required: Sinogram matrix, non-zero leaf open times, and per-leaf open/closed topology
 - Status: implemented
 - Notes: Mathematical definition summarizes the current sinogram-based implementation.
@@ -3556,7 +3677,7 @@ Definitions are written to match the current code implementation. They are not a
 - Symbol/short name: L1NS
 - Mathematical definition: L1NS = mean fraction of open leaves with 1 open nearest neighbor
 - Physical meaning: Fraction of open leaves with one open nearest neighbor.
-- Unit: count
+- Unit: proportion
 - Inputs required: Sinogram matrix, non-zero leaf open times, and per-leaf open/closed topology
 - Status: implemented
 - Notes: Mathematical definition summarizes the current sinogram-based implementation.
@@ -3567,7 +3688,7 @@ Definitions are written to match the current code implementation. They are not a
 - Symbol/short name: L2NS
 - Mathematical definition: L2NS = mean fraction of open leaves with 2 open nearest neighbors
 - Physical meaning: Fraction of open leaves with two open nearest neighbors.
-- Unit: count
+- Unit: proportion
 - Inputs required: Sinogram matrix, non-zero leaf open times, and per-leaf open/closed topology
 - Status: implemented
 - Notes: Mathematical definition summarizes the current sinogram-based implementation.
@@ -3578,7 +3699,7 @@ Definitions are written to match the current code implementation. They are not a
 - Symbol/short name: LOTV
 - Mathematical definition: LOTV = mean over leaves of [ sum(max(LOT) - abs(delta LOT)) / ((N_proj - 1) * max(LOT)) ]
 - Physical meaning: Variability of leaf open time across consecutive projections.
-- Unit: ms
+- Unit: dimensionless
 - Inputs required: Sinogram matrix, non-zero leaf open times, and per-leaf open/closed topology
 - Status: implemented
 - Notes: Mathematical definition summarizes the current sinogram-based implementation.
@@ -3589,7 +3710,7 @@ Definitions are written to match the current code implementation. They are not a
 - Symbol/short name: ELOTV-1
 - Mathematical definition: ELOTV-1 = mean normalized abs(LOT_i - LOT_{i+1}) over leaves
 - Physical meaning: Extended leaf open time variability using a one-projection offset.
-- Unit: ms
+- Unit: dimensionless
 - Inputs required: Sinogram matrix, non-zero leaf open times, and per-leaf open/closed topology
 - Status: implemented
 - Notes: Mathematical definition summarizes the current sinogram-based implementation.
@@ -3600,7 +3721,7 @@ Definitions are written to match the current code implementation. They are not a
 - Symbol/short name: ELOTV-5
 - Mathematical definition: ELOTV-5 = mean normalized abs(LOT_i - LOT_{i+5}) over leaves
 - Physical meaning: Extended leaf open time variability using a five-projection offset.
-- Unit: ms
+- Unit: dimensionless
 - Inputs required: Sinogram matrix, non-zero leaf open times, and per-leaf open/closed topology
 - Status: implemented
 - Notes: Mathematical definition summarizes the current sinogram-based implementation.
@@ -3677,7 +3798,7 @@ Definitions are written to match the current code implementation. They are not a
 - Symbol/short name: mSA
 - Mathematical definition: mSA = sum(position * mean leaf opening) / sum(mean leaf opening)
 - Physical meaning: Mean left-right asymmetry of the sinogram.
-- Unit: dimensionless
+- Unit: leaf-index displacement
 - Inputs required: Sinogram matrix, non-zero leaf open times, and per-leaf open/closed topology
 - Status: implemented
 - Notes: Mathematical definition summarizes the current sinogram-based implementation.
@@ -3732,9 +3853,9 @@ Definitions are written to match the current code implementation. They are not a
 
 - Group: MLC-based subset
 - Symbol/short name: EM
-- Mathematical definition: EM = sum_segments[(MU_segment / MU_plan) * aperture edge metric]
+- Mathematical definition: EM = sum_segments[(MU_segment/MU_plan)*horizontal leaf-side boundary/A_segment], C1=0,C2=1; zero A gives 0
 - Physical meaning: Relative amount of aperture edge compared with open field area.
-- Unit: dimensionless
+- Unit: mm^-1
 - Inputs required: CyberKnife MLC segment apertures, segment MU, and interval grouping from beam-path XML
 - Status: implemented
 - Notes: Implements the paper-limited six-metric MLC subset only.
@@ -3754,7 +3875,7 @@ Definitions are written to match the current code implementation. They are not a
 
 - Group: MLC-based subset
 - Symbol/short name: PM
-- Mathematical definition: PM = sum_intervals[(MU_interval / MU_plan) * (1 - weighted beam area / (MU_interval * union area_interval))]
+- Mathematical definition: PM = sum_beams[(MU_beam/MU_plan)*(1-sum_segments(MU_segment*A_segment)/(MU_beam*E_XML_interval))]; E is the raw-bank max-slot envelope across the XML interval, not geometric union
 - Physical meaning: Variation in aperture opening between successive segments.
 - Unit: dimensionless
 - Inputs required: CyberKnife MLC segment apertures, segment MU, and interval grouping from beam-path XML
@@ -3877,7 +3998,7 @@ Definitions are written to match the current code implementation. They are not a
 
 - Group: V2 paper-style physics
 - Symbol/short name: projection_aperture_change_mean
-- Mathematical definition: mean_i(abs(delta A_i) / abs(delta z_i))
+- Mathematical definition: mean_i(abs(delta W_i) / abs(delta z_i)); W=sum_zip max(MLCX2-MLCX1,0) is an opening-width proxy, not area
 - Physical meaning: Mean projection aperture-change rate, defined as absolute aperture-width change per millimeter of longitudinal travel.
 - Unit: mm/mm
 - Inputs required: Aurora RTPLAN control points: gantry angle, isocenter z, cumulative meterset weight, MLCX1 and MLCX2
@@ -3888,7 +4009,7 @@ Definitions are written to match the current code implementation. They are not a
 
 - Group: V2 paper-style physics
 - Symbol/short name: projection_aperture_change_cv
-- Mathematical definition: std(abs(delta A_i) / abs(delta z_i)) / mean(abs(delta A_i) / abs(delta z_i))
+- Mathematical definition: population_std(abs(delta W_i)/abs(delta z_i))/abs(mean(abs(delta W_i)/abs(delta z_i))); W is opening-width proxy
 - Physical meaning: Coefficient of variation of the projection aperture-change rate.
 - Unit: dimensionless
 - Inputs required: Aurora RTPLAN control points: gantry angle, isocenter z, cumulative meterset weight, MLCX1 and MLCX2
@@ -4075,7 +4196,7 @@ Definitions are written to match the current code implementation. They are not a
 
 - Group: V3 small-opening burden
 - Symbol/short name: effective_small_gap_burden
-- Mathematical definition: weighted mean of max(0, 1 - gap / 10 mm) over open effective gaps
+- Mathematical definition: weighted mean of max(0,1-gap/10 mm) over positive zipped-channel gap proxies; abs(delta CMW) weights, zero increment falls back to 1
 - Physical meaning: Weighted severity score for narrow effective openings, with smaller openings contributing more burden.
 - Unit: dimensionless
 - Inputs required: Aurora RTPLAN control points: gantry angle, isocenter z, cumulative meterset weight, MLCX1 and MLCX2
@@ -4526,7 +4647,7 @@ Definitions are written to match the current code implementation. They are not a
 
 - Group: Legacy engineering
 - Symbol/short name: aperture_change_per_mm
-- Mathematical definition: sum_i abs(delta A_i) / sum_i abs(delta z_i)
+- Mathematical definition: sum_i abs(delta W_i)/sum_i abs(delta z_i), retaining dz>0; W is summed positive opening width, not area
 - Physical meaning: Legacy engineering metric for total absolute aperture-width change normalized by total axial travel.
 - Unit: mm/mm
 - Inputs required: Aurora RTPLAN control points: gantry angle, isocenter z, cumulative meterset weight, MLCX1 and MLCX2
@@ -4548,7 +4669,7 @@ Definitions are written to match the current code implementation. They are not a
 
 - Group: Legacy engineering
 - Symbol/short name: coupled_modulation_index
-- Mathematical definition: mean of normalized aperture-change/mm, leaf-travel/mm, MU-density variability, and pitch variability
+- Mathematical definition: mean(x/(1+x)) over available aperture-change/mm, leaf-travel/mm, MU-density CV and pitch CV; equal component weights
 - Physical meaning: Legacy engineering aggregate of normalized aperture change, leaf travel, MU-density variability, and pitch variability.
 - Unit: dimensionless
 - Inputs required: Aurora RTPLAN control points: gantry angle, isocenter z, cumulative meterset weight, MLCX1 and MLCX2

@@ -1,5 +1,9 @@
 from __future__ import annotations
 
+from ComplexityMetric.aperture_shape_metrics import (
+    maximum_aperture_area, leaf_sequence_variability,
+)
+
 from collections import defaultdict
 from typing import Dict, Iterable, List, Sequence, Tuple
 
@@ -8,7 +12,7 @@ from ComplexityMetric.edge_metric import EdgeMetric
 from ComplexityMetric.plan_irregularity import PlanIrregularity
 
 
-def calculate_cyberknife_metrics(cyberknife_beams: Sequence[object]) -> Dict[str, float]:
+def calculate_cyberknife_metrics(cyberknife_beams: Sequence[object], *, full_precision: bool = False) -> Dict[str, float]:
     """Calculate the six CyberKnife MLC metrics following Masi et al. (2021)."""
     segments = list(_iter_segments(cyberknife_beams))
     plan_mu = sum(segment.mu for segment in segments)
@@ -57,12 +61,12 @@ def calculate_cyberknife_metrics(cyberknife_beams: Sequence[object]) -> Dict[str
 
     sas10 = (total_small_pairs / total_open_pairs) if total_open_pairs else 0.0
     return {
-        "mcs": round(float(mcs), 2),
-        "em": round(float(em), 2),
-        "pi": round(float(pi), 2),
-        "pm": round(float(pm), 2),
-        "lg": round(float(lg), 2),
-        "sas10": round(float(sas10), 2),
+        "mcs": float(mcs) if full_precision else round(float(mcs), 2),
+        "em": float(em) if full_precision else round(float(em), 2),
+        "pi": float(pi) if full_precision else round(float(pi), 2),
+        "pm": float(pm) if full_precision else round(float(pm), 2),
+        "lg": float(lg) if full_precision else round(float(lg), 2),
+        "sas10": float(sas10) if full_precision else round(float(sas10), 2),
     }
 
 
@@ -80,21 +84,7 @@ def _build_interval_apertures(cyberknife_beams: Sequence[object]) -> Dict[Tuple[
 
 
 def _build_union_area(apertures: Sequence[PyAperture]) -> float:
-    left_min = {}
-    right_max = {}
-    widths = {}
-    for aperture in apertures:
-        for index, leaf_pair in enumerate(aperture.leaf_pairs):
-            if leaf_pair.is_outside_jaw():
-                continue
-            left_min[index] = min(left_min.get(index, leaf_pair.left), leaf_pair.left)
-            right_max[index] = max(right_max.get(index, leaf_pair.right), leaf_pair.right)
-            widths[index] = leaf_pair.open_leaf_width()
-
-    union_area = 0.0
-    for index in left_min:
-        union_area += max(right_max[index] - left_min[index], 0.0) * widths.get(index, 0.0)
-    return union_area
+    return maximum_aperture_area(apertures)
 
 
 def _calculate_aav(aperture: PyAperture, union_area: float) -> float:
@@ -104,25 +94,7 @@ def _calculate_aav(aperture: PyAperture, union_area: float) -> float:
 
 
 def _calculate_lsv(aperture: PyAperture) -> float:
-    active_leaf_pairs = [leaf_pair for leaf_pair in aperture.leaf_pairs if not leaf_pair.is_outside_jaw() and leaf_pair.field_size() > 0]
-    if len(active_leaf_pairs) < 2:
-        return 1.0 if active_leaf_pairs else 0.0
-
-    left_positions = [leaf_pair.left for leaf_pair in active_leaf_pairs]
-    right_positions = [leaf_pair.right for leaf_pair in active_leaf_pairs]
-    return _calculate_bank_lsv(left_positions) * _calculate_bank_lsv(right_positions)
-
-
-def _calculate_bank_lsv(positions: Sequence[float]) -> float:
-    if len(positions) < 2:
-        return 1.0
-    pos_range = max(positions) - min(positions)
-    if pos_range == 0.0:
-        # The supplement explicitly forces rectangular apertures to LSV = 1 to avoid a
-        # division-by-zero branch in the original McNiven formulation.
-        return 1.0
-    variation_sum = sum(pos_range - abs(current - following) for current, following in zip(positions[:-1], positions[1:]))
-    return variation_sum / ((len(positions) - 1) * pos_range)
+    return leaf_sequence_variability(aperture)
 
 
 def _calculate_segment_mean_leaf_gap(aperture: PyAperture) -> float:

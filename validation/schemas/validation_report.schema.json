@@ -41,6 +41,39 @@
         "exact_failures": {
           "type": "integer",
           "minimum": 0
+        },
+        "reference_exact_green": {
+          "type": ["boolean", "null"]
+        },
+        "analysis_failures": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "provenance_failures": {
+          "type": "integer",
+          "minimum": 0
+        }
+      }
+    },
+    "cases": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["case_id", "domain", "analysis_status", "formula_version_status", "reference_exact_green"],
+        "properties": {
+          "case_id": {"type": "string"},
+          "domain": {"type": "string"},
+          "supported": {"type": ["boolean", "null"]},
+          "expected_supported": {"type": ["boolean", "null"]},
+          "analysis_status": {"type": "string", "enum": ["pass", "fail", "not-recorded"]},
+          "analysis_note": {"type": "string"},
+          "required_formula_version": {"type": ["string", "null"]},
+          "expected_formula_version": {"type": ["string", "null"]},
+          "observed_formula_version": {"type": ["string", "null"]},
+          "formula_version_status": {"type": "string", "enum": ["pass", "fail", "legacy-unversioned"]},
+          "formula_version_note": {"type": "string"},
+          "reference_exact_green": {"type": ["boolean", "null"]}
         }
       }
     },
@@ -56,6 +89,9 @@
           "status"
         ],
         "properties": {
+          "case_id": {
+            "type": "string"
+          },
           "platform": {
             "type": "string"
           },

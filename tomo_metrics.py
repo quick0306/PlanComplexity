@@ -17,6 +17,7 @@ class TomoPlan:
     couch_translation_mm: float
     fraction_dose_cgy: float
     metadata: Dict[str, object] = field(default_factory=dict)
+    planned_couch_speed_mm_s: float | None = None
 
     @property
     def mask(self) -> np.ndarray:
@@ -54,11 +55,16 @@ class TomoPlan:
 
     @property
     def couch_speed_mm_s(self) -> float:
-        return self.couch_translation_mm / self.treatment_time_s if self.treatment_time_s else 0.0
+        if self.planned_couch_speed_mm_s is not None:
+            return self.planned_couch_speed_mm_s
+        return self.couch_translation_mm / self.treatment_time_s if self.treatment_time_s > 0 else float("nan")
 
     @property
     def target_length_mm(self) -> float:
-        return self.couch_translation_mm - self.field_width_mm
+        if not self.metadata.get("target_length_available", True):
+            return float("nan")
+        length = self.couch_translation_mm - self.field_width_mm
+        return length if np.isfinite(length) and length >= 0 else float("nan")
 
     @property
     def leaf_positions(self) -> np.ndarray:

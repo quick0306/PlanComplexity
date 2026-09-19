@@ -8,8 +8,10 @@ from pydicom.valuerep import IS
 class RTPlan:
     """Class that parses and returns formatted DICOM RT Plan data."""
 
-    def __init__(self, filename: str) -> None:
+    full_precision = False
 
+    def __init__(self, filename: str, *, full_precision: bool = False) -> None:
+        self.full_precision = full_precision
         if filename:
             self.plan = dict()
             try:
@@ -85,7 +87,8 @@ class RTPlan:
             fg = self.ds.FractionGroupSequence[0]
             if "ReferencedBeamSequence" in fg:
                 self.plan["fractions"] = fg.NumberOfFractionsPlanned
-        self.plan["rxdose"] = int(self.plan["rxdose"])
+        self.plan["rxdose"] = (float(self.plan["rxdose"]) if self.full_precision
+                               else int(self.plan["rxdose"]))
 
         # referenced beams
         ref_beams = self.get_beams()
@@ -93,7 +96,7 @@ class RTPlan:
 
         # Total number of MU
         total_mu = np.sum([ref_beams[b]["MU"] for b in ref_beams if "MU" in ref_beams[b]])
-        self.plan["Plan_MU"] = round(total_mu, 2)
+        self.plan["Plan_MU"] = float(total_mu) if self.full_precision else round(total_mu, 2)
 
         tmp = self.get_study_info()
         self.plan["description"] = tmp["description"]

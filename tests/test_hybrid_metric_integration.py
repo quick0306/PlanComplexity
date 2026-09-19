@@ -139,10 +139,10 @@ def test_vmat_analysis_and_exports_include_formula_provenance():
     result = analyze_plan_file(str(TRUEBEAM_BASELINE_PLAN))
     export_record = build_export_record(result)
 
-    assert result.metadata["metric_formula_version"] == "hybrid-v2"
-    assert export_record["metric_formula_version"] == "hybrid-v2"
+    assert result.metadata["metric_formula_version"] == "geometry-v4"
+    assert export_record["metric_formula_version"] == "geometry-v4"
     assert "Formula_Version" in BASE_HEADER
-    assert build_standard_row(result.metadata, {})[7] == "hybrid-v2"
+    assert build_standard_row(result.metadata, {})[7] == "geometry-v4"
 
 
 def test_failed_vmat_analysis_keeps_formula_provenance(monkeypatch):
@@ -154,4 +154,4 @@ def test_failed_vmat_analysis_keeps_formula_provenance(monkeypatch):
     result = _analyze_plan_file_safe("invalid.dcm", AnalysisMode.VMAT_IMRT)
 
     assert not result.supported
-    assert result.metadata["metric_formula_version"] == "hybrid-v2"
+    assert result.metadata["metric_formula_version"] == "geometry-v4"

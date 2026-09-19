@@ -1,0 +1,10 @@
+{
+  "case_id": "vmat_truebeam_canonical",
+  "domain": "VMAT_IMRT",
+  "expected_metrics_checksum": "6ef591ba5c5546bc6e8c4e8bb22507465a404a192c18bfc355c933721f008ffb",
+  "formula_version": "geometry-v4",
+  "generated_at": "2026-09-19T13:57:42Z",
+  "mode": "VMAT_IMRT",
+  "schema_version": 1,
+  "source_checksum": "5097cd72e73a24e2d99b91d77c8e8df7a441ab299eb335ebeec41a8c5c156e91"
+}

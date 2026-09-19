@@ -14,7 +14,17 @@ Scope: This artifact is research/publication-ready evidence support and is not c
 - Metric rows: {{ reference_summary.metrics_total }}
 - Exact-equivalent metric rows: {{ reference_summary.exact_metrics_total }}
 - Exact failures: {{ reference_summary.exact_failures }}
+- Analysis failures: {{ reference_summary.analysis_failures }}
+- Formula provenance failures: {{ reference_summary.provenance_failures }}
 - Reference exact green: {{ reference_summary.reference_exact_green }}
+
+## Case Formula Provenance And Analysis State
+
+| Case | Domain | Required version | Baseline version | Observed version | Formula status | Analysis status | Reference exact green |
+| --- | --- | --- | --- | --- | --- | --- | --- |
+{% for case in reference_cases %}
+| {{ case.case_id }} | {{ case.domain }} | {{ case.required_formula_version | display_value }} | {{ case.expected_formula_version | display_value }} | {{ case.observed_formula_version | display_value }} | {{ case.formula_version_status }} | {{ case.analysis_status }} | {{ case.reference_exact_green | display_value }} |
+{% endfor %}
 
 ## Domains
 
@@ -32,9 +42,23 @@ Scope: This artifact is research/publication-ready evidence support and is not c
 | {{ row.platform }} | {{ row.internal_metric }} | {{ row.comparator }} / {{ row.comparator_metric }} | {{ row.relationship }} | {{ row.status }} | {{ row.sample_count }} | {{ row.mae | display_value }} | {{ row.bias | display_value }} | {{ row.rmse | display_value }} | {{ row.notes }} |
 {% endfor %}
 
+{% if external_summary %}
+## Traceable External Captures
+
+- Historical captures: {{ external_summary.traceable_historical_captures }}
+- Captured external values: {{ external_summary.external_samples }}
+- Values paired with input-hash-bound, full-precision internal observations: {{ external_summary.actually_paired }}
+- Pairs with independently established formula equivalence: {{ external_summary.definition_eligible }}
+- Authenticated external executions: {{ external_summary.authenticated_external_runs }}
+
+See `external_benchmarks.json` for source/config hashes, workbook cells, formula status, and unrounded differences. Historical captures retain their provenance limits and do not enter an exactness or clinical gate. Legacy demonstration values above remain excluded.
+{% endif %}
+
 ## Interpretation Notes
 
 - Exact-equivalent rows contribute to the reference-case exactness gate.
+- Formula provenance and expected analysis state also contribute to the gate, including cases with no metric rows.
+- Baseline agreement is regression evidence; an unversioned legacy baseline does not establish formula provenance.
 - Derived-equivalent rows report agreement statistics and should not be reduced to simple pass/fail claims.
 - Association-only and not-comparable evidence remains visible rather than being silently dropped.
 - Aurora is included in the same artifact pipeline while preserving declared non-comparability where external equivalence is not established.

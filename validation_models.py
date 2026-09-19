@@ -88,6 +88,18 @@ class ReferenceCaseProvenanceRecord:
 
 
 @dataclass(frozen=True)
+class ExpectedMetricsProvenanceRecord:
+    schema_version: int
+    formula_version: str
+    case_id: str
+    domain: str
+    mode: str
+    source_checksum: str
+    expected_metrics_checksum: str
+    generated_at: str
+
+
+@dataclass(frozen=True)
 class ReferenceCaseRecord:
     case_id: str
     source_path: str
@@ -102,6 +114,9 @@ class ReferenceCaseRecord:
     checksum: str
     provenance: ReferenceCaseProvenanceRecord
     notes: str
+    expected_formula_version: str | None = None
+    expected_metrics_provenance: ExpectedMetricsProvenanceRecord | None = None
+    expected_supported: bool = True
 
 
 @dataclass(frozen=True)
@@ -120,6 +135,7 @@ __all__ = [
     "ComparatorMappingRecord",
     "ComparatorSampleRecord",
     "ExpectedRangeRecord",
+    "ExpectedMetricsProvenanceRecord",
     "MetricGroupRecord",
     "MetricSpecRecord",
     "ReferenceCaseProvenanceRecord",

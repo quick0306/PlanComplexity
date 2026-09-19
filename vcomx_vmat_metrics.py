@@ -1,5 +1,9 @@
 ﻿from __future__ import annotations
 
+from ComplexityMetric.aperture_shape_metrics import (
+    maximum_aperture_area, leaf_sequence_variability,
+)
+
 import math
 from dataclasses import dataclass
 from typing import Dict, Iterable, List, Sequence
@@ -43,13 +47,13 @@ class BeamLayerSummary:
     metrics: Dict[str, float]
 
 
-def calculate_vcomx_supplemental_metrics(plan_dict: Dict[str, object]) -> Dict[str, object]:
-    metrics, _ = calculate_vcomx_supplemental_metrics_with_warnings(plan_dict)
+def calculate_vcomx_supplemental_metrics(plan_dict: Dict[str, object], *, full_precision: bool = False) -> Dict[str, object]:
+    metrics, _ = calculate_vcomx_supplemental_metrics_with_warnings(plan_dict, full_precision=full_precision)
     return metrics
 
 
 def calculate_vcomx_supplemental_metrics_with_warnings(
-    plan_dict: Dict[str, object],
+    plan_dict: Dict[str, object], *, full_precision: bool = False,
 ) -> tuple[Dict[str, object], list[str]]:
     beams = [
         beam
@@ -91,18 +95,19 @@ def calculate_vcomx_supplemental_metrics_with_warnings(
         for key in MLC_DEPENDENT_KEYS:
             mlcx1 = _weighted_mean([summary[0].metrics.get(key, 0.0) for summary in beam_summaries], beam_weights)
             mlcx2 = _weighted_mean([summary[1].metrics.get(key, 0.0) for summary in beam_summaries], beam_weights)
-            metrics[key] = (_round_metric(mlcx1), _round_metric(mlcx2))
+            metrics[key] = (_round_metric(mlcx1, full_precision=full_precision), _round_metric(mlcx2, full_precision=full_precision))
 
         for key in TIME_DEPENDENT_KEYS:
             mlcx1 = _weighted_mean([summary[0].metrics.get(key, 0.0) for summary in beam_summaries], beam_weights)
             mlcx2 = _weighted_mean([summary[1].metrics.get(key, 0.0) for summary in beam_summaries], beam_weights)
-            metrics[key] = (_round_metric(mlcx1), _round_metric(mlcx2))
+            metrics[key] = (_round_metric(mlcx1, full_precision=full_precision), _round_metric(mlcx2, full_precision=full_precision))
         metrics["nl"] = metrics["nl_pairs"]
     else:
         beam_summaries = [_summarize_single_layer_beam(beam) for beam in beams]
         for key in MLC_DEPENDENT_KEYS + TIME_DEPENDENT_KEYS:
             metrics[key] = _round_metric(
-                _weighted_mean([summary.metrics.get(key, 0.0) for summary in beam_summaries], beam_weights)
+                _weighted_mean([summary.metrics.get(key, 0.0) for summary in beam_summaries], beam_weights),
+                full_precision=full_precision,
             )
         metrics["nl"] = metrics["nl_pairs"]
 
@@ -308,7 +313,7 @@ def _active_leaf_count(aperture: PyAperture) -> int:
 
 
 def _aperture_perimeter(aperture: PyAperture) -> float:
-    return float(aperture.side_perimeter_horizontal() + aperture.side_perimeter_vertical())
+    return float(aperture.perimeter())
 
 
 def _jaw_area(aperture: PyAperture) -> float:
@@ -327,24 +332,7 @@ def _tongue_and_groove(aperture: PyAperture) -> float:
 
 
 def _aav_normalization(arc_apertures: Sequence[PyAperture]) -> float:
-    # The normalization term only depends on the full arc, so compute it once
-    # and reuse it for every control point instead of rescanning the arc each time.
-    left_min: Dict[int, float] = {}
-    right_max: Dict[int, float] = {}
-    widths: Dict[int, float] = {}
-
-    for candidate in arc_apertures:
-        for idx, lp in enumerate(candidate.leaf_pairs):
-            if lp.is_outside_jaw():
-                continue
-            left_min[idx] = min(left_min.get(idx, lp.left), lp.left)
-            right_max[idx] = max(right_max.get(idx, lp.right), lp.right)
-            widths[idx] = lp.open_leaf_width()
-
-    normalization = 0.0
-    for idx in left_min:
-        normalization += max(right_max[idx] - left_min[idx], 0.0) * widths.get(idx, 0.0)
-    return normalization
+    return maximum_aperture_area(arc_apertures)
 
 
 def _cp_aav(aperture: PyAperture, normalization: float) -> float:
@@ -352,23 +340,7 @@ def _cp_aav(aperture: PyAperture, normalization: float) -> float:
 
 
 def _cp_lsv(aperture: PyAperture) -> float:
-    active_leaf_pairs = [lp for lp in aperture.leaf_pairs if not lp.is_outside_jaw() and lp.field_size() > 0]
-    if len(active_leaf_pairs) < 2:
-        return 1.0 if active_leaf_pairs else 0.0
-
-    left_positions = [lp.left for lp in active_leaf_pairs]
-    right_positions = [lp.right for lp in active_leaf_pairs]
-    return _bank_lsv(left_positions) * _bank_lsv(right_positions)
-
-
-def _bank_lsv(positions: List[float]) -> float:
-    if len(positions) < 2:
-        return 1.0
-    span = max(positions) - min(positions)
-    if span <= 0:
-        return 1.0
-    variation_sum = sum(span - abs(curr - nxt) for curr, nxt in zip(positions[:-1], positions[1:]))
-    return variation_sum / ((len(positions) - 1) * span)
+    return leaf_sequence_variability(aperture)
 
 
 def _leaf_travel(first: PyAperture, second: PyAperture) -> float:
@@ -432,8 +404,9 @@ def _finite_value(value: float) -> float:
     return numeric
 
 
-def _round_metric(value: float) -> float:
-    return round(_finite_value(value), 2)
+def _round_metric(value: float, *, full_precision: bool = False) -> float:
+    value = _finite_value(value)
+    return value if full_precision else round(value, 2)
 
 
 

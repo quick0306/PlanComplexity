@@ -108,14 +108,15 @@ VMAT_METRIC_SPECS = (
     MetricSpec("sas_10mm", "SAS10mm", "10.1088/0031-9155/60/6/2587", dual_mlc=True, aliases=("small_aperture_score_10mm",), description="Fraction of leaf gaps smaller than 10 mm."),
     MetricSpec("sas_20mm", "SAS20mm", "10.1088/0031-9155/60/6/2587", dual_mlc=True, aliases=("small_aperture_score_20mm",), description="Fraction of leaf gaps smaller than 20 mm."),
     MetricSpec("em", "EM", "10.1118/1.4762566", dual_mlc=True, aliases=("edge_metric",), description="Relative amount of aperture edge compared with open field area."),
-    MetricSpec("bjar", "BJAR", dual_mlc=False, aliases=("aperture_area_ratio_jaw_area",), description="Ratio between aperture area and jaw-defined area."),
+    MetricSpec("bjar", "BJAR", dual_mlc=True, aliases=("aperture_area_ratio_jaw_area",), description="Ratio between aperture area and jaw-defined area."),
     MetricSpec("mad", "MAD", "10.1088/0031-9155/60/6/2587", dual_mlc=True, aliases=("mean_asymmetry_distance",), description="Average distance of the aperture opening from the beam central axis."),
     MetricSpec("alg", "ALG", dual_mlc=True, description="Average gap between opposing leaf pairs."),
     MetricSpec("alg_sd", "ALG SD", dual_mlc=True, description="Standard deviation of the opposing leaf gap."),
     MetricSpec("perimeter", "P", dual_mlc=True, description="Average perimeter of the beam's-eye-view aperture."),
     MetricSpec("asr", "ASR", dual_mlc=True, aliases=("aperture_sub_regions",), description="Average number of disconnected open sub-regions in the aperture."),
-    MetricSpec("axjd", "AXJD", aliases=("aperture_x_jaw_distance",), description="Distance between aperture extent and X jaws."),
-    MetricSpec("ayjd", "AYJD", aliases=("aperture_y_jaw_distance",), description="Distance between aperture extent and Y jaws."),
+    MetricSpec("axjd", "AXJD", dual_mlc=True, aliases=("aperture_x_jaw_distance",), description="MU-weighted X-jaw opening width."),
+    MetricSpec("ayjd", "AYJD", dual_mlc=True, aliases=("aperture_y_jaw_distance",), description="MU-weighted Y-jaw opening width."),
+    MetricSpec("ja", "JA", dual_mlc=True, description="MU-weighted jaw-defined rectangular area."),
     MetricSpec("cam", "CAM", dual_mlc=True, aliases=("converted_aperture_metric",), description="Aperture complexity score based on converted field geometry."),
     MetricSpec("eam", "EAM", dual_mlc=True, aliases=("edge_area_metric",), description="Combined edge-and-area measure of aperture complexity."),
     MetricSpec(
@@ -135,6 +136,7 @@ VMAT_METRIC_SPECS = (
         "sport",
         "SPORT",
         "10.1118/1.4802748",
+        dual_mlc=True,
         gui_label="SPORT Modulation Index (Li and Xing 2013)",
         description=(
             "Station-wise SPORT modulation index MI(s) from Li and Xing, "

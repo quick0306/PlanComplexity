@@ -54,20 +54,27 @@ and Quintero et al. 2021:
   deliberately non-physical: it concatenates jaw-evaluated MLCX1 and MLCX2 slots for algorithm
   comparison and must not be interpreted as a transmitted aperture.
 
-VMAT/IMRT analyses record `metric_formula_version=hybrid-v2`. The migration and formula contract,
-including corrected MAD, MU-weighted LG/SAS, `lt_mean_leaf`, explicit leaf counts, and Halcyon
-alignment behavior, is documented in [`docs/hybrid_v2_metrics.md`](docs/hybrid_v2_metrics.md).
+VMAT/IMRT and CyberKnife analyses record `metric_formula_version=geometry-v4`; TOMO records
+`tomo-v3`. The current [precision and motion migration](docs/precision_motion_validation.md),
+[per-metric formula contracts](docs/metric_formula_contracts.md), and
+[TOMO input contract](docs/tomo_input_contract.md) describe units, boundaries, and unavailable
+results. The [preceding hybrid-v2 contract](docs/hybrid_v2_metrics.md) documents the retained
+MU-weighted MAD/LG/SAS definitions, `lt_mean_leaf`, explicit leaf counts, and Halcyon representations.
 The project does not provide an `RT_LENS` mode or vendor the upstream implementation; independent
 comparisons may call `matteomaspero/rt-complexity-lens` directly.
+
+Validation explicitly requests `analyze_plan_file(..., full_precision=True)`; the default
+analysis output retains legacy rounding. The [external benchmark capture](docs/external_benchmarks.md)
+records real UCoMX workbook cells and source/config hashes with its provenance and formula limitations.
 
 Use `--recursive` if the input directory contains nested folders.
 
 Use `--verbose` on any script to include debug logging.
 
-Run the minimal test suite:
+Run the full test suite, including independent numerical hand cases:
 
 ```bash
-python -m unittest discover -s tests
+python -m pytest tests -q
 ```
 
 Run the Aurora-focused standalone prototype tests:
@@ -101,6 +108,9 @@ These commands produce `reference_case_results.json`, `reference_case_results.cs
 The full artifact rebuild requires the referenced RTPLAN files under `data/`; when running
 from a separate worktree, pass `--source-root path/to/PlanComplexity` to point at the data root.
 The validation bundle is research/publication evidence support and is not clinical deployment ready.
+The reference command exits nonzero on a failed strict gate, including formula-version or
+expected support-state mismatches. Scalar baselines have separate formula-version and SHA256
+provenance; see the [reference pack](docs/reference_pack_v1.md) before updating them.
 
 Optional PSQA/SPC and endpoint association scaffolds are available for institution-approved,
 de-identified local datasets:
@@ -183,7 +193,7 @@ The Aurora prototype is for research use only. Clinical use is strongly forbidde
 - Folder batch analysis now uses light parallelism for independent RT Plan files, and
   beam-level geometry/meterset objects are cached during a single-file analysis pass.
 - Code paths have been standardized on `snake_case` module and API naming.
-- VMAT/IMRT default formulas use the `hybrid-v2` contract:
+- VMAT/IMRT default formulas use `geometry-v4`, retaining these `hybrid-v2` definitions:
   - `MAD` is the MU-weighted mean absolute aperture-center distance from the beam central axis.
   - `ALG`/`ALG SD` and `SAS` are calculated per control point and then MU weighted; SAS includes
     only jaw-overlapping, strictly positive gaps in its denominator.

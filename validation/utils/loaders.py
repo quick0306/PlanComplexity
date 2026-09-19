@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import hashlib
 import json
+from dataclasses import replace
 from datetime import datetime
 from functools import lru_cache
 from pathlib import Path
@@ -16,6 +17,7 @@ from validation_models import (
     ComparatorMappingRecord,
     ComparatorSampleRecord,
     ExpectedRangeRecord,
+    ExpectedMetricsProvenanceRecord,
     MetricGroupRecord,
     MetricSpecRecord,
     ReferenceCaseProvenanceRecord,
@@ -305,7 +307,13 @@ def load_reference_manifest() -> list[ReferenceCaseRecord]:
                 checksum=_require_string(row, "checksum", context),
                 provenance=_require_provenance(row, "provenance", context),
                 notes=_require_string(row, "notes", context, allow_empty=True),
+                expected_formula_version=_optional_string(row, "expected_formula_version", context),
+                expected_supported=row.get("expected_supported", True),
             )
+        )
+        records[-1] = replace(
+            records[-1],
+            expected_metrics_provenance=load_expected_metrics_provenance(records[-1]),
         )
 
     _require_unique([record.case_id for record in records], "reference case")
@@ -324,6 +332,37 @@ def resolve_reference_source_path(
     raise FileNotFoundError(
         f"Could not resolve reference-case source path '{case.source_path}' under '{repo_root}'."
     )
+
+
+def load_expected_metrics_provenance(
+    case: ReferenceCaseRecord,
+) -> ExpectedMetricsProvenanceRecord | None:
+    """Read and bind a sidecar to its case and exact scalar artifact bytes.
+
+    Missing sidecars remain loadable for explicit first-version migrations.
+    The reference evaluator enforces any manifest formula-version requirement.
+    """
+    path = case.expected_metrics_path.with_name("expected_metrics_provenance.json")
+    if not path.exists():
+        return None
+    try:
+        payload = json.loads(path.read_text(encoding="utf-8"))
+    except (OSError, json.JSONDecodeError) as exc:
+        raise ValueError(f"Failed to load expected metrics provenance for '{case.case_id}': {exc}") from exc
+    _validate_schema(payload, "expected_metrics_provenance.schema.json")
+    expected_identity = {
+        "case_id": case.case_id, "domain": case.domain, "mode": case.expected_mode,
+        "source_checksum": case.checksum.lower(),
+        "expected_metrics_checksum": hashlib.sha256(case.expected_metrics_path.read_bytes()).hexdigest(),
+    }
+    for key, expected in expected_identity.items():
+        observed = payload[key].lower() if key.endswith("checksum") else payload[key]
+        if observed != expected:
+            raise ValueError(
+                f"Expected metrics provenance {key} mismatch for '{case.case_id}': "
+                f"expected {expected!r}, observed {observed!r}."
+            )
+    return ExpectedMetricsProvenanceRecord(**payload)
 
 
 def verify_reference_source_checksum(

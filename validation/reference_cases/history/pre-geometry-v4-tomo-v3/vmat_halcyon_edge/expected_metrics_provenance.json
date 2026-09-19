@@ -1,0 +1,10 @@
+{
+  "case_id": "vmat_halcyon_edge",
+  "domain": "VMAT_IMRT",
+  "expected_metrics_checksum": "94a95729a2825c81c5ee703ad28b344c5d53257f76f845993248d4cd1f7a44e7",
+  "formula_version": "geometry-v3",
+  "generated_at": "2026-09-19T11:47:01Z",
+  "mode": "VMAT_IMRT",
+  "schema_version": 1,
+  "source_checksum": "9813382359503e91d2b1750b706ae98be811ca3bc064cc223f9aa80ddb02b854"
+}

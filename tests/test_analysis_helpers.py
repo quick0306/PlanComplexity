@@ -30,7 +30,7 @@ class FakeModulationIndexScore:
         return (f"mis-{k}", f"mia-{k}", f"mit-{k}")
 
 
-def fake_supplemental_metrics(_plan_dict):
+def fake_supplemental_metrics(_plan_dict, *, full_precision=False):
     return {
         "mus": 325.4,
         "pmu": 325.4,

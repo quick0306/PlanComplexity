@@ -1,8 +1,11 @@
 # VMAT/IMRT Hybrid-v2 Metric Contract
 
-`hybrid-v2` is the default VMAT/IMRT formula set. Every supported VMAT/IMRT analysis records
-`metric_formula_version: hybrid-v2` in structured metadata and exports it in CSV output. TOMO,
-Aurora, and CyberKnife formulas and schemas are unchanged.
+This records the preceding `hybrid-v2` formula set. The current default is
+[`geometry-v3`](geometry_v3_metrics.md), which retains the weighted definitions below while
+correcting full perimeter, native MLC boundaries, and dynamic-jaw AAV normalization.
+The statements about unchanged quantities below refer to the original hybrid-v2 migration;
+the geometry-v3 document lists subsequent changes. TOMO now has its separate
+[`tomo-v2` input contract](tomo_input_contract.md); Aurora remains unchanged.
 
 ## Intentional formula changes
 

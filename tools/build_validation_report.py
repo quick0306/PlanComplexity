@@ -42,6 +42,7 @@ def build_validation_report(
         profile=profile,
         output_dir=output_root,
         source_root=source_root,
+        reference_report=reference_report,
     )
     return render_validation_artifacts(reference_report, comparison_report, output_root)
 
@@ -94,6 +95,11 @@ def render_validation_artifacts(
         generated_at=generated_at,
         report_id=report_id,
     )
+    external = comparison_report.get("external_benchmarks")
+    if isinstance(external, dict):
+        artifact_paths["external_benchmarks_json"] = write_json_artifact(
+            output_root / "external_benchmarks.json", external,
+        )
     _validate_validation_report(validation_report)
     artifact_paths["validation_report_json"] = write_json_artifact(
         output_root / "validation_report.json",
@@ -108,6 +114,7 @@ def render_validation_artifacts(
         reference_report=reference_report,
         comparison_rows=comparison_rows,
     )
+    summary_context["external_summary"] = external.get("summary", {}) if isinstance(external, dict) else {}
     artifact_paths["summary_markdown"] = _write_text_artifact(
         output_root / "validation_summary.md",
         env.get_template("validation_summary.md.j2").render(summary_context),
@@ -144,6 +151,7 @@ def _build_validation_report_json(
         for row in metrics
         if row.get("comparison_class") == "exact-equivalent"
     ]
+    reference_summary = _reference_summary(reference_report)
     return {
         "report_id": report_id,
         "generated_at": generated_at,
@@ -152,9 +160,14 @@ def _build_validation_report_json(
             "total_metrics": len(metrics),
             "exact_passes": sum(1 for row in exact_rows if row.get("status") == "pass"),
             "exact_failures": sum(1 for row in exact_rows if row.get("status") == "fail"),
+            "reference_exact_green": reference_summary["reference_exact_green"],
+            "analysis_failures": reference_summary["analysis_failures"],
+            "provenance_failures": reference_summary["provenance_failures"],
         },
+        "cases": _reference_case_summaries(reference_report),
         "results": [
             {
+                "case_id": str(row.get("case_id") or ""),
                 "platform": str(row.get("domain") or row.get("platform") or ""),
                 "metric_key": str(row.get("metric_key") or ""),
                 "comparison_class": str(row.get("comparison_class") or "not-comparable"),
@@ -163,6 +176,26 @@ def _build_validation_report_json(
             for row in metrics
         ],
     }
+
+
+def _reference_case_summaries(reference_report: dict[str, Any]) -> list[dict[str, Any]]:
+    return [
+        {
+            "case_id": str(row.get("case_id") or ""),
+            "domain": str(row.get("domain") or ""),
+            "supported": row.get("supported"),
+            "expected_supported": row.get("expected_supported"),
+            "analysis_status": row.get("analysis_status", "not-recorded"),
+            "analysis_note": row.get("analysis_note", ""),
+            "required_formula_version": row.get("required_formula_version"),
+            "expected_formula_version": row.get("expected_formula_version"),
+            "observed_formula_version": row.get("observed_formula_version"),
+            "formula_version_status": row.get("formula_version_status", "legacy-unversioned"),
+            "formula_version_note": row.get("formula_version_note", ""),
+            "reference_exact_green": row.get("reference_exact_green"),
+        }
+        for row in _rows(reference_report.get("cases"))
+    ]
 
 
 def _summary_context(
@@ -179,6 +212,7 @@ def _summary_context(
         "generated_at": generated_at,
         "report_id": report_id,
         "reference_summary": _reference_summary(reference_report),
+        "reference_cases": _reference_case_summaries(reference_report),
         "domain_case_counts": sorted(_count_by(cases, "domain").items()),
         "comparison_rows": comparison_rows,
     }
@@ -197,7 +231,15 @@ def _reference_summary(reference_report: dict[str, Any]) -> dict[str, Any]:
     summary.setdefault("metrics_total", len(metrics))
     summary.setdefault("exact_metrics_total", len(exact_rows))
     summary.setdefault("exact_failures", sum(1 for row in exact_rows if row.get("status") == "fail"))
-    summary.setdefault("reference_exact_green", summary["exact_failures"] == 0)
+    summary.setdefault("analysis_failures", sum(1 for row in cases if row.get("analysis_status") == "fail"))
+    summary.setdefault("provenance_failures", sum(1 for row in cases if row.get("formula_version_status") == "fail"))
+    summary.setdefault(
+        "reference_exact_green",
+        summary["exact_failures"] == 0
+        and summary["analysis_failures"] == 0
+        and summary["provenance_failures"] == 0
+        and not any(row.get("reference_exact_green") is False for row in cases),
+    )
     return summary
 
 
@@ -229,8 +271,7 @@ def _build_manifest_lock(
 
 def _ensure_json_artifact(report: dict[str, Any], artifact_key: str, default_path: Path) -> Path:
     path = _artifact_path(report, artifact_key, default_path)
-    if not path.exists():
-        write_json_artifact(path, report)
+    write_json_artifact(path, report)
     return path
 
 
@@ -242,8 +283,7 @@ def _ensure_csv_artifact(
     fieldnames: list[str],
 ) -> Path:
     path = _artifact_path(report, artifact_key, default_path)
-    if not path.exists():
-        write_csv_artifact(path, rows, fieldnames=fieldnames)
+    write_csv_artifact(path, rows, fieldnames=fieldnames)
     return path
 
 

@@ -1,0 +1,101 @@
+{
+  "schema_version": 1,
+  "benchmark_id": "ucomx-halcyon-historical-20251229",
+  "case_id": "vmat_halcyon_edge",
+  "domain": "VMAT_IMRT",
+  "captured_at": "2026-09-19T13:54:56+00:00",
+  "provenance": {
+    "input_sha256": "9813382359503e91d2b1750b706ae98be811ca3bc064cc223f9aa80ddb02b854",
+    "workbook_sha256": "fa1987065c2a758574b1804c8b397f750d50bafdeceea6e43fd2ca417ef97b10",
+    "config_sha256": "5bc25903704c14b767f0c04c369100f0279e4a6297cf632e2ccf3650cfeb402e",
+    "metrics_config_sha256": "993fe6d8fc244aaeff66f38b2bd804ab61e3e782c7f7cb59bf5c55f961241a55",
+    "tool_name": "UCoMX/VCoMX",
+    "evidence_class": "historical_external_capture",
+    "identity_sheet": "info",
+    "identity_cell": "B2",
+    "input_identity_method": "filename_resolved_input_sha256",
+    "historical_input_hash_recorded": false,
+    "execution_binary_verified": false,
+    "historical_tool_version": "not_recorded",
+    "local_gui_label": "VCoMX v1.0",
+    "local_tool_snapshot_at_capture": {
+      "UCoMX.mlapp": "aaec0c8adf81b0e8cd60538f79c5e61c2e4bb4a1905ad537ecfac8492ea770ba",
+      "vcomx/VCoMX.p": "259954894601554c139e0bc9f3074cb7b5576c05bc676795a62986b302b09c21",
+      "vcomx/VCoMX_GUI.mlapp": "90579740925030d93e84cf4e210d986a41626cd95558d9a451ec9aa3b8a94f99"
+    },
+    "row_alignment": "same_row_index_in_paired_export_sheets"
+  },
+  "samples": [
+    {
+      "external_metric": "MUs",
+      "external_value": 927.9379754850991,
+      "sheet": "metrics",
+      "value_cell": "A2",
+      "header_cell": "A1"
+    },
+    {
+      "external_metric": "LT",
+      "external_value": 190.4344512195122,
+      "sheet": "metrics",
+      "value_cell": "F2",
+      "header_cell": "F1"
+    },
+    {
+      "external_metric": "MCSv",
+      "external_value": 0.3059251194633957,
+      "sheet": "metrics",
+      "value_cell": "R2",
+      "header_cell": "R1"
+    },
+    {
+      "external_metric": "AAV",
+      "external_value": 0.378342444206498,
+      "sheet": "metrics",
+      "value_cell": "S2",
+      "header_cell": "S1"
+    },
+    {
+      "external_metric": "LSV",
+      "external_value": 0.793068173959255,
+      "sheet": "metrics",
+      "value_cell": "T2",
+      "header_cell": "T1"
+    },
+    {
+      "external_metric": "PI",
+      "external_value": 10.745492046495036,
+      "sheet": "metrics",
+      "value_cell": "Y2",
+      "header_cell": "Y1"
+    },
+    {
+      "external_metric": "PA",
+      "external_value": 3155.2000284808328,
+      "sheet": "metrics",
+      "value_cell": "AH2",
+      "header_cell": "AH1"
+    },
+    {
+      "external_metric": "EFS",
+      "external_value": 33.72078981797468,
+      "sheet": "metrics",
+      "value_cell": "AM2",
+      "header_cell": "AM1"
+    },
+    {
+      "external_metric": "EM",
+      "external_value": 0.1157006079944917,
+      "sheet": "metrics",
+      "value_cell": "AR2",
+      "header_cell": "AR1"
+    },
+    {
+      "external_metric": "P",
+      "external_value": 558.3086535595286,
+      "sheet": "metrics",
+      "value_cell": "AU2",
+      "header_cell": "AU1"
+    }
+  ],
+  "capture_sha256": "282e0017807f5ef1be28b30074b25f9e4919c065e3fd2f862ce69d483db01c17"
+}

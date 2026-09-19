@@ -4,7 +4,6 @@ import sys
 from collections import defaultdict
 
 import pydicom
-from pydicom.tag import Tag
 
 
 def printable(value, limit: int = 160) -> str:

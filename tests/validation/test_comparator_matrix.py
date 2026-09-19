@@ -11,6 +11,9 @@ class ComparatorMatrixTests(unittest.TestCase):
 
         self.assertGreater(report["summary"]["metrics_total"], 0)
         self.assertGreaterEqual(report["summary"]["mapped_metrics"], 3)
+        self.assertEqual(report["summary"]["verified_external_samples"], 0)
+        self.assertTrue(all(row["mapping_provenance"] == "legacy-unverified"
+                            for row in report["metrics"] if row["coverage_status"] == "mapped"))
         platforms = {row["platform"] for row in report["platforms"]}
         self.assertTrue({"VMAT_IMRT", "AURORA"}.issubset(platforms))
 

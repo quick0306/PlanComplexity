@@ -67,12 +67,12 @@ class ProportionMLCSpeedAcceleration(ComplexityMetric):
                 mlcx2_summary.append(mlcx2[2])
 
             return (
-                np.round(self._weighted_average(mlcx1_speed, weights), 4).tolist(),
-                np.round(self._weighted_average(mlcx1_acc, weights), 4).tolist(),
-                np.round(self._weighted_average(mlcx1_summary, weights), 4).tolist(),
-                np.round(self._weighted_average(mlcx2_speed, weights), 4).tolist(),
-                np.round(self._weighted_average(mlcx2_acc, weights), 4).tolist(),
-                np.round(self._weighted_average(mlcx2_summary, weights), 4).tolist(),
+                self.format_result(self._weighted_average(mlcx1_speed, weights), 4).tolist(),
+                self.format_result(self._weighted_average(mlcx1_acc, weights), 4).tolist(),
+                self.format_result(self._weighted_average(mlcx1_summary, weights), 4).tolist(),
+                self.format_result(self._weighted_average(mlcx2_speed, weights), 4).tolist(),
+                self.format_result(self._weighted_average(mlcx2_acc, weights), 4).tolist(),
+                self.format_result(self._weighted_average(mlcx2_summary, weights), 4).tolist(),
             )
 
         speed_profiles = []
@@ -89,9 +89,9 @@ class ProportionMLCSpeedAcceleration(ComplexityMetric):
             weights.append(max(len(beam.get("ControlPointSequence", [])) - 1, 1))
 
         return (
-            np.round(self._weighted_average(speed_profiles, weights), 4).tolist(),
-            np.round(self._weighted_average(acc_profiles, weights), 4).tolist(),
-            np.round(self._weighted_average(summaries, weights), 4).tolist(),
+            self.format_result(self._weighted_average(speed_profiles, weights), 4).tolist(),
+            self.format_result(self._weighted_average(acc_profiles, weights), 4).tolist(),
+            self.format_result(self._weighted_average(summaries, weights), 4).tolist(),
         )
 
     def calculate_for_beam(self, beam: Dict[str, str]):

@@ -57,7 +57,7 @@ class SmallApertureScore(ComplexityMetric):
                     "[METRIC_WEIGHT_FALLBACK] SAS used uniform beam weights because beam MU "
                     "values were missing or invalid."
                 )
-            results.append(round(result.value, self.round_digits))
+            results.append(self.format_result(result.value))
         return (tuple(results) if dual_layer else results[0]), list(dict.fromkeys(warnings))
 
     def count_beam_leaf_gaps(

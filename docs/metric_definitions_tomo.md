@@ -118,7 +118,7 @@ This appendix is generated from the shared metric-definition catalog.
 - Symbol/short name: CS
 - Mathematical definition: CS = CT / TT
 - Physical meaning: Average couch translation speed.
-- Unit: s
+- Unit: mm/s
 - Inputs required: Sinogram metadata: projection time, projections per rotation, field width, pitch, couch travel, dose
 - Status: implemented
 - Notes: Mathematical definition summarizes the current sinogram-based implementation.
@@ -217,7 +217,7 @@ This appendix is generated from the shared metric-definition catalog.
 - Symbol/short name: kLOT
 - Mathematical definition: kLOT = kurtosis(LOT)
 - Physical meaning: Kurtosis of the leaf open time distribution.
-- Unit: ms
+- Unit: dimensionless
 - Inputs required: Sinogram matrix, non-zero leaf open times, and per-leaf open/closed topology
 - Status: implemented
 - Notes: Mathematical definition summarizes the current sinogram-based implementation.
@@ -228,7 +228,7 @@ This appendix is generated from the shared metric-definition catalog.
 - Symbol/short name: sLOT
 - Mathematical definition: sLOT = skewness(LOT)
 - Physical meaning: Skewness of the leaf open time distribution.
-- Unit: ms
+- Unit: dimensionless
 - Inputs required: Sinogram matrix, non-zero leaf open times, and per-leaf open/closed topology
 - Status: implemented
 - Notes: Mathematical definition summarizes the current sinogram-based implementation.
@@ -237,7 +237,7 @@ This appendix is generated from the shared metric-definition catalog.
 
 - Group: Leaf open time
 - Symbol/short name: CLNS10
-- Mathematical definition: CLNS10 = count(LOT < 10 ms) / count(non-zero LOT)
+- Mathematical definition: CLNS10 = count(0 < LOT < 10 ms) / count(non-zero LOT)
 - Physical meaning: Fraction of leaf open times shorter than 10 ms.
 - Unit: dimensionless
 - Inputs required: Sinogram matrix, non-zero leaf open times, and per-leaf open/closed topology
@@ -248,7 +248,7 @@ This appendix is generated from the shared metric-definition catalog.
 
 - Group: Leaf open time
 - Symbol/short name: CLNS20
-- Mathematical definition: CLNS20 = count(LOT < 20 ms) / count(non-zero LOT)
+- Mathematical definition: CLNS20 = count(0 < LOT < 20 ms) / count(non-zero LOT)
 - Physical meaning: Fraction of leaf open times shorter than 20 ms.
 - Unit: dimensionless
 - Inputs required: Sinogram matrix, non-zero leaf open times, and per-leaf open/closed topology
@@ -259,7 +259,7 @@ This appendix is generated from the shared metric-definition catalog.
 
 - Group: Leaf open time
 - Symbol/short name: CLNS30
-- Mathematical definition: CLNS30 = count(LOT < 30 ms) / count(non-zero LOT)
+- Mathematical definition: CLNS30 = count(0 < LOT < 30 ms) / count(non-zero LOT)
 - Physical meaning: Fraction of leaf open times shorter than 30 ms.
 - Unit: dimensionless
 - Inputs required: Sinogram matrix, non-zero leaf open times, and per-leaf open/closed topology
@@ -270,7 +270,7 @@ This appendix is generated from the shared metric-definition catalog.
 
 - Group: Leaf open time
 - Symbol/short name: CLNS50
-- Mathematical definition: CLNS50 = count(LOT < 50 ms) / count(non-zero LOT)
+- Mathematical definition: CLNS50 = count(0 < LOT < 50 ms) / count(non-zero LOT)
 - Physical meaning: Fraction of leaf open times shorter than 50 ms.
 - Unit: dimensionless
 - Inputs required: Sinogram matrix, non-zero leaf open times, and per-leaf open/closed topology
@@ -281,7 +281,7 @@ This appendix is generated from the shared metric-definition catalog.
 
 - Group: Leaf open time
 - Symbol/short name: CLNSpt10
-- Mathematical definition: CLNSpt_10 = count(LOT < pt_10 ms) / count(non-zero LOT)
+- Mathematical definition: CLNSpt10 = count(LOT > projection time - 10 ms) / count(non-zero LOT)
 - Physical meaning: Fraction of leaf open times within 10 ms of the projection time.
 - Unit: dimensionless
 - Inputs required: Sinogram matrix, non-zero leaf open times, and per-leaf open/closed topology
@@ -292,7 +292,7 @@ This appendix is generated from the shared metric-definition catalog.
 
 - Group: Leaf open time
 - Symbol/short name: CLNSpt20
-- Mathematical definition: CLNSpt_20 = count(LOT < pt_20 ms) / count(non-zero LOT)
+- Mathematical definition: CLNSpt20 = count(LOT > projection time - 20 ms) / count(non-zero LOT)
 - Physical meaning: Fraction of leaf open times within 20 ms of the projection time.
 - Unit: dimensionless
 - Inputs required: Sinogram matrix, non-zero leaf open times, and per-leaf open/closed topology
@@ -303,7 +303,7 @@ This appendix is generated from the shared metric-definition catalog.
 
 - Group: Leaf open time
 - Symbol/short name: CLNSpt30
-- Mathematical definition: CLNSpt_30 = count(LOT < pt_30 ms) / count(non-zero LOT)
+- Mathematical definition: CLNSpt30 = count(LOT > projection time - 30 ms) / count(non-zero LOT)
 - Physical meaning: Fraction of leaf open times within 30 ms of the projection time.
 - Unit: dimensionless
 - Inputs required: Sinogram matrix, non-zero leaf open times, and per-leaf open/closed topology
@@ -314,7 +314,7 @@ This appendix is generated from the shared metric-definition catalog.
 
 - Group: Leaf open time
 - Symbol/short name: CLNSpt50
-- Mathematical definition: CLNSpt_50 = count(LOT < pt_50 ms) / count(non-zero LOT)
+- Mathematical definition: CLNSpt50 = count(LOT > projection time - 50 ms) / count(non-zero LOT)
 - Physical meaning: Fraction of leaf open times within 50 ms of the projection time.
 - Unit: dimensionless
 - Inputs required: Sinogram matrix, non-zero leaf open times, and per-leaf open/closed topology
@@ -437,7 +437,7 @@ This appendix is generated from the shared metric-definition catalog.
 - Symbol/short name: TA
 - Mathematical definition: TA = mean projection treatment width across the sinogram
 - Physical meaning: Average width of the treated sinogram area per projection.
-- Unit: mm
+- Unit: leaf slots
 - Inputs required: Sinogram matrix, non-zero leaf open times, and per-leaf open/closed topology
 - Status: implemented
 - Notes: Mathematical definition summarizes the current sinogram-based implementation.
@@ -459,7 +459,7 @@ This appendix is generated from the shared metric-definition catalog.
 - Symbol/short name: lengthCC
 - Mathematical definition: lengthCC = mean connected-component length in the sinogram
 - Physical meaning: Average length of connected open sinogram components.
-- Unit: mm
+- Unit: leaf slots
 - Inputs required: Sinogram matrix, non-zero leaf open times, and per-leaf open/closed topology
 - Status: implemented
 - Notes: Mathematical definition summarizes the current sinogram-based implementation.
@@ -490,7 +490,7 @@ This appendix is generated from the shared metric-definition catalog.
 
 - Group: Sinogram geometry
 - Symbol/short name: CLSin
-- Mathematical definition: CLSin = mean(closed leaves inside the treatment area)
+- Mathematical definition: CLSin = mean_nonempty_rows(closed leaves inside treatment span / total number of leaf columns)
 - Physical meaning: Closed leaf score within the treatment area.
 - Unit: dimensionless
 - Inputs required: Sinogram matrix, non-zero leaf open times, and per-leaf open/closed topology
@@ -536,7 +536,7 @@ This appendix is generated from the shared metric-definition catalog.
 - Symbol/short name: Centroid
 - Mathematical definition: Centroid = mean lateral centroid of open leaves over projections
 - Physical meaning: Average lateral position of the open sinogram barycenter.
-- Unit: mm
+- Unit: leaf-index displacement
 - Inputs required: Sinogram matrix, non-zero leaf open times, and per-leaf open/closed topology
 - Status: implemented
 - Notes: Mathematical definition summarizes the current sinogram-based implementation.
@@ -547,7 +547,7 @@ This appendix is generated from the shared metric-definition catalog.
 - Symbol/short name: L0NS
 - Mathematical definition: L0NS = mean fraction of open leaves with 0 open nearest neighbors
 - Physical meaning: Fraction of open leaves with no open nearest neighbors.
-- Unit: count
+- Unit: proportion
 - Inputs required: Sinogram matrix, non-zero leaf open times, and per-leaf open/closed topology
 - Status: implemented
 - Notes: Mathematical definition summarizes the current sinogram-based implementation.
@@ -558,7 +558,7 @@ This appendix is generated from the shared metric-definition catalog.
 - Symbol/short name: L1NS
 - Mathematical definition: L1NS = mean fraction of open leaves with 1 open nearest neighbor
 - Physical meaning: Fraction of open leaves with one open nearest neighbor.
-- Unit: count
+- Unit: proportion
 - Inputs required: Sinogram matrix, non-zero leaf open times, and per-leaf open/closed topology
 - Status: implemented
 - Notes: Mathematical definition summarizes the current sinogram-based implementation.
@@ -569,7 +569,7 @@ This appendix is generated from the shared metric-definition catalog.
 - Symbol/short name: L2NS
 - Mathematical definition: L2NS = mean fraction of open leaves with 2 open nearest neighbors
 - Physical meaning: Fraction of open leaves with two open nearest neighbors.
-- Unit: count
+- Unit: proportion
 - Inputs required: Sinogram matrix, non-zero leaf open times, and per-leaf open/closed topology
 - Status: implemented
 - Notes: Mathematical definition summarizes the current sinogram-based implementation.
@@ -580,7 +580,7 @@ This appendix is generated from the shared metric-definition catalog.
 - Symbol/short name: LOTV
 - Mathematical definition: LOTV = mean over leaves of [ sum(max(LOT) - abs(delta LOT)) / ((N_proj - 1) * max(LOT)) ]
 - Physical meaning: Variability of leaf open time across consecutive projections.
-- Unit: ms
+- Unit: dimensionless
 - Inputs required: Sinogram matrix, non-zero leaf open times, and per-leaf open/closed topology
 - Status: implemented
 - Notes: Mathematical definition summarizes the current sinogram-based implementation.
@@ -591,7 +591,7 @@ This appendix is generated from the shared metric-definition catalog.
 - Symbol/short name: ELOTV-1
 - Mathematical definition: ELOTV-1 = mean normalized abs(LOT_i - LOT_{i+1}) over leaves
 - Physical meaning: Extended leaf open time variability using a one-projection offset.
-- Unit: ms
+- Unit: dimensionless
 - Inputs required: Sinogram matrix, non-zero leaf open times, and per-leaf open/closed topology
 - Status: implemented
 - Notes: Mathematical definition summarizes the current sinogram-based implementation.
@@ -602,7 +602,7 @@ This appendix is generated from the shared metric-definition catalog.
 - Symbol/short name: ELOTV-5
 - Mathematical definition: ELOTV-5 = mean normalized abs(LOT_i - LOT_{i+5}) over leaves
 - Physical meaning: Extended leaf open time variability using a five-projection offset.
-- Unit: ms
+- Unit: dimensionless
 - Inputs required: Sinogram matrix, non-zero leaf open times, and per-leaf open/closed topology
 - Status: implemented
 - Notes: Mathematical definition summarizes the current sinogram-based implementation.
@@ -679,7 +679,7 @@ This appendix is generated from the shared metric-definition catalog.
 - Symbol/short name: mSA
 - Mathematical definition: mSA = sum(position * mean leaf opening) / sum(mean leaf opening)
 - Physical meaning: Mean left-right asymmetry of the sinogram.
-- Unit: dimensionless
+- Unit: leaf-index displacement
 - Inputs required: Sinogram matrix, non-zero leaf open times, and per-leaf open/closed topology
 - Status: implemented
 - Notes: Mathematical definition summarizes the current sinogram-based implementation.

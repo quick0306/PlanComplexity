@@ -1,0 +1,335 @@
+{
+  "retrieved_at": "2026-09-19T12:40:06.030320+00:00",
+  "scope": "Repository discovery, pinned source/document review, independent hand examples, and local read-only TOMO metadata checks. No upstream executable or full external benchmark was run; no calculation or baseline was changed in this survey.",
+  "repositories": [
+    {
+      "repository": "SamueleCavinato/TCoMX",
+      "url": "https://github.com/SamueleCavinato/TCoMX",
+      "default_branch": "main",
+      "commit": "ac8f28e4068fac0c883bd409dd8cc464593ea351",
+      "commit_date": "2024-08-27T08:38:17Z",
+      "github_license_id": "GPL-3.0",
+      "retrieved_files": [
+        {
+          "path": "libs/01_read-input/TCoMX_read_RTplan.m",
+          "sha256": "e0d26c7dc5f0ebf2c5284c446bcd68fce8289751a9dde6497dff957e29d649d5",
+          "url": "https://github.com/SamueleCavinato/TCoMX/blob/ac8f28e4068fac0c883bd409dd8cc464593ea351/libs/01_read-input/TCoMX_read_RTplan.m"
+        },
+        {
+          "path": "libs/02_metrics-extraction/TCoMX_ELOTV.m",
+          "sha256": "6f28b6040635f558f7f28ccde6a52381f9af4174a272aaf4936b7209af63f78c",
+          "url": "https://github.com/SamueleCavinato/TCoMX/blob/ac8f28e4068fac0c883bd409dd8cc464593ea351/libs/02_metrics-extraction/TCoMX_ELOTV.m"
+        },
+        {
+          "path": "libs/02_metrics-extraction/TCoMX_LOTstats.m",
+          "sha256": "a0c84ccb375a1ea58896fd2e02c0092715989f8f7101e01913df25dacd225d15",
+          "url": "https://github.com/SamueleCavinato/TCoMX/blob/ac8f28e4068fac0c883bd409dd8cc464593ea351/libs/02_metrics-extraction/TCoMX_LOTstats.m"
+        },
+        {
+          "path": "libs/02_metrics-extraction/TCoMX_TTDF.m",
+          "sha256": "e64ada44d3b05c5f3d682a94b9e656b768cd6149a6a549b141ed10f90a271966",
+          "url": "https://github.com/SamueleCavinato/TCoMX/blob/ac8f28e4068fac0c883bd409dd8cc464593ea351/libs/02_metrics-extraction/TCoMX_TTDF.m"
+        },
+        {
+          "path": "README.md",
+          "sha256": "84abddf98268a3d1741e348c7204c7a94aefc6ecdfec3cbcd147469bd116403b",
+          "url": "https://github.com/SamueleCavinato/TCoMX/blob/ac8f28e4068fac0c883bd409dd8cc464593ea351/README.md"
+        }
+      ]
+    },
+    {
+      "repository": "matteomaspero/rt-complexity-lens",
+      "url": "https://github.com/matteomaspero/rt-complexity-lens",
+      "default_branch": "main",
+      "commit": "ece2965ea81d05f935087edce4d3556e3ed6a291",
+      "commit_date": "2026-09-04T16:05:59Z",
+      "github_license_id": "NOASSERTION",
+      "retrieved_files": [
+        {
+          "path": "docs/ALGORITHMS.md",
+          "sha256": "3ee504c4935497c5ecd4d68e0cc8e392d28b3530478386ae9bb79b9e5c9e07f7",
+          "url": "https://github.com/matteomaspero/rt-complexity-lens/blob/ece2965ea81d05f935087edce4d3556e3ed6a291/docs/ALGORITHMS.md"
+        },
+        {
+          "path": "LICENSE",
+          "sha256": "3c176b7f6757c06a39abe1297bad04b0d1d2ec619c189ad28ce42c60dff15816",
+          "url": "https://github.com/matteomaspero/rt-complexity-lens/blob/ece2965ea81d05f935087edce4d3556e3ed6a291/LICENSE"
+        },
+        {
+          "path": "python/rtplan_complexity/metrics.py",
+          "sha256": "efc8e2580c808c68a1c43689a58e9134af538dbfffda05ad0d6e7fea257fc12f",
+          "url": "https://github.com/matteomaspero/rt-complexity-lens/blob/ece2965ea81d05f935087edce4d3556e3ed6a291/python/rtplan_complexity/metrics.py"
+        },
+        {
+          "path": "python/rtplan_complexity/parser.py",
+          "sha256": "37a3a5323ff66df3be7d73aeadca046cdeb7c004153d7e2635a476350a27250d",
+          "url": "https://github.com/matteomaspero/rt-complexity-lens/blob/ece2965ea81d05f935087edce4d3556e3ed6a291/python/rtplan_complexity/parser.py"
+        },
+        {
+          "path": "python/tests/cross_validate_ucomx.py",
+          "sha256": "9ac5ea21f3da4563ebfef2c7493c99a2a7857b75127ef87ae664a65473a66850",
+          "url": "https://github.com/matteomaspero/rt-complexity-lens/blob/ece2965ea81d05f935087edce4d3556e3ed6a291/python/tests/cross_validate_ucomx.py"
+        },
+        {
+          "path": "python/tests/external_reference.py",
+          "sha256": "02b64a0533f2b6caaa1e3ef635a0f0926ea92b278b482b32519e61fef9e01512",
+          "url": "https://github.com/matteomaspero/rt-complexity-lens/blob/ece2965ea81d05f935087edce4d3556e3ed6a291/python/tests/external_reference.py"
+        },
+        {
+          "path": "python/tests/reference_data/AUDIT_REPORT.md",
+          "sha256": "7ee578b58553e8836e775cd9ff8e89f7cacc3747ff3623bbb67053f00efaf278",
+          "url": "https://github.com/matteomaspero/rt-complexity-lens/blob/ece2965ea81d05f935087edce4d3556e3ed6a291/python/tests/reference_data/AUDIT_REPORT.md"
+        },
+        {
+          "path": "README.md",
+          "sha256": "c8678cce81c0ff9343e253c02d421a878422e2062d460d14ffe7242b074151f7",
+          "url": "https://github.com/matteomaspero/rt-complexity-lens/blob/ece2965ea81d05f935087edce4d3556e3ed6a291/README.md"
+        }
+      ]
+    },
+    {
+      "repository": "Varian-MedicalAffairsAppliedSolutions/MAAS-PlanComplexity",
+      "url": "https://github.com/Varian-MedicalAffairsAppliedSolutions/MAAS-PlanComplexity",
+      "default_branch": "main",
+      "commit": "57132954f7280a691335eecd0e6f159f7f6dfcf8",
+      "commit_date": "2026-02-03T02:18:31Z",
+      "github_license_id": "NOASSERTION",
+      "retrieved_files": [
+        {
+          "path": "license.txt",
+          "sha256": "b3250151f3b88ad509b4b59cf03d4871465e618d3ca8628c5cf4d299cca02252",
+          "url": "https://github.com/Varian-MedicalAffairsAppliedSolutions/MAAS-PlanComplexity/blob/57132954f7280a691335eecd0e6f159f7f6dfcf8/license.txt"
+        },
+        {
+          "path": "ModulationComplexity/Models/ComplexityModel.cs",
+          "sha256": "c42b871d6f4df38289b8c5e7035097f9d2661e788c05823788241081bde9c59c",
+          "url": "https://github.com/Varian-MedicalAffairsAppliedSolutions/MAAS-PlanComplexity/blob/57132954f7280a691335eecd0e6f159f7f6dfcf8/ModulationComplexity/Models/ComplexityModel.cs"
+        }
+      ]
+    },
+    {
+      "repository": "pymedphys/pymedphys",
+      "url": "https://github.com/pymedphys/pymedphys",
+      "default_branch": "main",
+      "commit": "98c800132c4a37194fb51764cace675969d25608",
+      "commit_date": "2026-09-16T20:44:21Z",
+      "github_license_id": "Apache-2.0",
+      "retrieved_files": [
+        {
+          "path": "lib/pymedphys/_experimental/plancomplexity/complexity.py",
+          "sha256": "1dca951cf6c5a83b7f8eb4689e88a26222eae5f5e78627e810bd56ace13c0a6f",
+          "url": "https://github.com/pymedphys/pymedphys/blob/98c800132c4a37194fb51764cace675969d25608/lib/pymedphys/_experimental/plancomplexity/complexity.py"
+        },
+        {
+          "path": "lib/pymedphys/_metersetmap/metersetmap.py",
+          "sha256": "3f11fe8d0330ecb9ba748c9c2616caf5fb825e8002bae463a61c7cf3bd35d247",
+          "url": "https://github.com/pymedphys/pymedphys/blob/98c800132c4a37194fb51764cace675969d25608/lib/pymedphys/_metersetmap/metersetmap.py"
+        },
+        {
+          "path": "lib/pymedphys/docs/users/ref/lib/metersetmap.rst",
+          "sha256": "c20fd5d2d6694d1397896987bd36d3b84bb41c0c4e4a902d6a87877d3622e2c0",
+          "url": "https://github.com/pymedphys/pymedphys/blob/98c800132c4a37194fb51764cace675969d25608/lib/pymedphys/docs/users/ref/lib/metersetmap.rst"
+        },
+        {
+          "path": "lib/pymedphys/tests/delivery/test_from_dicom.py",
+          "sha256": "0b826e9a739be29c2d1cee78399efe486631112d1d99ef2b10266855cad69aec",
+          "url": "https://github.com/pymedphys/pymedphys/blob/98c800132c4a37194fb51764cace675969d25608/lib/pymedphys/tests/delivery/test_from_dicom.py"
+        },
+        {
+          "path": "LICENSE",
+          "sha256": "c71d239df91726fc519c6eb72d318ec65820627232b2f796219e87dcf35d0ab4",
+          "url": "https://github.com/pymedphys/pymedphys/blob/98c800132c4a37194fb51764cace675969d25608/LICENSE"
+        }
+      ]
+    },
+    {
+      "repository": "Jothy/ComplexityCalc",
+      "url": "https://github.com/Jothy/ComplexityCalc",
+      "default_branch": "master",
+      "commit": "1b1fd69ab243b76e6f8ad45f0e335306eaa79bc6",
+      "commit_date": "2021-12-22T20:51:00Z",
+      "github_license_id": "GPL-3.0",
+      "retrieved_files": [
+        {
+          "path": "LICENSE",
+          "sha256": "3972dc9744f6499f0f9b2dbf76696f2ae7ad8af9b23dde66d6af86c9dfb36986",
+          "url": "https://github.com/Jothy/ComplexityCalc/blob/1b1fd69ab243b76e6f8ad45f0e335306eaa79bc6/LICENSE"
+        },
+        {
+          "path": "README.md",
+          "sha256": "674148adef9effcb3b65f53439471a1d30486f9077b24269e6751496b34c040a",
+          "url": "https://github.com/Jothy/ComplexityCalc/blob/1b1fd69ab243b76e6f8ad45f0e335306eaa79bc6/README.md"
+        }
+      ]
+    },
+    {
+      "repository": "victorgabr/ApertureComplexity",
+      "url": "https://github.com/victorgabr/ApertureComplexity",
+      "default_branch": "master",
+      "commit": "fbb25e756dd2a7b265a77cb6903fe69e868cce6e",
+      "commit_date": "2023-05-01T17:31:15Z",
+      "github_license_id": "GPL-3.0",
+      "retrieved_files": [
+        {
+          "path": "complexity/PyComplexityMetric.py",
+          "sha256": "e7def2680c3f2390928d74d92311c0611eb20edfaf07ea18c98770ce66cb2bc0",
+          "url": "https://github.com/victorgabr/ApertureComplexity/blob/fbb25e756dd2a7b265a77cb6903fe69e868cce6e/complexity/PyComplexityMetric.py"
+        },
+        {
+          "path": "LICENSE",
+          "sha256": "b98fbb37db5b23bc5cfdcd16793206a5a7120a7b01f75374e5e0888376e4691c",
+          "url": "https://github.com/victorgabr/ApertureComplexity/blob/fbb25e756dd2a7b265a77cb6903fe69e868cce6e/LICENSE"
+        },
+        {
+          "path": "tests/test_apertureIrregularityMetric.py",
+          "sha256": "53b3b31b139138211cd692837058a19d26ef3e885ff1ebcf838810cd20a271a8",
+          "url": "https://github.com/victorgabr/ApertureComplexity/blob/fbb25e756dd2a7b265a77cb6903fe69e868cce6e/tests/test_apertureIrregularityMetric.py"
+        }
+      ]
+    },
+    {
+      "repository": "umro/Complexity",
+      "url": "https://github.com/umro/Complexity",
+      "default_branch": "master",
+      "commit": "76aaeb550a04f149ac5db1e8c044e321ec407c26",
+      "commit_date": "2017-10-12T14:19:55Z",
+      "github_license_id": "GPL-3.0",
+      "retrieved_files": [
+        {
+          "path": "README.md",
+          "sha256": "1e71ea2eaf0e95eba02df3999e32f5257bf00961cac07201dd0e351ba5fa57fa",
+          "url": "https://github.com/umro/Complexity/blob/76aaeb550a04f149ac5db1e8c044e321ec407c26/README.md"
+        },
+        {
+          "path": "src/Complexity.ApertureMetric/Aperture.cs",
+          "sha256": "f154cef5f929ea0c3147841c8aaa87f5921eb4ed0f21620be5cce69f0a4f1b15",
+          "url": "https://github.com/umro/Complexity/blob/76aaeb550a04f149ac5db1e8c044e321ec407c26/src/Complexity.ApertureMetric/Aperture.cs"
+        },
+        {
+          "path": "src/Complexity.ApertureMetric/EdgeMetric.cs",
+          "sha256": "0252774daa17254073057acd7dd5bad7f7c38f997ba3c1f03fdf012416430b8a",
+          "url": "https://github.com/umro/Complexity/blob/76aaeb550a04f149ac5db1e8c044e321ec407c26/src/Complexity.ApertureMetric/EdgeMetric.cs"
+        }
+      ]
+    },
+    {
+      "repository": "Varian-MedicalAffairsAppliedSolutions/PlanDeliverySimulator",
+      "url": "https://github.com/Varian-MedicalAffairsAppliedSolutions/PlanDeliverySimulator",
+      "default_branch": "Main",
+      "commit": "dcf247e7ac09dd8eb6c906656dd11190e806131e",
+      "commit_date": "2026-02-23T23:29:39Z",
+      "github_license_id": "NOASSERTION",
+      "retrieved_files": [
+        {
+          "path": "License",
+          "sha256": "62b66581378870c181a10107d9774fcee5b5fea601d3a9881bb0914035424344",
+          "url": "https://github.com/Varian-MedicalAffairsAppliedSolutions/PlanDeliverySimulator/blob/dcf247e7ac09dd8eb6c906656dd11190e806131e/License"
+        },
+        {
+          "path": "README.md",
+          "sha256": "e590e0432d80077ec690ccd177f958f388a54495aeb0fdf116a432ac8d291d7f",
+          "url": "https://github.com/Varian-MedicalAffairsAppliedSolutions/PlanDeliverySimulator/blob/dcf247e7ac09dd8eb6c906656dd11190e806131e/README.md"
+        }
+      ]
+    }
+  ],
+  "supplemental_resources": [
+    {
+      "repository": "jrkerns/pylinac",
+      "url": "https://github.com/jrkerns/pylinac",
+      "commit": null,
+      "verification": "Official 3.48.0 documentation reviewed; live GitHub API commit lookup rate-limited.",
+      "documentation": "https://pylinac.readthedocs.io/en/latest/topics/fluence.html"
+    },
+    {
+      "name": "UCoMX",
+      "version": "1.1",
+      "url": "https://zenodo.org/records/15673571",
+      "verification": "Author release page; MATLAB pcode and Windows binary; source not published in this release."
+    }
+  ],
+  "definition_counterexamples": [
+    {
+      "quantity": "one-bank LSV",
+      "positions": [
+        0,
+        1,
+        2
+      ],
+      "local_range_normalization": 0.5,
+      "rt_complexity_lens_max_adjacent_normalization": 0.0,
+      "conclusion": "Definition mismatch; this check does not adjudicate literature conformance."
+    },
+    {
+      "quantity": "EM",
+      "rectangle_mm": [
+        20,
+        5
+      ],
+      "area_mm2": 100,
+      "full_perimeter_mm": 50,
+      "local_leaf_side_perimeter_over_area_mm_inv": 0.4,
+      "rt_complexity_lens_full_perimeter_over_2area_mm_inv": 0.25,
+      "conclusion": "Definition mismatch; square apertures alone can conceal it."
+    }
+  ],
+  "tomo_couch_findings": [
+    {
+      "case_id": "tomo_canonical",
+      "source_checksum": "c0804684e11fb3064a0980969d8e98a94e9f82266504aee92dd0cd73d9c6426b",
+      "private_creator": "TOMO_HA_01",
+      "speed_tag": "300D,1080",
+      "speed_mm_s": 0.610483,
+      "pitch_tag": "300D,1060",
+      "private_pitch": 0.287,
+      "duration_s": 365.5686274509804,
+      "current_couch_translation_mm": 0.0,
+      "independently_derived_translation_mm": 223.17343239215685,
+      "current_couch_speed_mm_s": 0.0,
+      "current_target_length_mm": -25.1,
+      "quantity_class": "planned motion, not measured motion",
+      "derivation": "distance_mm = private_speed_mm_s * n_projections * projection_time_s",
+      "unit_source": "https://www.accuray.com/wp-content/uploads/1066787.pdf",
+      "upstream_source": "https://github.com/SamueleCavinato/TCoMX/blob/ac8f28e4068fac0c883bd409dd8cc464593ea351/libs/01_read-input/TCoMX_read_RTplan.m#L209-L219"
+    },
+    {
+      "case_id": "tomo_default_inference_edge",
+      "source_checksum": "afdb4d429bd9e0019a5908bbe5f0fc0f675862d205bddd5c16eaadab17b6fbda",
+      "private_creator": "TOMO_HA_01",
+      "speed_tag": "300D,1080",
+      "speed_mm_s": 0.238533,
+      "pitch_tag": "300D,1060",
+      "private_pitch": 0.287,
+      "duration_s": 412.73333333333335,
+      "current_couch_translation_mm": 0.0,
+      "independently_derived_translation_mm": 98.4505202,
+      "current_couch_speed_mm_s": 0.0,
+      "current_target_length_mm": -25.1,
+      "quantity_class": "planned motion, not measured motion",
+      "derivation": "distance_mm = private_speed_mm_s * n_projections * projection_time_s",
+      "unit_source": "https://www.accuray.com/wp-content/uploads/1066787.pdf",
+      "upstream_source": "https://github.com/SamueleCavinato/TCoMX/blob/ac8f28e4068fac0c883bd409dd8cc464593ea351/libs/01_read-input/TCoMX_read_RTplan.m#L209-L219"
+    }
+  ],
+  "external_comparator_inventory": {
+    "mapping_count": 3,
+    "numerically_comparable_mappings": 2,
+    "numeric_samples_per_mapping": [
+      1,
+      1
+    ],
+    "missing_provenance_fields": [
+      "comparator version",
+      "raw output checksum",
+      "run configuration",
+      "generation time"
+    ],
+    "conclusion": "Existing regression pass counts do not establish external numerical equivalence."
+  },
+  "verification_limitations": [
+    "GitHub API rate limit prevented a pinned pylinac commit.",
+    "Some optional raw-file requests timed out; only successfully retrieved files are listed.",
+    "Accuray document unit definitions were verified in official-domain indexed excerpts; direct PDF fetch returned HTTP 404.",
+    "No new external runtime, source transplant, or dependency was installed."
+  ]
+}

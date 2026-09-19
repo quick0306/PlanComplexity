@@ -24,25 +24,14 @@ jobs:
       - name: Install dependencies
         run: python -m pip install -r requirements.txt
 
-      - name: Run validation unit gates
+      # pytest also discovers function-style numerical tests; GUI construction
+      # is verified in the local Windows suite and requires a display.
+      - name: Run headless tests
         run: >
-          python -m unittest
-          tests.validation.test_validation_smoke
-          tests.validation.test_metric_specs
-          tests.validation.test_spec_loaders
-          tests.validation.test_validation_runtime
-          tests.validation.test_reference_manifest
-          tests.validation.test_freeze_reference_outputs
-          tests.validation.test_reference_suite
-          tests.validation.test_formula_oracles
-          tests.validation.test_paper_reproduction
-          tests.validation.test_tool_comparison
-          tests.validation.test_comparator_matrix
-          tests.validation.test_validation_report
-          tests.validation.test_psqa_spc
-          tests.validation.test_clinical_endpoints
-          tests.validation.test_clinical_readiness
-          -v
+          python -m pytest tests
+          --ignore=tests/test_aurora_gui_smoke.py
+          --deselect=tests/test_aurora_service.py::AuroraServiceScaffoldingTests::test_aurora_entrypoints_call_real_main_functions
+          -q
 
       - name: Run formula oracle gate
         run: python tools/run_formula_oracles.py --output-dir run_reports/validation

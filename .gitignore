@@ -32,6 +32,7 @@ MANIFEST
 #  before PyInstaller builds the exe, so as to inject date/other infos into it.
 *.manifest
 *.spec
+!PyUCoMX.spec
 
 # Installer logs
 pip-log.txt
@@ -132,3 +133,7 @@ dmypy.json
 data/
 .idea/
 .worktrees/
+
+# Local exports and document-production intermediates.
+/run_reports/real_rtplan*.json
+/output/software_copyright/

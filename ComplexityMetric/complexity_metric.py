@@ -12,6 +12,17 @@ class ComplexityMetric:
     aggregation_mode = "uniform"
     round_digits = 2
 
+    def __init__(self, *, full_precision: bool = False):
+        self.full_precision = full_precision
+
+    def format_result(self, value, digits=None):
+        """Round final presentation values only; validation keeps the float result."""
+        digits = self.round_digits if digits is None else digits
+        if isinstance(value, (list, tuple, np.ndarray)):
+            values = np.asarray(value, dtype=float)
+            return values if self.full_precision else np.round(values, digits)
+        return float(value) if self.full_precision else round(value, digits)
+
     def calculate_for_plan(self, plan: Dict[str, str] = None) -> Union[Tuple[float, float], float]:
         """Return the plan metric aggregated according to the metric definition."""
         weights = self.get_plan_aggregation_weights(plan)
@@ -20,11 +31,11 @@ class ComplexityMetric:
             mlcx1_metrics = [metric[0] for metric in metrics]
             mlcx2_metrics = [metric[1] for metric in metrics]
             return (
-                round(self.weighted_sum(weights, mlcx1_metrics), self.round_digits),
-                round(self.weighted_sum(weights, mlcx2_metrics), self.round_digits),
+                self.format_result(self.weighted_sum(weights, mlcx1_metrics)),
+                self.format_result(self.weighted_sum(weights, mlcx2_metrics)),
             )
         else:
-            return round(self.weighted_sum(weights, metrics), self.round_digits)
+            return self.format_result(self.weighted_sum(weights, metrics))
 
     def get_weights_plan(self, plan: Dict[str, str]) -> List[float]:
         """Returns beam MU weights for backwards-compatible callers."""

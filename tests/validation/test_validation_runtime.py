@@ -31,6 +31,7 @@ class ValidationRuntimeTests(unittest.TestCase):
         fake_service.analyze_plan_file.assert_called_once_with(
             "demo_tomo.dcm",
             requested_mode=AnalysisMode.TOMO,
+            full_precision=True,
         )
         self.assertIsInstance(record, ValidationCaseResult)
         self.assertEqual("TOMO", record.domain)

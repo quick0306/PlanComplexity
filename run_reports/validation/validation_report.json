@@ -1,2679 +1,4065 @@
 {
-  "generated_at": "2026-04-28T15:52:13Z",
+  "cases": [
+    {
+      "analysis_note": "",
+      "analysis_status": "pass",
+      "case_id": "vmat_truebeam_canonical",
+      "domain": "VMAT_IMRT",
+      "expected_formula_version": "geometry-v4",
+      "expected_supported": true,
+      "formula_version_note": "",
+      "formula_version_status": "pass",
+      "observed_formula_version": "geometry-v4",
+      "reference_exact_green": true,
+      "required_formula_version": "geometry-v4",
+      "supported": true
+    },
+    {
+      "analysis_note": "",
+      "analysis_status": "pass",
+      "case_id": "vmat_halcyon_edge",
+      "domain": "VMAT_IMRT",
+      "expected_formula_version": "geometry-v4",
+      "expected_supported": true,
+      "formula_version_note": "",
+      "formula_version_status": "pass",
+      "observed_formula_version": "geometry-v4",
+      "reference_exact_green": true,
+      "required_formula_version": "geometry-v4",
+      "supported": true
+    },
+    {
+      "analysis_note": "",
+      "analysis_status": "pass",
+      "case_id": "tomo_canonical",
+      "domain": "TOMO",
+      "expected_formula_version": "tomo-v3",
+      "expected_supported": true,
+      "formula_version_note": "",
+      "formula_version_status": "pass",
+      "observed_formula_version": "tomo-v3",
+      "reference_exact_green": true,
+      "required_formula_version": "tomo-v3",
+      "supported": true
+    },
+    {
+      "analysis_note": "",
+      "analysis_status": "pass",
+      "case_id": "tomo_default_inference_edge",
+      "domain": "TOMO",
+      "expected_formula_version": "tomo-v3",
+      "expected_supported": true,
+      "formula_version_note": "",
+      "formula_version_status": "pass",
+      "observed_formula_version": "tomo-v3",
+      "reference_exact_green": true,
+      "required_formula_version": "tomo-v3",
+      "supported": true
+    },
+    {
+      "analysis_note": "",
+      "analysis_status": "pass",
+      "case_id": "cyberknife_multiplan_canonical",
+      "domain": "CYBERKNIFE_MLC",
+      "expected_formula_version": "geometry-v4",
+      "expected_supported": true,
+      "formula_version_note": "",
+      "formula_version_status": "pass",
+      "observed_formula_version": "geometry-v4",
+      "reference_exact_green": true,
+      "required_formula_version": "geometry-v4",
+      "supported": true
+    },
+    {
+      "analysis_note": "",
+      "analysis_status": "pass",
+      "case_id": "cyberknife_precision_missing_xml_edge",
+      "domain": "CYBERKNIFE_MLC",
+      "expected_formula_version": "geometry-v4",
+      "expected_supported": false,
+      "formula_version_note": "",
+      "formula_version_status": "pass",
+      "observed_formula_version": "geometry-v4",
+      "reference_exact_green": true,
+      "required_formula_version": "geometry-v4",
+      "supported": false
+    },
+    {
+      "analysis_note": "",
+      "analysis_status": "pass",
+      "case_id": "aurora_canonical",
+      "domain": "AURORA",
+      "expected_formula_version": null,
+      "expected_supported": true,
+      "formula_version_note": "Legacy baseline has no formula-version provenance.",
+      "formula_version_status": "legacy-unversioned",
+      "observed_formula_version": null,
+      "reference_exact_green": true,
+      "required_formula_version": null,
+      "supported": true
+    },
+    {
+      "analysis_note": "",
+      "analysis_status": "pass",
+      "case_id": "aurora_research_edge",
+      "domain": "AURORA",
+      "expected_formula_version": null,
+      "expected_supported": true,
+      "formula_version_note": "Legacy baseline has no formula-version provenance.",
+      "formula_version_status": "legacy-unversioned",
+      "observed_formula_version": null,
+      "reference_exact_green": true,
+      "required_formula_version": null,
+      "supported": true
+    }
+  ],
+  "generated_at": "2026-09-19T14:33:23Z",
   "profile_key": "research",
-  "report_id": "validation-research-20260428T155213UTC",
+  "report_id": "validation-research-20260919T143323UTC",
   "results": [
     {
+      "case_id": "vmat_truebeam_canonical",
       "comparison_class": "exact-equivalent",
       "metric_key": "aav",
       "platform": "VMAT_IMRT",
       "status": "pass"
     },
     {
+      "case_id": "vmat_truebeam_canonical",
       "comparison_class": "derived-equivalent",
       "metric_key": "acc_0_40",
       "platform": "VMAT_IMRT",
       "status": "skipped"
     },
     {
+      "case_id": "vmat_truebeam_canonical",
       "comparison_class": "derived-equivalent",
       "metric_key": "acc_120_160",
       "platform": "VMAT_IMRT",
       "status": "skipped"
     },
     {
+      "case_id": "vmat_truebeam_canonical",
       "comparison_class": "derived-equivalent",
       "metric_key": "acc_160_200",
       "platform": "VMAT_IMRT",
       "status": "skipped"
     },
     {
+      "case_id": "vmat_truebeam_canonical",
       "comparison_class": "derived-equivalent",
       "metric_key": "acc_40_80",
       "platform": "VMAT_IMRT",
       "status": "skipped"
     },
     {
+      "case_id": "vmat_truebeam_canonical",
       "comparison_class": "derived-equivalent",
       "metric_key": "acc_80_120",
       "platform": "VMAT_IMRT",
       "status": "skipped"
     },
     {
+      "case_id": "vmat_truebeam_canonical",
       "comparison_class": "derived-equivalent",
       "metric_key": "acc_average",
       "platform": "VMAT_IMRT",
       "status": "skipped"
     },
     {
+      "case_id": "vmat_truebeam_canonical",
       "comparison_class": "derived-equivalent",
       "metric_key": "acc_std",
       "platform": "VMAT_IMRT",
       "status": "skipped"
     },
     {
+      "case_id": "vmat_truebeam_canonical",
       "comparison_class": "exact-equivalent",
       "metric_key": "al",
       "platform": "VMAT_IMRT",
       "status": "pass"
     },
     {
+      "case_id": "vmat_truebeam_canonical",
       "comparison_class": "exact-equivalent",
       "metric_key": "alg",
       "platform": "VMAT_IMRT",
       "status": "pass"
     },
     {
+      "case_id": "vmat_truebeam_canonical",
       "comparison_class": "exact-equivalent",
       "metric_key": "alg_sd",
       "platform": "VMAT_IMRT",
       "status": "pass"
     },
     {
+      "case_id": "vmat_truebeam_canonical",
       "comparison_class": "exact-equivalent",
       "metric_key": "asr",
       "platform": "VMAT_IMRT",
       "status": "pass"
     },
     {
+      "case_id": "vmat_truebeam_canonical",
       "comparison_class": "exact-equivalent",
       "metric_key": "axjd",
       "platform": "VMAT_IMRT",
       "status": "pass"
     },
     {
+      "case_id": "vmat_truebeam_canonical",
       "comparison_class": "exact-equivalent",
       "metric_key": "ayjd",
       "platform": "VMAT_IMRT",
       "status": "pass"
     },
     {
+      "case_id": "vmat_truebeam_canonical",
       "comparison_class": "exact-equivalent",
       "metric_key": "bjar",
       "platform": "VMAT_IMRT",
       "status": "pass"
     },
     {
+      "case_id": "vmat_truebeam_canonical",
       "comparison_class": "exact-equivalent",
       "metric_key": "cal",
       "platform": "VMAT_IMRT",
       "status": "pass"
     },
     {
+      "case_id": "vmat_truebeam_canonical",
       "comparison_class": "exact-equivalent",
       "metric_key": "cam",
       "platform": "VMAT_IMRT",
       "status": "pass"
     },
     {
+      "case_id": "vmat_truebeam_canonical",
       "comparison_class": "exact-equivalent",
       "metric_key": "dr",
       "platform": "VMAT_IMRT",
       "status": "pass"
     },
     {
+      "case_id": "vmat_truebeam_canonical",
       "comparison_class": "exact-equivalent",
       "metric_key": "dt",
       "platform": "VMAT_IMRT",
       "status": "pass"
     },
     {
+      "case_id": "vmat_truebeam_canonical",
       "comparison_class": "exact-equivalent",
       "metric_key": "eam",
       "platform": "VMAT_IMRT",
       "status": "pass"
     },
     {
+      "case_id": "vmat_truebeam_canonical",
       "comparison_class": "exact-equivalent",
       "metric_key": "efs",
       "platform": "VMAT_IMRT",
       "status": "pass"
     },
     {
+      "case_id": "vmat_truebeam_canonical",
       "comparison_class": "exact-equivalent",
       "metric_key": "em",
       "platform": "VMAT_IMRT",
       "status": "pass"
     },
     {
+      "case_id": "vmat_truebeam_canonical",
       "comparison_class": "exact-equivalent",
       "metric_key": "fraction_dose_gy",
       "platform": "VMAT_IMRT",
       "status": "pass"
     },
     {
+      "case_id": "vmat_truebeam_canonical",
       "comparison_class": "exact-equivalent",
       "metric_key": "fractions_count",
       "platform": "VMAT_IMRT",
       "status": "pass"
     },
     {
+      "case_id": "vmat_truebeam_canonical",
       "comparison_class": "exact-equivalent",
       "metric_key": "gs",
       "platform": "VMAT_IMRT",
       "status": "pass"
     },
     {
+      "case_id": "vmat_truebeam_canonical",
       "comparison_class": "exact-equivalent",
       "metric_key": "gt",
       "platform": "VMAT_IMRT",
       "status": "pass"
     },
     {
+      "case_id": "vmat_truebeam_canonical",
+      "comparison_class": "exact-equivalent",
+      "metric_key": "ja",
+      "platform": "VMAT_IMRT",
+      "status": "pass"
+    },
+    {
+      "case_id": "vmat_truebeam_canonical",
       "comparison_class": "exact-equivalent",
       "metric_key": "lna",
       "platform": "VMAT_IMRT",
       "status": "pass"
     },
     {
+      "case_id": "vmat_truebeam_canonical",
       "comparison_class": "exact-equivalent",
       "metric_key": "ls",
       "platform": "VMAT_IMRT",
       "status": "pass"
     },
     {
+      "case_id": "vmat_truebeam_canonical",
       "comparison_class": "exact-equivalent",
       "metric_key": "lsv",
       "platform": "VMAT_IMRT",
       "status": "pass"
     },
     {
+      "case_id": "vmat_truebeam_canonical",
       "comparison_class": "exact-equivalent",
       "metric_key": "lt",
       "platform": "VMAT_IMRT",
       "status": "pass"
     },
     {
+      "case_id": "vmat_truebeam_canonical",
+      "comparison_class": "exact-equivalent",
+      "metric_key": "lt_mean_leaf",
+      "platform": "VMAT_IMRT",
+      "status": "pass"
+    },
+    {
+      "case_id": "vmat_truebeam_canonical",
       "comparison_class": "exact-equivalent",
       "metric_key": "ltal",
       "platform": "VMAT_IMRT",
       "status": "pass"
     },
     {
+      "case_id": "vmat_truebeam_canonical",
       "comparison_class": "exact-equivalent",
       "metric_key": "ltmu",
       "platform": "VMAT_IMRT",
       "status": "pass"
     },
     {
+      "case_id": "vmat_truebeam_canonical",
       "comparison_class": "exact-equivalent",
       "metric_key": "ltnl",
       "platform": "VMAT_IMRT",
       "status": "pass"
     },
     {
+      "case_id": "vmat_truebeam_canonical",
       "comparison_class": "exact-equivalent",
       "metric_key": "ltnlmu",
       "platform": "VMAT_IMRT",
       "status": "pass"
     },
     {
+      "case_id": "vmat_truebeam_canonical",
       "comparison_class": "exact-equivalent",
       "metric_key": "mad",
       "platform": "VMAT_IMRT",
       "status": "pass"
     },
     {
+      "case_id": "vmat_truebeam_canonical",
       "comparison_class": "exact-equivalent",
       "metric_key": "mcsv",
       "platform": "VMAT_IMRT",
       "status": "pass"
     },
     {
+      "case_id": "vmat_truebeam_canonical",
       "comparison_class": "exact-equivalent",
       "metric_key": "md",
       "platform": "VMAT_IMRT",
       "status": "pass"
     },
     {
+      "case_id": "vmat_truebeam_canonical",
       "comparison_class": "exact-equivalent",
       "metric_key": "mdrv",
       "platform": "VMAT_IMRT",
       "status": "pass"
     },
     {
+      "case_id": "vmat_truebeam_canonical",
       "comparison_class": "exact-equivalent",
       "metric_key": "mgsv",
       "platform": "VMAT_IMRT",
       "status": "pass"
     },
     {
+      "case_id": "vmat_truebeam_canonical",
+      "comparison_class": "derived-equivalent",
+      "metric_key": "mi_0_2_mia",
+      "platform": "VMAT_IMRT",
+      "status": "skipped"
+    },
+    {
+      "case_id": "vmat_truebeam_canonical",
+      "comparison_class": "derived-equivalent",
+      "metric_key": "mi_0_2_mis",
+      "platform": "VMAT_IMRT",
+      "status": "skipped"
+    },
+    {
+      "case_id": "vmat_truebeam_canonical",
+      "comparison_class": "derived-equivalent",
+      "metric_key": "mi_0_2_mit",
+      "platform": "VMAT_IMRT",
+      "status": "skipped"
+    },
+    {
+      "case_id": "vmat_truebeam_canonical",
+      "comparison_class": "derived-equivalent",
+      "metric_key": "mi_0_5_mia",
+      "platform": "VMAT_IMRT",
+      "status": "skipped"
+    },
+    {
+      "case_id": "vmat_truebeam_canonical",
+      "comparison_class": "derived-equivalent",
+      "metric_key": "mi_0_5_mis",
+      "platform": "VMAT_IMRT",
+      "status": "skipped"
+    },
+    {
+      "case_id": "vmat_truebeam_canonical",
+      "comparison_class": "derived-equivalent",
+      "metric_key": "mi_0_5_mit",
+      "platform": "VMAT_IMRT",
+      "status": "skipped"
+    },
+    {
+      "case_id": "vmat_truebeam_canonical",
+      "comparison_class": "derived-equivalent",
+      "metric_key": "mi_1_0_mia",
+      "platform": "VMAT_IMRT",
+      "status": "skipped"
+    },
+    {
+      "case_id": "vmat_truebeam_canonical",
+      "comparison_class": "derived-equivalent",
+      "metric_key": "mi_1_0_mis",
+      "platform": "VMAT_IMRT",
+      "status": "skipped"
+    },
+    {
+      "case_id": "vmat_truebeam_canonical",
+      "comparison_class": "derived-equivalent",
+      "metric_key": "mi_1_0_mit",
+      "platform": "VMAT_IMRT",
+      "status": "skipped"
+    },
+    {
+      "case_id": "vmat_truebeam_canonical",
+      "comparison_class": "derived-equivalent",
+      "metric_key": "mi_2_0_mia",
+      "platform": "VMAT_IMRT",
+      "status": "skipped"
+    },
+    {
+      "case_id": "vmat_truebeam_canonical",
+      "comparison_class": "derived-equivalent",
+      "metric_key": "mi_2_0_mis",
+      "platform": "VMAT_IMRT",
+      "status": "skipped"
+    },
+    {
+      "case_id": "vmat_truebeam_canonical",
+      "comparison_class": "derived-equivalent",
+      "metric_key": "mi_2_0_mit",
+      "platform": "VMAT_IMRT",
+      "status": "skipped"
+    },
+    {
+      "case_id": "vmat_truebeam_canonical",
       "comparison_class": "exact-equivalent",
       "metric_key": "muca",
       "platform": "VMAT_IMRT",
       "status": "pass"
     },
     {
+      "case_id": "vmat_truebeam_canonical",
       "comparison_class": "exact-equivalent",
       "metric_key": "mucgy",
       "platform": "VMAT_IMRT",
       "status": "pass"
     },
     {
+      "case_id": "vmat_truebeam_canonical",
       "comparison_class": "exact-equivalent",
       "metric_key": "mudeg",
       "platform": "VMAT_IMRT",
       "status": "pass"
     },
     {
+      "case_id": "vmat_truebeam_canonical",
       "comparison_class": "exact-equivalent",
       "metric_key": "mus",
       "platform": "VMAT_IMRT",
       "status": "pass"
     },
     {
+      "case_id": "vmat_truebeam_canonical",
       "comparison_class": "exact-equivalent",
       "metric_key": "narcs",
       "platform": "VMAT_IMRT",
       "status": "pass"
     },
     {
+      "case_id": "vmat_truebeam_canonical",
       "comparison_class": "exact-equivalent",
       "metric_key": "nl",
       "platform": "VMAT_IMRT",
       "status": "pass"
     },
     {
+      "case_id": "vmat_truebeam_canonical",
+      "comparison_class": "exact-equivalent",
+      "metric_key": "nl_leaves",
+      "platform": "VMAT_IMRT",
+      "status": "pass"
+    },
+    {
+      "case_id": "vmat_truebeam_canonical",
+      "comparison_class": "exact-equivalent",
+      "metric_key": "nl_pairs",
+      "platform": "VMAT_IMRT",
+      "status": "pass"
+    },
+    {
+      "case_id": "vmat_truebeam_canonical",
       "comparison_class": "exact-equivalent",
       "metric_key": "pa",
       "platform": "VMAT_IMRT",
       "status": "pass"
     },
     {
+      "case_id": "vmat_truebeam_canonical",
       "comparison_class": "exact-equivalent",
       "metric_key": "perimeter",
       "platform": "VMAT_IMRT",
       "status": "pass"
     },
     {
+      "case_id": "vmat_truebeam_canonical",
       "comparison_class": "exact-equivalent",
       "metric_key": "pi",
       "platform": "VMAT_IMRT",
       "status": "pass"
     },
     {
+      "case_id": "vmat_truebeam_canonical",
       "comparison_class": "exact-equivalent",
       "metric_key": "pm",
       "platform": "VMAT_IMRT",
       "status": "pass"
     },
     {
+      "case_id": "vmat_truebeam_canonical",
       "comparison_class": "exact-equivalent",
       "metric_key": "pmu",
       "platform": "VMAT_IMRT",
       "status": "pass"
     },
     {
+      "case_id": "vmat_truebeam_canonical",
       "comparison_class": "exact-equivalent",
       "metric_key": "psmall",
       "platform": "VMAT_IMRT",
       "status": "pass"
     },
     {
+      "case_id": "vmat_truebeam_canonical",
       "comparison_class": "exact-equivalent",
       "metric_key": "sas_10mm",
       "platform": "VMAT_IMRT",
       "status": "pass"
     },
     {
+      "case_id": "vmat_truebeam_canonical",
       "comparison_class": "exact-equivalent",
       "metric_key": "sas_20mm",
       "platform": "VMAT_IMRT",
       "status": "pass"
     },
     {
+      "case_id": "vmat_truebeam_canonical",
       "comparison_class": "exact-equivalent",
       "metric_key": "sas_5mm",
       "platform": "VMAT_IMRT",
       "status": "pass"
     },
     {
+      "case_id": "vmat_truebeam_canonical",
       "comparison_class": "derived-equivalent",
       "metric_key": "speed_0_4",
       "platform": "VMAT_IMRT",
       "status": "skipped"
     },
     {
+      "case_id": "vmat_truebeam_canonical",
       "comparison_class": "derived-equivalent",
       "metric_key": "speed_12_16",
       "platform": "VMAT_IMRT",
       "status": "skipped"
     },
     {
+      "case_id": "vmat_truebeam_canonical",
       "comparison_class": "derived-equivalent",
       "metric_key": "speed_16_20",
       "platform": "VMAT_IMRT",
       "status": "skipped"
     },
     {
+      "case_id": "vmat_truebeam_canonical",
       "comparison_class": "derived-equivalent",
       "metric_key": "speed_4_8",
       "platform": "VMAT_IMRT",
       "status": "skipped"
     },
     {
+      "case_id": "vmat_truebeam_canonical",
       "comparison_class": "derived-equivalent",
       "metric_key": "speed_8_12",
       "platform": "VMAT_IMRT",
       "status": "skipped"
     },
     {
+      "case_id": "vmat_truebeam_canonical",
       "comparison_class": "derived-equivalent",
       "metric_key": "speed_average",
       "platform": "VMAT_IMRT",
       "status": "skipped"
     },
     {
+      "case_id": "vmat_truebeam_canonical",
       "comparison_class": "derived-equivalent",
       "metric_key": "speed_std",
       "platform": "VMAT_IMRT",
       "status": "skipped"
     },
     {
+      "case_id": "vmat_truebeam_canonical",
       "comparison_class": "exact-equivalent",
       "metric_key": "sport",
       "platform": "VMAT_IMRT",
       "status": "pass"
     },
     {
+      "case_id": "vmat_truebeam_canonical",
       "comparison_class": "exact-equivalent",
       "metric_key": "tg",
       "platform": "VMAT_IMRT",
       "status": "pass"
     },
     {
+      "case_id": "vmat_halcyon_edge",
+      "comparison_class": "exact-equivalent",
+      "metric_key": "aav_effective",
+      "platform": "VMAT_IMRT",
+      "status": "pass"
+    },
+    {
+      "case_id": "vmat_halcyon_edge",
       "comparison_class": "derived-equivalent",
       "metric_key": "aav_mlcx1",
       "platform": "VMAT_IMRT",
       "status": "skipped"
     },
     {
+      "case_id": "vmat_halcyon_edge",
       "comparison_class": "derived-equivalent",
       "metric_key": "aav_mlcx2",
       "platform": "VMAT_IMRT",
       "status": "skipped"
     },
     {
+      "case_id": "vmat_halcyon_edge",
+      "comparison_class": "exact-equivalent",
+      "metric_key": "aav_stacked",
+      "platform": "VMAT_IMRT",
+      "status": "pass"
+    },
+    {
+      "case_id": "vmat_halcyon_edge",
       "comparison_class": "exact-equivalent",
       "metric_key": "al",
       "platform": "VMAT_IMRT",
       "status": "pass"
     },
     {
+      "case_id": "vmat_halcyon_edge",
+      "comparison_class": "exact-equivalent",
+      "metric_key": "alg_effective",
+      "platform": "VMAT_IMRT",
+      "status": "pass"
+    },
+    {
+      "case_id": "vmat_halcyon_edge",
       "comparison_class": "derived-equivalent",
       "metric_key": "alg_mlcx1",
       "platform": "VMAT_IMRT",
       "status": "skipped"
     },
     {
+      "case_id": "vmat_halcyon_edge",
       "comparison_class": "derived-equivalent",
       "metric_key": "alg_mlcx2",
       "platform": "VMAT_IMRT",
       "status": "skipped"
     },
     {
+      "case_id": "vmat_halcyon_edge",
+      "comparison_class": "exact-equivalent",
+      "metric_key": "alg_sd_effective",
+      "platform": "VMAT_IMRT",
+      "status": "pass"
+    },
+    {
+      "case_id": "vmat_halcyon_edge",
       "comparison_class": "derived-equivalent",
       "metric_key": "alg_sd_mlcx1",
       "platform": "VMAT_IMRT",
       "status": "skipped"
     },
     {
+      "case_id": "vmat_halcyon_edge",
       "comparison_class": "derived-equivalent",
       "metric_key": "alg_sd_mlcx2",
       "platform": "VMAT_IMRT",
       "status": "skipped"
     },
     {
+      "case_id": "vmat_halcyon_edge",
+      "comparison_class": "exact-equivalent",
+      "metric_key": "alg_sd_stacked",
+      "platform": "VMAT_IMRT",
+      "status": "pass"
+    },
+    {
+      "case_id": "vmat_halcyon_edge",
+      "comparison_class": "exact-equivalent",
+      "metric_key": "alg_stacked",
+      "platform": "VMAT_IMRT",
+      "status": "pass"
+    },
+    {
+      "case_id": "vmat_halcyon_edge",
       "comparison_class": "derived-equivalent",
       "metric_key": "asr_mlcx1",
       "platform": "VMAT_IMRT",
       "status": "skipped"
     },
     {
+      "case_id": "vmat_halcyon_edge",
       "comparison_class": "derived-equivalent",
       "metric_key": "asr_mlcx2",
       "platform": "VMAT_IMRT",
       "status": "skipped"
     },
     {
+      "case_id": "vmat_halcyon_edge",
+      "comparison_class": "exact-equivalent",
+      "metric_key": "axjd_mlcx1",
+      "platform": "VMAT_IMRT",
+      "status": "pass"
+    },
+    {
+      "case_id": "vmat_halcyon_edge",
+      "comparison_class": "exact-equivalent",
+      "metric_key": "axjd_mlcx2",
+      "platform": "VMAT_IMRT",
+      "status": "pass"
+    },
+    {
+      "case_id": "vmat_halcyon_edge",
+      "comparison_class": "exact-equivalent",
+      "metric_key": "ayjd_mlcx1",
+      "platform": "VMAT_IMRT",
+      "status": "pass"
+    },
+    {
+      "case_id": "vmat_halcyon_edge",
+      "comparison_class": "exact-equivalent",
+      "metric_key": "ayjd_mlcx2",
+      "platform": "VMAT_IMRT",
+      "status": "pass"
+    },
+    {
+      "case_id": "vmat_halcyon_edge",
+      "comparison_class": "exact-equivalent",
+      "metric_key": "bjar_mlcx1",
+      "platform": "VMAT_IMRT",
+      "status": "pass"
+    },
+    {
+      "case_id": "vmat_halcyon_edge",
+      "comparison_class": "exact-equivalent",
+      "metric_key": "bjar_mlcx2",
+      "platform": "VMAT_IMRT",
+      "status": "pass"
+    },
+    {
+      "case_id": "vmat_halcyon_edge",
       "comparison_class": "exact-equivalent",
       "metric_key": "cal",
       "platform": "VMAT_IMRT",
       "status": "pass"
     },
     {
+      "case_id": "vmat_halcyon_edge",
       "comparison_class": "derived-equivalent",
       "metric_key": "cam_mlcx1",
       "platform": "VMAT_IMRT",
       "status": "skipped"
     },
     {
+      "case_id": "vmat_halcyon_edge",
       "comparison_class": "derived-equivalent",
       "metric_key": "cam_mlcx2",
       "platform": "VMAT_IMRT",
       "status": "skipped"
     },
     {
+      "case_id": "vmat_halcyon_edge",
+      "comparison_class": "exact-equivalent",
+      "metric_key": "distal_mcs",
+      "platform": "VMAT_IMRT",
+      "status": "pass"
+    },
+    {
+      "case_id": "vmat_halcyon_edge",
+      "comparison_class": "exact-equivalent",
+      "metric_key": "distal_mcsul",
+      "platform": "VMAT_IMRT",
+      "status": "pass"
+    },
+    {
+      "case_id": "vmat_halcyon_edge",
+      "comparison_class": "exact-equivalent",
+      "metric_key": "distal_mcsw",
+      "platform": "VMAT_IMRT",
+      "status": "pass"
+    },
+    {
+      "case_id": "vmat_halcyon_edge",
+      "comparison_class": "exact-equivalent",
+      "metric_key": "distal_pa",
+      "platform": "VMAT_IMRT",
+      "status": "pass"
+    },
+    {
+      "case_id": "vmat_halcyon_edge",
+      "comparison_class": "exact-equivalent",
+      "metric_key": "distal_paw",
+      "platform": "VMAT_IMRT",
+      "status": "pass"
+    },
+    {
+      "case_id": "vmat_halcyon_edge",
+      "comparison_class": "exact-equivalent",
+      "metric_key": "distal_pi",
+      "platform": "VMAT_IMRT",
+      "status": "pass"
+    },
+    {
+      "case_id": "vmat_halcyon_edge",
+      "comparison_class": "exact-equivalent",
+      "metric_key": "distal_piw",
+      "platform": "VMAT_IMRT",
+      "status": "pass"
+    },
+    {
+      "case_id": "vmat_halcyon_edge",
+      "comparison_class": "exact-equivalent",
+      "metric_key": "distal_pm",
+      "platform": "VMAT_IMRT",
+      "status": "pass"
+    },
+    {
+      "case_id": "vmat_halcyon_edge",
+      "comparison_class": "exact-equivalent",
+      "metric_key": "distal_pmw",
+      "platform": "VMAT_IMRT",
+      "status": "pass"
+    },
+    {
+      "case_id": "vmat_halcyon_edge",
+      "comparison_class": "exact-equivalent",
+      "metric_key": "distal_ul",
+      "platform": "VMAT_IMRT",
+      "status": "pass"
+    },
+    {
+      "case_id": "vmat_halcyon_edge",
+      "comparison_class": "exact-equivalent",
+      "metric_key": "distal_weight_mean",
+      "platform": "VMAT_IMRT",
+      "status": "pass"
+    },
+    {
+      "case_id": "vmat_halcyon_edge",
       "comparison_class": "derived-equivalent",
       "metric_key": "dr_mlcx1",
       "platform": "VMAT_IMRT",
       "status": "skipped"
     },
     {
+      "case_id": "vmat_halcyon_edge",
       "comparison_class": "derived-equivalent",
       "metric_key": "dr_mlcx2",
       "platform": "VMAT_IMRT",
       "status": "skipped"
     },
     {
+      "case_id": "vmat_halcyon_edge",
       "comparison_class": "derived-equivalent",
       "metric_key": "dt_mlcx1",
       "platform": "VMAT_IMRT",
       "status": "skipped"
     },
     {
+      "case_id": "vmat_halcyon_edge",
       "comparison_class": "derived-equivalent",
       "metric_key": "dt_mlcx2",
       "platform": "VMAT_IMRT",
       "status": "skipped"
     },
     {
+      "case_id": "vmat_halcyon_edge",
       "comparison_class": "derived-equivalent",
       "metric_key": "eam_mlcx1",
       "platform": "VMAT_IMRT",
       "status": "skipped"
     },
     {
+      "case_id": "vmat_halcyon_edge",
       "comparison_class": "derived-equivalent",
       "metric_key": "eam_mlcx2",
       "platform": "VMAT_IMRT",
       "status": "skipped"
     },
     {
+      "case_id": "vmat_halcyon_edge",
+      "comparison_class": "exact-equivalent",
+      "metric_key": "eds",
+      "platform": "VMAT_IMRT",
+      "status": "pass"
+    },
+    {
+      "case_id": "vmat_halcyon_edge",
       "comparison_class": "derived-equivalent",
       "metric_key": "efs_mlcx1",
       "platform": "VMAT_IMRT",
       "status": "skipped"
     },
     {
+      "case_id": "vmat_halcyon_edge",
       "comparison_class": "derived-equivalent",
       "metric_key": "efs_mlcx2",
       "platform": "VMAT_IMRT",
       "status": "skipped"
     },
     {
+      "case_id": "vmat_halcyon_edge",
       "comparison_class": "derived-equivalent",
       "metric_key": "em_mlcx1",
       "platform": "VMAT_IMRT",
       "status": "skipped"
     },
     {
+      "case_id": "vmat_halcyon_edge",
       "comparison_class": "derived-equivalent",
       "metric_key": "em_mlcx2",
       "platform": "VMAT_IMRT",
       "status": "skipped"
     },
     {
+      "case_id": "vmat_halcyon_edge",
       "comparison_class": "exact-equivalent",
       "metric_key": "fraction_dose_gy",
       "platform": "VMAT_IMRT",
       "status": "pass"
     },
     {
+      "case_id": "vmat_halcyon_edge",
       "comparison_class": "exact-equivalent",
       "metric_key": "fractions_count",
       "platform": "VMAT_IMRT",
       "status": "pass"
     },
     {
+      "case_id": "vmat_halcyon_edge",
       "comparison_class": "derived-equivalent",
       "metric_key": "gs_mlcx1",
       "platform": "VMAT_IMRT",
       "status": "skipped"
     },
     {
+      "case_id": "vmat_halcyon_edge",
       "comparison_class": "derived-equivalent",
       "metric_key": "gs_mlcx2",
       "platform": "VMAT_IMRT",
       "status": "skipped"
     },
     {
+      "case_id": "vmat_halcyon_edge",
       "comparison_class": "exact-equivalent",
       "metric_key": "gt",
       "platform": "VMAT_IMRT",
       "status": "pass"
     },
     {
+      "case_id": "vmat_halcyon_edge",
+      "comparison_class": "exact-equivalent",
+      "metric_key": "ja_mlcx1",
+      "platform": "VMAT_IMRT",
+      "status": "pass"
+    },
+    {
+      "case_id": "vmat_halcyon_edge",
+      "comparison_class": "exact-equivalent",
+      "metric_key": "ja_mlcx2",
+      "platform": "VMAT_IMRT",
+      "status": "pass"
+    },
+    {
+      "case_id": "vmat_halcyon_edge",
       "comparison_class": "derived-equivalent",
       "metric_key": "lna_mlcx1",
       "platform": "VMAT_IMRT",
       "status": "skipped"
     },
     {
+      "case_id": "vmat_halcyon_edge",
       "comparison_class": "derived-equivalent",
       "metric_key": "lna_mlcx2",
       "platform": "VMAT_IMRT",
       "status": "skipped"
     },
     {
+      "case_id": "vmat_halcyon_edge",
       "comparison_class": "derived-equivalent",
       "metric_key": "ls_mlcx1",
       "platform": "VMAT_IMRT",
       "status": "skipped"
     },
     {
+      "case_id": "vmat_halcyon_edge",
       "comparison_class": "derived-equivalent",
       "metric_key": "ls_mlcx2",
       "platform": "VMAT_IMRT",
       "status": "skipped"
     },
     {
+      "case_id": "vmat_halcyon_edge",
+      "comparison_class": "exact-equivalent",
+      "metric_key": "lsv_effective",
+      "platform": "VMAT_IMRT",
+      "status": "pass"
+    },
+    {
+      "case_id": "vmat_halcyon_edge",
       "comparison_class": "derived-equivalent",
       "metric_key": "lsv_mlcx1",
       "platform": "VMAT_IMRT",
       "status": "skipped"
     },
     {
+      "case_id": "vmat_halcyon_edge",
       "comparison_class": "derived-equivalent",
       "metric_key": "lsv_mlcx2",
       "platform": "VMAT_IMRT",
       "status": "skipped"
     },
     {
+      "case_id": "vmat_halcyon_edge",
+      "comparison_class": "exact-equivalent",
+      "metric_key": "lsv_stacked",
+      "platform": "VMAT_IMRT",
+      "status": "pass"
+    },
+    {
+      "case_id": "vmat_halcyon_edge",
+      "comparison_class": "exact-equivalent",
+      "metric_key": "lt_effective",
+      "platform": "VMAT_IMRT",
+      "status": "pass"
+    },
+    {
+      "case_id": "vmat_halcyon_edge",
+      "comparison_class": "exact-equivalent",
+      "metric_key": "lt_mean_leaf_effective",
+      "platform": "VMAT_IMRT",
+      "status": "pass"
+    },
+    {
+      "case_id": "vmat_halcyon_edge",
+      "comparison_class": "exact-equivalent",
+      "metric_key": "lt_mean_leaf_mlcx1",
+      "platform": "VMAT_IMRT",
+      "status": "pass"
+    },
+    {
+      "case_id": "vmat_halcyon_edge",
+      "comparison_class": "exact-equivalent",
+      "metric_key": "lt_mean_leaf_mlcx2",
+      "platform": "VMAT_IMRT",
+      "status": "pass"
+    },
+    {
+      "case_id": "vmat_halcyon_edge",
+      "comparison_class": "exact-equivalent",
+      "metric_key": "lt_mean_leaf_stacked",
+      "platform": "VMAT_IMRT",
+      "status": "pass"
+    },
+    {
+      "case_id": "vmat_halcyon_edge",
       "comparison_class": "derived-equivalent",
       "metric_key": "lt_mlcx1",
       "platform": "VMAT_IMRT",
       "status": "skipped"
     },
     {
+      "case_id": "vmat_halcyon_edge",
       "comparison_class": "derived-equivalent",
       "metric_key": "lt_mlcx2",
       "platform": "VMAT_IMRT",
       "status": "skipped"
     },
     {
+      "case_id": "vmat_halcyon_edge",
+      "comparison_class": "exact-equivalent",
+      "metric_key": "lt_stacked",
+      "platform": "VMAT_IMRT",
+      "status": "pass"
+    },
+    {
+      "case_id": "vmat_halcyon_edge",
       "comparison_class": "derived-equivalent",
       "metric_key": "ltal_mlcx1",
       "platform": "VMAT_IMRT",
       "status": "skipped"
     },
     {
+      "case_id": "vmat_halcyon_edge",
       "comparison_class": "derived-equivalent",
       "metric_key": "ltal_mlcx2",
       "platform": "VMAT_IMRT",
       "status": "skipped"
     },
     {
+      "case_id": "vmat_halcyon_edge",
       "comparison_class": "derived-equivalent",
       "metric_key": "ltmu_mlcx1",
       "platform": "VMAT_IMRT",
       "status": "skipped"
     },
     {
+      "case_id": "vmat_halcyon_edge",
       "comparison_class": "derived-equivalent",
       "metric_key": "ltmu_mlcx2",
       "platform": "VMAT_IMRT",
       "status": "skipped"
     },
     {
+      "case_id": "vmat_halcyon_edge",
       "comparison_class": "derived-equivalent",
       "metric_key": "ltnl_mlcx1",
       "platform": "VMAT_IMRT",
       "status": "skipped"
     },
     {
+      "case_id": "vmat_halcyon_edge",
       "comparison_class": "derived-equivalent",
       "metric_key": "ltnl_mlcx2",
       "platform": "VMAT_IMRT",
       "status": "skipped"
     },
     {
+      "case_id": "vmat_halcyon_edge",
       "comparison_class": "derived-equivalent",
       "metric_key": "ltnlmu_mlcx1",
       "platform": "VMAT_IMRT",
       "status": "skipped"
     },
     {
+      "case_id": "vmat_halcyon_edge",
       "comparison_class": "derived-equivalent",
       "metric_key": "ltnlmu_mlcx2",
       "platform": "VMAT_IMRT",
       "status": "skipped"
     },
     {
+      "case_id": "vmat_halcyon_edge",
+      "comparison_class": "exact-equivalent",
+      "metric_key": "mad_effective",
+      "platform": "VMAT_IMRT",
+      "status": "pass"
+    },
+    {
+      "case_id": "vmat_halcyon_edge",
       "comparison_class": "derived-equivalent",
       "metric_key": "mad_mlcx1",
       "platform": "VMAT_IMRT",
       "status": "skipped"
     },
     {
+      "case_id": "vmat_halcyon_edge",
       "comparison_class": "derived-equivalent",
       "metric_key": "mad_mlcx2",
       "platform": "VMAT_IMRT",
       "status": "skipped"
     },
     {
-      "comparison_class": "derived-equivalent",
-      "metric_key": "mcsv_mlcx1",
+      "case_id": "vmat_halcyon_edge",
+      "comparison_class": "exact-equivalent",
+      "metric_key": "mad_stacked",
       "platform": "VMAT_IMRT",
-      "status": "skipped"
+      "status": "pass"
     },
     {
-      "comparison_class": "derived-equivalent",
-      "metric_key": "mcsv_mlcx2",
+      "case_id": "vmat_halcyon_edge",
+      "comparison_class": "exact-equivalent",
+      "metric_key": "mcs5",
       "platform": "VMAT_IMRT",
-      "status": "skipped"
+      "status": "pass"
     },
     {
+      "case_id": "vmat_halcyon_edge",
+      "comparison_class": "exact-equivalent",
+      "metric_key": "mcsul",
+      "platform": "VMAT_IMRT",
+      "status": "pass"
+    },
+    {
+      "case_id": "vmat_halcyon_edge",
+      "comparison_class": "exact-equivalent",
+      "metric_key": "mcsv",
+      "platform": "VMAT_IMRT",
+      "status": "pass"
+    },
+    {
+      "case_id": "vmat_halcyon_edge",
+      "comparison_class": "exact-equivalent",
+      "metric_key": "mcsv_effective",
+      "platform": "VMAT_IMRT",
+      "status": "pass"
+    },
+    {
+      "case_id": "vmat_halcyon_edge",
+      "comparison_class": "exact-equivalent",
+      "metric_key": "mcsv_stacked",
+      "platform": "VMAT_IMRT",
+      "status": "pass"
+    },
+    {
+      "case_id": "vmat_halcyon_edge",
+      "comparison_class": "exact-equivalent",
+      "metric_key": "mcsw",
+      "platform": "VMAT_IMRT",
+      "status": "pass"
+    },
+    {
+      "case_id": "vmat_halcyon_edge",
       "comparison_class": "derived-equivalent",
       "metric_key": "md_mlcx1",
       "platform": "VMAT_IMRT",
       "status": "skipped"
     },
     {
+      "case_id": "vmat_halcyon_edge",
       "comparison_class": "derived-equivalent",
       "metric_key": "md_mlcx2",
       "platform": "VMAT_IMRT",
       "status": "skipped"
     },
     {
+      "case_id": "vmat_halcyon_edge",
       "comparison_class": "derived-equivalent",
       "metric_key": "mdrv_mlcx1",
       "platform": "VMAT_IMRT",
       "status": "skipped"
     },
     {
+      "case_id": "vmat_halcyon_edge",
       "comparison_class": "derived-equivalent",
       "metric_key": "mdrv_mlcx2",
       "platform": "VMAT_IMRT",
       "status": "skipped"
     },
     {
+      "case_id": "vmat_halcyon_edge",
       "comparison_class": "derived-equivalent",
       "metric_key": "mgsv_mlcx1",
       "platform": "VMAT_IMRT",
       "status": "skipped"
     },
     {
+      "case_id": "vmat_halcyon_edge",
       "comparison_class": "derived-equivalent",
       "metric_key": "mgsv_mlcx2",
       "platform": "VMAT_IMRT",
       "status": "skipped"
     },
     {
+      "case_id": "vmat_halcyon_edge",
+      "comparison_class": "derived-equivalent",
+      "metric_key": "mi_0_2_mlcx1_mia",
+      "platform": "VMAT_IMRT",
+      "status": "skipped"
+    },
+    {
+      "case_id": "vmat_halcyon_edge",
+      "comparison_class": "derived-equivalent",
+      "metric_key": "mi_0_2_mlcx1_mis",
+      "platform": "VMAT_IMRT",
+      "status": "skipped"
+    },
+    {
+      "case_id": "vmat_halcyon_edge",
+      "comparison_class": "derived-equivalent",
+      "metric_key": "mi_0_2_mlcx1_mit",
+      "platform": "VMAT_IMRT",
+      "status": "skipped"
+    },
+    {
+      "case_id": "vmat_halcyon_edge",
+      "comparison_class": "derived-equivalent",
+      "metric_key": "mi_0_2_mlcx2_mia",
+      "platform": "VMAT_IMRT",
+      "status": "skipped"
+    },
+    {
+      "case_id": "vmat_halcyon_edge",
+      "comparison_class": "derived-equivalent",
+      "metric_key": "mi_0_2_mlcx2_mis",
+      "platform": "VMAT_IMRT",
+      "status": "skipped"
+    },
+    {
+      "case_id": "vmat_halcyon_edge",
+      "comparison_class": "derived-equivalent",
+      "metric_key": "mi_0_2_mlcx2_mit",
+      "platform": "VMAT_IMRT",
+      "status": "skipped"
+    },
+    {
+      "case_id": "vmat_halcyon_edge",
+      "comparison_class": "derived-equivalent",
+      "metric_key": "mi_0_5_mlcx1_mia",
+      "platform": "VMAT_IMRT",
+      "status": "skipped"
+    },
+    {
+      "case_id": "vmat_halcyon_edge",
+      "comparison_class": "derived-equivalent",
+      "metric_key": "mi_0_5_mlcx1_mis",
+      "platform": "VMAT_IMRT",
+      "status": "skipped"
+    },
+    {
+      "case_id": "vmat_halcyon_edge",
+      "comparison_class": "derived-equivalent",
+      "metric_key": "mi_0_5_mlcx1_mit",
+      "platform": "VMAT_IMRT",
+      "status": "skipped"
+    },
+    {
+      "case_id": "vmat_halcyon_edge",
+      "comparison_class": "derived-equivalent",
+      "metric_key": "mi_0_5_mlcx2_mia",
+      "platform": "VMAT_IMRT",
+      "status": "skipped"
+    },
+    {
+      "case_id": "vmat_halcyon_edge",
+      "comparison_class": "derived-equivalent",
+      "metric_key": "mi_0_5_mlcx2_mis",
+      "platform": "VMAT_IMRT",
+      "status": "skipped"
+    },
+    {
+      "case_id": "vmat_halcyon_edge",
+      "comparison_class": "derived-equivalent",
+      "metric_key": "mi_0_5_mlcx2_mit",
+      "platform": "VMAT_IMRT",
+      "status": "skipped"
+    },
+    {
+      "case_id": "vmat_halcyon_edge",
+      "comparison_class": "derived-equivalent",
+      "metric_key": "mi_1_0_mlcx1_mia",
+      "platform": "VMAT_IMRT",
+      "status": "skipped"
+    },
+    {
+      "case_id": "vmat_halcyon_edge",
+      "comparison_class": "derived-equivalent",
+      "metric_key": "mi_1_0_mlcx1_mis",
+      "platform": "VMAT_IMRT",
+      "status": "skipped"
+    },
+    {
+      "case_id": "vmat_halcyon_edge",
+      "comparison_class": "derived-equivalent",
+      "metric_key": "mi_1_0_mlcx1_mit",
+      "platform": "VMAT_IMRT",
+      "status": "skipped"
+    },
+    {
+      "case_id": "vmat_halcyon_edge",
+      "comparison_class": "derived-equivalent",
+      "metric_key": "mi_1_0_mlcx2_mia",
+      "platform": "VMAT_IMRT",
+      "status": "skipped"
+    },
+    {
+      "case_id": "vmat_halcyon_edge",
+      "comparison_class": "derived-equivalent",
+      "metric_key": "mi_1_0_mlcx2_mis",
+      "platform": "VMAT_IMRT",
+      "status": "skipped"
+    },
+    {
+      "case_id": "vmat_halcyon_edge",
+      "comparison_class": "derived-equivalent",
+      "metric_key": "mi_1_0_mlcx2_mit",
+      "platform": "VMAT_IMRT",
+      "status": "skipped"
+    },
+    {
+      "case_id": "vmat_halcyon_edge",
+      "comparison_class": "derived-equivalent",
+      "metric_key": "mi_2_0_mlcx1_mia",
+      "platform": "VMAT_IMRT",
+      "status": "skipped"
+    },
+    {
+      "case_id": "vmat_halcyon_edge",
+      "comparison_class": "derived-equivalent",
+      "metric_key": "mi_2_0_mlcx1_mis",
+      "platform": "VMAT_IMRT",
+      "status": "skipped"
+    },
+    {
+      "case_id": "vmat_halcyon_edge",
+      "comparison_class": "derived-equivalent",
+      "metric_key": "mi_2_0_mlcx1_mit",
+      "platform": "VMAT_IMRT",
+      "status": "skipped"
+    },
+    {
+      "case_id": "vmat_halcyon_edge",
+      "comparison_class": "derived-equivalent",
+      "metric_key": "mi_2_0_mlcx2_mia",
+      "platform": "VMAT_IMRT",
+      "status": "skipped"
+    },
+    {
+      "case_id": "vmat_halcyon_edge",
+      "comparison_class": "derived-equivalent",
+      "metric_key": "mi_2_0_mlcx2_mis",
+      "platform": "VMAT_IMRT",
+      "status": "skipped"
+    },
+    {
+      "case_id": "vmat_halcyon_edge",
+      "comparison_class": "derived-equivalent",
+      "metric_key": "mi_2_0_mlcx2_mit",
+      "platform": "VMAT_IMRT",
+      "status": "skipped"
+    },
+    {
+      "case_id": "vmat_halcyon_edge",
       "comparison_class": "derived-equivalent",
       "metric_key": "mlcx1_acc_0_40",
       "platform": "VMAT_IMRT",
       "status": "skipped"
     },
     {
+      "case_id": "vmat_halcyon_edge",
       "comparison_class": "derived-equivalent",
       "metric_key": "mlcx1_acc_120_160",
       "platform": "VMAT_IMRT",
       "status": "skipped"
     },
     {
+      "case_id": "vmat_halcyon_edge",
       "comparison_class": "derived-equivalent",
       "metric_key": "mlcx1_acc_160_200",
       "platform": "VMAT_IMRT",
       "status": "skipped"
     },
     {
+      "case_id": "vmat_halcyon_edge",
       "comparison_class": "derived-equivalent",
       "metric_key": "mlcx1_acc_40_80",
       "platform": "VMAT_IMRT",
       "status": "skipped"
     },
     {
+      "case_id": "vmat_halcyon_edge",
       "comparison_class": "derived-equivalent",
       "metric_key": "mlcx1_acc_80_120",
       "platform": "VMAT_IMRT",
       "status": "skipped"
     },
     {
+      "case_id": "vmat_halcyon_edge",
       "comparison_class": "derived-equivalent",
       "metric_key": "mlcx1_acc_average",
       "platform": "VMAT_IMRT",
       "status": "skipped"
     },
     {
+      "case_id": "vmat_halcyon_edge",
       "comparison_class": "derived-equivalent",
       "metric_key": "mlcx1_acc_std",
       "platform": "VMAT_IMRT",
       "status": "skipped"
     },
     {
+      "case_id": "vmat_halcyon_edge",
       "comparison_class": "derived-equivalent",
       "metric_key": "mlcx1_speed_0_4",
       "platform": "VMAT_IMRT",
       "status": "skipped"
     },
     {
+      "case_id": "vmat_halcyon_edge",
       "comparison_class": "derived-equivalent",
       "metric_key": "mlcx1_speed_12_16",
       "platform": "VMAT_IMRT",
       "status": "skipped"
     },
     {
+      "case_id": "vmat_halcyon_edge",
       "comparison_class": "derived-equivalent",
       "metric_key": "mlcx1_speed_16_20",
       "platform": "VMAT_IMRT",
       "status": "skipped"
     },
     {
+      "case_id": "vmat_halcyon_edge",
       "comparison_class": "derived-equivalent",
       "metric_key": "mlcx1_speed_4_8",
       "platform": "VMAT_IMRT",
       "status": "skipped"
     },
     {
+      "case_id": "vmat_halcyon_edge",
       "comparison_class": "derived-equivalent",
       "metric_key": "mlcx1_speed_8_12",
       "platform": "VMAT_IMRT",
       "status": "skipped"
     },
     {
+      "case_id": "vmat_halcyon_edge",
       "comparison_class": "derived-equivalent",
       "metric_key": "mlcx1_speed_average",
       "platform": "VMAT_IMRT",
       "status": "skipped"
     },
     {
+      "case_id": "vmat_halcyon_edge",
       "comparison_class": "derived-equivalent",
       "metric_key": "mlcx1_speed_std",
       "platform": "VMAT_IMRT",
       "status": "skipped"
     },
     {
+      "case_id": "vmat_halcyon_edge",
       "comparison_class": "derived-equivalent",
       "metric_key": "mlcx2_acc_0_40",
       "platform": "VMAT_IMRT",
       "status": "skipped"
     },
     {
+      "case_id": "vmat_halcyon_edge",
       "comparison_class": "derived-equivalent",
       "metric_key": "mlcx2_acc_120_160",
       "platform": "VMAT_IMRT",
       "status": "skipped"
     },
     {
+      "case_id": "vmat_halcyon_edge",
       "comparison_class": "derived-equivalent",
       "metric_key": "mlcx2_acc_160_200",
       "platform": "VMAT_IMRT",
       "status": "skipped"
     },
     {
+      "case_id": "vmat_halcyon_edge",
       "comparison_class": "derived-equivalent",
       "metric_key": "mlcx2_acc_40_80",
       "platform": "VMAT_IMRT",
       "status": "skipped"
     },
     {
+      "case_id": "vmat_halcyon_edge",
       "comparison_class": "derived-equivalent",
       "metric_key": "mlcx2_acc_80_120",
       "platform": "VMAT_IMRT",
       "status": "skipped"
     },
     {
+      "case_id": "vmat_halcyon_edge",
       "comparison_class": "derived-equivalent",
       "metric_key": "mlcx2_acc_average",
       "platform": "VMAT_IMRT",
       "status": "skipped"
     },
     {
+      "case_id": "vmat_halcyon_edge",
       "comparison_class": "derived-equivalent",
       "metric_key": "mlcx2_acc_std",
       "platform": "VMAT_IMRT",
       "status": "skipped"
     },
     {
+      "case_id": "vmat_halcyon_edge",
       "comparison_class": "derived-equivalent",
       "metric_key": "mlcx2_speed_0_4",
       "platform": "VMAT_IMRT",
       "status": "skipped"
     },
     {
+      "case_id": "vmat_halcyon_edge",
       "comparison_class": "derived-equivalent",
       "metric_key": "mlcx2_speed_12_16",
       "platform": "VMAT_IMRT",
       "status": "skipped"
     },
     {
+      "case_id": "vmat_halcyon_edge",
       "comparison_class": "derived-equivalent",
       "metric_key": "mlcx2_speed_16_20",
       "platform": "VMAT_IMRT",
       "status": "skipped"
     },
     {
+      "case_id": "vmat_halcyon_edge",
       "comparison_class": "derived-equivalent",
       "metric_key": "mlcx2_speed_4_8",
       "platform": "VMAT_IMRT",
       "status": "skipped"
     },
     {
+      "case_id": "vmat_halcyon_edge",
       "comparison_class": "derived-equivalent",
       "metric_key": "mlcx2_speed_8_12",
       "platform": "VMAT_IMRT",
       "status": "skipped"
     },
     {
+      "case_id": "vmat_halcyon_edge",
       "comparison_class": "derived-equivalent",
       "metric_key": "mlcx2_speed_average",
       "platform": "VMAT_IMRT",
       "status": "skipped"
     },
     {
+      "case_id": "vmat_halcyon_edge",
       "comparison_class": "derived-equivalent",
       "metric_key": "mlcx2_speed_std",
       "platform": "VMAT_IMRT",
       "status": "skipped"
     },
     {
+      "case_id": "vmat_halcyon_edge",
       "comparison_class": "exact-equivalent",
       "metric_key": "muca",
       "platform": "VMAT_IMRT",
       "status": "pass"
     },
     {
+      "case_id": "vmat_halcyon_edge",
       "comparison_class": "exact-equivalent",
       "metric_key": "mucgy",
       "platform": "VMAT_IMRT",
       "status": "pass"
     },
     {
+      "case_id": "vmat_halcyon_edge",
+      "comparison_class": "exact-equivalent",
+      "metric_key": "mucp",
+      "platform": "VMAT_IMRT",
+      "status": "pass"
+    },
+    {
+      "case_id": "vmat_halcyon_edge",
       "comparison_class": "exact-equivalent",
       "metric_key": "mudeg",
       "platform": "VMAT_IMRT",
       "status": "pass"
     },
     {
+      "case_id": "vmat_halcyon_edge",
       "comparison_class": "exact-equivalent",
       "metric_key": "mus",
       "platform": "VMAT_IMRT",
       "status": "pass"
     },
     {
+      "case_id": "vmat_halcyon_edge",
       "comparison_class": "exact-equivalent",
       "metric_key": "narcs",
       "platform": "VMAT_IMRT",
       "status": "pass"
     },
     {
+      "case_id": "vmat_halcyon_edge",
+      "comparison_class": "exact-equivalent",
+      "metric_key": "nl_leaves_effective",
+      "platform": "VMAT_IMRT",
+      "status": "pass"
+    },
+    {
+      "case_id": "vmat_halcyon_edge",
+      "comparison_class": "exact-equivalent",
+      "metric_key": "nl_leaves_mlcx1",
+      "platform": "VMAT_IMRT",
+      "status": "pass"
+    },
+    {
+      "case_id": "vmat_halcyon_edge",
+      "comparison_class": "exact-equivalent",
+      "metric_key": "nl_leaves_mlcx2",
+      "platform": "VMAT_IMRT",
+      "status": "pass"
+    },
+    {
+      "case_id": "vmat_halcyon_edge",
+      "comparison_class": "exact-equivalent",
+      "metric_key": "nl_leaves_stacked",
+      "platform": "VMAT_IMRT",
+      "status": "pass"
+    },
+    {
+      "case_id": "vmat_halcyon_edge",
       "comparison_class": "derived-equivalent",
       "metric_key": "nl_mlcx1",
       "platform": "VMAT_IMRT",
       "status": "skipped"
     },
     {
+      "case_id": "vmat_halcyon_edge",
       "comparison_class": "derived-equivalent",
       "metric_key": "nl_mlcx2",
       "platform": "VMAT_IMRT",
       "status": "skipped"
     },
     {
+      "case_id": "vmat_halcyon_edge",
+      "comparison_class": "exact-equivalent",
+      "metric_key": "nl_pairs_effective",
+      "platform": "VMAT_IMRT",
+      "status": "pass"
+    },
+    {
+      "case_id": "vmat_halcyon_edge",
+      "comparison_class": "exact-equivalent",
+      "metric_key": "nl_pairs_mlcx1",
+      "platform": "VMAT_IMRT",
+      "status": "pass"
+    },
+    {
+      "case_id": "vmat_halcyon_edge",
+      "comparison_class": "exact-equivalent",
+      "metric_key": "nl_pairs_mlcx2",
+      "platform": "VMAT_IMRT",
+      "status": "pass"
+    },
+    {
+      "case_id": "vmat_halcyon_edge",
+      "comparison_class": "exact-equivalent",
+      "metric_key": "nl_pairs_stacked",
+      "platform": "VMAT_IMRT",
+      "status": "pass"
+    },
+    {
+      "case_id": "vmat_halcyon_edge",
+      "comparison_class": "exact-equivalent",
+      "metric_key": "np",
+      "platform": "VMAT_IMRT",
+      "status": "pass"
+    },
+    {
+      "case_id": "vmat_halcyon_edge",
+      "comparison_class": "exact-equivalent",
+      "metric_key": "pa5",
+      "platform": "VMAT_IMRT",
+      "status": "pass"
+    },
+    {
+      "case_id": "vmat_halcyon_edge",
+      "comparison_class": "exact-equivalent",
+      "metric_key": "pa_effective",
+      "platform": "VMAT_IMRT",
+      "status": "pass"
+    },
+    {
+      "case_id": "vmat_halcyon_edge",
       "comparison_class": "derived-equivalent",
       "metric_key": "pa_mlcx1",
       "platform": "VMAT_IMRT",
       "status": "skipped"
     },
     {
+      "case_id": "vmat_halcyon_edge",
       "comparison_class": "derived-equivalent",
       "metric_key": "pa_mlcx2",
       "platform": "VMAT_IMRT",
       "status": "skipped"
     },
     {
+      "case_id": "vmat_halcyon_edge",
+      "comparison_class": "exact-equivalent",
+      "metric_key": "pa_stacked",
+      "platform": "VMAT_IMRT",
+      "status": "pass"
+    },
+    {
+      "case_id": "vmat_halcyon_edge",
+      "comparison_class": "exact-equivalent",
+      "metric_key": "paw",
+      "platform": "VMAT_IMRT",
+      "status": "pass"
+    },
+    {
+      "case_id": "vmat_halcyon_edge",
       "comparison_class": "derived-equivalent",
       "metric_key": "perimeter_mlcx1",
       "platform": "VMAT_IMRT",
       "status": "skipped"
     },
     {
+      "case_id": "vmat_halcyon_edge",
       "comparison_class": "derived-equivalent",
       "metric_key": "perimeter_mlcx2",
       "platform": "VMAT_IMRT",
       "status": "skipped"
     },
     {
+      "case_id": "vmat_halcyon_edge",
+      "comparison_class": "exact-equivalent",
+      "metric_key": "pi5",
+      "platform": "VMAT_IMRT",
+      "status": "pass"
+    },
+    {
+      "case_id": "vmat_halcyon_edge",
       "comparison_class": "derived-equivalent",
       "metric_key": "pi_mlcx1",
       "platform": "VMAT_IMRT",
       "status": "skipped"
     },
     {
+      "case_id": "vmat_halcyon_edge",
       "comparison_class": "derived-equivalent",
       "metric_key": "pi_mlcx2",
       "platform": "VMAT_IMRT",
       "status": "skipped"
     },
     {
+      "case_id": "vmat_halcyon_edge",
+      "comparison_class": "exact-equivalent",
+      "metric_key": "piw",
+      "platform": "VMAT_IMRT",
+      "status": "pass"
+    },
+    {
+      "case_id": "vmat_halcyon_edge",
+      "comparison_class": "exact-equivalent",
+      "metric_key": "pm5",
+      "platform": "VMAT_IMRT",
+      "status": "pass"
+    },
+    {
+      "case_id": "vmat_halcyon_edge",
       "comparison_class": "derived-equivalent",
       "metric_key": "pm_mlcx1",
       "platform": "VMAT_IMRT",
       "status": "skipped"
     },
     {
+      "case_id": "vmat_halcyon_edge",
       "comparison_class": "derived-equivalent",
       "metric_key": "pm_mlcx2",
       "platform": "VMAT_IMRT",
       "status": "skipped"
     },
     {
+      "case_id": "vmat_halcyon_edge",
       "comparison_class": "exact-equivalent",
       "metric_key": "pmu",
       "platform": "VMAT_IMRT",
       "status": "pass"
     },
     {
+      "case_id": "vmat_halcyon_edge",
+      "comparison_class": "exact-equivalent",
+      "metric_key": "pmw",
+      "platform": "VMAT_IMRT",
+      "status": "pass"
+    },
+    {
+      "case_id": "vmat_halcyon_edge",
+      "comparison_class": "exact-equivalent",
+      "metric_key": "proximal_mcs",
+      "platform": "VMAT_IMRT",
+      "status": "pass"
+    },
+    {
+      "case_id": "vmat_halcyon_edge",
+      "comparison_class": "exact-equivalent",
+      "metric_key": "proximal_mcsul",
+      "platform": "VMAT_IMRT",
+      "status": "pass"
+    },
+    {
+      "case_id": "vmat_halcyon_edge",
+      "comparison_class": "exact-equivalent",
+      "metric_key": "proximal_mcsw",
+      "platform": "VMAT_IMRT",
+      "status": "pass"
+    },
+    {
+      "case_id": "vmat_halcyon_edge",
+      "comparison_class": "exact-equivalent",
+      "metric_key": "proximal_pa",
+      "platform": "VMAT_IMRT",
+      "status": "pass"
+    },
+    {
+      "case_id": "vmat_halcyon_edge",
+      "comparison_class": "exact-equivalent",
+      "metric_key": "proximal_paw",
+      "platform": "VMAT_IMRT",
+      "status": "pass"
+    },
+    {
+      "case_id": "vmat_halcyon_edge",
+      "comparison_class": "exact-equivalent",
+      "metric_key": "proximal_pi",
+      "platform": "VMAT_IMRT",
+      "status": "pass"
+    },
+    {
+      "case_id": "vmat_halcyon_edge",
+      "comparison_class": "exact-equivalent",
+      "metric_key": "proximal_piw",
+      "platform": "VMAT_IMRT",
+      "status": "pass"
+    },
+    {
+      "case_id": "vmat_halcyon_edge",
+      "comparison_class": "exact-equivalent",
+      "metric_key": "proximal_pm",
+      "platform": "VMAT_IMRT",
+      "status": "pass"
+    },
+    {
+      "case_id": "vmat_halcyon_edge",
+      "comparison_class": "exact-equivalent",
+      "metric_key": "proximal_pmw",
+      "platform": "VMAT_IMRT",
+      "status": "pass"
+    },
+    {
+      "case_id": "vmat_halcyon_edge",
+      "comparison_class": "exact-equivalent",
+      "metric_key": "proximal_ul",
+      "platform": "VMAT_IMRT",
+      "status": "pass"
+    },
+    {
+      "case_id": "vmat_halcyon_edge",
+      "comparison_class": "exact-equivalent",
+      "metric_key": "proximal_weight_mean",
+      "platform": "VMAT_IMRT",
+      "status": "pass"
+    },
+    {
+      "case_id": "vmat_halcyon_edge",
       "comparison_class": "derived-equivalent",
       "metric_key": "psmall_mlcx1",
       "platform": "VMAT_IMRT",
       "status": "skipped"
     },
     {
+      "case_id": "vmat_halcyon_edge",
       "comparison_class": "derived-equivalent",
       "metric_key": "psmall_mlcx2",
       "platform": "VMAT_IMRT",
       "status": "skipped"
     },
     {
+      "case_id": "vmat_halcyon_edge",
+      "comparison_class": "exact-equivalent",
+      "metric_key": "sas_10mm_effective",
+      "platform": "VMAT_IMRT",
+      "status": "pass"
+    },
+    {
+      "case_id": "vmat_halcyon_edge",
       "comparison_class": "derived-equivalent",
       "metric_key": "sas_10mm_mlcx1",
       "platform": "VMAT_IMRT",
       "status": "skipped"
     },
     {
+      "case_id": "vmat_halcyon_edge",
       "comparison_class": "derived-equivalent",
       "metric_key": "sas_10mm_mlcx2",
       "platform": "VMAT_IMRT",
       "status": "skipped"
     },
     {
+      "case_id": "vmat_halcyon_edge",
+      "comparison_class": "exact-equivalent",
+      "metric_key": "sas_10mm_stacked",
+      "platform": "VMAT_IMRT",
+      "status": "pass"
+    },
+    {
+      "case_id": "vmat_halcyon_edge",
+      "comparison_class": "exact-equivalent",
+      "metric_key": "sas_20mm_effective",
+      "platform": "VMAT_IMRT",
+      "status": "pass"
+    },
+    {
+      "case_id": "vmat_halcyon_edge",
       "comparison_class": "derived-equivalent",
       "metric_key": "sas_20mm_mlcx1",
       "platform": "VMAT_IMRT",
       "status": "skipped"
     },
     {
+      "case_id": "vmat_halcyon_edge",
       "comparison_class": "derived-equivalent",
       "metric_key": "sas_20mm_mlcx2",
       "platform": "VMAT_IMRT",
       "status": "skipped"
     },
     {
+      "case_id": "vmat_halcyon_edge",
+      "comparison_class": "exact-equivalent",
+      "metric_key": "sas_20mm_stacked",
+      "platform": "VMAT_IMRT",
+      "status": "pass"
+    },
+    {
+      "case_id": "vmat_halcyon_edge",
+      "comparison_class": "exact-equivalent",
+      "metric_key": "sas_5mm_effective",
+      "platform": "VMAT_IMRT",
+      "status": "pass"
+    },
+    {
+      "case_id": "vmat_halcyon_edge",
       "comparison_class": "derived-equivalent",
       "metric_key": "sas_5mm_mlcx1",
       "platform": "VMAT_IMRT",
       "status": "skipped"
     },
     {
+      "case_id": "vmat_halcyon_edge",
       "comparison_class": "derived-equivalent",
       "metric_key": "sas_5mm_mlcx2",
       "platform": "VMAT_IMRT",
       "status": "skipped"
     },
     {
+      "case_id": "vmat_halcyon_edge",
+      "comparison_class": "exact-equivalent",
+      "metric_key": "sas_5mm_stacked",
+      "platform": "VMAT_IMRT",
+      "status": "pass"
+    },
+    {
+      "case_id": "vmat_halcyon_edge",
+      "comparison_class": "exact-equivalent",
+      "metric_key": "sport_mlcx1",
+      "platform": "VMAT_IMRT",
+      "status": "pass"
+    },
+    {
+      "case_id": "vmat_halcyon_edge",
+      "comparison_class": "exact-equivalent",
+      "metric_key": "sport_mlcx2",
+      "platform": "VMAT_IMRT",
+      "status": "pass"
+    },
+    {
+      "case_id": "vmat_halcyon_edge",
       "comparison_class": "derived-equivalent",
       "metric_key": "tg_mlcx1",
       "platform": "VMAT_IMRT",
       "status": "skipped"
     },
     {
+      "case_id": "vmat_halcyon_edge",
       "comparison_class": "derived-equivalent",
       "metric_key": "tg_mlcx2",
       "platform": "VMAT_IMRT",
       "status": "skipped"
     },
     {
+      "case_id": "vmat_halcyon_edge",
+      "comparison_class": "exact-equivalent",
+      "metric_key": "ul",
+      "platform": "VMAT_IMRT",
+      "status": "pass"
+    },
+    {
+      "case_id": "tomo_canonical",
       "comparison_class": "exact-equivalent",
       "metric_key": "centroid",
       "platform": "TOMO",
       "status": "pass"
     },
     {
+      "case_id": "tomo_canonical",
       "comparison_class": "exact-equivalent",
       "metric_key": "cfns_0_1",
       "platform": "TOMO",
       "status": "pass"
     },
     {
+      "case_id": "tomo_canonical",
       "comparison_class": "exact-equivalent",
       "metric_key": "cfns_0_25",
       "platform": "TOMO",
       "status": "pass"
     },
     {
+      "case_id": "tomo_canonical",
       "comparison_class": "exact-equivalent",
       "metric_key": "cfns_0_5",
       "platform": "TOMO",
       "status": "pass"
     },
     {
+      "case_id": "tomo_canonical",
       "comparison_class": "exact-equivalent",
       "metric_key": "cfns_0_75",
       "platform": "TOMO",
       "status": "pass"
     },
     {
+      "case_id": "tomo_canonical",
       "comparison_class": "exact-equivalent",
       "metric_key": "clns_10ms",
       "platform": "TOMO",
       "status": "pass"
     },
     {
+      "case_id": "tomo_canonical",
       "comparison_class": "exact-equivalent",
       "metric_key": "clns_20ms",
       "platform": "TOMO",
       "status": "pass"
     },
     {
+      "case_id": "tomo_canonical",
       "comparison_class": "exact-equivalent",
       "metric_key": "clns_30ms",
       "platform": "TOMO",
       "status": "pass"
     },
     {
+      "case_id": "tomo_canonical",
       "comparison_class": "exact-equivalent",
       "metric_key": "clns_50ms",
       "platform": "TOMO",
       "status": "pass"
     },
     {
+      "case_id": "tomo_canonical",
       "comparison_class": "exact-equivalent",
       "metric_key": "clns_pt_10ms",
       "platform": "TOMO",
       "status": "pass"
     },
     {
+      "case_id": "tomo_canonical",
       "comparison_class": "exact-equivalent",
       "metric_key": "clns_pt_20ms",
       "platform": "TOMO",
       "status": "pass"
     },
     {
+      "case_id": "tomo_canonical",
       "comparison_class": "exact-equivalent",
       "metric_key": "clns_pt_30ms",
       "platform": "TOMO",
       "status": "pass"
     },
     {
+      "case_id": "tomo_canonical",
       "comparison_class": "exact-equivalent",
       "metric_key": "clns_pt_50ms",
       "platform": "TOMO",
       "status": "pass"
     },
     {
+      "case_id": "tomo_canonical",
       "comparison_class": "exact-equivalent",
       "metric_key": "cls",
       "platform": "TOMO",
       "status": "pass"
     },
     {
+      "case_id": "tomo_canonical",
       "comparison_class": "exact-equivalent",
       "metric_key": "clsin",
       "platform": "TOMO",
       "status": "pass"
     },
     {
+      "case_id": "tomo_canonical",
       "comparison_class": "exact-equivalent",
       "metric_key": "clsinarea",
       "platform": "TOMO",
       "status": "pass"
     },
     {
+      "case_id": "tomo_canonical",
       "comparison_class": "exact-equivalent",
       "metric_key": "clsinareadisc",
       "platform": "TOMO",
       "status": "pass"
     },
     {
+      "case_id": "tomo_canonical",
       "comparison_class": "exact-equivalent",
       "metric_key": "clsindisc",
       "platform": "TOMO",
       "status": "pass"
     },
     {
+      "case_id": "tomo_canonical",
       "comparison_class": "exact-equivalent",
       "metric_key": "couch_speed_mm_s",
       "platform": "TOMO",
       "status": "pass"
     },
     {
+      "case_id": "tomo_canonical",
       "comparison_class": "exact-equivalent",
       "metric_key": "couch_translation_mm",
       "platform": "TOMO",
       "status": "pass"
     },
     {
+      "case_id": "tomo_canonical",
       "comparison_class": "exact-equivalent",
       "metric_key": "elotv_1",
       "platform": "TOMO",
       "status": "pass"
     },
     {
+      "case_id": "tomo_canonical",
       "comparison_class": "exact-equivalent",
       "metric_key": "elotv_5",
       "platform": "TOMO",
       "status": "pass"
     },
     {
+      "case_id": "tomo_canonical",
       "comparison_class": "exact-equivalent",
       "metric_key": "epstv_0_1",
       "platform": "TOMO",
       "status": "pass"
     },
     {
+      "case_id": "tomo_canonical",
       "comparison_class": "exact-equivalent",
       "metric_key": "epstv_1_0",
       "platform": "TOMO",
       "status": "pass"
     },
     {
+      "case_id": "tomo_canonical",
       "comparison_class": "exact-equivalent",
       "metric_key": "epstv_1_1",
       "platform": "TOMO",
       "status": "pass"
     },
     {
+      "case_id": "tomo_canonical",
       "comparison_class": "exact-equivalent",
       "metric_key": "fdisc",
       "platform": "TOMO",
       "status": "pass"
     },
     {
+      "case_id": "tomo_canonical",
       "comparison_class": "exact-equivalent",
       "metric_key": "field_width_mm",
       "platform": "TOMO",
       "status": "pass"
     },
     {
+      "case_id": "tomo_canonical",
       "comparison_class": "exact-equivalent",
       "metric_key": "gantry_period_s",
       "platform": "TOMO",
       "status": "pass"
     },
     {
+      "case_id": "tomo_canonical",
       "comparison_class": "exact-equivalent",
       "metric_key": "klot",
       "platform": "TOMO",
       "status": "pass"
     },
     {
+      "case_id": "tomo_canonical",
       "comparison_class": "exact-equivalent",
       "metric_key": "l0ns",
       "platform": "TOMO",
       "status": "pass"
     },
     {
+      "case_id": "tomo_canonical",
       "comparison_class": "exact-equivalent",
       "metric_key": "l1ns",
       "platform": "TOMO",
       "status": "pass"
     },
     {
+      "case_id": "tomo_canonical",
       "comparison_class": "exact-equivalent",
       "metric_key": "l2ns",
       "platform": "TOMO",
       "status": "pass"
     },
     {
+      "case_id": "tomo_canonical",
       "comparison_class": "exact-equivalent",
       "metric_key": "lengthcc",
       "platform": "TOMO",
       "status": "pass"
     },
     {
+      "case_id": "tomo_canonical",
       "comparison_class": "exact-equivalent",
       "metric_key": "lotv",
       "platform": "TOMO",
       "status": "pass"
     },
     {
+      "case_id": "tomo_canonical",
       "comparison_class": "exact-equivalent",
       "metric_key": "maxflot",
       "platform": "TOMO",
       "status": "pass"
     },
     {
+      "case_id": "tomo_canonical",
       "comparison_class": "exact-equivalent",
       "metric_key": "maxlot",
       "platform": "TOMO",
       "status": "pass"
     },
     {
+      "case_id": "tomo_canonical",
       "comparison_class": "exact-equivalent",
       "metric_key": "mdflot",
       "platform": "TOMO",
       "status": "pass"
     },
     {
+      "case_id": "tomo_canonical",
       "comparison_class": "exact-equivalent",
       "metric_key": "mdlot",
       "platform": "TOMO",
       "status": "pass"
     },
     {
+      "case_id": "tomo_canonical",
       "comparison_class": "exact-equivalent",
       "metric_key": "mdsi",
       "platform": "TOMO",
       "status": "pass"
     },
     {
+      "case_id": "tomo_canonical",
       "comparison_class": "exact-equivalent",
       "metric_key": "mf",
       "platform": "TOMO",
       "status": "pass"
     },
     {
+      "case_id": "tomo_canonical",
       "comparison_class": "exact-equivalent",
       "metric_key": "mflot",
       "platform": "TOMO",
       "status": "pass"
     },
     {
+      "case_id": "tomo_canonical",
       "comparison_class": "exact-equivalent",
       "metric_key": "mi",
       "platform": "TOMO",
       "status": "pass"
     },
     {
+      "case_id": "tomo_canonical",
       "comparison_class": "exact-equivalent",
       "metric_key": "minflot",
       "platform": "TOMO",
       "status": "pass"
     },
     {
+      "case_id": "tomo_canonical",
       "comparison_class": "exact-equivalent",
       "metric_key": "minlot",
       "platform": "TOMO",
       "status": "pass"
     },
     {
+      "case_id": "tomo_canonical",
       "comparison_class": "exact-equivalent",
       "metric_key": "mlot",
       "platform": "TOMO",
       "status": "pass"
     },
     {
+      "case_id": "tomo_canonical",
       "comparison_class": "exact-equivalent",
       "metric_key": "moflot",
       "platform": "TOMO",
       "status": "pass"
     },
     {
+      "case_id": "tomo_canonical",
       "comparison_class": "exact-equivalent",
       "metric_key": "molot",
       "platform": "TOMO",
       "status": "pass"
     },
     {
+      "case_id": "tomo_canonical",
       "comparison_class": "exact-equivalent",
       "metric_key": "msa",
       "platform": "TOMO",
       "status": "pass"
     },
     {
+      "case_id": "tomo_canonical",
       "comparison_class": "exact-equivalent",
       "metric_key": "msi",
       "platform": "TOMO",
       "status": "pass"
     },
     {
+      "case_id": "tomo_canonical",
       "comparison_class": "exact-equivalent",
       "metric_key": "ncc",
       "platform": "TOMO",
       "status": "pass"
     },
     {
+      "case_id": "tomo_canonical",
       "comparison_class": "exact-equivalent",
       "metric_key": "noc",
       "platform": "TOMO",
       "status": "pass"
     },
     {
+      "case_id": "tomo_canonical",
       "comparison_class": "exact-equivalent",
       "metric_key": "nproj",
       "platform": "TOMO",
       "status": "pass"
     },
     {
+      "case_id": "tomo_canonical",
       "comparison_class": "exact-equivalent",
       "metric_key": "nproj_rot",
       "platform": "TOMO",
       "status": "pass"
     },
     {
+      "case_id": "tomo_canonical",
       "comparison_class": "exact-equivalent",
       "metric_key": "nrot",
       "platform": "TOMO",
       "status": "pass"
     },
     {
+      "case_id": "tomo_canonical",
       "comparison_class": "exact-equivalent",
       "metric_key": "pitch",
       "platform": "TOMO",
       "status": "pass"
     },
     {
+      "case_id": "tomo_canonical",
       "comparison_class": "exact-equivalent",
       "metric_key": "projection_time_s",
       "platform": "TOMO",
       "status": "pass"
     },
     {
+      "case_id": "tomo_canonical",
       "comparison_class": "exact-equivalent",
       "metric_key": "pstv",
       "platform": "TOMO",
       "status": "pass"
     },
     {
+      "case_id": "tomo_canonical",
       "comparison_class": "exact-equivalent",
       "metric_key": "sdflot",
       "platform": "TOMO",
       "status": "pass"
     },
     {
+      "case_id": "tomo_canonical",
       "comparison_class": "exact-equivalent",
       "metric_key": "sdlot",
       "platform": "TOMO",
       "status": "pass"
     },
     {
+      "case_id": "tomo_canonical",
       "comparison_class": "exact-equivalent",
       "metric_key": "sdsi",
       "platform": "TOMO",
       "status": "pass"
     },
     {
+      "case_id": "tomo_canonical",
       "comparison_class": "exact-equivalent",
       "metric_key": "slot",
       "platform": "TOMO",
       "status": "pass"
     },
     {
+      "case_id": "tomo_canonical",
       "comparison_class": "exact-equivalent",
       "metric_key": "ta",
       "platform": "TOMO",
       "status": "pass"
     },
     {
+      "case_id": "tomo_canonical",
       "comparison_class": "exact-equivalent",
       "metric_key": "target_length_mm",
       "platform": "TOMO",
       "status": "pass"
     },
     {
+      "case_id": "tomo_canonical",
       "comparison_class": "exact-equivalent",
       "metric_key": "treatment_time_s",
       "platform": "TOMO",
       "status": "pass"
     },
     {
+      "case_id": "tomo_canonical",
       "comparison_class": "exact-equivalent",
       "metric_key": "ttdf_s_cgy",
       "platform": "TOMO",
       "status": "pass"
     },
     {
+      "case_id": "tomo_default_inference_edge",
       "comparison_class": "exact-equivalent",
       "metric_key": "centroid",
       "platform": "TOMO",
       "status": "pass"
     },
     {
+      "case_id": "tomo_default_inference_edge",
       "comparison_class": "exact-equivalent",
       "metric_key": "cfns_0_1",
       "platform": "TOMO",
       "status": "pass"
     },
     {
+      "case_id": "tomo_default_inference_edge",
       "comparison_class": "exact-equivalent",
       "metric_key": "cfns_0_25",
       "platform": "TOMO",
       "status": "pass"
     },
     {
+      "case_id": "tomo_default_inference_edge",
       "comparison_class": "exact-equivalent",
       "metric_key": "cfns_0_5",
       "platform": "TOMO",
       "status": "pass"
     },
     {
+      "case_id": "tomo_default_inference_edge",
       "comparison_class": "exact-equivalent",
       "metric_key": "cfns_0_75",
       "platform": "TOMO",
       "status": "pass"
     },
     {
+      "case_id": "tomo_default_inference_edge",
       "comparison_class": "exact-equivalent",
       "metric_key": "clns_10ms",
       "platform": "TOMO",
       "status": "pass"
     },
     {
+      "case_id": "tomo_default_inference_edge",
       "comparison_class": "exact-equivalent",
       "metric_key": "clns_20ms",
       "platform": "TOMO",
       "status": "pass"
     },
     {
+      "case_id": "tomo_default_inference_edge",
       "comparison_class": "exact-equivalent",
       "metric_key": "clns_30ms",
       "platform": "TOMO",
       "status": "pass"
     },
     {
+      "case_id": "tomo_default_inference_edge",
       "comparison_class": "exact-equivalent",
       "metric_key": "clns_50ms",
       "platform": "TOMO",
       "status": "pass"
     },
     {
+      "case_id": "tomo_default_inference_edge",
       "comparison_class": "exact-equivalent",
       "metric_key": "clns_pt_10ms",
       "platform": "TOMO",
       "status": "pass"
     },
     {
+      "case_id": "tomo_default_inference_edge",
       "comparison_class": "exact-equivalent",
       "metric_key": "clns_pt_20ms",
       "platform": "TOMO",
       "status": "pass"
     },
     {
+      "case_id": "tomo_default_inference_edge",
       "comparison_class": "exact-equivalent",
       "metric_key": "clns_pt_30ms",
       "platform": "TOMO",
       "status": "pass"
     },
     {
+      "case_id": "tomo_default_inference_edge",
       "comparison_class": "exact-equivalent",
       "metric_key": "clns_pt_50ms",
       "platform": "TOMO",
       "status": "pass"
     },
     {
+      "case_id": "tomo_default_inference_edge",
       "comparison_class": "exact-equivalent",
       "metric_key": "cls",
       "platform": "TOMO",
       "status": "pass"
     },
     {
+      "case_id": "tomo_default_inference_edge",
       "comparison_class": "exact-equivalent",
       "metric_key": "clsin",
       "platform": "TOMO",
       "status": "pass"
     },
     {
+      "case_id": "tomo_default_inference_edge",
       "comparison_class": "exact-equivalent",
       "metric_key": "clsinarea",
       "platform": "TOMO",
       "status": "pass"
     },
     {
+      "case_id": "tomo_default_inference_edge",
       "comparison_class": "exact-equivalent",
       "metric_key": "clsinareadisc",
       "platform": "TOMO",
       "status": "pass"
     },
     {
+      "case_id": "tomo_default_inference_edge",
       "comparison_class": "exact-equivalent",
       "metric_key": "clsindisc",
       "platform": "TOMO",
       "status": "pass"
     },
     {
+      "case_id": "tomo_default_inference_edge",
       "comparison_class": "exact-equivalent",
       "metric_key": "couch_speed_mm_s",
       "platform": "TOMO",
       "status": "pass"
     },
     {
+      "case_id": "tomo_default_inference_edge",
       "comparison_class": "exact-equivalent",
       "metric_key": "couch_translation_mm",
       "platform": "TOMO",
       "status": "pass"
     },
     {
+      "case_id": "tomo_default_inference_edge",
       "comparison_class": "exact-equivalent",
       "metric_key": "elotv_1",
       "platform": "TOMO",
       "status": "pass"
     },
     {
+      "case_id": "tomo_default_inference_edge",
       "comparison_class": "exact-equivalent",
       "metric_key": "elotv_5",
       "platform": "TOMO",
       "status": "pass"
     },
     {
+      "case_id": "tomo_default_inference_edge",
       "comparison_class": "exact-equivalent",
       "metric_key": "epstv_0_1",
       "platform": "TOMO",
       "status": "pass"
     },
     {
+      "case_id": "tomo_default_inference_edge",
       "comparison_class": "exact-equivalent",
       "metric_key": "epstv_1_0",
       "platform": "TOMO",
       "status": "pass"
     },
     {
+      "case_id": "tomo_default_inference_edge",
       "comparison_class": "exact-equivalent",
       "metric_key": "epstv_1_1",
       "platform": "TOMO",
       "status": "pass"
     },
     {
+      "case_id": "tomo_default_inference_edge",
       "comparison_class": "exact-equivalent",
       "metric_key": "fdisc",
       "platform": "TOMO",
       "status": "pass"
     },
     {
+      "case_id": "tomo_default_inference_edge",
       "comparison_class": "exact-equivalent",
       "metric_key": "field_width_mm",
       "platform": "TOMO",
       "status": "pass"
     },
     {
+      "case_id": "tomo_default_inference_edge",
       "comparison_class": "exact-equivalent",
       "metric_key": "gantry_period_s",
       "platform": "TOMO",
       "status": "pass"
     },
     {
+      "case_id": "tomo_default_inference_edge",
       "comparison_class": "exact-equivalent",
       "metric_key": "klot",
       "platform": "TOMO",
       "status": "pass"
     },
     {
+      "case_id": "tomo_default_inference_edge",
       "comparison_class": "exact-equivalent",
       "metric_key": "l0ns",
       "platform": "TOMO",
       "status": "pass"
     },
     {
+      "case_id": "tomo_default_inference_edge",
       "comparison_class": "exact-equivalent",
       "metric_key": "l1ns",
       "platform": "TOMO",
       "status": "pass"
     },
     {
+      "case_id": "tomo_default_inference_edge",
       "comparison_class": "exact-equivalent",
       "metric_key": "l2ns",
       "platform": "TOMO",
       "status": "pass"
     },
     {
+      "case_id": "tomo_default_inference_edge",
       "comparison_class": "exact-equivalent",
       "metric_key": "lengthcc",
       "platform": "TOMO",
       "status": "pass"
     },
     {
+      "case_id": "tomo_default_inference_edge",
       "comparison_class": "exact-equivalent",
       "metric_key": "lotv",
       "platform": "TOMO",
       "status": "pass"
     },
     {
+      "case_id": "tomo_default_inference_edge",
       "comparison_class": "exact-equivalent",
       "metric_key": "maxflot",
       "platform": "TOMO",
       "status": "pass"
     },
     {
+      "case_id": "tomo_default_inference_edge",
       "comparison_class": "exact-equivalent",
       "metric_key": "maxlot",
       "platform": "TOMO",
       "status": "pass"
     },
     {
+      "case_id": "tomo_default_inference_edge",
       "comparison_class": "exact-equivalent",
       "metric_key": "mdflot",
       "platform": "TOMO",
       "status": "pass"
     },
     {
+      "case_id": "tomo_default_inference_edge",
       "comparison_class": "exact-equivalent",
       "metric_key": "mdlot",
       "platform": "TOMO",
       "status": "pass"
     },
     {
+      "case_id": "tomo_default_inference_edge",
       "comparison_class": "exact-equivalent",
       "metric_key": "mdsi",
       "platform": "TOMO",
       "status": "pass"
     },
     {
+      "case_id": "tomo_default_inference_edge",
       "comparison_class": "exact-equivalent",
       "metric_key": "mf",
       "platform": "TOMO",
       "status": "pass"
     },
     {
+      "case_id": "tomo_default_inference_edge",
       "comparison_class": "exact-equivalent",
       "metric_key": "mflot",
       "platform": "TOMO",
       "status": "pass"
     },
     {
+      "case_id": "tomo_default_inference_edge",
       "comparison_class": "exact-equivalent",
       "metric_key": "mi",
       "platform": "TOMO",
       "status": "pass"
     },
     {
+      "case_id": "tomo_default_inference_edge",
       "comparison_class": "exact-equivalent",
       "metric_key": "minflot",
       "platform": "TOMO",
       "status": "pass"
     },
     {
+      "case_id": "tomo_default_inference_edge",
       "comparison_class": "exact-equivalent",
       "metric_key": "minlot",
       "platform": "TOMO",
       "status": "pass"
     },
     {
+      "case_id": "tomo_default_inference_edge",
       "comparison_class": "exact-equivalent",
       "metric_key": "mlot",
       "platform": "TOMO",
       "status": "pass"
     },
     {
+      "case_id": "tomo_default_inference_edge",
       "comparison_class": "exact-equivalent",
       "metric_key": "moflot",
       "platform": "TOMO",
       "status": "pass"
     },
     {
+      "case_id": "tomo_default_inference_edge",
       "comparison_class": "exact-equivalent",
       "metric_key": "molot",
       "platform": "TOMO",
       "status": "pass"
     },
     {
+      "case_id": "tomo_default_inference_edge",
       "comparison_class": "exact-equivalent",
       "metric_key": "msa",
       "platform": "TOMO",
       "status": "pass"
     },
     {
+      "case_id": "tomo_default_inference_edge",
       "comparison_class": "exact-equivalent",
       "metric_key": "msi",
       "platform": "TOMO",
       "status": "pass"
     },
     {
+      "case_id": "tomo_default_inference_edge",
       "comparison_class": "exact-equivalent",
       "metric_key": "ncc",
       "platform": "TOMO",
       "status": "pass"
     },
     {
+      "case_id": "tomo_default_inference_edge",
       "comparison_class": "exact-equivalent",
       "metric_key": "noc",
       "platform": "TOMO",
       "status": "pass"
     },
     {
+      "case_id": "tomo_default_inference_edge",
       "comparison_class": "exact-equivalent",
       "metric_key": "nproj",
       "platform": "TOMO",
       "status": "pass"
     },
     {
+      "case_id": "tomo_default_inference_edge",
       "comparison_class": "exact-equivalent",
       "metric_key": "nproj_rot",
       "platform": "TOMO",
       "status": "pass"
     },
     {
+      "case_id": "tomo_default_inference_edge",
       "comparison_class": "exact-equivalent",
       "metric_key": "nrot",
       "platform": "TOMO",
       "status": "pass"
     },
     {
+      "case_id": "tomo_default_inference_edge",
       "comparison_class": "exact-equivalent",
       "metric_key": "pitch",
       "platform": "TOMO",
       "status": "pass"
     },
     {
+      "case_id": "tomo_default_inference_edge",
       "comparison_class": "exact-equivalent",
       "metric_key": "projection_time_s",
       "platform": "TOMO",
       "status": "pass"
     },
     {
+      "case_id": "tomo_default_inference_edge",
       "comparison_class": "exact-equivalent",
       "metric_key": "pstv",
       "platform": "TOMO",
       "status": "pass"
     },
     {
+      "case_id": "tomo_default_inference_edge",
       "comparison_class": "exact-equivalent",
       "metric_key": "sdflot",
       "platform": "TOMO",
       "status": "pass"
     },
     {
+      "case_id": "tomo_default_inference_edge",
       "comparison_class": "exact-equivalent",
       "metric_key": "sdlot",
       "platform": "TOMO",
       "status": "pass"
     },
     {
+      "case_id": "tomo_default_inference_edge",
       "comparison_class": "exact-equivalent",
       "metric_key": "sdsi",
       "platform": "TOMO",
       "status": "pass"
     },
     {
+      "case_id": "tomo_default_inference_edge",
       "comparison_class": "exact-equivalent",
       "metric_key": "slot",
       "platform": "TOMO",
       "status": "pass"
     },
     {
+      "case_id": "tomo_default_inference_edge",
       "comparison_class": "exact-equivalent",
       "metric_key": "ta",
       "platform": "TOMO",
       "status": "pass"
     },
     {
+      "case_id": "tomo_default_inference_edge",
       "comparison_class": "exact-equivalent",
       "metric_key": "target_length_mm",
       "platform": "TOMO",
       "status": "pass"
     },
     {
+      "case_id": "tomo_default_inference_edge",
       "comparison_class": "exact-equivalent",
       "metric_key": "treatment_time_s",
       "platform": "TOMO",
       "status": "pass"
     },
     {
+      "case_id": "tomo_default_inference_edge",
       "comparison_class": "exact-equivalent",
       "metric_key": "ttdf_s_cgy",
       "platform": "TOMO",
       "status": "pass"
     },
     {
+      "case_id": "cyberknife_multiplan_canonical",
       "comparison_class": "exact-equivalent",
       "metric_key": "em",
       "platform": "CYBERKNIFE_MLC",
       "status": "pass"
     },
     {
+      "case_id": "cyberknife_multiplan_canonical",
       "comparison_class": "exact-equivalent",
       "metric_key": "lg",
       "platform": "CYBERKNIFE_MLC",
       "status": "pass"
     },
     {
+      "case_id": "cyberknife_multiplan_canonical",
       "comparison_class": "exact-equivalent",
       "metric_key": "mcs",
       "platform": "CYBERKNIFE_MLC",
       "status": "pass"
     },
     {
+      "case_id": "cyberknife_multiplan_canonical",
       "comparison_class": "exact-equivalent",
       "metric_key": "pi",
       "platform": "CYBERKNIFE_MLC",
       "status": "pass"
     },
     {
+      "case_id": "cyberknife_multiplan_canonical",
       "comparison_class": "exact-equivalent",
       "metric_key": "pm",
       "platform": "CYBERKNIFE_MLC",
       "status": "pass"
     },
     {
+      "case_id": "cyberknife_multiplan_canonical",
       "comparison_class": "exact-equivalent",
       "metric_key": "sas10",
       "platform": "CYBERKNIFE_MLC",
       "status": "pass"
     },
     {
+      "case_id": "aurora_canonical",
       "comparison_class": "not-comparable",
       "metric_key": "aperture_change_per_mm",
       "platform": "AURORA",
       "status": "skipped"
     },
     {
+      "case_id": "aurora_canonical",
       "comparison_class": "not-comparable",
       "metric_key": "axial_travel_mm",
       "platform": "AURORA",
       "status": "skipped"
     },
     {
+      "case_id": "aurora_canonical",
       "comparison_class": "not-comparable",
       "metric_key": "beam_pair_balance_index",
       "platform": "AURORA",
       "status": "skipped"
     },
     {
+      "case_id": "aurora_canonical",
       "comparison_class": "not-comparable",
       "metric_key": "coupled_modulation_index",
       "platform": "AURORA",
       "status": "skipped"
     },
     {
+      "case_id": "aurora_canonical",
       "comparison_class": "not-comparable",
       "metric_key": "effective_small_gap_burden",
       "platform": "AURORA",
       "status": "skipped"
     },
     {
+      "case_id": "aurora_canonical",
       "comparison_class": "not-comparable",
       "metric_key": "forward_backward_metric_difference",
       "platform": "AURORA",
       "status": "skipped"
     },
     {
+      "case_id": "aurora_canonical",
       "comparison_class": "not-comparable",
       "metric_key": "gantry_rotation_deg",
       "platform": "AURORA",
       "status": "skipped"
     },
     {
+      "case_id": "aurora_canonical",
       "comparison_class": "not-comparable",
       "metric_key": "head_aperture_change_cv",
       "platform": "AURORA",
       "status": "skipped"
     },
     {
+      "case_id": "aurora_canonical",
       "comparison_class": "not-comparable",
       "metric_key": "head_aperture_change_mean",
       "platform": "AURORA",
       "status": "skipped"
     },
     {
+      "case_id": "aurora_canonical",
       "comparison_class": "not-comparable",
       "metric_key": "head_leaf_travel_cv",
       "platform": "AURORA",
       "status": "skipped"
     },
     {
+      "case_id": "aurora_canonical",
       "comparison_class": "not-comparable",
       "metric_key": "head_leaf_travel_mean",
       "platform": "AURORA",
       "status": "skipped"
     },
     {
+      "case_id": "aurora_canonical",
       "comparison_class": "not-comparable",
       "metric_key": "head_mu_density_cv_proxy",
       "platform": "AURORA",
       "status": "skipped"
     },
     {
+      "case_id": "aurora_canonical",
       "comparison_class": "not-comparable",
       "metric_key": "head_mu_density_mean_proxy",
       "platform": "AURORA",
       "status": "skipped"
     },
     {
+      "case_id": "aurora_canonical",
       "comparison_class": "not-comparable",
       "metric_key": "layer_correlation_index",
       "platform": "AURORA",
       "status": "skipped"
     },
     {
+      "case_id": "aurora_canonical",
       "comparison_class": "not-comparable",
       "metric_key": "layer_imbalance_index",
       "platform": "AURORA",
       "status": "skipped"
     },
     {
+      "case_id": "aurora_canonical",
       "comparison_class": "not-comparable",
       "metric_key": "leaf_travel_per_mm",
       "platform": "AURORA",
       "status": "skipped"
     },
     {
+      "case_id": "aurora_canonical",
       "comparison_class": "not-comparable",
       "metric_key": "longitudinal_travel_mm",
       "platform": "AURORA",
       "status": "skipped"
     },
     {
+      "case_id": "aurora_canonical",
       "comparison_class": "not-comparable",
       "metric_key": "mid_aperture_change_cv",
       "platform": "AURORA",
       "status": "skipped"
     },
     {
+      "case_id": "aurora_canonical",
       "comparison_class": "not-comparable",
       "metric_key": "mid_aperture_change_mean",
       "platform": "AURORA",
       "status": "skipped"
     },
     {
+      "case_id": "aurora_canonical",
       "comparison_class": "not-comparable",
       "metric_key": "mid_leaf_travel_cv",
       "platform": "AURORA",
       "status": "skipped"
     },
     {
+      "case_id": "aurora_canonical",
       "comparison_class": "not-comparable",
       "metric_key": "mid_leaf_travel_mean",
       "platform": "AURORA",
       "status": "skipped"
     },
     {
+      "case_id": "aurora_canonical",
       "comparison_class": "not-comparable",
       "metric_key": "mid_mu_density_cv_proxy",
       "platform": "AURORA",
       "status": "skipped"
     },
     {
+      "case_id": "aurora_canonical",
       "comparison_class": "not-comparable",
       "metric_key": "mid_mu_density_mean_proxy",
       "platform": "AURORA",
       "status": "skipped"
     },
     {
+      "case_id": "aurora_canonical",
       "comparison_class": "not-comparable",
       "metric_key": "mlc_z_coupling_cv",
       "platform": "AURORA",
       "status": "skipped"
     },
     {
+      "case_id": "aurora_canonical",
       "comparison_class": "not-comparable",
       "metric_key": "mlcx1_z_coupling_cv",
       "platform": "AURORA",
       "status": "skipped"
     },
     {
+      "case_id": "aurora_canonical",
       "comparison_class": "not-comparable",
       "metric_key": "mlcx2_z_coupling_cv",
       "platform": "AURORA",
       "status": "skipped"
     },
     {
+      "case_id": "aurora_canonical",
       "comparison_class": "not-comparable",
       "metric_key": "mm_per_deg",
       "platform": "AURORA",
       "status": "skipped"
     },
     {
+      "case_id": "aurora_canonical",
       "comparison_class": "not-comparable",
       "metric_key": "mm_per_rotation",
       "platform": "AURORA",
       "status": "skipped"
     },
     {
+      "case_id": "aurora_canonical",
       "comparison_class": "not-comparable",
       "metric_key": "mu_per_mm",
       "platform": "AURORA",
       "status": "skipped"
     },
     {
+      "case_id": "aurora_canonical",
       "comparison_class": "not-comparable",
       "metric_key": "mu_z_coupling_cv_proxy",
       "platform": "AURORA",
       "status": "skipped"
     },
     {
+      "case_id": "aurora_canonical",
       "comparison_class": "not-comparable",
       "metric_key": "near_closed_fraction",
       "platform": "AURORA",
       "status": "skipped"
     },
     {
+      "case_id": "aurora_canonical",
       "comparison_class": "not-comparable",
       "metric_key": "pitch_consistency",
       "platform": "AURORA",
       "status": "skipped"
     },
     {
+      "case_id": "aurora_canonical",
       "comparison_class": "not-comparable",
       "metric_key": "projection_aperture_change_cv",
       "platform": "AURORA",
       "status": "skipped"
     },
     {
+      "case_id": "aurora_canonical",
       "comparison_class": "not-comparable",
       "metric_key": "projection_aperture_change_max",
       "platform": "AURORA",
       "status": "skipped"
     },
     {
+      "case_id": "aurora_canonical",
       "comparison_class": "not-comparable",
       "metric_key": "projection_aperture_change_mean",
       "platform": "AURORA",
       "status": "skipped"
     },
     {
+      "case_id": "aurora_canonical",
       "comparison_class": "not-comparable",
       "metric_key": "projection_aperture_change_p95",
       "platform": "AURORA",
       "status": "skipped"
     },
     {
+      "case_id": "aurora_canonical",
       "comparison_class": "not-comparable",
       "metric_key": "projection_aperture_change_top3_mean",
       "platform": "AURORA",
       "status": "skipped"
     },
     {
+      "case_id": "aurora_canonical",
       "comparison_class": "not-comparable",
       "metric_key": "projection_leaf_travel_cv",
       "platform": "AURORA",
       "status": "skipped"
     },
     {
+      "case_id": "aurora_canonical",
       "comparison_class": "not-comparable",
       "metric_key": "projection_leaf_travel_cv_mlcx1",
       "platform": "AURORA",
       "status": "skipped"
     },
     {
+      "case_id": "aurora_canonical",
       "comparison_class": "not-comparable",
       "metric_key": "projection_leaf_travel_cv_mlcx2",
       "platform": "AURORA",
       "status": "skipped"
     },
     {
+      "case_id": "aurora_canonical",
       "comparison_class": "not-comparable",
       "metric_key": "projection_leaf_travel_max",
       "platform": "AURORA",
       "status": "skipped"
     },
     {
+      "case_id": "aurora_canonical",
       "comparison_class": "not-comparable",
       "metric_key": "projection_leaf_travel_mean",
       "platform": "AURORA",
       "status": "skipped"
     },
     {
+      "case_id": "aurora_canonical",
       "comparison_class": "not-comparable",
       "metric_key": "projection_leaf_travel_mean_mlcx1",
       "platform": "AURORA",
       "status": "skipped"
     },
     {
+      "case_id": "aurora_canonical",
       "comparison_class": "not-comparable",
       "metric_key": "projection_leaf_travel_mean_mlcx2",
       "platform": "AURORA",
       "status": "skipped"
     },
     {
+      "case_id": "aurora_canonical",
       "comparison_class": "not-comparable",
       "metric_key": "projection_leaf_travel_p95",
       "platform": "AURORA",
       "status": "skipped"
     },
     {
+      "case_id": "aurora_canonical",
       "comparison_class": "not-comparable",
       "metric_key": "projection_leaf_travel_top3_mean",
       "platform": "AURORA",
       "status": "skipped"
     },
     {
+      "case_id": "aurora_canonical",
       "comparison_class": "not-comparable",
       "metric_key": "projection_mu_density_cv_proxy",
       "platform": "AURORA",
       "status": "skipped"
     },
     {
+      "case_id": "aurora_canonical",
       "comparison_class": "not-comparable",
       "metric_key": "projection_mu_density_max_proxy",
       "platform": "AURORA",
       "status": "skipped"
     },
     {
+      "case_id": "aurora_canonical",
       "comparison_class": "not-comparable",
       "metric_key": "projection_mu_density_mean_proxy",
       "platform": "AURORA",
       "status": "skipped"
     },
     {
+      "case_id": "aurora_canonical",
       "comparison_class": "not-comparable",
       "metric_key": "projection_mu_density_p95_proxy",
       "platform": "AURORA",
       "status": "skipped"
     },
     {
+      "case_id": "aurora_canonical",
       "comparison_class": "not-comparable",
       "metric_key": "projection_mu_density_top3_mean_proxy",
       "platform": "AURORA",
       "status": "skipped"
     },
     {
+      "case_id": "aurora_canonical",
       "comparison_class": "not-comparable",
       "metric_key": "projection_pitch_cv",
       "platform": "AURORA",
       "status": "skipped"
     },
     {
+      "case_id": "aurora_canonical",
       "comparison_class": "not-comparable",
       "metric_key": "projection_pitch_max",
       "platform": "AURORA",
       "status": "skipped"
     },
     {
+      "case_id": "aurora_canonical",
       "comparison_class": "not-comparable",
       "metric_key": "projection_pitch_mean",
       "platform": "AURORA",
       "status": "skipped"
     },
     {
+      "case_id": "aurora_canonical",
       "comparison_class": "not-comparable",
       "metric_key": "projection_pitch_p95",
       "platform": "AURORA",
       "status": "skipped"
     },
     {
+      "case_id": "aurora_canonical",
       "comparison_class": "not-comparable",
       "metric_key": "projection_pitch_top3_mean",
       "platform": "AURORA",
       "status": "skipped"
     },
     {
+      "case_id": "aurora_canonical",
       "comparison_class": "not-comparable",
       "metric_key": "reversal_symmetry_index",
       "platform": "AURORA",
       "status": "skipped"
     },
     {
+      "case_id": "aurora_canonical",
       "comparison_class": "not-comparable",
       "metric_key": "rotations",
       "platform": "AURORA",
       "status": "skipped"
     },
     {
+      "case_id": "aurora_canonical",
       "comparison_class": "not-comparable",
       "metric_key": "small_opening_fraction",
       "platform": "AURORA",
       "status": "skipped"
     },
     {
+      "case_id": "aurora_canonical",
       "comparison_class": "not-comparable",
       "metric_key": "tail_aperture_change_cv",
       "platform": "AURORA",
       "status": "skipped"
     },
     {
+      "case_id": "aurora_canonical",
       "comparison_class": "not-comparable",
       "metric_key": "tail_aperture_change_mean",
       "platform": "AURORA",
       "status": "skipped"
     },
     {
+      "case_id": "aurora_canonical",
       "comparison_class": "not-comparable",
       "metric_key": "tail_leaf_travel_cv",
       "platform": "AURORA",
       "status": "skipped"
     },
     {
+      "case_id": "aurora_canonical",
       "comparison_class": "not-comparable",
       "metric_key": "tail_leaf_travel_mean",
       "platform": "AURORA",
       "status": "skipped"
     },
     {
+      "case_id": "aurora_canonical",
       "comparison_class": "not-comparable",
       "metric_key": "tail_mu_density_cv_proxy",
       "platform": "AURORA",
       "status": "skipped"
     },
     {
+      "case_id": "aurora_canonical",
       "comparison_class": "not-comparable",
       "metric_key": "tail_mu_density_mean_proxy",
       "platform": "AURORA",
       "status": "skipped"
     },
     {
+      "case_id": "aurora_canonical",
       "comparison_class": "not-comparable",
       "metric_key": "theta_z_coupling_cv",
       "platform": "AURORA",
       "status": "skipped"
     },
     {
+      "case_id": "aurora_canonical",
       "comparison_class": "not-comparable",
       "metric_key": "total_rotation_deg",
       "platform": "AURORA",
       "status": "skipped"
     },
     {
+      "case_id": "aurora_canonical",
       "comparison_class": "not-comparable",
       "metric_key": "travel_per_rotation_mm",
       "platform": "AURORA",
       "status": "skipped"
     },
     {
+      "case_id": "aurora_canonical",
       "comparison_class": "not-comparable",
       "metric_key": "x1_x2_aperture_disparity",
       "platform": "AURORA",
       "status": "skipped"
     },
     {
+      "case_id": "aurora_canonical",
       "comparison_class": "not-comparable",
       "metric_key": "x1_x2_leaf_travel_ratio",
       "platform": "AURORA",
       "status": "skipped"
     },
     {
+      "case_id": "aurora_research_edge",
       "comparison_class": "not-comparable",
       "metric_key": "aperture_change_per_mm",
       "platform": "AURORA",
       "status": "skipped"
     },
     {
+      "case_id": "aurora_research_edge",
       "comparison_class": "not-comparable",
       "metric_key": "axial_travel_mm",
       "platform": "AURORA",
       "status": "skipped"
     },
     {
+      "case_id": "aurora_research_edge",
       "comparison_class": "not-comparable",
       "metric_key": "beam_pair_balance_index",
       "platform": "AURORA",
       "status": "skipped"
     },
     {
+      "case_id": "aurora_research_edge",
       "comparison_class": "not-comparable",
       "metric_key": "coupled_modulation_index",
       "platform": "AURORA",
       "status": "skipped"
     },
     {
+      "case_id": "aurora_research_edge",
       "comparison_class": "not-comparable",
       "metric_key": "effective_small_gap_burden",
       "platform": "AURORA",
       "status": "skipped"
     },
     {
+      "case_id": "aurora_research_edge",
       "comparison_class": "not-comparable",
       "metric_key": "forward_backward_metric_difference",
       "platform": "AURORA",
       "status": "skipped"
     },
     {
+      "case_id": "aurora_research_edge",
       "comparison_class": "not-comparable",
       "metric_key": "gantry_rotation_deg",
       "platform": "AURORA",
       "status": "skipped"
     },
     {
+      "case_id": "aurora_research_edge",
       "comparison_class": "not-comparable",
       "metric_key": "head_aperture_change_cv",
       "platform": "AURORA",
       "status": "skipped"
     },
     {
+      "case_id": "aurora_research_edge",
       "comparison_class": "not-comparable",
       "metric_key": "head_aperture_change_mean",
       "platform": "AURORA",
       "status": "skipped"
     },
     {
+      "case_id": "aurora_research_edge",
       "comparison_class": "not-comparable",
       "metric_key": "head_leaf_travel_cv",
       "platform": "AURORA",
       "status": "skipped"
     },
     {
+      "case_id": "aurora_research_edge",
       "comparison_class": "not-comparable",
       "metric_key": "head_leaf_travel_mean",
       "platform": "AURORA",
       "status": "skipped"
     },
     {
+      "case_id": "aurora_research_edge",
       "comparison_class": "not-comparable",
       "metric_key": "head_mu_density_cv_proxy",
       "platform": "AURORA",
       "status": "skipped"
     },
     {
+      "case_id": "aurora_research_edge",
       "comparison_class": "not-comparable",
       "metric_key": "head_mu_density_mean_proxy",
       "platform": "AURORA",
       "status": "skipped"
     },
     {
+      "case_id": "aurora_research_edge",
       "comparison_class": "not-comparable",
       "metric_key": "layer_correlation_index",
       "platform": "AURORA",
       "status": "skipped"
     },
     {
+      "case_id": "aurora_research_edge",
       "comparison_class": "not-comparable",
       "metric_key": "layer_imbalance_index",
       "platform": "AURORA",
       "status": "skipped"
     },
     {
+      "case_id": "aurora_research_edge",
       "comparison_class": "not-comparable",
       "metric_key": "leaf_travel_per_mm",
       "platform": "AURORA",
       "status": "skipped"
     },
     {
+      "case_id": "aurora_research_edge",
       "comparison_class": "not-comparable",
       "metric_key": "longitudinal_travel_mm",
       "platform": "AURORA",
       "status": "skipped"
     },
     {
+      "case_id": "aurora_research_edge",
       "comparison_class": "not-comparable",
       "metric_key": "mid_aperture_change_cv",
       "platform": "AURORA",
       "status": "skipped"
     },
     {
+      "case_id": "aurora_research_edge",
       "comparison_class": "not-comparable",
       "metric_key": "mid_aperture_change_mean",
       "platform": "AURORA",
       "status": "skipped"
     },
     {
+      "case_id": "aurora_research_edge",
       "comparison_class": "not-comparable",
       "metric_key": "mid_leaf_travel_cv",
       "platform": "AURORA",
       "status": "skipped"
     },
     {
+      "case_id": "aurora_research_edge",
       "comparison_class": "not-comparable",
       "metric_key": "mid_leaf_travel_mean",
       "platform": "AURORA",
       "status": "skipped"
     },
     {
+      "case_id": "aurora_research_edge",
       "comparison_class": "not-comparable",
       "metric_key": "mid_mu_density_cv_proxy",
       "platform": "AURORA",
       "status": "skipped"
     },
     {
+      "case_id": "aurora_research_edge",
       "comparison_class": "not-comparable",
       "metric_key": "mid_mu_density_mean_proxy",
       "platform": "AURORA",
       "status": "skipped"
     },
     {
+      "case_id": "aurora_research_edge",
       "comparison_class": "not-comparable",
       "metric_key": "mlc_z_coupling_cv",
       "platform": "AURORA",
       "status": "skipped"
     },
     {
+      "case_id": "aurora_research_edge",
       "comparison_class": "not-comparable",
       "metric_key": "mlcx1_z_coupling_cv",
       "platform": "AURORA",
       "status": "skipped"
     },
     {
+      "case_id": "aurora_research_edge",
       "comparison_class": "not-comparable",
       "metric_key": "mlcx2_z_coupling_cv",
       "platform": "AURORA",
       "status": "skipped"
     },
     {
+      "case_id": "aurora_research_edge",
       "comparison_class": "not-comparable",
       "metric_key": "mm_per_deg",
       "platform": "AURORA",
       "status": "skipped"
     },
     {
+      "case_id": "aurora_research_edge",
       "comparison_class": "not-comparable",
       "metric_key": "mm_per_rotation",
       "platform": "AURORA",
       "status": "skipped"
     },
     {
+      "case_id": "aurora_research_edge",
       "comparison_class": "not-comparable",
       "metric_key": "mu_per_mm",
       "platform": "AURORA",
       "status": "skipped"
     },
     {
+      "case_id": "aurora_research_edge",
       "comparison_class": "not-comparable",
       "metric_key": "mu_z_coupling_cv_proxy",
       "platform": "AURORA",
       "status": "skipped"
     },
     {
+      "case_id": "aurora_research_edge",
       "comparison_class": "not-comparable",
       "metric_key": "near_closed_fraction",
       "platform": "AURORA",
       "status": "skipped"
     },
     {
+      "case_id": "aurora_research_edge",
       "comparison_class": "not-comparable",
       "metric_key": "pitch_consistency",
       "platform": "AURORA",
       "status": "skipped"
     },
     {
+      "case_id": "aurora_research_edge",
       "comparison_class": "not-comparable",
       "metric_key": "projection_aperture_change_cv",
       "platform": "AURORA",
       "status": "skipped"
     },
     {
+      "case_id": "aurora_research_edge",
       "comparison_class": "not-comparable",
       "metric_key": "projection_aperture_change_max",
       "platform": "AURORA",
       "status": "skipped"
     },
     {
+      "case_id": "aurora_research_edge",
       "comparison_class": "not-comparable",
       "metric_key": "projection_aperture_change_mean",
       "platform": "AURORA",
       "status": "skipped"
     },
     {
+      "case_id": "aurora_research_edge",
       "comparison_class": "not-comparable",
       "metric_key": "projection_aperture_change_p95",
       "platform": "AURORA",
       "status": "skipped"
     },
     {
+      "case_id": "aurora_research_edge",
       "comparison_class": "not-comparable",
       "metric_key": "projection_aperture_change_top3_mean",
       "platform": "AURORA",
       "status": "skipped"
     },
     {
+      "case_id": "aurora_research_edge",
       "comparison_class": "not-comparable",
       "metric_key": "projection_leaf_travel_cv",
       "platform": "AURORA",
       "status": "skipped"
     },
     {
+      "case_id": "aurora_research_edge",
       "comparison_class": "not-comparable",
       "metric_key": "projection_leaf_travel_cv_mlcx1",
       "platform": "AURORA",
       "status": "skipped"
     },
     {
+      "case_id": "aurora_research_edge",
       "comparison_class": "not-comparable",
       "metric_key": "projection_leaf_travel_cv_mlcx2",
       "platform": "AURORA",
       "status": "skipped"
     },
     {
+      "case_id": "aurora_research_edge",
       "comparison_class": "not-comparable",
       "metric_key": "projection_leaf_travel_max",
       "platform": "AURORA",
       "status": "skipped"
     },
     {
+      "case_id": "aurora_research_edge",
       "comparison_class": "not-comparable",
       "metric_key": "projection_leaf_travel_mean",
       "platform": "AURORA",
       "status": "skipped"
     },
     {
+      "case_id": "aurora_research_edge",
       "comparison_class": "not-comparable",
       "metric_key": "projection_leaf_travel_mean_mlcx1",
       "platform": "AURORA",
       "status": "skipped"
     },
     {
+      "case_id": "aurora_research_edge",
       "comparison_class": "not-comparable",
       "metric_key": "projection_leaf_travel_mean_mlcx2",
       "platform": "AURORA",
       "status": "skipped"
     },
     {
+      "case_id": "aurora_research_edge",
       "comparison_class": "not-comparable",
       "metric_key": "projection_leaf_travel_p95",
       "platform": "AURORA",
       "status": "skipped"
     },
     {
+      "case_id": "aurora_research_edge",
       "comparison_class": "not-comparable",
       "metric_key": "projection_leaf_travel_top3_mean",
       "platform": "AURORA",
       "status": "skipped"
     },
     {
+      "case_id": "aurora_research_edge",
       "comparison_class": "not-comparable",
       "metric_key": "projection_mu_density_cv_proxy",
       "platform": "AURORA",
       "status": "skipped"
     },
     {
+      "case_id": "aurora_research_edge",
       "comparison_class": "not-comparable",
       "metric_key": "projection_mu_density_max_proxy",
       "platform": "AURORA",
       "status": "skipped"
     },
     {
+      "case_id": "aurora_research_edge",
       "comparison_class": "not-comparable",
       "metric_key": "projection_mu_density_mean_proxy",
       "platform": "AURORA",
       "status": "skipped"
     },
     {
+      "case_id": "aurora_research_edge",
       "comparison_class": "not-comparable",
       "metric_key": "projection_mu_density_p95_proxy",
       "platform": "AURORA",
       "status": "skipped"
     },
     {
+      "case_id": "aurora_research_edge",
       "comparison_class": "not-comparable",
       "metric_key": "projection_mu_density_top3_mean_proxy",
       "platform": "AURORA",
       "status": "skipped"
     },
     {
+      "case_id": "aurora_research_edge",
       "comparison_class": "not-comparable",
       "metric_key": "projection_pitch_cv",
       "platform": "AURORA",
       "status": "skipped"
     },
     {
+      "case_id": "aurora_research_edge",
       "comparison_class": "not-comparable",
       "metric_key": "projection_pitch_max",
       "platform": "AURORA",
       "status": "skipped"
     },
     {
+      "case_id": "aurora_research_edge",
       "comparison_class": "not-comparable",
       "metric_key": "projection_pitch_mean",
       "platform": "AURORA",
       "status": "skipped"
     },
     {
+      "case_id": "aurora_research_edge",
       "comparison_class": "not-comparable",
       "metric_key": "projection_pitch_p95",
       "platform": "AURORA",
       "status": "skipped"
     },
     {
+      "case_id": "aurora_research_edge",
       "comparison_class": "not-comparable",
       "metric_key": "projection_pitch_top3_mean",
       "platform": "AURORA",
       "status": "skipped"
     },
     {
+      "case_id": "aurora_research_edge",
       "comparison_class": "not-comparable",
       "metric_key": "reversal_symmetry_index",
       "platform": "AURORA",
       "status": "skipped"
     },
     {
+      "case_id": "aurora_research_edge",
       "comparison_class": "not-comparable",
       "metric_key": "rotations",
       "platform": "AURORA",
       "status": "skipped"
     },
     {
+      "case_id": "aurora_research_edge",
       "comparison_class": "not-comparable",
       "metric_key": "small_opening_fraction",
       "platform": "AURORA",
       "status": "skipped"
     },
     {
+      "case_id": "aurora_research_edge",
       "comparison_class": "not-comparable",
       "metric_key": "tail_aperture_change_cv",
       "platform": "AURORA",
       "status": "skipped"
     },
     {
+      "case_id": "aurora_research_edge",
       "comparison_class": "not-comparable",
       "metric_key": "tail_aperture_change_mean",
       "platform": "AURORA",
       "status": "skipped"
     },
     {
+      "case_id": "aurora_research_edge",
       "comparison_class": "not-comparable",
       "metric_key": "tail_leaf_travel_cv",
       "platform": "AURORA",
       "status": "skipped"
     },
     {
+      "case_id": "aurora_research_edge",
       "comparison_class": "not-comparable",
       "metric_key": "tail_leaf_travel_mean",
       "platform": "AURORA",
       "status": "skipped"
     },
     {
+      "case_id": "aurora_research_edge",
       "comparison_class": "not-comparable",
       "metric_key": "tail_mu_density_cv_proxy",
       "platform": "AURORA",
       "status": "skipped"
     },
     {
+      "case_id": "aurora_research_edge",
       "comparison_class": "not-comparable",
       "metric_key": "tail_mu_density_mean_proxy",
       "platform": "AURORA",
       "status": "skipped"
     },
     {
+      "case_id": "aurora_research_edge",
       "comparison_class": "not-comparable",
       "metric_key": "theta_z_coupling_cv",
       "platform": "AURORA",
       "status": "skipped"
     },
     {
+      "case_id": "aurora_research_edge",
       "comparison_class": "not-comparable",
       "metric_key": "total_rotation_deg",
       "platform": "AURORA",
       "status": "skipped"
     },
     {
+      "case_id": "aurora_research_edge",
       "comparison_class": "not-comparable",
       "metric_key": "travel_per_rotation_mm",
       "platform": "AURORA",
       "status": "skipped"
     },
     {
+      "case_id": "aurora_research_edge",
       "comparison_class": "not-comparable",
       "metric_key": "x1_x2_aperture_disparity",
       "platform": "AURORA",
       "status": "skipped"
     },
     {
+      "case_id": "aurora_research_edge",
       "comparison_class": "not-comparable",
       "metric_key": "x1_x2_leaf_travel_ratio",
       "platform": "AURORA",
@@ -2681,8 +4067,11 @@
     }
   ],
   "summary": {
+    "analysis_failures": 0,
     "exact_failures": 0,
-    "exact_passes": 196,
-    "total_metrics": 446
+    "exact_passes": 280,
+    "provenance_failures": 0,
+    "reference_exact_green": true,
+    "total_metrics": 564
   }
 }

@@ -1,49 +1,55 @@
 {
   "artifacts": [
     {
-      "bytes": 758,
+      "bytes": 880,
       "key": "comparison_csv",
       "path": "comparator_statistics.csv",
-      "sha256": "943f88da588943f410a4de166c7a8ba5a2327d1ed047969cf2066f777e4d6d1f"
+      "sha256": "d19b1ae25fbdb3fc420392a1305568e7ea155404fbdcc800aef4904c7c8ea6d8"
     },
     {
-      "bytes": 1526,
+      "bytes": 12944,
       "key": "comparison_json",
       "path": "comparator_statistics.json",
-      "sha256": "ad1975abb2ef7f575df034d013a0210b14144152612778deeb1fa71bfe8b48e4"
+      "sha256": "ae4cb1ef7ec568a10d09f861febc152c6e959b6bc05e2d062f511942f7f8512d"
     },
     {
-      "bytes": 83026,
+      "bytes": 10440,
+      "key": "external_benchmarks_json",
+      "path": "external_benchmarks.json",
+      "sha256": "180c8e41e9ae651082c7b606fa22f651e2816c26f3ad07aff0e8a34def0ca4d8"
+    },
+    {
+      "bytes": 178100,
       "key": "reference_csv",
       "path": "reference_case_results.csv",
-      "sha256": "db23bcbae7ac5eb3fa579ba4c2d1fe1d0e33745cfb6902f2035b2e6d5ca356a6"
+      "sha256": "44b5cbc733f41d7514c79c1efda277d6ec49cc454acf4f4e0896783d29d582f5"
     },
     {
-      "bytes": 240910,
+      "bytes": 518931,
       "key": "reference_json",
       "path": "reference_case_results.json",
-      "sha256": "584a860fad1cf8e498d35fa15d4bb79846ee6b4b614cbd77e8643d1d7790b460"
+      "sha256": "640dc02cf27933ef702ecd78a1292b1d765ce14556a4a860314b9011f43e21cd"
     },
     {
-      "bytes": 1908,
+      "bytes": 3939,
       "key": "summary_markdown",
       "path": "validation_summary.md",
-      "sha256": "05b564685249186f64cc68476d5f7737bf178311f6df06e617a6ee388f7bff7d"
+      "sha256": "c648fd070a18e8019730bc8c0af83530f4791b0554591c4a24423c31a174c647"
     },
     {
-      "bytes": 764,
+      "bytes": 898,
       "key": "supplement_comparison_csv",
       "path": "supplement_tables/comparison_table.csv",
-      "sha256": "da313a9bf829ff4b5779db6d244bd2a170ff41a5c97a4d767af0e851ac4ffad0"
+      "sha256": "5f98aaab114f99ba11eb5c41c73ea595ec0e5e84d85e86feba167f7ff1a6b560"
     },
     {
-      "bytes": 69488,
+      "bytes": 115061,
       "key": "validation_report_json",
       "path": "validation_report.json",
-      "sha256": "f9f622eae30ec13ec3ccdc47475cae5c548453eaaaad2bcdaed6630f29d127c7"
+      "sha256": "f67c0db3c2db368a415a96fb1daf962a35a1d49d4bb00b61d894c6aa1eed99c4"
     }
   ],
-  "generated_at": "2026-04-28T15:52:13Z",
+  "generated_at": "2026-09-19T14:33:23Z",
   "profile_key": "research",
-  "report_id": "validation-research-20260428T155213UTC"
+  "report_id": "validation-research-20260919T143323UTC"
 }

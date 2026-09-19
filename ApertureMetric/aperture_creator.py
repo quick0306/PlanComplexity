@@ -26,9 +26,11 @@ class AperturesFromBeamCreator:
 
         apertures: List[PyAperture] = []
         machine_name = beam["TreatmentMachineName"].lower()
+        jaw = None
 
         if "halcyon" in machine_name or "ethos" in machine_name:
-            leaf_widths = self.get_leaf_widths(beam)
+            distal_boundaries = self.get_leaf_boundaries(beam, "MLCX1")
+            proximal_boundaries = self.get_leaf_boundaries(beam, "MLCX2")
             last_mlcx1_positions = None
             last_mlcx2_positions = None
             for control_point in beam["ControlPointSequence"]:
@@ -39,17 +41,20 @@ class AperturesFromBeamCreator:
                     leaf_mlcx1_positions = last_mlcx1_positions.copy()
                 if leaf_mlcx2_positions is None and last_mlcx2_positions is not None:
                     leaf_mlcx2_positions = last_mlcx2_positions.copy()
-                jaw = self.get_halcyon_jaw_positions(beam, control_point)
+                jaw = self.get_halcyon_jaw_positions(beam, control_point, previous_jaw=jaw)
                 if leaf_mlcx1_positions is not None and leaf_mlcx2_positions is not None:
                     # DICOM control points inherit unchanged machine parameters; some
                     # TPS exports write final meterset control points without repeating
                     # the unchanged MLC positions.
                     last_mlcx1_positions = leaf_mlcx1_positions.copy()
                     last_mlcx2_positions = leaf_mlcx2_positions.copy()
-                    apertures.append(PyAperture(leaf_mlcx1_positions, leaf_widths, jaw, gantry_angle))
-                    apertures.append(PyAperture(leaf_mlcx2_positions, leaf_widths, jaw, gantry_angle))
+                    apertures.append(PyAperture(leaf_mlcx1_positions, np.diff(distal_boundaries), jaw, gantry_angle,
+                                                leaf_position_boundaries=distal_boundaries))
+                    apertures.append(PyAperture(leaf_mlcx2_positions, np.diff(proximal_boundaries), jaw, gantry_angle,
+                                                leaf_position_boundaries=proximal_boundaries))
         else:
-            leaf_widths = self.get_leaf_widths(beam)
+            boundaries = self.get_leaf_boundaries(beam, "MLCX")
+            leaf_widths = np.diff(boundaries)
             last_leaf_positions = None
             for control_point in beam["ControlPointSequence"]:
                 gantry_angle = float(control_point.GantryAngle) if "GantryAngle" in control_point else beam["GantryAngle"]
@@ -58,36 +63,18 @@ class AperturesFromBeamCreator:
                     # DICOM omits unchanged values after the first control point; keep
                     # aperture count aligned with cumulative meterset weights.
                     leaf_positions = last_leaf_positions.copy()
-                jaw = self.get_jaw_positions(beam, control_point)
+                jaw = self.get_jaw_positions(beam, control_point, previous_jaw=jaw)
                 if leaf_positions is not None:
                     last_leaf_positions = leaf_positions.copy()
-                    apertures.append(PyAperture(leaf_positions, leaf_widths, jaw, gantry_angle))
+                    apertures.append(PyAperture(leaf_positions, leaf_widths, jaw, gantry_angle,
+                                                leaf_position_boundaries=boundaries))
 
         beam["_cached_apertures"] = apertures
         return apertures
 
-    def get_halcyon_jaw_positions(self, beam: dict, control_point: Dataset) -> List[float]:
+    def get_halcyon_jaw_positions(self, beam: dict, control_point: Dataset, *, previous_jaw=None) -> List[float]:
         """Return Halcyon/Ethos jaw positions for the given control point."""
-        left, right, top, bottom = -140.0, 140.0, -140.0, 140.0
-        device_types = []
-        if "BeamLimitingDevicePositionSequence" in control_point:
-            for beam_limit in control_point.BeamLimitingDevicePositionSequence:
-                device_types.append(beam_limit.RTBeamLimitingDeviceType)
-                if beam_limit.RTBeamLimitingDeviceType == "X":
-                    left = float(beam_limit.LeafJawPositions[0])
-                    right = float(beam_limit.LeafJawPositions[1])
-                if beam_limit.RTBeamLimitingDeviceType == "Y":
-                    top = float(beam_limit.LeafJawPositions[0])
-                    bottom = float(beam_limit.LeafJawPositions[1])
-
-        if "X" not in device_types and "X" in beam:
-            left = float(beam["X"][0])
-            right = float(beam["X"][1])
-        if "Y" not in device_types and "Y" in beam:
-            top = float(beam["Y"][0])
-            bottom = float(beam["Y"][1])
-
-        return [left, -top, right, -bottom]
+        return self._jaw_positions(beam, control_point, half_field=140.0, previous_jaw=previous_jaw)
 
     def get_halcyon_leaf_widths(self, beam_dict: Dict) -> np.ndarray:
         beam_limits = beam_dict["BeamLimitingDeviceSequence"]
@@ -120,28 +107,42 @@ class AperturesFromBeamCreator:
         leaf_positions[:, leaf_positions[1, :] - leaf_positions[0, :] < 0] = 0
         return leaf_positions
 
-    def get_jaw_positions(self, beam: dict, control_point: Dataset) -> List[float]:
+    def get_jaw_positions(self, beam: dict, control_point: Dataset, *, previous_jaw=None) -> List[float]:
         """Return standard jaw positions for the given control point."""
-        left, right, top, bottom = -200.0, 200.0, -200.0, 200.0
-        device_types = []
-        if "BeamLimitingDevicePositionSequence" in control_point:
-            for beam_limit in control_point.BeamLimitingDevicePositionSequence:
-                device_types.append(beam_limit.RTBeamLimitingDeviceType)
-                if beam_limit.RTBeamLimitingDeviceType == "ASYMX":
-                    left = float(beam_limit.LeafJawPositions[0])
-                    right = float(beam_limit.LeafJawPositions[1])
-                if beam_limit.RTBeamLimitingDeviceType == "ASYMY":
-                    top = float(beam_limit.LeafJawPositions[0])
-                    bottom = float(beam_limit.LeafJawPositions[1])
+        return self._jaw_positions(beam, control_point, half_field=200.0, previous_jaw=previous_jaw)
 
-        if "ASYMX" not in device_types and "ASYMX" in beam:
-            left = float(beam["ASYMX"][0])
-            right = float(beam["ASYMX"][1])
-        if "ASYMY" not in device_types and "ASYMY" in beam:
-            top = float(beam["ASYMY"][0])
-            bottom = float(beam["ASYMY"][1])
+    @staticmethod
+    def _jaw_positions(beam, control_point, *, half_field, previous_jaw=None):
+        positions = {str(item.RTBeamLimitingDeviceType).upper(): item.LeafJawPositions
+                     for item in getattr(control_point, "BeamLimitingDevicePositionSequence", [])}
+        result = []
+        for axis, aliases in enumerate((("X", "ASYMX"), ("Y", "ASYMY"))):
+            values = next((positions[key] for key in aliases if key in positions), None)
+            if values is None and previous_jaw is not None:
+                # Tolerate exports that omit repeated axes after later control
+                # points too. Convert the cached internal Y back to IEC.
+                values = ([previous_jaw[0], previous_jaw[2]] if axis == 0
+                          else [-previous_jaw[1], -previous_jaw[3]])
+            if values is None:
+                values = next((beam[key] for key in aliases if key in beam), [-half_field, half_field])
+            values = np.asarray(values, dtype=float)
+            if values.shape != (2,) or not np.all(np.isfinite(values)) or values[0] > values[1]:
+                raise ValueError("Jaw positions must be a finite ordered pair.")
+            result.append(values)
+        (left, right), (y1, y2) = result
+        return [left, -y1, right, -y2]
 
-        return [left, -top, right, -bottom]
+    @staticmethod
+    def get_leaf_boundaries(beam_dict, device_type):
+        for device in beam_dict.get("BeamLimitingDeviceSequence", []):
+            if str(device.RTBeamLimitingDeviceType).upper() == device_type:
+                boundaries = np.asarray(getattr(device, "LeafPositionBoundaries", []), dtype=float)
+                count = int(getattr(device, "NumberOfLeafJawPairs", len(boundaries) - 1))
+                if (count <= 0 or boundaries.shape != (count + 1,)
+                        or not np.all(np.isfinite(boundaries)) or np.any(np.diff(boundaries) <= 0)):
+                    raise ValueError(f"Invalid {device_type} leaf boundaries or leaf count.")
+                return boundaries
+        raise ValueError(f"Missing {device_type} leaf boundaries.")
 
     def get_leaf_widths(self, beam_dict: Dict) -> np.ndarray:
         """Get leaf widths from BeamLimitingDeviceSequence boundaries."""

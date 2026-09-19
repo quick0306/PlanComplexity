@@ -1,4 +1,5 @@
 import json
+import argparse
 import unittest
 import hashlib
 from pathlib import Path
@@ -16,6 +17,32 @@ from validation_models import (
 
 
 class ReferenceSuiteTests(unittest.TestCase):
+    def test_cli_exits_nonzero_when_strict_reference_gate_fails(self):
+        from tools.run_reference_suite import main
+
+        args = argparse.Namespace(profile="research", output_dir="unused", source_root=None)
+        with (
+            patch("tools.run_reference_suite._parse_args", return_value=args),
+            patch("tools.run_reference_suite.run_reference_suite", return_value={
+                "summary": {"reference_exact_green": False},
+            }),
+        ):
+            self.assertEqual(1, main())
+
+    def test_cli_succeeds_when_strict_gate_passes_or_is_not_required(self):
+        from tools.run_reference_suite import main
+
+        args = argparse.Namespace(profile="research", output_dir="unused", source_root=None)
+        for green in (True, None):
+            with (
+                self.subTest(green=green),
+                patch("tools.run_reference_suite._parse_args", return_value=args),
+                patch("tools.run_reference_suite.run_reference_suite", return_value={
+                    "summary": {"reference_exact_green": green},
+                }),
+            ):
+                self.assertEqual(0, main())
+
     def test_reference_suite_reports_case_and_metric_level_results(self):
         from tools.run_reference_suite import run_reference_suite
 

@@ -6,6 +6,7 @@ from concurrent.futures import ThreadPoolExecutor
 from typing import Any, Dict, Iterable, List, Sequence
 
 import pydicom
+import numpy as np
 
 from analysis_helpers import (
     calculate_core_metrics,
@@ -18,6 +19,7 @@ from aurora_svmat_lab.service import analyze_plan_file as analyze_aurora_plan_fi
 from cyberknife_parser import build_cyberknife_plan_dict, parse_cyberknife_beams, resolve_referenced_xml_paths
 from DicomParse.dicom_rt import RTPlan
 from DicomParse.utilities import retrieve_dcm_filenames
+from formula_versions import formula_version_for_mode
 from metric_registry import (
     VMAT_DUAL_MLC_KEYS,
     metric_descriptions_with_aliases,
@@ -137,7 +139,23 @@ def _unsupported_result(
     )
 
 
-def analyze_plan_file(source_path: str, requested_mode: AnalysisMode = AnalysisMode.AUTO) -> PlanAnalysisResult:
+def _analyze_tomo_plan(source_path: str) -> PlanAnalysisResult:
+    metadata = {"metric_formula_version": formula_version_for_mode(AnalysisMode.TOMO.value),
+                "numeric_precision": "float64"}
+    try:
+        tomo_plan, warnings = parse_tomo_rtplan(source_path)
+        metrics = calculate_tomo_metrics(tomo_plan)
+    except ValueError as exc:
+        return _unsupported_result(source_path=source_path, mode=AnalysisMode.TOMO,
+                                   metadata=metadata, warning=str(exc))
+    metadata = {**tomo_plan.metadata, **metadata}
+    return PlanAnalysisResult(source_path=source_path, mode=AnalysisMode.TOMO,
+                              metadata=metadata, metrics=metrics,
+                              flattened_metrics=flatten_metrics(metrics),
+                              supported=True, warnings=warnings)
+
+
+def analyze_plan_file(source_path: str, requested_mode: AnalysisMode = AnalysisMode.AUTO, *, full_precision: bool = False) -> PlanAnalysisResult:
     detected_mode_from_file = detect_mode_from_file(source_path)
     if requested_mode == AnalysisMode.AUTO and detected_mode_from_file in (
         AnalysisMode.TOMO,
@@ -153,41 +171,20 @@ def analyze_plan_file(source_path: str, requested_mode: AnalysisMode = AnalysisM
         )
 
     if requested_mode == AnalysisMode.TOMO:
-        tomo_plan, warnings = parse_tomo_rtplan(source_path)
-        metrics = calculate_tomo_metrics(tomo_plan)
-        flattened_metrics = flatten_metrics(metrics)
-        return PlanAnalysisResult(
-            source_path=source_path,
-            mode=AnalysisMode.TOMO,
-            metadata=tomo_plan.metadata,
-            metrics=metrics,
-            flattened_metrics=flattened_metrics,
-            supported=True,
-            warnings=warnings,
-        )
+        return _analyze_tomo_plan(source_path)
 
-    plan_info = RTPlan(filename=source_path)
+    plan_info = RTPlan(filename=source_path, full_precision=full_precision)
     plan_dict = plan_info.to_plan_dict()
     metadata = get_plan_metadata(plan_info, plan_dict)
+    metadata["numeric_precision"] = "float64" if full_precision else "legacy-rounded"
     detected_mode = detect_mode(metadata)
     active_mode = detected_mode if requested_mode == AnalysisMode.AUTO else requested_mode
-    if active_mode == AnalysisMode.VMAT_IMRT:
-        metadata["metric_formula_version"] = "hybrid-v2"
+    if formula_version_for_mode(active_mode.value):
+        metadata["metric_formula_version"] = formula_version_for_mode(active_mode.value)
     cyberknife_beams = None
 
     if active_mode == AnalysisMode.TOMO:
-        tomo_plan, warnings = parse_tomo_rtplan(source_path)
-        metrics = calculate_tomo_metrics(tomo_plan)
-        flattened_metrics = flatten_metrics(metrics)
-        return PlanAnalysisResult(
-            source_path=source_path,
-            mode=active_mode,
-            metadata=tomo_plan.metadata,
-            metrics=metrics,
-            flattened_metrics=flattened_metrics,
-            supported=True,
-            warnings=warnings,
-        )
+        return _analyze_tomo_plan(source_path)
 
     if active_mode == AnalysisMode.CYBERKNIFE_MLC and not _has_standard_mlc_geometry(plan_dict):
         plan_dir = os.path.dirname(source_path)
@@ -233,10 +230,10 @@ def analyze_plan_file(source_path: str, requested_mode: AnalysisMode = AnalysisM
     try:
         if active_mode == AnalysisMode.CYBERKNIFE_MLC:
             metrics = calculate_cyberknife_mlc_metrics(
-                plan_dict, cyberknife_beams=cyberknife_beams
+                plan_dict, cyberknife_beams=cyberknife_beams, full_precision=full_precision
             )
         else:
-            metrics, metric_warnings = calculate_core_metrics_with_warnings(plan_dict)
+            metrics, metric_warnings = calculate_core_metrics_with_warnings(plan_dict, full_precision=full_precision)
     except IndexError as exc:
         return _unsupported_result(
             source_path=source_path,
@@ -526,6 +523,8 @@ def _stringify(value: Any) -> str:
 
 
 def _is_sequence(value: Any, expected_len: int) -> bool:
+    if isinstance(value, np.ndarray):
+        return value.ndim > 0 and len(value) == expected_len
     return isinstance(value, (list, tuple)) and len(value) == expected_len
 
 
@@ -535,8 +534,8 @@ def _analyze_plan_file_safe(source_path: str, requested_mode: AnalysisMode) -> P
     except Exception as exc:
         fallback_mode = requested_mode if requested_mode != AnalysisMode.AUTO else AnalysisMode.VMAT_IMRT
         metadata = {"plan_name": "", "patient_id": "", "patient_name": "", "machine_id": ""}
-        if fallback_mode == AnalysisMode.VMAT_IMRT:
-            metadata["metric_formula_version"] = "hybrid-v2"
+        if formula_version_for_mode(fallback_mode.value):
+            metadata["metric_formula_version"] = formula_version_for_mode(fallback_mode.value)
         return PlanAnalysisResult(
             source_path=source_path,
             mode=fallback_mode,

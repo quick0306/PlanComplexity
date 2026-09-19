@@ -1,0 +1,142 @@
+{
+  "generated_at": "2026-09-19T14:31:43Z",
+  "oracles": [
+    {
+      "abs_diff": 0.0,
+      "abs_tol": 1e-09,
+      "expected": 2.0,
+      "metric_key": "mad",
+      "notes": "Two-pair hand case using the hybrid-v2 opening-center distance definition.",
+      "observed": 2.0,
+      "oracle_id": "vmat_mean_asymmetry_distance_hand_case",
+      "platform": "VMAT_IMRT",
+      "status": "pass"
+    },
+    {
+      "abs_diff": 0.0,
+      "abs_tol": 1e-09,
+      "expected": 11.0,
+      "metric_key": "lg",
+      "notes": "Two active gaps of 10 and 12 mm; expected mean is 11 mm.",
+      "observed": 11.0,
+      "oracle_id": "vmat_leaf_gap_summary_hand_case",
+      "platform": "VMAT_IMRT",
+      "status": "pass"
+    },
+    {
+      "abs_diff": 0.0,
+      "abs_tol": 1e-09,
+      "expected": 0.6666666666666666,
+      "metric_key": "sas_5mm",
+      "notes": "Two of three active gaps are below the 5 mm threshold.",
+      "observed": 0.6666666666666666,
+      "oracle_id": "vmat_small_aperture_fraction_hand_case",
+      "platform": "VMAT_IMRT",
+      "status": "pass"
+    },
+    {
+      "abs_diff": 0.0,
+      "abs_tol": 1e-09,
+      "expected": 4.0,
+      "metric_key": "mlc_position_parser",
+      "notes": "Jaw item is last in the sequence; MLC must still be selected by RTBeamLimitingDeviceType.",
+      "observed": 4.0,
+      "oracle_id": "dicom_standard_mlc_device_type_selection",
+      "platform": "VMAT_IMRT",
+      "status": "pass"
+    },
+    {
+      "abs_diff": 0.0,
+      "abs_tol": 1e-09,
+      "expected": 0.0,
+      "metric_key": "ul",
+      "notes": "Identical proximal/distal edges share aperture weight but create no uncovered-layer exposure.",
+      "observed": 0.0,
+      "oracle_id": "halcyon_identical_layers_have_zero_uncovered_exposure",
+      "platform": "VMAT_IMRT",
+      "status": "pass"
+    },
+    {
+      "abs_diff": 0.0,
+      "abs_tol": 1e-09,
+      "expected": 40.0,
+      "metric_key": "perimeter",
+      "notes": "A 10 by 10 mm square has perimeter 40 mm.",
+      "observed": 40.0,
+      "oracle_id": "square_perimeter_40mm",
+      "platform": "VMAT_IMRT",
+      "status": "pass"
+    },
+    {
+      "abs_diff": 0.0,
+      "abs_tol": 1e-09,
+      "expected": 1.2732395447351628,
+      "metric_key": "pi",
+      "notes": "P squared / (4 pi A) = 1600 / (400 pi).",
+      "observed": 1.2732395447351628,
+      "oracle_id": "square_pi_4_over_pi",
+      "platform": "VMAT_IMRT",
+      "status": "pass"
+    },
+    {
+      "abs_diff": 0.0,
+      "abs_tol": 1e-09,
+      "expected": 10.0,
+      "metric_key": "efs",
+      "notes": "4A/P for a 10 mm square is 10 mm.",
+      "observed": 10.0,
+      "oracle_id": "square_efs_10mm",
+      "platform": "VMAT_IMRT",
+      "status": "pass"
+    },
+    {
+      "abs_diff": 0.0,
+      "abs_tol": 1e-09,
+      "expected": 100.0,
+      "metric_key": "pa",
+      "notes": "20 mm MLC opening clipped by symmetric +/-5 mm X and Y jaws.",
+      "observed": 100.0,
+      "oracle_id": "symmetric_jaws_area_100mm2",
+      "platform": "VMAT_IMRT",
+      "status": "pass"
+    },
+    {
+      "abs_diff": 0.0,
+      "abs_tol": 1e-09,
+      "expected": 100.0,
+      "metric_key": "proximal_pa",
+      "notes": "29th proximal row: 20 mm gap times 5 mm inside fixed jaws.",
+      "observed": 100.0,
+      "oracle_id": "halcyon_native_edge_100mm2",
+      "platform": "VMAT_IMRT",
+      "status": "pass"
+    },
+    {
+      "abs_diff": 0.0,
+      "abs_tol": 1e-09,
+      "expected": 0.6,
+      "metric_key": "mcsv",
+      "notes": "Two rectangles of area 100 and 20; LSV 1; mean AAV 0.6.",
+      "observed": 0.6,
+      "oracle_id": "dynamic_jaw_mcsv_0_6",
+      "platform": "VMAT_IMRT",
+      "status": "pass"
+    },
+    {
+      "abs_diff": 0.0,
+      "abs_tol": 1e-09,
+      "expected": 200.0,
+      "metric_key": "fraction_dose_cgy",
+      "notes": "60 Gy divided over 30 fractions is 200 cGy/fraction.",
+      "observed": 200.0,
+      "oracle_id": "tomo_fraction_dose_200cgy",
+      "platform": "TOMO",
+      "status": "pass"
+    }
+  ],
+  "summary": {
+    "failures": 0,
+    "formula_oracle_green": true,
+    "oracles_total": 12
+  }
+}

@@ -1,0 +1,36 @@
+{
+  "source_commit": "be93062484277b362948d959a2044c72c8543dcc",
+  "note": "Exact pre-migration bytes. Original scalar baselines had no formula-version provenance; do not label them hybrid-v2.",
+  "cases": [
+    {
+      "case_id": "vmat_truebeam_canonical",
+      "formula_version": null,
+      "sha256": "7c8898b3690226bd827e80883498e826057aeff6fd7267c4f066fbc9b9b0cdce"
+    },
+    {
+      "case_id": "vmat_halcyon_edge",
+      "formula_version": null,
+      "sha256": "f25d382f058183cd0cdca7e2ee062b00819bc0b575e51db54a993ed0cde7ec95"
+    },
+    {
+      "case_id": "tomo_canonical",
+      "formula_version": null,
+      "sha256": "f80abdbe58016c95d61f0a3cd536349f816fd9a76361f7cb3461c905b865f504"
+    },
+    {
+      "case_id": "tomo_default_inference_edge",
+      "formula_version": null,
+      "sha256": "73efaa81578aa42c7b1f38462427b6ec7b7d80fb0580b5310c944b85f7fea5e2"
+    },
+    {
+      "case_id": "cyberknife_multiplan_canonical",
+      "formula_version": null,
+      "sha256": "29f861ce255e9b3f3e22870d609c1d0df8b475df163b13298e213ece58760303"
+    },
+    {
+      "case_id": "cyberknife_precision_missing_xml_edge",
+      "formula_version": null,
+      "sha256": "e3566b3a06430868d71e9287dfd6c6c520a3da027aabea01951d407ee131dc2f"
+    }
+  ]
+}

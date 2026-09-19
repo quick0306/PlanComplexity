@@ -1,0 +1,10 @@
+{
+  "case_id": "cyberknife_multiplan_canonical",
+  "domain": "CYBERKNIFE_MLC",
+  "expected_metrics_checksum": "92244cfa8fd7212512bc57503414ff804545812837eafe5cc718e66aa3e94c4f",
+  "formula_version": "geometry-v4",
+  "generated_at": "2026-09-19T14:02:33Z",
+  "mode": "CYBERKNIFE_MLC",
+  "schema_version": 1,
+  "source_checksum": "39985f5433862491fe430fe8c9be85ef4d676b13eb7455f0e90fdd3bb364775c"
+}

@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 from dataclasses import asdict
+import math
 
 from aurora_svmat_lab.models import AuroraAnalysisResult
 from metric_definition_catalog import metric_catalog_keys_for_platform
@@ -22,7 +23,7 @@ def analyze_validation_case(source_path: str, domain: str) -> ValidationCaseResu
 
     from ucomx_service import analyze_plan_file
 
-    result = analyze_plan_file(source_path, requested_mode=requested_mode)
+    result = analyze_plan_file(source_path, requested_mode=requested_mode, full_precision=True)
     return _normalize_core_result(result, domain=normalized_domain)
 
 
@@ -65,7 +66,7 @@ def _normalize_aurora_result(result: AuroraAnalysisResult) -> ValidationCaseResu
         mode="AURORA",
         supported=result.supported,
         reason=result.reason,
-        metadata=asdict(result.metadata),
+        metadata={**asdict(result.metadata), "numeric_precision": "float64"},
         metrics=listed_metrics,
         warnings=tuple(result.warnings),
     )
@@ -95,6 +96,8 @@ def _normalize_metric_value(value: object) -> float | int | str | None | object:
             return _UNSUPPORTED_METRIC_VALUE
     if isinstance(value, bool) or not isinstance(value, (int, float, str)) and value is not None:
         return _UNSUPPORTED_METRIC_VALUE
+    if isinstance(value, float) and not math.isfinite(value):
+        return None
     return value
 
 

@@ -1,0 +1,1493 @@
+{
+  "audit_files": [
+    "geometry_audit.json",
+    "tomo_audit.json"
+  ],
+  "cases": [
+    {
+      "case_id": "vmat_truebeam_canonical",
+      "changes": [
+        {
+          "category": "stale_pre_hybrid_v2_expectation",
+          "change": "changed",
+          "metric_key": "alg",
+          "new_expected": 31.66,
+          "old_expected": 31.73,
+          "previous_runtime": 31.66,
+          "reason": "Old expectation predates per-control-point MU-weighted positive-gap moments/ratios. Independent raw-DICOM ALG, ALG_SD, MAD and SAS audit agrees with the retained hybrid-v2 runtime."
+        },
+        {
+          "category": "stale_pre_hybrid_v2_expectation",
+          "change": "changed",
+          "metric_key": "alg_sd",
+          "new_expected": 16.59,
+          "old_expected": 16.56,
+          "previous_runtime": 16.59,
+          "reason": "Old expectation predates per-control-point MU-weighted positive-gap moments/ratios. Independent raw-DICOM ALG, ALG_SD, MAD and SAS audit agrees with the retained hybrid-v2 runtime."
+        },
+        {
+          "category": "full_transmitted_boundary",
+          "change": "changed",
+          "metric_key": "efs",
+          "new_expected": 20.11,
+          "old_expected": 24.04,
+          "previous_runtime": 24.04,
+          "reason": "Full perimeter includes both banks and excludes false closed-row interfaces; PI, EFS and EFS-derived small-field outputs change. Independent rectangle-union audit verifies physical area and perimeter."
+        },
+        {
+          "category": "previously_unfrozen_hybrid_v2_output",
+          "change": "added",
+          "metric_key": "lt_mean_leaf",
+          "new_expected": 460.34,
+          "old_expected": null,
+          "previous_runtime": 460.34,
+          "reason": "Already emitted before this repair, now included in the baseline. Covered by hybrid formula/integration tests and source geometry audit; no new formula introduced."
+        },
+        {
+          "category": "stale_pre_hybrid_v2_expectation",
+          "change": "changed",
+          "metric_key": "mad",
+          "new_expected": 27.83,
+          "old_expected": 30.74,
+          "previous_runtime": 27.83,
+          "reason": "Old expectation predates per-control-point MU-weighted positive-gap moments/ratios. Independent raw-DICOM ALG, ALG_SD, MAD and SAS audit agrees with the retained hybrid-v2 runtime."
+        },
+        {
+          "category": "previously_unfrozen_hybrid_v2_output",
+          "change": "added",
+          "metric_key": "nl_leaves",
+          "new_expected": 43.3,
+          "old_expected": null,
+          "previous_runtime": 43.3,
+          "reason": "Already emitted before this repair, now included in the baseline. Covered by hybrid formula/integration tests and source geometry audit; no new formula introduced."
+        },
+        {
+          "category": "previously_unfrozen_hybrid_v2_output",
+          "change": "added",
+          "metric_key": "nl_pairs",
+          "new_expected": 21.65,
+          "old_expected": null,
+          "previous_runtime": 21.65,
+          "reason": "Already emitted before this repair, now included in the baseline. Covered by hybrid formula/integration tests and source geometry audit; no new formula introduced."
+        },
+        {
+          "category": "full_transmitted_boundary",
+          "change": "changed",
+          "metric_key": "perimeter",
+          "new_expected": 395.6,
+          "old_expected": 335.49,
+          "previous_runtime": 335.49,
+          "reason": "Full perimeter includes both banks and excludes false closed-row interfaces; PI, EFS and EFS-derived small-field outputs change. Independent rectangle-union audit verifies physical area and perimeter."
+        },
+        {
+          "category": "full_transmitted_boundary",
+          "change": "changed",
+          "metric_key": "pi",
+          "new_expected": 7.21,
+          "old_expected": 5.26,
+          "previous_runtime": 5.26,
+          "reason": "Full perimeter includes both banks and excludes false closed-row interfaces; PI, EFS and EFS-derived small-field outputs change. Independent rectangle-union audit verifies physical area and perimeter."
+        },
+        {
+          "category": "full_transmitted_boundary",
+          "change": "changed",
+          "metric_key": "psmall",
+          "new_expected": 0.93,
+          "old_expected": 0.76,
+          "previous_runtime": 0.76,
+          "reason": "Full perimeter includes both banks and excludes false closed-row interfaces; PI, EFS and EFS-derived small-field outputs change. Independent rectangle-union audit verifies physical area and perimeter."
+        }
+      ],
+      "domain": "VMAT_IMRT",
+      "expected_supported": true,
+      "new_expected_metrics_checksum": "26db8d24beb0a0e16cdfc15dc02b83b12deb87b484cff831e9b4b483e0dbf875",
+      "new_formula_version": "geometry-v3",
+      "old_baseline_formula_version": null,
+      "source_checksum": "5097cd72e73a24e2d99b91d77c8e8df7a441ab299eb335ebeec41a8c5c156e91"
+    },
+    {
+      "case_id": "vmat_halcyon_edge",
+      "changes": [
+        {
+          "category": "previously_unfrozen_hybrid_v2_output",
+          "change": "added",
+          "metric_key": "aav_effective",
+          "new_expected": 0.183969,
+          "old_expected": null,
+          "previous_runtime": 0.183969,
+          "reason": "Already emitted before this repair, now included in the baseline. Covered by hybrid formula/integration tests and source geometry audit; no new formula introduced."
+        },
+        {
+          "category": "previously_unfrozen_hybrid_v2_output",
+          "change": "added",
+          "metric_key": "aav_stacked",
+          "new_expected": 0.228484,
+          "old_expected": null,
+          "previous_runtime": 0.228484,
+          "reason": "Already emitted before this repair, now included in the baseline. Covered by hybrid formula/integration tests and source geometry audit; no new formula introduced."
+        },
+        {
+          "category": "previously_unfrozen_hybrid_v2_output",
+          "change": "added",
+          "metric_key": "alg_effective",
+          "new_expected": 19.575681,
+          "old_expected": null,
+          "previous_runtime": 19.575681,
+          "reason": "Already emitted before this repair, now included in the baseline. Covered by hybrid formula/integration tests and source geometry audit; no new formula introduced."
+        },
+        {
+          "category": "stale_pre_hybrid_v2_expectation",
+          "change": "changed",
+          "metric_key": "alg_mlcx1",
+          "new_expected": 20.62,
+          "old_expected": 19.62,
+          "previous_runtime": 20.62,
+          "reason": "Old expectation predates per-control-point MU-weighted positive-gap moments/ratios. Independent raw-DICOM ALG, ALG_SD, MAD and SAS audit agrees with the retained hybrid-v2 runtime."
+        },
+        {
+          "category": "stale_pre_hybrid_v2_expectation",
+          "change": "changed",
+          "metric_key": "alg_mlcx2",
+          "new_expected": 26.91,
+          "old_expected": 25.95,
+          "previous_runtime": 26.91,
+          "reason": "Old expectation predates per-control-point MU-weighted positive-gap moments/ratios. Independent raw-DICOM ALG, ALG_SD, MAD and SAS audit agrees with the retained hybrid-v2 runtime."
+        },
+        {
+          "category": "previously_unfrozen_hybrid_v2_output",
+          "change": "added",
+          "metric_key": "alg_sd_effective",
+          "new_expected": 13.798682,
+          "old_expected": null,
+          "previous_runtime": 13.798682,
+          "reason": "Already emitted before this repair, now included in the baseline. Covered by hybrid formula/integration tests and source geometry audit; no new formula introduced."
+        },
+        {
+          "category": "stale_pre_hybrid_v2_expectation",
+          "change": "changed",
+          "metric_key": "alg_sd_mlcx1",
+          "new_expected": 15.52,
+          "old_expected": 15.12,
+          "previous_runtime": 15.52,
+          "reason": "Old expectation predates per-control-point MU-weighted positive-gap moments/ratios. Independent raw-DICOM ALG, ALG_SD, MAD and SAS audit agrees with the retained hybrid-v2 runtime."
+        },
+        {
+          "category": "stale_pre_hybrid_v2_expectation",
+          "change": "changed",
+          "metric_key": "alg_sd_mlcx2",
+          "new_expected": 20.16,
+          "old_expected": 19.73,
+          "previous_runtime": 20.16,
+          "reason": "Old expectation predates per-control-point MU-weighted positive-gap moments/ratios. Independent raw-DICOM ALG, ALG_SD, MAD and SAS audit agrees with the retained hybrid-v2 runtime."
+        },
+        {
+          "category": "previously_unfrozen_hybrid_v2_output",
+          "change": "added",
+          "metric_key": "alg_sd_stacked",
+          "new_expected": 17.636251,
+          "old_expected": null,
+          "previous_runtime": 17.636251,
+          "reason": "Already emitted before this repair, now included in the baseline. Covered by hybrid formula/integration tests and source geometry audit; no new formula introduced."
+        },
+        {
+          "category": "previously_unfrozen_hybrid_v2_output",
+          "change": "added",
+          "metric_key": "alg_stacked",
+          "new_expected": 23.845835,
+          "old_expected": null,
+          "previous_runtime": 23.845835,
+          "reason": "Already emitted before this repair, now included in the baseline. Covered by hybrid formula/integration tests and source geometry audit; no new formula introduced."
+        },
+        {
+          "category": "native_proximal_geometry",
+          "change": "changed",
+          "metric_key": "cam_mlcx2",
+          "new_expected": 0.51,
+          "old_expected": 0.49,
+          "previous_runtime": 0.49,
+          "reason": "All 29 proximal leaf pairs and absolute +/-145 mm boundaries are retained, with fixed +/-140 mm jaw clipping. Layer shape and per-leaf normalizers now use the complete physical array. Verified raw geometry and edge-half-leaf hand case; metric aggregation unchanged."
+        },
+        {
+          "category": "full_transmitted_boundary",
+          "change": "changed",
+          "metric_key": "distal_pi",
+          "new_expected": 11.052885,
+          "old_expected": 8.985082,
+          "previous_runtime": 8.985082,
+          "reason": "Full perimeter includes both banks and excludes false closed-row interfaces; PI, EFS and EFS-derived small-field outputs change. Independent rectangle-union audit verifies physical area and perimeter."
+        },
+        {
+          "category": "full_transmitted_boundary",
+          "change": "changed",
+          "metric_key": "distal_piw",
+          "new_expected": 6.258153,
+          "old_expected": 5.08284,
+          "previous_runtime": 5.08284,
+          "reason": "Full perimeter includes both banks and excludes false closed-row interfaces; PI, EFS and EFS-derived small-field outputs change. Independent rectangle-union audit verifies physical area and perimeter."
+        },
+        {
+          "category": "full_transmitted_boundary",
+          "change": "changed",
+          "metric_key": "efs_mlcx1",
+          "new_expected": 23.52,
+          "old_expected": 26.27,
+          "previous_runtime": 26.27,
+          "reason": "Full perimeter includes both banks and excludes false closed-row interfaces; PI, EFS and EFS-derived small-field outputs change. Independent rectangle-union audit verifies physical area and perimeter."
+        },
+        {
+          "category": "full_transmitted_boundary",
+          "change": "changed",
+          "metric_key": "efs_mlcx2",
+          "new_expected": 29.83,
+          "old_expected": 34.39,
+          "previous_runtime": 34.39,
+          "reason": "Full perimeter includes both banks and excludes false closed-row interfaces; PI, EFS and EFS-derived small-field outputs change. Independent rectangle-union audit verifies physical area and perimeter."
+        },
+        {
+          "category": "previously_unfrozen_hybrid_v2_output",
+          "change": "added",
+          "metric_key": "lsv_effective",
+          "new_expected": 0.793132,
+          "old_expected": null,
+          "previous_runtime": 0.793132,
+          "reason": "Already emitted before this repair, now included in the baseline. Covered by hybrid formula/integration tests and source geometry audit; no new formula introduced."
+        },
+        {
+          "category": "previously_unfrozen_hybrid_v2_output",
+          "change": "added",
+          "metric_key": "lsv_stacked",
+          "new_expected": 0.683054,
+          "old_expected": null,
+          "previous_runtime": 0.683054,
+          "reason": "Already emitted before this repair, now included in the baseline. Covered by hybrid formula/integration tests and source geometry audit; no new formula introduced."
+        },
+        {
+          "category": "previously_unfrozen_hybrid_v2_output",
+          "change": "added",
+          "metric_key": "lt_effective",
+          "new_expected": 249.337476,
+          "old_expected": null,
+          "previous_runtime": 249.337476,
+          "reason": "Already emitted before this repair, now included in the baseline. Covered by hybrid formula/integration tests and source geometry audit; no new formula introduced."
+        },
+        {
+          "category": "previously_unfrozen_hybrid_v2_output",
+          "change": "added",
+          "metric_key": "lt_mean_leaf_effective",
+          "new_expected": 289.834753,
+          "old_expected": null,
+          "previous_runtime": 289.834753,
+          "reason": "Already emitted before this repair, now included in the baseline. Covered by hybrid formula/integration tests and source geometry audit; no new formula introduced."
+        },
+        {
+          "category": "previously_unfrozen_hybrid_v2_output",
+          "change": "added",
+          "metric_key": "lt_mean_leaf_mlcx1",
+          "new_expected": 228.05,
+          "old_expected": null,
+          "previous_runtime": 228.05,
+          "reason": "Already emitted before this repair, now included in the baseline. Covered by hybrid formula/integration tests and source geometry audit; no new formula introduced."
+        },
+        {
+          "category": "previously_unfrozen_hybrid_v2_output",
+          "change": "added",
+          "metric_key": "lt_mean_leaf_mlcx2",
+          "new_expected": 257.26,
+          "old_expected": null,
+          "previous_runtime": 257.26,
+          "reason": "Already emitted before this repair, now included in the baseline. Covered by hybrid formula/integration tests and source geometry audit; no new formula introduced."
+        },
+        {
+          "category": "previously_unfrozen_hybrid_v2_output",
+          "change": "added",
+          "metric_key": "lt_mean_leaf_stacked",
+          "new_expected": 242.448716,
+          "old_expected": null,
+          "previous_runtime": 242.448716,
+          "reason": "Already emitted before this repair, now included in the baseline. Covered by hybrid formula/integration tests and source geometry audit; no new formula introduced."
+        },
+        {
+          "category": "previously_unfrozen_hybrid_v2_output",
+          "change": "added",
+          "metric_key": "lt_stacked",
+          "new_expected": 224.233928,
+          "old_expected": null,
+          "previous_runtime": 224.233928,
+          "reason": "Already emitted before this repair, now included in the baseline. Covered by hybrid formula/integration tests and source geometry audit; no new formula introduced."
+        },
+        {
+          "category": "previously_unfrozen_hybrid_v2_output",
+          "change": "added",
+          "metric_key": "mad_effective",
+          "new_expected": 24.504529,
+          "old_expected": null,
+          "previous_runtime": 24.504529,
+          "reason": "Already emitted before this repair, now included in the baseline. Covered by hybrid formula/integration tests and source geometry audit; no new formula introduced."
+        },
+        {
+          "category": "stale_pre_hybrid_v2_expectation",
+          "change": "changed",
+          "metric_key": "mad_mlcx1",
+          "new_expected": 23.39,
+          "old_expected": 27.15,
+          "previous_runtime": 23.39,
+          "reason": "Old expectation predates per-control-point MU-weighted positive-gap moments/ratios. Independent raw-DICOM ALG, ALG_SD, MAD and SAS audit agrees with the retained hybrid-v2 runtime."
+        },
+        {
+          "category": "stale_pre_hybrid_v2_expectation",
+          "change": "changed",
+          "metric_key": "mad_mlcx2",
+          "new_expected": 22.47,
+          "old_expected": 27.91,
+          "previous_runtime": 22.47,
+          "reason": "Old expectation predates per-control-point MU-weighted positive-gap moments/ratios. Independent raw-DICOM ALG, ALG_SD, MAD and SAS audit agrees with the retained hybrid-v2 runtime."
+        },
+        {
+          "category": "previously_unfrozen_hybrid_v2_output",
+          "change": "added",
+          "metric_key": "mad_stacked",
+          "new_expected": 22.931283,
+          "old_expected": null,
+          "previous_runtime": 22.931283,
+          "reason": "Already emitted before this repair, now included in the baseline. Covered by hybrid formula/integration tests and source geometry audit; no new formula introduced."
+        },
+        {
+          "category": "previously_unfrozen_hybrid_v2_output",
+          "change": "added",
+          "metric_key": "mcsv_effective",
+          "new_expected": 0.149013,
+          "old_expected": null,
+          "previous_runtime": 0.149013,
+          "reason": "Already emitted before this repair, now included in the baseline. Covered by hybrid formula/integration tests and source geometry audit; no new formula introduced."
+        },
+        {
+          "category": "previously_unfrozen_hybrid_v2_output",
+          "change": "added",
+          "metric_key": "mcsv_stacked",
+          "new_expected": 0.158002,
+          "old_expected": null,
+          "previous_runtime": 0.158002,
+          "reason": "Already emitted before this repair, now included in the baseline. Covered by hybrid formula/integration tests and source geometry audit; no new formula introduced."
+        },
+        {
+          "category": "native_proximal_geometry",
+          "change": "changed",
+          "metric_key": "mlcx2_acc_0_40",
+          "new_expected": 0.7445,
+          "old_expected": 0.7354,
+          "previous_runtime": 0.7354,
+          "reason": "All 29 proximal leaf pairs and absolute +/-145 mm boundaries are retained, with fixed +/-140 mm jaw clipping. Layer shape and per-leaf normalizers now use the complete physical array. Verified raw geometry and edge-half-leaf hand case; metric aggregation unchanged."
+        },
+        {
+          "category": "native_proximal_geometry",
+          "change": "changed",
+          "metric_key": "mlcx2_acc_120_160",
+          "new_expected": 0.0318,
+          "old_expected": 0.0329,
+          "previous_runtime": 0.0329,
+          "reason": "All 29 proximal leaf pairs and absolute +/-145 mm boundaries are retained, with fixed +/-140 mm jaw clipping. Layer shape and per-leaf normalizers now use the complete physical array. Verified raw geometry and edge-half-leaf hand case; metric aggregation unchanged."
+        },
+        {
+          "category": "native_proximal_geometry",
+          "change": "changed",
+          "metric_key": "mlcx2_acc_160_200",
+          "new_expected": 0.0135,
+          "old_expected": 0.014,
+          "previous_runtime": 0.014,
+          "reason": "All 29 proximal leaf pairs and absolute +/-145 mm boundaries are retained, with fixed +/-140 mm jaw clipping. Layer shape and per-leaf normalizers now use the complete physical array. Verified raw geometry and edge-half-leaf hand case; metric aggregation unchanged."
+        },
+        {
+          "category": "native_proximal_geometry",
+          "change": "changed",
+          "metric_key": "mlcx2_acc_40_80",
+          "new_expected": 0.1233,
+          "old_expected": 0.1277,
+          "previous_runtime": 0.1277,
+          "reason": "All 29 proximal leaf pairs and absolute +/-145 mm boundaries are retained, with fixed +/-140 mm jaw clipping. Layer shape and per-leaf normalizers now use the complete physical array. Verified raw geometry and edge-half-leaf hand case; metric aggregation unchanged."
+        },
+        {
+          "category": "native_proximal_geometry",
+          "change": "changed",
+          "metric_key": "mlcx2_acc_80_120",
+          "new_expected": 0.0664,
+          "old_expected": 0.0687,
+          "previous_runtime": 0.0687,
+          "reason": "All 29 proximal leaf pairs and absolute +/-145 mm boundaries are retained, with fixed +/-140 mm jaw clipping. Layer shape and per-leaf normalizers now use the complete physical array. Verified raw geometry and edge-half-leaf hand case; metric aggregation unchanged."
+        },
+        {
+          "category": "native_proximal_geometry",
+          "change": "changed",
+          "metric_key": "mlcx2_speed_0_4",
+          "new_expected": 0.5229,
+          "old_expected": 0.5058,
+          "previous_runtime": 0.5058,
+          "reason": "All 29 proximal leaf pairs and absolute +/-145 mm boundaries are retained, with fixed +/-140 mm jaw clipping. Layer shape and per-leaf normalizers now use the complete physical array. Verified raw geometry and edge-half-leaf hand case; metric aggregation unchanged."
+        },
+        {
+          "category": "native_proximal_geometry",
+          "change": "changed",
+          "metric_key": "mlcx2_speed_12_16",
+          "new_expected": 0.0468,
+          "old_expected": 0.0485,
+          "previous_runtime": 0.0485,
+          "reason": "All 29 proximal leaf pairs and absolute +/-145 mm boundaries are retained, with fixed +/-140 mm jaw clipping. Layer shape and per-leaf normalizers now use the complete physical array. Verified raw geometry and edge-half-leaf hand case; metric aggregation unchanged."
+        },
+        {
+          "category": "native_proximal_geometry",
+          "change": "changed",
+          "metric_key": "mlcx2_speed_16_20",
+          "new_expected": 0.0594,
+          "old_expected": 0.0615,
+          "previous_runtime": 0.0615,
+          "reason": "All 29 proximal leaf pairs and absolute +/-145 mm boundaries are retained, with fixed +/-140 mm jaw clipping. Layer shape and per-leaf normalizers now use the complete physical array. Verified raw geometry and edge-half-leaf hand case; metric aggregation unchanged."
+        },
+        {
+          "category": "native_proximal_geometry",
+          "change": "changed",
+          "metric_key": "mlcx2_speed_4_8",
+          "new_expected": 0.0462,
+          "old_expected": 0.0479,
+          "previous_runtime": 0.0479,
+          "reason": "All 29 proximal leaf pairs and absolute +/-145 mm boundaries are retained, with fixed +/-140 mm jaw clipping. Layer shape and per-leaf normalizers now use the complete physical array. Verified raw geometry and edge-half-leaf hand case; metric aggregation unchanged."
+        },
+        {
+          "category": "native_proximal_geometry",
+          "change": "changed",
+          "metric_key": "mlcx2_speed_8_12",
+          "new_expected": 0.0589,
+          "old_expected": 0.061,
+          "previous_runtime": 0.061,
+          "reason": "All 29 proximal leaf pairs and absolute +/-145 mm boundaries are retained, with fixed +/-140 mm jaw clipping. Layer shape and per-leaf normalizers now use the complete physical array. Verified raw geometry and edge-half-leaf hand case; metric aggregation unchanged."
+        },
+        {
+          "category": "previously_unfrozen_hybrid_v2_output",
+          "change": "added",
+          "metric_key": "nl_leaves_effective",
+          "new_expected": 60.567529,
+          "old_expected": null,
+          "previous_runtime": 60.567529,
+          "reason": "Already emitted before this repair, now included in the baseline. Covered by hybrid formula/integration tests and source geometry audit; no new formula introduced."
+        },
+        {
+          "category": "previously_unfrozen_hybrid_v2_output",
+          "change": "added",
+          "metric_key": "nl_leaves_mlcx1",
+          "new_expected": 34.28,
+          "old_expected": null,
+          "previous_runtime": 34.28,
+          "reason": "Already emitted before this repair, now included in the baseline. Covered by hybrid formula/integration tests and source geometry audit; no new formula introduced."
+        },
+        {
+          "category": "previously_unfrozen_hybrid_v2_output",
+          "change": "added",
+          "metric_key": "nl_leaves_mlcx2",
+          "new_expected": 36.51,
+          "old_expected": null,
+          "previous_runtime": 36.51,
+          "reason": "Already emitted before this repair, now included in the baseline. Covered by hybrid formula/integration tests and source geometry audit; no new formula introduced."
+        },
+        {
+          "category": "previously_unfrozen_hybrid_v2_output",
+          "change": "added",
+          "metric_key": "nl_leaves_stacked",
+          "new_expected": 70.784973,
+          "old_expected": null,
+          "previous_runtime": 70.784973,
+          "reason": "Already emitted before this repair, now included in the baseline. Covered by hybrid formula/integration tests and source geometry audit; no new formula introduced."
+        },
+        {
+          "category": "previously_unfrozen_hybrid_v2_output",
+          "change": "added",
+          "metric_key": "nl_pairs_effective",
+          "new_expected": 30.283764,
+          "old_expected": null,
+          "previous_runtime": 30.283764,
+          "reason": "Already emitted before this repair, now included in the baseline. Covered by hybrid formula/integration tests and source geometry audit; no new formula introduced."
+        },
+        {
+          "category": "previously_unfrozen_hybrid_v2_output",
+          "change": "added",
+          "metric_key": "nl_pairs_mlcx1",
+          "new_expected": 17.14,
+          "old_expected": null,
+          "previous_runtime": 17.14,
+          "reason": "Already emitted before this repair, now included in the baseline. Covered by hybrid formula/integration tests and source geometry audit; no new formula introduced."
+        },
+        {
+          "category": "previously_unfrozen_hybrid_v2_output",
+          "change": "added",
+          "metric_key": "nl_pairs_mlcx2",
+          "new_expected": 18.25,
+          "old_expected": null,
+          "previous_runtime": 18.25,
+          "reason": "Already emitted before this repair, now included in the baseline. Covered by hybrid formula/integration tests and source geometry audit; no new formula introduced."
+        },
+        {
+          "category": "previously_unfrozen_hybrid_v2_output",
+          "change": "added",
+          "metric_key": "nl_pairs_stacked",
+          "new_expected": 35.392487,
+          "old_expected": null,
+          "previous_runtime": 35.392487,
+          "reason": "Already emitted before this repair, now included in the baseline. Covered by hybrid formula/integration tests and source geometry audit; no new formula introduced."
+        },
+        {
+          "category": "previously_unfrozen_hybrid_v2_output",
+          "change": "added",
+          "metric_key": "pa_effective",
+          "new_expected": 3155.203585,
+          "old_expected": null,
+          "previous_runtime": 3155.203585,
+          "reason": "Already emitted before this repair, now included in the baseline. Covered by hybrid formula/integration tests and source geometry audit; no new formula introduced."
+        },
+        {
+          "category": "previously_unfrozen_hybrid_v2_output",
+          "change": "added",
+          "metric_key": "pa_stacked",
+          "new_expected": 8472.112297,
+          "old_expected": null,
+          "previous_runtime": 8472.112297,
+          "reason": "Already emitted before this repair, now included in the baseline. Covered by hybrid formula/integration tests and source geometry audit; no new formula introduced."
+        },
+        {
+          "category": "full_transmitted_boundary",
+          "change": "changed",
+          "metric_key": "perimeter_mlcx1",
+          "new_expected": 601.15,
+          "old_expected": 538.37,
+          "previous_runtime": 538.37,
+          "reason": "Full perimeter includes both banks and excludes false closed-row interfaces; PI, EFS and EFS-derived small-field outputs change. Independent rectangle-union audit verifies physical area and perimeter."
+        },
+        {
+          "category": "full_transmitted_boundary",
+          "change": "changed",
+          "metric_key": "perimeter_mlcx2",
+          "new_expected": 679.17,
+          "old_expected": 594.1,
+          "previous_runtime": 594.1,
+          "reason": "Full perimeter includes both banks and excludes false closed-row interfaces; PI, EFS and EFS-derived small-field outputs change. Independent rectangle-union audit verifies physical area and perimeter."
+        },
+        {
+          "category": "full_transmitted_boundary",
+          "change": "changed",
+          "metric_key": "pi5",
+          "new_expected": 10.457651,
+          "old_expected": 11.374771,
+          "previous_runtime": 11.374771,
+          "reason": "Full perimeter includes both banks and excludes false closed-row interfaces; PI, EFS and EFS-derived small-field outputs change. Independent rectangle-union audit verifies physical area and perimeter. Old-formula replay and signed weighted contributions explain the decrease, not just the new baseline."
+        },
+        {
+          "category": "full_transmitted_boundary",
+          "change": "changed",
+          "metric_key": "pi_mlcx1",
+          "new_expected": 11.05,
+          "old_expected": 8.99,
+          "previous_runtime": 8.99,
+          "reason": "Full perimeter includes both banks and excludes false closed-row interfaces; PI, EFS and EFS-derived small-field outputs change. Independent rectangle-union audit verifies physical area and perimeter."
+        },
+        {
+          "category": "full_transmitted_boundary",
+          "change": "changed",
+          "metric_key": "pi_mlcx2",
+          "new_expected": 8.84,
+          "old_expected": 6.84,
+          "previous_runtime": 6.84,
+          "reason": "Full perimeter includes both banks and excludes false closed-row interfaces; PI, EFS and EFS-derived small-field outputs change. Independent rectangle-union audit verifies physical area and perimeter."
+        },
+        {
+          "category": "full_transmitted_boundary",
+          "change": "changed",
+          "metric_key": "piw",
+          "new_expected": 10.153123,
+          "old_expected": 8.092545,
+          "previous_runtime": 8.092545,
+          "reason": "Full perimeter includes both banks and excludes false closed-row interfaces; PI, EFS and EFS-derived small-field outputs change. Independent rectangle-union audit verifies physical area and perimeter."
+        },
+        {
+          "category": "full_transmitted_boundary",
+          "change": "changed",
+          "metric_key": "proximal_pi",
+          "new_expected": 8.841735,
+          "old_expected": 6.840857,
+          "previous_runtime": 6.840857,
+          "reason": "Full perimeter includes both banks and excludes false closed-row interfaces; PI, EFS and EFS-derived small-field outputs change. Independent rectangle-union audit verifies physical area and perimeter."
+        },
+        {
+          "category": "full_transmitted_boundary",
+          "change": "changed",
+          "metric_key": "proximal_piw",
+          "new_expected": 3.89497,
+          "old_expected": 3.009705,
+          "previous_runtime": 3.009705,
+          "reason": "Full perimeter includes both banks and excludes false closed-row interfaces; PI, EFS and EFS-derived small-field outputs change. Independent rectangle-union audit verifies physical area and perimeter."
+        },
+        {
+          "category": "full_transmitted_boundary",
+          "change": "changed",
+          "metric_key": "psmall_mlcx1",
+          "new_expected": 0.76,
+          "old_expected": 0.7,
+          "previous_runtime": 0.7,
+          "reason": "Full perimeter includes both banks and excludes false closed-row interfaces; PI, EFS and EFS-derived small-field outputs change. Independent rectangle-union audit verifies physical area and perimeter."
+        },
+        {
+          "category": "full_transmitted_boundary",
+          "change": "changed",
+          "metric_key": "psmall_mlcx2",
+          "new_expected": 0.55,
+          "old_expected": 0.36,
+          "previous_runtime": 0.36,
+          "reason": "Full perimeter includes both banks and excludes false closed-row interfaces; PI, EFS and EFS-derived small-field outputs change. Independent rectangle-union audit verifies physical area and perimeter."
+        },
+        {
+          "category": "previously_unfrozen_hybrid_v2_output",
+          "change": "added",
+          "metric_key": "sas_10mm_effective",
+          "new_expected": 0.296366,
+          "old_expected": null,
+          "previous_runtime": 0.296366,
+          "reason": "Already emitted before this repair, now included in the baseline. Covered by hybrid formula/integration tests and source geometry audit; no new formula introduced."
+        },
+        {
+          "category": "stale_pre_hybrid_v2_expectation",
+          "change": "changed",
+          "metric_key": "sas_10mm_mlcx1",
+          "new_expected": 0.29,
+          "old_expected": 0.31,
+          "previous_runtime": 0.29,
+          "reason": "Old expectation predates per-control-point MU-weighted positive-gap moments/ratios. Independent raw-DICOM ALG, ALG_SD, MAD and SAS audit agrees with the retained hybrid-v2 runtime."
+        },
+        {
+          "category": "stale_pre_hybrid_v2_expectation",
+          "change": "changed",
+          "metric_key": "sas_10mm_mlcx2",
+          "new_expected": 0.2,
+          "old_expected": 0.22,
+          "previous_runtime": 0.2,
+          "reason": "Old expectation predates per-control-point MU-weighted positive-gap moments/ratios. Independent raw-DICOM ALG, ALG_SD, MAD and SAS audit agrees with the retained hybrid-v2 runtime."
+        },
+        {
+          "category": "previously_unfrozen_hybrid_v2_output",
+          "change": "added",
+          "metric_key": "sas_10mm_stacked",
+          "new_expected": 0.244846,
+          "old_expected": null,
+          "previous_runtime": 0.244846,
+          "reason": "Already emitted before this repair, now included in the baseline. Covered by hybrid formula/integration tests and source geometry audit; no new formula introduced."
+        },
+        {
+          "category": "previously_unfrozen_hybrid_v2_output",
+          "change": "added",
+          "metric_key": "sas_20mm_effective",
+          "new_expected": 0.585573,
+          "old_expected": null,
+          "previous_runtime": 0.585573,
+          "reason": "Already emitted before this repair, now included in the baseline. Covered by hybrid formula/integration tests and source geometry audit; no new formula introduced."
+        },
+        {
+          "category": "stale_pre_hybrid_v2_expectation",
+          "change": "changed",
+          "metric_key": "sas_20mm_mlcx1",
+          "new_expected": 0.54,
+          "old_expected": 0.56,
+          "previous_runtime": 0.54,
+          "reason": "Old expectation predates per-control-point MU-weighted positive-gap moments/ratios. Independent raw-DICOM ALG, ALG_SD, MAD and SAS audit agrees with the retained hybrid-v2 runtime."
+        },
+        {
+          "category": "stale_pre_hybrid_v2_expectation",
+          "change": "changed",
+          "metric_key": "sas_20mm_mlcx2",
+          "new_expected": 0.41,
+          "old_expected": 0.43,
+          "previous_runtime": 0.41,
+          "reason": "Old expectation predates per-control-point MU-weighted positive-gap moments/ratios. Independent raw-DICOM ALG, ALG_SD, MAD and SAS audit agrees with the retained hybrid-v2 runtime."
+        },
+        {
+          "category": "previously_unfrozen_hybrid_v2_output",
+          "change": "added",
+          "metric_key": "sas_20mm_stacked",
+          "new_expected": 0.474851,
+          "old_expected": null,
+          "previous_runtime": 0.474851,
+          "reason": "Already emitted before this repair, now included in the baseline. Covered by hybrid formula/integration tests and source geometry audit; no new formula introduced."
+        },
+        {
+          "category": "previously_unfrozen_hybrid_v2_output",
+          "change": "added",
+          "metric_key": "sas_5mm_effective",
+          "new_expected": 0.156345,
+          "old_expected": null,
+          "previous_runtime": 0.156345,
+          "reason": "Already emitted before this repair, now included in the baseline. Covered by hybrid formula/integration tests and source geometry audit; no new formula introduced."
+        },
+        {
+          "category": "stale_pre_hybrid_v2_expectation",
+          "change": "changed",
+          "metric_key": "sas_5mm_mlcx1",
+          "new_expected": 0.17,
+          "old_expected": 0.18,
+          "previous_runtime": 0.17,
+          "reason": "Old expectation predates per-control-point MU-weighted positive-gap moments/ratios. Independent raw-DICOM ALG, ALG_SD, MAD and SAS audit agrees with the retained hybrid-v2 runtime."
+        },
+        {
+          "category": "stale_pre_hybrid_v2_expectation",
+          "change": "changed",
+          "metric_key": "sas_5mm_mlcx2",
+          "new_expected": 0.12,
+          "old_expected": 0.14,
+          "previous_runtime": 0.12,
+          "reason": "Old expectation predates per-control-point MU-weighted positive-gap moments/ratios. Independent raw-DICOM ALG, ALG_SD, MAD and SAS audit agrees with the retained hybrid-v2 runtime."
+        },
+        {
+          "category": "previously_unfrozen_hybrid_v2_output",
+          "change": "added",
+          "metric_key": "sas_5mm_stacked",
+          "new_expected": 0.145043,
+          "old_expected": null,
+          "previous_runtime": 0.145043,
+          "reason": "Already emitted before this repair, now included in the baseline. Covered by hybrid formula/integration tests and source geometry audit; no new formula introduced."
+        },
+        {
+          "category": "native_proximal_geometry",
+          "change": "changed",
+          "metric_key": "tg_mlcx2",
+          "new_expected": 22.33,
+          "old_expected": 23.13,
+          "previous_runtime": 23.13,
+          "reason": "All 29 proximal leaf pairs and absolute +/-145 mm boundaries are retained, with fixed +/-140 mm jaw clipping. Layer shape and per-leaf normalizers now use the complete physical array. Verified raw geometry and edge-half-leaf hand case; metric aggregation unchanged."
+        }
+      ],
+      "domain": "VMAT_IMRT",
+      "expected_supported": true,
+      "new_expected_metrics_checksum": "94a95729a2825c81c5ee703ad28b344c5d53257f76f845993248d4cd1f7a44e7",
+      "new_formula_version": "geometry-v3",
+      "old_baseline_formula_version": null,
+      "source_checksum": "9813382359503e91d2b1750b706ae98be811ca3bc064cc223f9aa80ddb02b854"
+    },
+    {
+      "case_id": "tomo_canonical",
+      "changes": [
+        {
+          "category": "documented_timing",
+          "change": "changed",
+          "independent_after": 0.0,
+          "independent_agreement": true,
+          "metric_key": "clns_10ms",
+          "new_expected": 0.0,
+          "old_expected": 0.5516546539564442,
+          "previous_runtime": 0.5516546539564442,
+          "reason": "Private gantry period / angular projections per rotation replaces the 0.02-second assumption."
+        },
+        {
+          "category": "documented_timing",
+          "change": "changed",
+          "independent_after": 0.007633883592962877,
+          "independent_agreement": true,
+          "metric_key": "clns_20ms",
+          "new_expected": 0.007633883592962877,
+          "old_expected": 1.0,
+          "previous_runtime": 1.0,
+          "reason": "Private gantry period / angular projections per rotation replaces the 0.02-second assumption."
+        },
+        {
+          "category": "documented_timing",
+          "change": "changed",
+          "independent_after": 0.04774083546462063,
+          "independent_agreement": true,
+          "metric_key": "clns_30ms",
+          "new_expected": 0.04774083546462063,
+          "old_expected": 1.0,
+          "previous_runtime": 1.0,
+          "reason": "Private gantry period / angular projections per rotation replaces the 0.02-second assumption."
+        },
+        {
+          "category": "documented_timing",
+          "change": "changed",
+          "independent_after": 0.14267999689994576,
+          "independent_agreement": true,
+          "metric_key": "clns_50ms",
+          "new_expected": 0.14267999689994576,
+          "old_expected": 1.0,
+          "previous_runtime": 1.0,
+          "reason": "Private gantry period / angular projections per rotation replaces the 0.02-second assumption."
+        },
+        {
+          "category": "documented_timing",
+          "change": "changed",
+          "independent_after": 0.01929783771215996,
+          "independent_agreement": true,
+          "metric_key": "clns_pt_10ms",
+          "new_expected": 0.01929783771215996,
+          "old_expected": 0.44834534604355575,
+          "previous_runtime": 0.44834534604355575,
+          "reason": "Private gantry period / angular projections per rotation replaces the 0.02-second assumption."
+        },
+        {
+          "category": "documented_timing",
+          "change": "changed",
+          "independent_after": 0.02867550182128187,
+          "independent_agreement": true,
+          "metric_key": "clns_pt_20ms",
+          "new_expected": 0.02867550182128187,
+          "old_expected": 1.0,
+          "previous_runtime": 1.0,
+          "reason": "Private gantry period / angular projections per rotation replaces the 0.02-second assumption."
+        },
+        {
+          "category": "documented_timing",
+          "change": "changed",
+          "independent_after": 0.038866930171278,
+          "independent_agreement": true,
+          "metric_key": "clns_pt_30ms",
+          "new_expected": 0.038866930171278,
+          "old_expected": 1.0,
+          "previous_runtime": 1.0,
+          "reason": "Private gantry period / angular projections per rotation replaces the 0.02-second assumption."
+        },
+        {
+          "category": "documented_timing",
+          "change": "changed",
+          "independent_after": 0.06227233976594591,
+          "independent_agreement": true,
+          "metric_key": "clns_pt_50ms",
+          "new_expected": 0.06227233976594591,
+          "old_expected": 1.0,
+          "previous_runtime": 1.0,
+          "reason": "Private gantry period / angular projections per rotation replaces the 0.02-second assumption."
+        },
+        {
+          "category": "documented_timing",
+          "change": "changed",
+          "independent_after": 11.8,
+          "independent_agreement": true,
+          "metric_key": "gantry_period_s",
+          "new_expected": 11.8,
+          "old_expected": 1.02,
+          "previous_runtime": 1.02,
+          "reason": "Private gantry period / angular projections per rotation replaces the 0.02-second assumption."
+        },
+        {
+          "category": "floating_point_roundoff",
+          "change": "changed",
+          "independent_after": -0.41163100582318746,
+          "independent_agreement": true,
+          "metric_key": "klot",
+          "new_expected": -0.4116310058231867,
+          "old_expected": -0.41163100582318757,
+          "previous_runtime": -0.41163100582318757,
+          "reason": "Dimensionless invariant agrees with independent fraction-based calculation."
+        },
+        {
+          "category": "documented_timing",
+          "change": "changed",
+          "independent_after": 222.21713725490196,
+          "independent_agreement": true,
+          "metric_key": "maxlot",
+          "new_expected": 222.21713725490196,
+          "old_expected": 19.2086,
+          "previous_runtime": 19.2086,
+          "reason": "Private gantry period / angular projections per rotation replaces the 0.02-second assumption."
+        },
+        {
+          "category": "documented_timing",
+          "change": "changed",
+          "independent_after": 108.71849019607843,
+          "independent_agreement": true,
+          "metric_key": "mdlot",
+          "new_expected": 108.71849019607843,
+          "old_expected": 9.3977,
+          "previous_runtime": 9.3977,
+          "reason": "Private gantry period / angular projections per rotation replaces the 0.02-second assumption."
+        },
+        {
+          "category": "floating_point_roundoff",
+          "change": "changed",
+          "independent_after": 0.4812228633037343,
+          "independent_agreement": true,
+          "metric_key": "mf",
+          "new_expected": 0.4812228633037343,
+          "old_expected": 0.48122286330373437,
+          "previous_runtime": 0.48122286330373437,
+          "reason": "Dimensionless invariant agrees with independent fraction-based calculation."
+        },
+        {
+          "category": "documented_timing",
+          "change": "changed",
+          "independent_after": 18.003098039215686,
+          "independent_agreement": true,
+          "metric_key": "minlot",
+          "new_expected": 18.00309803921569,
+          "old_expected": 1.5562000000000002,
+          "previous_runtime": 1.5562000000000002,
+          "reason": "Private gantry period / angular projections per rotation replaces the 0.02-second assumption."
+        },
+        {
+          "category": "documented_timing",
+          "change": "changed",
+          "independent_after": 106.93596706496285,
+          "independent_agreement": true,
+          "metric_key": "mlot",
+          "new_expected": 106.93596706496285,
+          "old_expected": 9.243617492056112,
+          "previous_runtime": 9.243617492056112,
+          "reason": "Private gantry period / angular projections per rotation replaces the 0.02-second assumption."
+        },
+        {
+          "category": "documented_timing",
+          "change": "changed",
+          "independent_after": 222.217137,
+          "independent_agreement": true,
+          "metric_key": "molot",
+          "new_expected": 222.217137,
+          "old_expected": 19.2086,
+          "previous_runtime": 19.2086,
+          "reason": "Private gantry period / angular projections per rotation replaces the 0.02-second assumption."
+        },
+        {
+          "category": "documented_timing",
+          "change": "changed",
+          "independent_after": 0.23137254901960785,
+          "independent_agreement": true,
+          "metric_key": "projection_time_s",
+          "new_expected": 0.23137254901960785,
+          "old_expected": 0.02,
+          "previous_runtime": 0.02,
+          "reason": "Private gantry period / angular projections per rotation replaces the 0.02-second assumption."
+        },
+        {
+          "category": "documented_timing",
+          "change": "changed",
+          "independent_after": 47.47255003047266,
+          "independent_agreement": true,
+          "metric_key": "sdlot",
+          "new_expected": 47.47255003047266,
+          "old_expected": 4.103559409413738,
+          "previous_runtime": 4.103559409413738,
+          "reason": "Private gantry period / angular projections per rotation replaces the 0.02-second assumption."
+        },
+        {
+          "category": "floating_point_roundoff",
+          "change": "changed",
+          "independent_after": 0.19921710392770564,
+          "independent_agreement": true,
+          "metric_key": "slot",
+          "new_expected": 0.19921710392770586,
+          "old_expected": 0.1992171039277052,
+          "previous_runtime": 0.1992171039277052,
+          "reason": "Dimensionless invariant agrees with independent fraction-based calculation."
+        },
+        {
+          "category": "documented_timing",
+          "change": "changed",
+          "independent_after": 365.5686274509804,
+          "independent_agreement": true,
+          "metric_key": "treatment_time_s",
+          "new_expected": 365.5686274509804,
+          "old_expected": 31.6,
+          "previous_runtime": 31.6,
+          "reason": "Private gantry period / angular projections per rotation replaces the 0.02-second assumption."
+        },
+        {
+          "category": "unavailable_dose",
+          "change": "changed",
+          "independent_after": null,
+          "independent_agreement": true,
+          "metric_key": "ttdf_s_cgy",
+          "new_expected": null,
+          "old_expected": 0.0,
+          "previous_runtime": 0.0,
+          "reason": "Zero/missing dose now propagates unavailable instead of zero."
+        }
+      ],
+      "domain": "TOMO",
+      "expected_supported": true,
+      "new_expected_metrics_checksum": "dab7025de45a178ef7fe68595125adf3c5d986cf49f0594d0ed022bcc87acf1b",
+      "new_formula_version": "tomo-v2",
+      "old_baseline_formula_version": null,
+      "source_checksum": "c0804684e11fb3064a0980969d8e98a94e9f82266504aee92dd0cd73d9c6426b"
+    },
+    {
+      "case_id": "tomo_default_inference_edge",
+      "changes": [
+        {
+          "category": "documented_timing",
+          "change": "changed",
+          "independent_after": 0.0,
+          "independent_agreement": true,
+          "metric_key": "clns_10ms",
+          "new_expected": 0.0,
+          "old_expected": 0.03570042685292976,
+          "previous_runtime": 0.03570042685292976,
+          "reason": "Private gantry period / angular projections per rotation replaces the 0.02-second assumption."
+        },
+        {
+          "category": "documented_timing",
+          "change": "changed",
+          "independent_after": 0.00038804811796662784,
+          "independent_agreement": true,
+          "metric_key": "clns_20ms",
+          "new_expected": 0.00038804811796662784,
+          "old_expected": 1.0,
+          "previous_runtime": 1.0,
+          "reason": "Private gantry period / angular projections per rotation replaces the 0.02-second assumption."
+        },
+        {
+          "category": "documented_timing",
+          "change": "changed",
+          "independent_after": 0.002716336825766395,
+          "independent_agreement": true,
+          "metric_key": "clns_30ms",
+          "new_expected": 0.002716336825766395,
+          "old_expected": 1.0,
+          "previous_runtime": 1.0,
+          "reason": "Private gantry period / angular projections per rotation replaces the 0.02-second assumption."
+        },
+        {
+          "category": "documented_timing",
+          "change": "changed",
+          "independent_after": 0.008537058595265812,
+          "independent_agreement": true,
+          "metric_key": "clns_50ms",
+          "new_expected": 0.008537058595265812,
+          "old_expected": 1.0,
+          "previous_runtime": 1.0,
+          "reason": "Private gantry period / angular projections per rotation replaces the 0.02-second assumption."
+        },
+        {
+          "category": "documented_timing",
+          "change": "changed",
+          "independent_after": 0.906092355452076,
+          "independent_agreement": true,
+          "metric_key": "clns_pt_10ms",
+          "new_expected": 0.906092355452076,
+          "old_expected": 0.9642995731470703,
+          "previous_runtime": 0.9642995731470703,
+          "reason": "Private gantry period / angular projections per rotation replaces the 0.02-second assumption."
+        },
+        {
+          "category": "documented_timing",
+          "change": "changed",
+          "independent_after": 0.9076445479239426,
+          "independent_agreement": true,
+          "metric_key": "clns_pt_20ms",
+          "new_expected": 0.9076445479239426,
+          "old_expected": 1.0,
+          "previous_runtime": 1.0,
+          "reason": "Private gantry period / angular projections per rotation replaces the 0.02-second assumption."
+        },
+        {
+          "category": "documented_timing",
+          "change": "changed",
+          "independent_after": 0.9099728366317423,
+          "independent_agreement": true,
+          "metric_key": "clns_pt_30ms",
+          "new_expected": 0.9099728366317423,
+          "old_expected": 1.0,
+          "previous_runtime": 1.0,
+          "reason": "Private gantry period / angular projections per rotation replaces the 0.02-second assumption."
+        },
+        {
+          "category": "documented_timing",
+          "change": "changed",
+          "independent_after": 0.9154055102832751,
+          "independent_agreement": true,
+          "metric_key": "clns_pt_50ms",
+          "new_expected": 0.9154055102832751,
+          "old_expected": 1.0,
+          "previous_runtime": 1.0,
+          "reason": "Private gantry period / angular projections per rotation replaces the 0.02-second assumption."
+        },
+        {
+          "category": "restored_closed_projections",
+          "change": "changed",
+          "independent_after": 0.942230093256815,
+          "independent_agreement": true,
+          "metric_key": "cls",
+          "new_expected": 0.942230093256815,
+          "old_expected": 0.9322127525252525,
+          "previous_runtime": 0.9322127525252525,
+          "reason": "Empty intervals are restored; per-projection denominators and temporal neighbors change."
+        },
+        {
+          "category": "restored_closed_projections",
+          "change": "changed",
+          "independent_after": 0.027468441763836515,
+          "independent_agreement": true,
+          "metric_key": "elotv_1",
+          "new_expected": 0.02746844176383652,
+          "old_expected": 0.032028727601400034,
+          "previous_runtime": 0.032028727601400034,
+          "reason": "Empty intervals are restored; per-projection denominators and temporal neighbors change."
+        },
+        {
+          "category": "restored_closed_projections",
+          "change": "changed",
+          "independent_after": 0.09069546520732596,
+          "independent_agreement": true,
+          "metric_key": "elotv_5",
+          "new_expected": 0.09069546520732599,
+          "old_expected": 0.10496402286453281,
+          "previous_runtime": 0.10496402286453281,
+          "reason": "Empty intervals are restored; per-projection denominators and temporal neighbors change."
+        },
+        {
+          "category": "restored_closed_projections",
+          "change": "changed",
+          "independent_after": 0.03104436291589806,
+          "independent_agreement": true,
+          "metric_key": "epstv_0_1",
+          "new_expected": 0.03104436291589806,
+          "old_expected": 0.03642747635080969,
+          "previous_runtime": 0.03642747635080969,
+          "reason": "Empty intervals are restored; per-projection denominators and temporal neighbors change."
+        },
+        {
+          "category": "restored_closed_projections",
+          "change": "changed",
+          "independent_after": 0.02744317079741379,
+          "independent_agreement": true,
+          "metric_key": "epstv_1_0",
+          "new_expected": 0.02744317079741379,
+          "old_expected": 0.03199926117200674,
+          "previous_runtime": 0.03199926117200674,
+          "reason": "Empty intervals are restored; per-projection denominators and temporal neighbors change."
+        },
+        {
+          "category": "restored_closed_projections",
+          "change": "changed",
+          "independent_after": 0.058922173417259624,
+          "independent_agreement": true,
+          "metric_key": "epstv_1_1",
+          "new_expected": 0.058922173417259624,
+          "old_expected": 0.06894260606547284,
+          "previous_runtime": 0.06894260606547284,
+          "reason": "Empty intervals are restored; per-projection denominators and temporal neighbors change."
+        },
+        {
+          "category": "restored_closed_projections",
+          "change": "changed",
+          "independent_after": 0.1291248206599713,
+          "independent_agreement": true,
+          "metric_key": "fdisc",
+          "new_expected": 0.1291248206599713,
+          "old_expected": 0.15151515151515152,
+          "previous_runtime": 0.15151515151515152,
+          "reason": "Empty intervals are restored; per-projection denominators and temporal neighbors change."
+        },
+        {
+          "category": "documented_timing",
+          "change": "changed",
+          "independent_after": 30.2,
+          "independent_agreement": true,
+          "metric_key": "gantry_period_s",
+          "new_expected": 30.2,
+          "old_expected": 1.02,
+          "previous_runtime": 1.02,
+          "reason": "Private gantry period / angular projections per rotation replaces the 0.02-second assumption."
+        },
+        {
+          "category": "floating_point_roundoff",
+          "change": "changed",
+          "independent_after": 18.21613149679681,
+          "independent_agreement": true,
+          "metric_key": "klot",
+          "new_expected": 18.2161314967968,
+          "old_expected": 18.21613149679684,
+          "previous_runtime": 18.21613149679684,
+          "reason": "Dimensionless invariant agrees with independent fraction-based calculation."
+        },
+        {
+          "category": "restored_closed_projections",
+          "change": "changed",
+          "independent_after": 0.9725315582361634,
+          "independent_agreement": true,
+          "metric_key": "lotv",
+          "new_expected": 0.9725315582361636,
+          "old_expected": 0.9679712723986,
+          "previous_runtime": 0.9679712723986,
+          "reason": "Empty intervals are restored; per-projection denominators and temporal neighbors change."
+        },
+        {
+          "category": "documented_timing",
+          "change": "changed",
+          "independent_after": 591.6120784313725,
+          "independent_agreement": true,
+          "metric_key": "maxlot",
+          "new_expected": 591.6120784313725,
+          "old_expected": 19.9816,
+          "previous_runtime": 19.9816,
+          "reason": "Private gantry period / angular projections per rotation replaces the 0.02-second assumption."
+        },
+        {
+          "category": "documented_timing",
+          "change": "changed",
+          "independent_after": 591.6120784313725,
+          "independent_agreement": true,
+          "metric_key": "mdlot",
+          "new_expected": 591.6120784313725,
+          "old_expected": 19.9816,
+          "previous_runtime": 19.9816,
+          "reason": "Private gantry period / angular projections per rotation replaces the 0.02-second assumption."
+        },
+        {
+          "category": "floating_point_roundoff",
+          "change": "changed",
+          "independent_after": 0.9578584863072086,
+          "independent_agreement": true,
+          "metric_key": "mf",
+          "new_expected": 0.9578584863072086,
+          "old_expected": 0.9578584863072089,
+          "previous_runtime": 0.9578584863072089,
+          "reason": "Dimensionless invariant agrees with independent fraction-based calculation."
+        },
+        {
+          "category": "restored_closed_projections",
+          "change": "changed",
+          "independent_after": 0.06983031049366206,
+          "independent_agreement": true,
+          "metric_key": "mi",
+          "new_expected": 0.06983031049366206,
+          "old_expected": 0.08169420064828155,
+          "previous_runtime": 0.08169420064828155,
+          "reason": "Empty intervals are restored; per-projection denominators and temporal neighbors change."
+        },
+        {
+          "category": "documented_timing",
+          "change": "changed",
+          "independent_after": 19.298392156862743,
+          "independent_agreement": true,
+          "metric_key": "minlot",
+          "new_expected": 19.298392156862747,
+          "old_expected": 0.6518,
+          "previous_runtime": 0.6518,
+          "reason": "Private gantry period / angular projections per rotation replaces the 0.02-second assumption."
+        },
+        {
+          "category": "documented_timing",
+          "change": "changed",
+          "independent_after": 566.680649927336,
+          "independent_agreement": true,
+          "metric_key": "mlot",
+          "new_expected": 566.680649927336,
+          "old_expected": 19.139545129996126,
+          "previous_runtime": 19.139545129996126,
+          "reason": "Private gantry period / angular projections per rotation replaces the 0.02-second assumption."
+        },
+        {
+          "category": "documented_timing",
+          "change": "changed",
+          "independent_after": 591.612078,
+          "independent_agreement": true,
+          "metric_key": "molot",
+          "new_expected": 591.612078,
+          "old_expected": 19.9816,
+          "previous_runtime": 19.9816,
+          "reason": "Private gantry period / angular projections per rotation replaces the 0.02-second assumption."
+        },
+        {
+          "category": "floating_point_roundoff",
+          "change": "changed",
+          "independent_after": 0.1493824724328541,
+          "independent_agreement": true,
+          "metric_key": "msa",
+          "new_expected": 0.14938247243285416,
+          "old_expected": 0.14938247243285394,
+          "previous_runtime": 0.14938247243285394,
+          "reason": "Dimensionless invariant agrees with independent fraction-based calculation."
+        },
+        {
+          "category": "restored_closed_projections",
+          "change": "changed",
+          "independent_after": 0.055284486863342905,
+          "independent_agreement": true,
+          "metric_key": "msi",
+          "new_expected": 0.05528448686334299,
+          "old_expected": 0.06487085411405734,
+          "previous_runtime": 0.06487085411405734,
+          "reason": "Empty intervals are restored; per-projection denominators and temporal neighbors change."
+        },
+        {
+          "category": "restored_closed_projections",
+          "change": "changed",
+          "independent_after": 0.9913916786226685,
+          "independent_agreement": true,
+          "metric_key": "ncc",
+          "new_expected": 0.9913916786226685,
+          "old_expected": 1.1632996632996633,
+          "previous_runtime": 1.1632996632996633,
+          "reason": "Empty intervals are restored; per-projection denominators and temporal neighbors change."
+        },
+        {
+          "category": "restored_closed_projections",
+          "change": "changed",
+          "independent_after": 0.11553981348637016,
+          "independent_agreement": true,
+          "metric_key": "noc",
+          "new_expected": 0.11553981348637016,
+          "old_expected": 0.13557449494949497,
+          "previous_runtime": 0.13557449494949497,
+          "reason": "Empty intervals are restored; per-projection denominators and temporal neighbors change."
+        },
+        {
+          "category": "restored_closed_projections",
+          "change": "changed",
+          "independent_after": 697.0,
+          "independent_agreement": true,
+          "metric_key": "nproj",
+          "new_expected": 697.0,
+          "old_expected": 594.0,
+          "previous_runtime": 594.0,
+          "reason": "Empty intervals are restored; per-projection denominators and temporal neighbors change."
+        },
+        {
+          "category": "restored_closed_projections",
+          "change": "changed",
+          "independent_after": 13.666666666666666,
+          "independent_agreement": true,
+          "metric_key": "nrot",
+          "new_expected": 13.666666666666666,
+          "old_expected": 11.647058823529411,
+          "previous_runtime": 11.647058823529411,
+          "reason": "Empty intervals are restored; per-projection denominators and temporal neighbors change."
+        },
+        {
+          "category": "documented_timing",
+          "change": "changed",
+          "independent_after": 0.592156862745098,
+          "independent_agreement": true,
+          "metric_key": "projection_time_s",
+          "new_expected": 0.592156862745098,
+          "old_expected": 0.02,
+          "previous_runtime": 0.02,
+          "reason": "Private gantry period / angular projections per rotation replaces the 0.02-second assumption."
+        },
+        {
+          "category": "restored_closed_projections",
+          "change": "changed",
+          "independent_after": 0.058922173417259624,
+          "independent_agreement": true,
+          "metric_key": "pstv",
+          "new_expected": 0.058922173417259624,
+          "old_expected": 0.06894260606547284,
+          "previous_runtime": 0.06894260606547284,
+          "reason": "Empty intervals are restored; per-projection denominators and temporal neighbors change."
+        },
+        {
+          "category": "documented_timing",
+          "change": "changed",
+          "independent_after": 94.65026782075176,
+          "independent_agreement": true,
+          "metric_key": "sdlot",
+          "new_expected": 94.65026782075176,
+          "old_expected": 3.1967971250717486,
+          "previous_runtime": 3.1967971250717486,
+          "reason": "Private gantry period / angular projections per rotation replaces the 0.02-second assumption."
+        },
+        {
+          "category": "restored_closed_projections",
+          "change": "changed",
+          "independent_after": 0.07863706445715314,
+          "independent_agreement": true,
+          "metric_key": "sdsi",
+          "new_expected": 0.07863706445715314,
+          "old_expected": 0.09227278438827564,
+          "previous_runtime": 0.09227278438827564,
+          "reason": "Empty intervals are restored; per-projection denominators and temporal neighbors change."
+        },
+        {
+          "category": "floating_point_roundoff",
+          "change": "changed",
+          "independent_after": -4.285737678806715,
+          "independent_agreement": true,
+          "metric_key": "slot",
+          "new_expected": -4.285737678806715,
+          "old_expected": -4.285737678806721,
+          "previous_runtime": -4.285737678806721,
+          "reason": "Dimensionless invariant agrees with independent fraction-based calculation."
+        },
+        {
+          "category": "restored_closed_projections",
+          "change": "changed",
+          "independent_after": 4.449067431850789,
+          "independent_agreement": true,
+          "metric_key": "ta",
+          "new_expected": 4.449067431850789,
+          "old_expected": 5.220538720538721,
+          "previous_runtime": 5.220538720538721,
+          "reason": "Empty intervals are restored; per-projection denominators and temporal neighbors change."
+        },
+        {
+          "category": "documented_timing",
+          "change": "changed",
+          "independent_after": 412.73333333333335,
+          "independent_agreement": true,
+          "metric_key": "treatment_time_s",
+          "new_expected": 412.73333333333335,
+          "old_expected": 11.88,
+          "previous_runtime": 11.88,
+          "reason": "Private gantry period / angular projections per rotation replaces the 0.02-second assumption. Restored closed projections also change total duration."
+        },
+        {
+          "category": "unavailable_dose",
+          "change": "changed",
+          "independent_after": null,
+          "independent_agreement": true,
+          "metric_key": "ttdf_s_cgy",
+          "new_expected": null,
+          "old_expected": 0.0,
+          "previous_runtime": 0.0,
+          "reason": "Zero/missing dose now propagates unavailable instead of zero."
+        }
+      ],
+      "domain": "TOMO",
+      "expected_supported": true,
+      "new_expected_metrics_checksum": "61e66168e6ff9df46d8b00ada49d88451af9cc6924cf766c58466bac7786cfa8",
+      "new_formula_version": "tomo-v2",
+      "old_baseline_formula_version": null,
+      "source_checksum": "afdb4d429bd9e0019a5908bbe5f0fc0f675862d205bddd5c16eaadab17b6fbda"
+    },
+    {
+      "case_id": "cyberknife_multiplan_canonical",
+      "changes": [
+        {
+          "category": "full_transmitted_boundary",
+          "change": "changed",
+          "metric_key": "pi",
+          "new_expected": 1.8,
+          "old_expected": 1.07,
+          "previous_runtime": 1.07,
+          "reason": "Full perimeter includes both banks and excludes false closed-row interfaces; PI, EFS and EFS-derived small-field outputs change. Independent rectangle-union audit verifies physical area and perimeter."
+        }
+      ],
+      "domain": "CYBERKNIFE_MLC",
+      "expected_supported": true,
+      "new_expected_metrics_checksum": "e85bf882d6a73117fc8d9f18e25c4ca592cf7d5b55d1350afbd95542d92fb3d8",
+      "new_formula_version": "geometry-v3",
+      "old_baseline_formula_version": null,
+      "source_checksum": "39985f5433862491fe430fe8c9be85ef4d676b13eb7455f0e90fdd3bb364775c"
+    },
+    {
+      "case_id": "cyberknife_precision_missing_xml_edge",
+      "changes": [],
+      "domain": "CYBERKNIFE_MLC",
+      "expected_supported": false,
+      "new_expected_metrics_checksum": "ca3d163bab055381827226140568f3bef7eaac187cebd76878e0b63e9e442356",
+      "new_formula_version": "geometry-v3",
+      "old_baseline_formula_version": null,
+      "source_checksum": "1ef3410843e7f14753b7086415c1ce995160ada65a3c85297225d3e65bd84c23"
+    }
+  ],
+  "external_comparator_inputs_changed": false,
+  "migration": "geometry-v3_tomo-v2",
+  "old_baseline_contract": "Unversioned; some VMAT expectations predate hybrid-v2.",
+  "original_code_commit": "be93062484277b362948d959a2044c72c8543dcc",
+  "summary": {
+    "added": 37,
+    "changed": 106
+  },
+  "tolerances_changed": false,
+  "unaffected_cases": [
+    "aurora_canonical",
+    "aurora_research_edge"
+  ]
+}

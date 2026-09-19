@@ -94,7 +94,71 @@ def _built_in_oracles() -> list[FormulaOracle]:
             observe=_observe_halcyon_identical_layer_uncovered,
             notes="Identical proximal/distal edges share aperture weight but create no uncovered-layer exposure.",
         ),
+        FormulaOracle("square_perimeter_40mm", "perimeter", "VMAT_IMRT", 40.0,
+                      lambda: _square().perimeter(), "A 10 by 10 mm square has perimeter 40 mm."),
+        FormulaOracle("square_pi_4_over_pi", "pi", "VMAT_IMRT", 4.0 / np.pi,
+                      _observe_square_pi, "P squared / (4 pi A) = 1600 / (400 pi)."),
+        FormulaOracle("square_efs_10mm", "efs", "VMAT_IMRT", 10.0,
+                      lambda: 4.0 * _square().area() / _square().perimeter(),
+                      "4A/P for a 10 mm square is 10 mm."),
+        FormulaOracle("symmetric_jaws_area_100mm2", "pa", "VMAT_IMRT", 100.0,
+                      _observe_symmetric_jaws, "20 mm MLC opening clipped by symmetric +/-5 mm X and Y jaws."),
+        FormulaOracle("halcyon_native_edge_100mm2", "proximal_pa", "VMAT_IMRT", 100.0,
+                      _observe_halcyon_native_edge, "29th proximal row: 20 mm gap times 5 mm inside fixed jaws."),
+        FormulaOracle("dynamic_jaw_mcsv_0_6", "mcsv", "VMAT_IMRT", 0.6,
+                      _observe_dynamic_jaw_mcsv, "Two rectangles of area 100 and 20; LSV 1; mean AAV 0.6."),
+        FormulaOracle("tomo_fraction_dose_200cgy", "fraction_dose_cgy", "TOMO", 200.0,
+                      _observe_tomo_fraction_dose, "60 Gy divided over 30 fractions is 200 cGy/fraction."),
     ]
+
+
+def _square(top=5.0, bottom=-5.0):
+    return PyAperture(np.array([[-5., -5.], [5., 5.]]), np.array([5., 5.]),
+                      [-100., top, 100., bottom], 0.)
+
+
+def _observe_square_pi():
+    from ComplexityMetric.plan_irregularity import PlanIrregularity
+    return PlanIrregularity().calculate_aperture_irregularity(_square())
+
+
+def _dataset(**attributes):
+    from pydicom.dataset import Dataset
+    result = Dataset()
+    for key, value in attributes.items():
+        setattr(result, key, value)
+    return result
+
+
+def _observe_symmetric_jaws():
+    device = _dataset(RTBeamLimitingDeviceType="MLCX", NumberOfLeafJawPairs=2,
+                      LeafPositionBoundaries=[-10., 0., 10.])
+    positions = [_dataset(RTBeamLimitingDeviceType="MLCX", LeafJawPositions=[-10., -10., 10., 10.])]
+    positions += [_dataset(RTBeamLimitingDeviceType=kind, LeafJawPositions=[-5., 5.]) for kind in ("X", "Y")]
+    beam = {"TreatmentMachineName": "Synthetic", "GantryAngle": 0.,
+            "BeamLimitingDeviceSequence": [device],
+            "ControlPointSequence": [_dataset(GantryAngle=0., BeamLimitingDevicePositionSequence=positions)]}
+    return AperturesFromBeamCreator().create(beam)[0].area()
+
+
+def _observe_halcyon_native_edge():
+    # Native coordinate primitive: the final DICOM slot spans IEC Y 135..145.
+    positions = np.zeros((2, 29)); positions[:, -1] = [-10., 10.]
+    aperture = PyAperture(positions, np.full(29, 10.), [-140., 140., 140., -140.], 0.,
+                          leaf_position_boundaries=np.arange(-145., 146., 10.))
+    return aperture.area()
+
+
+def _observe_dynamic_jaw_mcsv():
+    from ComplexityMetric.modulation_complexity_score import ModulationComplexityScore
+    return ModulationComplexityScore().calculate_per_aperture([_square(), _square(1., -1.)])[0]
+
+
+def _observe_tomo_fraction_dose():
+    from tomo_parser import _infer_fraction_dose_cgy
+    plan = _dataset(DoseReferenceSequence=[_dataset(TargetPrescriptionDose=60.)],
+                    FractionGroupSequence=[_dataset(NumberOfFractionsPlanned=30)])
+    return _infer_fraction_dose_cgy(plan)
 
 
 def _sample_aperture() -> PyAperture:

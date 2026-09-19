@@ -1,0 +1,973 @@
+{
+  "generated_at": "2026-09-19T14:10:26Z",
+  "rows": [
+    {
+      "comparison_class": "derived-equivalent",
+      "group_key": "vmat_imrt_motion_bins",
+      "metric_key": "speed_0_4",
+      "paper": "Park 2015",
+      "platform": "VMAT_IMRT",
+      "status": "derived-comparison",
+      "validation_level": "Derived-equivalent"
+    },
+    {
+      "comparison_class": "derived-equivalent",
+      "group_key": "vmat_imrt_motion_bins",
+      "metric_key": "speed_4_8",
+      "paper": "Park 2015",
+      "platform": "VMAT_IMRT",
+      "status": "derived-comparison",
+      "validation_level": "Derived-equivalent"
+    },
+    {
+      "comparison_class": "derived-equivalent",
+      "group_key": "vmat_imrt_motion_bins",
+      "metric_key": "speed_8_12",
+      "paper": "Park 2015",
+      "platform": "VMAT_IMRT",
+      "status": "derived-comparison",
+      "validation_level": "Derived-equivalent"
+    },
+    {
+      "comparison_class": "derived-equivalent",
+      "group_key": "vmat_imrt_motion_bins",
+      "metric_key": "speed_12_16",
+      "paper": "Park 2015",
+      "platform": "VMAT_IMRT",
+      "status": "derived-comparison",
+      "validation_level": "Derived-equivalent"
+    },
+    {
+      "comparison_class": "derived-equivalent",
+      "group_key": "vmat_imrt_motion_bins",
+      "metric_key": "speed_16_20",
+      "paper": "Park 2015",
+      "platform": "VMAT_IMRT",
+      "status": "derived-comparison",
+      "validation_level": "Derived-equivalent"
+    },
+    {
+      "comparison_class": "derived-equivalent",
+      "group_key": "vmat_imrt_motion_bins",
+      "metric_key": "acc_0_40",
+      "paper": "Park 2015",
+      "platform": "VMAT_IMRT",
+      "status": "derived-comparison",
+      "validation_level": "Derived-equivalent"
+    },
+    {
+      "comparison_class": "derived-equivalent",
+      "group_key": "vmat_imrt_motion_bins",
+      "metric_key": "acc_40_80",
+      "paper": "Park 2015",
+      "platform": "VMAT_IMRT",
+      "status": "derived-comparison",
+      "validation_level": "Derived-equivalent"
+    },
+    {
+      "comparison_class": "derived-equivalent",
+      "group_key": "vmat_imrt_motion_bins",
+      "metric_key": "acc_80_120",
+      "paper": "Park 2015",
+      "platform": "VMAT_IMRT",
+      "status": "derived-comparison",
+      "validation_level": "Derived-equivalent"
+    },
+    {
+      "comparison_class": "derived-equivalent",
+      "group_key": "vmat_imrt_motion_bins",
+      "metric_key": "acc_120_160",
+      "paper": "Park 2015",
+      "platform": "VMAT_IMRT",
+      "status": "derived-comparison",
+      "validation_level": "Derived-equivalent"
+    },
+    {
+      "comparison_class": "derived-equivalent",
+      "group_key": "vmat_imrt_motion_bins",
+      "metric_key": "acc_160_200",
+      "paper": "Park 2015",
+      "platform": "VMAT_IMRT",
+      "status": "derived-comparison",
+      "validation_level": "Derived-equivalent"
+    },
+    {
+      "comparison_class": "derived-equivalent",
+      "group_key": "vmat_imrt_motion_bins",
+      "metric_key": "speed_average",
+      "paper": "Park 2015",
+      "platform": "VMAT_IMRT",
+      "status": "derived-comparison",
+      "validation_level": "Derived-equivalent"
+    },
+    {
+      "comparison_class": "derived-equivalent",
+      "group_key": "vmat_imrt_motion_bins",
+      "metric_key": "acc_average",
+      "paper": "Park 2015",
+      "platform": "VMAT_IMRT",
+      "status": "derived-comparison",
+      "validation_level": "Derived-equivalent"
+    },
+    {
+      "comparison_class": "derived-equivalent",
+      "group_key": "vmat_imrt_motion_bins",
+      "metric_key": "speed_std",
+      "paper": "Park 2015",
+      "platform": "VMAT_IMRT",
+      "status": "derived-comparison",
+      "validation_level": "Derived-equivalent"
+    },
+    {
+      "comparison_class": "derived-equivalent",
+      "group_key": "vmat_imrt_motion_bins",
+      "metric_key": "acc_std",
+      "paper": "Park 2015",
+      "platform": "VMAT_IMRT",
+      "status": "derived-comparison",
+      "validation_level": "Derived-equivalent"
+    },
+    {
+      "comparison_class": "derived-equivalent",
+      "group_key": "vmat_imrt_motion_bins",
+      "metric_key": "mlcx1_speed_0_4",
+      "paper": "Park 2015",
+      "platform": "VMAT_IMRT",
+      "status": "derived-comparison",
+      "validation_level": "Derived-equivalent"
+    },
+    {
+      "comparison_class": "derived-equivalent",
+      "group_key": "vmat_imrt_motion_bins",
+      "metric_key": "mlcx1_speed_4_8",
+      "paper": "Park 2015",
+      "platform": "VMAT_IMRT",
+      "status": "derived-comparison",
+      "validation_level": "Derived-equivalent"
+    },
+    {
+      "comparison_class": "derived-equivalent",
+      "group_key": "vmat_imrt_motion_bins",
+      "metric_key": "mlcx1_speed_8_12",
+      "paper": "Park 2015",
+      "platform": "VMAT_IMRT",
+      "status": "derived-comparison",
+      "validation_level": "Derived-equivalent"
+    },
+    {
+      "comparison_class": "derived-equivalent",
+      "group_key": "vmat_imrt_motion_bins",
+      "metric_key": "mlcx1_speed_12_16",
+      "paper": "Park 2015",
+      "platform": "VMAT_IMRT",
+      "status": "derived-comparison",
+      "validation_level": "Derived-equivalent"
+    },
+    {
+      "comparison_class": "derived-equivalent",
+      "group_key": "vmat_imrt_motion_bins",
+      "metric_key": "mlcx1_speed_16_20",
+      "paper": "Park 2015",
+      "platform": "VMAT_IMRT",
+      "status": "derived-comparison",
+      "validation_level": "Derived-equivalent"
+    },
+    {
+      "comparison_class": "derived-equivalent",
+      "group_key": "vmat_imrt_motion_bins",
+      "metric_key": "mlcx1_acc_0_40",
+      "paper": "Park 2015",
+      "platform": "VMAT_IMRT",
+      "status": "derived-comparison",
+      "validation_level": "Derived-equivalent"
+    },
+    {
+      "comparison_class": "derived-equivalent",
+      "group_key": "vmat_imrt_motion_bins",
+      "metric_key": "mlcx1_acc_40_80",
+      "paper": "Park 2015",
+      "platform": "VMAT_IMRT",
+      "status": "derived-comparison",
+      "validation_level": "Derived-equivalent"
+    },
+    {
+      "comparison_class": "derived-equivalent",
+      "group_key": "vmat_imrt_motion_bins",
+      "metric_key": "mlcx1_acc_80_120",
+      "paper": "Park 2015",
+      "platform": "VMAT_IMRT",
+      "status": "derived-comparison",
+      "validation_level": "Derived-equivalent"
+    },
+    {
+      "comparison_class": "derived-equivalent",
+      "group_key": "vmat_imrt_motion_bins",
+      "metric_key": "mlcx1_acc_120_160",
+      "paper": "Park 2015",
+      "platform": "VMAT_IMRT",
+      "status": "derived-comparison",
+      "validation_level": "Derived-equivalent"
+    },
+    {
+      "comparison_class": "derived-equivalent",
+      "group_key": "vmat_imrt_motion_bins",
+      "metric_key": "mlcx1_acc_160_200",
+      "paper": "Park 2015",
+      "platform": "VMAT_IMRT",
+      "status": "derived-comparison",
+      "validation_level": "Derived-equivalent"
+    },
+    {
+      "comparison_class": "derived-equivalent",
+      "group_key": "vmat_imrt_motion_bins",
+      "metric_key": "mlcx1_speed_average",
+      "paper": "Park 2015",
+      "platform": "VMAT_IMRT",
+      "status": "derived-comparison",
+      "validation_level": "Derived-equivalent"
+    },
+    {
+      "comparison_class": "derived-equivalent",
+      "group_key": "vmat_imrt_motion_bins",
+      "metric_key": "mlcx1_acc_average",
+      "paper": "Park 2015",
+      "platform": "VMAT_IMRT",
+      "status": "derived-comparison",
+      "validation_level": "Derived-equivalent"
+    },
+    {
+      "comparison_class": "derived-equivalent",
+      "group_key": "vmat_imrt_motion_bins",
+      "metric_key": "mlcx1_speed_std",
+      "paper": "Park 2015",
+      "platform": "VMAT_IMRT",
+      "status": "derived-comparison",
+      "validation_level": "Derived-equivalent"
+    },
+    {
+      "comparison_class": "derived-equivalent",
+      "group_key": "vmat_imrt_motion_bins",
+      "metric_key": "mlcx1_acc_std",
+      "paper": "Park 2015",
+      "platform": "VMAT_IMRT",
+      "status": "derived-comparison",
+      "validation_level": "Derived-equivalent"
+    },
+    {
+      "comparison_class": "derived-equivalent",
+      "group_key": "vmat_imrt_motion_bins",
+      "metric_key": "mlcx2_speed_0_4",
+      "paper": "Park 2015",
+      "platform": "VMAT_IMRT",
+      "status": "derived-comparison",
+      "validation_level": "Derived-equivalent"
+    },
+    {
+      "comparison_class": "derived-equivalent",
+      "group_key": "vmat_imrt_motion_bins",
+      "metric_key": "mlcx2_speed_4_8",
+      "paper": "Park 2015",
+      "platform": "VMAT_IMRT",
+      "status": "derived-comparison",
+      "validation_level": "Derived-equivalent"
+    },
+    {
+      "comparison_class": "derived-equivalent",
+      "group_key": "vmat_imrt_motion_bins",
+      "metric_key": "mlcx2_speed_8_12",
+      "paper": "Park 2015",
+      "platform": "VMAT_IMRT",
+      "status": "derived-comparison",
+      "validation_level": "Derived-equivalent"
+    },
+    {
+      "comparison_class": "derived-equivalent",
+      "group_key": "vmat_imrt_motion_bins",
+      "metric_key": "mlcx2_speed_12_16",
+      "paper": "Park 2015",
+      "platform": "VMAT_IMRT",
+      "status": "derived-comparison",
+      "validation_level": "Derived-equivalent"
+    },
+    {
+      "comparison_class": "derived-equivalent",
+      "group_key": "vmat_imrt_motion_bins",
+      "metric_key": "mlcx2_speed_16_20",
+      "paper": "Park 2015",
+      "platform": "VMAT_IMRT",
+      "status": "derived-comparison",
+      "validation_level": "Derived-equivalent"
+    },
+    {
+      "comparison_class": "derived-equivalent",
+      "group_key": "vmat_imrt_motion_bins",
+      "metric_key": "mlcx2_acc_0_40",
+      "paper": "Park 2015",
+      "platform": "VMAT_IMRT",
+      "status": "derived-comparison",
+      "validation_level": "Derived-equivalent"
+    },
+    {
+      "comparison_class": "derived-equivalent",
+      "group_key": "vmat_imrt_motion_bins",
+      "metric_key": "mlcx2_acc_40_80",
+      "paper": "Park 2015",
+      "platform": "VMAT_IMRT",
+      "status": "derived-comparison",
+      "validation_level": "Derived-equivalent"
+    },
+    {
+      "comparison_class": "derived-equivalent",
+      "group_key": "vmat_imrt_motion_bins",
+      "metric_key": "mlcx2_acc_80_120",
+      "paper": "Park 2015",
+      "platform": "VMAT_IMRT",
+      "status": "derived-comparison",
+      "validation_level": "Derived-equivalent"
+    },
+    {
+      "comparison_class": "derived-equivalent",
+      "group_key": "vmat_imrt_motion_bins",
+      "metric_key": "mlcx2_acc_120_160",
+      "paper": "Park 2015",
+      "platform": "VMAT_IMRT",
+      "status": "derived-comparison",
+      "validation_level": "Derived-equivalent"
+    },
+    {
+      "comparison_class": "derived-equivalent",
+      "group_key": "vmat_imrt_motion_bins",
+      "metric_key": "mlcx2_acc_160_200",
+      "paper": "Park 2015",
+      "platform": "VMAT_IMRT",
+      "status": "derived-comparison",
+      "validation_level": "Derived-equivalent"
+    },
+    {
+      "comparison_class": "derived-equivalent",
+      "group_key": "vmat_imrt_motion_bins",
+      "metric_key": "mlcx2_speed_average",
+      "paper": "Park 2015",
+      "platform": "VMAT_IMRT",
+      "status": "derived-comparison",
+      "validation_level": "Derived-equivalent"
+    },
+    {
+      "comparison_class": "derived-equivalent",
+      "group_key": "vmat_imrt_motion_bins",
+      "metric_key": "mlcx2_acc_average",
+      "paper": "Park 2015",
+      "platform": "VMAT_IMRT",
+      "status": "derived-comparison",
+      "validation_level": "Derived-equivalent"
+    },
+    {
+      "comparison_class": "derived-equivalent",
+      "group_key": "vmat_imrt_motion_bins",
+      "metric_key": "mlcx2_speed_std",
+      "paper": "Park 2015",
+      "platform": "VMAT_IMRT",
+      "status": "derived-comparison",
+      "validation_level": "Derived-equivalent"
+    },
+    {
+      "comparison_class": "derived-equivalent",
+      "group_key": "vmat_imrt_motion_bins",
+      "metric_key": "mlcx2_acc_std",
+      "paper": "Park 2015",
+      "platform": "VMAT_IMRT",
+      "status": "derived-comparison",
+      "validation_level": "Derived-equivalent"
+    },
+    {
+      "comparison_class": "exact-equivalent",
+      "group_key": "vmat_imrt_sport",
+      "metric_key": "sport",
+      "paper": "Li and Xing 2013",
+      "platform": "VMAT_IMRT",
+      "status": "reference-gated",
+      "validation_level": "Reference-case exact"
+    },
+    {
+      "comparison_class": "exact-equivalent",
+      "group_key": "cyberknife_mlc_mlc_based_subset",
+      "metric_key": "mcs",
+      "paper": "Masi 2021",
+      "platform": "CYBERKNIFE_MLC",
+      "status": "reference-gated",
+      "validation_level": "Reference-case exact"
+    },
+    {
+      "comparison_class": "exact-equivalent",
+      "group_key": "cyberknife_mlc_mlc_based_subset",
+      "metric_key": "em",
+      "paper": "Masi 2021",
+      "platform": "CYBERKNIFE_MLC",
+      "status": "reference-gated",
+      "validation_level": "Reference-case exact"
+    },
+    {
+      "comparison_class": "exact-equivalent",
+      "group_key": "cyberknife_mlc_mlc_based_subset",
+      "metric_key": "pi",
+      "paper": "Masi 2021",
+      "platform": "CYBERKNIFE_MLC",
+      "status": "reference-gated",
+      "validation_level": "Reference-case exact"
+    },
+    {
+      "comparison_class": "exact-equivalent",
+      "group_key": "cyberknife_mlc_mlc_based_subset",
+      "metric_key": "pm",
+      "paper": "Masi 2021",
+      "platform": "CYBERKNIFE_MLC",
+      "status": "reference-gated",
+      "validation_level": "Reference-case exact"
+    },
+    {
+      "comparison_class": "exact-equivalent",
+      "group_key": "cyberknife_mlc_mlc_based_subset",
+      "metric_key": "lg",
+      "paper": "Masi 2021",
+      "platform": "CYBERKNIFE_MLC",
+      "status": "reference-gated",
+      "validation_level": "Reference-case exact"
+    },
+    {
+      "comparison_class": "exact-equivalent",
+      "group_key": "cyberknife_mlc_mlc_based_subset",
+      "metric_key": "sas10",
+      "paper": "Masi 2021",
+      "platform": "CYBERKNIFE_MLC",
+      "status": "reference-gated",
+      "validation_level": "Reference-case exact"
+    },
+    {
+      "comparison_class": "not-comparable",
+      "group_key": "aurora_v2_paper_style_physics",
+      "metric_key": "longitudinal_travel_mm",
+      "paper": "Aurora research specification",
+      "platform": "AURORA",
+      "status": "formula-only",
+      "validation_level": "Formula-exact"
+    },
+    {
+      "comparison_class": "not-comparable",
+      "group_key": "aurora_v2_paper_style_physics",
+      "metric_key": "total_rotation_deg",
+      "paper": "Aurora research specification",
+      "platform": "AURORA",
+      "status": "formula-only",
+      "validation_level": "Formula-exact"
+    },
+    {
+      "comparison_class": "not-comparable",
+      "group_key": "aurora_v2_paper_style_physics",
+      "metric_key": "rotations",
+      "paper": "Aurora research specification",
+      "platform": "AURORA",
+      "status": "formula-only",
+      "validation_level": "Formula-exact"
+    },
+    {
+      "comparison_class": "not-comparable",
+      "group_key": "aurora_v2_paper_style_physics",
+      "metric_key": "travel_per_rotation_mm",
+      "paper": "Aurora research specification",
+      "platform": "AURORA",
+      "status": "formula-only",
+      "validation_level": "Formula-exact"
+    },
+    {
+      "comparison_class": "not-comparable",
+      "group_key": "aurora_v2_paper_style_physics",
+      "metric_key": "projection_pitch_mean",
+      "paper": "Aurora research specification",
+      "platform": "AURORA",
+      "status": "formula-only",
+      "validation_level": "Formula-exact"
+    },
+    {
+      "comparison_class": "not-comparable",
+      "group_key": "aurora_v2_paper_style_physics",
+      "metric_key": "projection_pitch_cv",
+      "paper": "Aurora research specification",
+      "platform": "AURORA",
+      "status": "formula-only",
+      "validation_level": "Formula-exact"
+    },
+    {
+      "comparison_class": "not-comparable",
+      "group_key": "aurora_v2_paper_style_physics",
+      "metric_key": "projection_mu_density_mean_proxy",
+      "paper": "Aurora research specification",
+      "platform": "AURORA",
+      "status": "formula-only",
+      "validation_level": "Formula-exact"
+    },
+    {
+      "comparison_class": "not-comparable",
+      "group_key": "aurora_v2_paper_style_physics",
+      "metric_key": "projection_mu_density_cv_proxy",
+      "paper": "Aurora research specification",
+      "platform": "AURORA",
+      "status": "formula-only",
+      "validation_level": "Formula-exact"
+    },
+    {
+      "comparison_class": "not-comparable",
+      "group_key": "aurora_v2_paper_style_physics",
+      "metric_key": "projection_aperture_change_mean",
+      "paper": "Aurora research specification",
+      "platform": "AURORA",
+      "status": "formula-only",
+      "validation_level": "Formula-exact"
+    },
+    {
+      "comparison_class": "not-comparable",
+      "group_key": "aurora_v2_paper_style_physics",
+      "metric_key": "projection_aperture_change_cv",
+      "paper": "Aurora research specification",
+      "platform": "AURORA",
+      "status": "formula-only",
+      "validation_level": "Formula-exact"
+    },
+    {
+      "comparison_class": "not-comparable",
+      "group_key": "aurora_v2_paper_style_physics",
+      "metric_key": "projection_leaf_travel_mean",
+      "paper": "Aurora research specification",
+      "platform": "AURORA",
+      "status": "formula-only",
+      "validation_level": "Formula-exact"
+    },
+    {
+      "comparison_class": "not-comparable",
+      "group_key": "aurora_v2_paper_style_physics",
+      "metric_key": "projection_leaf_travel_cv",
+      "paper": "Aurora research specification",
+      "platform": "AURORA",
+      "status": "formula-only",
+      "validation_level": "Formula-exact"
+    },
+    {
+      "comparison_class": "not-comparable",
+      "group_key": "aurora_v2_paper_style_physics",
+      "metric_key": "projection_leaf_travel_mean_mlcx1",
+      "paper": "Aurora research specification",
+      "platform": "AURORA",
+      "status": "formula-only",
+      "validation_level": "Formula-exact"
+    },
+    {
+      "comparison_class": "not-comparable",
+      "group_key": "aurora_v2_paper_style_physics",
+      "metric_key": "projection_leaf_travel_cv_mlcx1",
+      "paper": "Aurora research specification",
+      "platform": "AURORA",
+      "status": "formula-only",
+      "validation_level": "Formula-exact"
+    },
+    {
+      "comparison_class": "not-comparable",
+      "group_key": "aurora_v2_paper_style_physics",
+      "metric_key": "projection_leaf_travel_mean_mlcx2",
+      "paper": "Aurora research specification",
+      "platform": "AURORA",
+      "status": "formula-only",
+      "validation_level": "Formula-exact"
+    },
+    {
+      "comparison_class": "not-comparable",
+      "group_key": "aurora_v2_paper_style_physics",
+      "metric_key": "projection_leaf_travel_cv_mlcx2",
+      "paper": "Aurora research specification",
+      "platform": "AURORA",
+      "status": "formula-only",
+      "validation_level": "Formula-exact"
+    },
+    {
+      "comparison_class": "not-comparable",
+      "group_key": "aurora_v2_paper_style_physics",
+      "metric_key": "theta_z_coupling_cv",
+      "paper": "Aurora research specification",
+      "platform": "AURORA",
+      "status": "formula-only",
+      "validation_level": "Formula-exact"
+    },
+    {
+      "comparison_class": "not-comparable",
+      "group_key": "aurora_v2_paper_style_physics",
+      "metric_key": "mu_z_coupling_cv_proxy",
+      "paper": "Aurora research specification",
+      "platform": "AURORA",
+      "status": "formula-only",
+      "validation_level": "Formula-exact"
+    },
+    {
+      "comparison_class": "not-comparable",
+      "group_key": "aurora_v2_paper_style_physics",
+      "metric_key": "mlc_z_coupling_cv",
+      "paper": "Aurora research specification",
+      "platform": "AURORA",
+      "status": "formula-only",
+      "validation_level": "Formula-exact"
+    },
+    {
+      "comparison_class": "not-comparable",
+      "group_key": "aurora_v2_paper_style_physics",
+      "metric_key": "mlcx1_z_coupling_cv",
+      "paper": "Aurora research specification",
+      "platform": "AURORA",
+      "status": "formula-only",
+      "validation_level": "Formula-exact"
+    },
+    {
+      "comparison_class": "not-comparable",
+      "group_key": "aurora_v2_paper_style_physics",
+      "metric_key": "mlcx2_z_coupling_cv",
+      "paper": "Aurora research specification",
+      "platform": "AURORA",
+      "status": "formula-only",
+      "validation_level": "Formula-exact"
+    },
+    {
+      "comparison_class": "exact-equivalent",
+      "group_key": "vmat_imrt_halcyon_ethos_tamura_2020",
+      "metric_key": "mcs5",
+      "paper": "Tamura/Park 2020",
+      "platform": "VMAT_IMRT",
+      "status": "reference-gated",
+      "validation_level": "Reference-case exact"
+    },
+    {
+      "comparison_class": "exact-equivalent",
+      "group_key": "vmat_imrt_halcyon_ethos_tamura_2020",
+      "metric_key": "pa5",
+      "paper": "Tamura/Park 2020",
+      "platform": "VMAT_IMRT",
+      "status": "reference-gated",
+      "validation_level": "Reference-case exact"
+    },
+    {
+      "comparison_class": "exact-equivalent",
+      "group_key": "vmat_imrt_halcyon_ethos_tamura_2020",
+      "metric_key": "pi5",
+      "paper": "Tamura/Park 2020",
+      "platform": "VMAT_IMRT",
+      "status": "reference-gated",
+      "validation_level": "Reference-case exact"
+    },
+    {
+      "comparison_class": "exact-equivalent",
+      "group_key": "vmat_imrt_halcyon_ethos_tamura_2020",
+      "metric_key": "pm5",
+      "paper": "Tamura/Park 2020",
+      "platform": "VMAT_IMRT",
+      "status": "reference-gated",
+      "validation_level": "Reference-case exact"
+    },
+    {
+      "comparison_class": "exact-equivalent",
+      "group_key": "vmat_imrt_halcyon_ethos_tamura_2020",
+      "metric_key": "eds",
+      "paper": "Tamura/Park 2020",
+      "platform": "VMAT_IMRT",
+      "status": "reference-gated",
+      "validation_level": "Reference-case exact"
+    },
+    {
+      "comparison_class": "exact-equivalent",
+      "group_key": "vmat_imrt_halcyon_ethos_tamura_2020",
+      "metric_key": "mcsw",
+      "paper": "Tamura/Park 2020",
+      "platform": "VMAT_IMRT",
+      "status": "reference-gated",
+      "validation_level": "Reference-case exact"
+    },
+    {
+      "comparison_class": "exact-equivalent",
+      "group_key": "vmat_imrt_halcyon_ethos_tamura_2020",
+      "metric_key": "paw",
+      "paper": "Tamura/Park 2020",
+      "platform": "VMAT_IMRT",
+      "status": "reference-gated",
+      "validation_level": "Reference-case exact"
+    },
+    {
+      "comparison_class": "exact-equivalent",
+      "group_key": "vmat_imrt_halcyon_ethos_tamura_2020",
+      "metric_key": "piw",
+      "paper": "Tamura/Park 2020",
+      "platform": "VMAT_IMRT",
+      "status": "reference-gated",
+      "validation_level": "Reference-case exact"
+    },
+    {
+      "comparison_class": "exact-equivalent",
+      "group_key": "vmat_imrt_halcyon_ethos_tamura_2020",
+      "metric_key": "pmw",
+      "paper": "Tamura/Park 2020",
+      "platform": "VMAT_IMRT",
+      "status": "reference-gated",
+      "validation_level": "Reference-case exact"
+    },
+    {
+      "comparison_class": "exact-equivalent",
+      "group_key": "vmat_imrt_halcyon_ethos_tamura_2020",
+      "metric_key": "proximal_mcs",
+      "paper": "Tamura/Park 2020",
+      "platform": "VMAT_IMRT",
+      "status": "reference-gated",
+      "validation_level": "Reference-case exact"
+    },
+    {
+      "comparison_class": "exact-equivalent",
+      "group_key": "vmat_imrt_halcyon_ethos_tamura_2020",
+      "metric_key": "distal_mcs",
+      "paper": "Tamura/Park 2020",
+      "platform": "VMAT_IMRT",
+      "status": "reference-gated",
+      "validation_level": "Reference-case exact"
+    },
+    {
+      "comparison_class": "exact-equivalent",
+      "group_key": "vmat_imrt_halcyon_ethos_tamura_2020",
+      "metric_key": "proximal_pa",
+      "paper": "Tamura/Park 2020",
+      "platform": "VMAT_IMRT",
+      "status": "reference-gated",
+      "validation_level": "Reference-case exact"
+    },
+    {
+      "comparison_class": "exact-equivalent",
+      "group_key": "vmat_imrt_halcyon_ethos_tamura_2020",
+      "metric_key": "distal_pa",
+      "paper": "Tamura/Park 2020",
+      "platform": "VMAT_IMRT",
+      "status": "reference-gated",
+      "validation_level": "Reference-case exact"
+    },
+    {
+      "comparison_class": "exact-equivalent",
+      "group_key": "vmat_imrt_halcyon_ethos_tamura_2020",
+      "metric_key": "proximal_pi",
+      "paper": "Tamura/Park 2020",
+      "platform": "VMAT_IMRT",
+      "status": "reference-gated",
+      "validation_level": "Reference-case exact"
+    },
+    {
+      "comparison_class": "exact-equivalent",
+      "group_key": "vmat_imrt_halcyon_ethos_tamura_2020",
+      "metric_key": "distal_pi",
+      "paper": "Tamura/Park 2020",
+      "platform": "VMAT_IMRT",
+      "status": "reference-gated",
+      "validation_level": "Reference-case exact"
+    },
+    {
+      "comparison_class": "exact-equivalent",
+      "group_key": "vmat_imrt_halcyon_ethos_tamura_2020",
+      "metric_key": "proximal_pm",
+      "paper": "Tamura/Park 2020",
+      "platform": "VMAT_IMRT",
+      "status": "reference-gated",
+      "validation_level": "Reference-case exact"
+    },
+    {
+      "comparison_class": "exact-equivalent",
+      "group_key": "vmat_imrt_halcyon_ethos_tamura_2020",
+      "metric_key": "distal_pm",
+      "paper": "Tamura/Park 2020",
+      "platform": "VMAT_IMRT",
+      "status": "reference-gated",
+      "validation_level": "Reference-case exact"
+    },
+    {
+      "comparison_class": "exact-equivalent",
+      "group_key": "vmat_imrt_halcyon_ethos_tamura_2020",
+      "metric_key": "proximal_mcsw",
+      "paper": "Tamura/Park 2020",
+      "platform": "VMAT_IMRT",
+      "status": "reference-gated",
+      "validation_level": "Reference-case exact"
+    },
+    {
+      "comparison_class": "exact-equivalent",
+      "group_key": "vmat_imrt_halcyon_ethos_tamura_2020",
+      "metric_key": "distal_mcsw",
+      "paper": "Tamura/Park 2020",
+      "platform": "VMAT_IMRT",
+      "status": "reference-gated",
+      "validation_level": "Reference-case exact"
+    },
+    {
+      "comparison_class": "exact-equivalent",
+      "group_key": "vmat_imrt_halcyon_ethos_tamura_2020",
+      "metric_key": "proximal_paw",
+      "paper": "Tamura/Park 2020",
+      "platform": "VMAT_IMRT",
+      "status": "reference-gated",
+      "validation_level": "Reference-case exact"
+    },
+    {
+      "comparison_class": "exact-equivalent",
+      "group_key": "vmat_imrt_halcyon_ethos_tamura_2020",
+      "metric_key": "distal_paw",
+      "paper": "Tamura/Park 2020",
+      "platform": "VMAT_IMRT",
+      "status": "reference-gated",
+      "validation_level": "Reference-case exact"
+    },
+    {
+      "comparison_class": "exact-equivalent",
+      "group_key": "vmat_imrt_halcyon_ethos_tamura_2020",
+      "metric_key": "proximal_piw",
+      "paper": "Tamura/Park 2020",
+      "platform": "VMAT_IMRT",
+      "status": "reference-gated",
+      "validation_level": "Reference-case exact"
+    },
+    {
+      "comparison_class": "exact-equivalent",
+      "group_key": "vmat_imrt_halcyon_ethos_tamura_2020",
+      "metric_key": "distal_piw",
+      "paper": "Tamura/Park 2020",
+      "platform": "VMAT_IMRT",
+      "status": "reference-gated",
+      "validation_level": "Reference-case exact"
+    },
+    {
+      "comparison_class": "exact-equivalent",
+      "group_key": "vmat_imrt_halcyon_ethos_tamura_2020",
+      "metric_key": "proximal_pmw",
+      "paper": "Tamura/Park 2020",
+      "platform": "VMAT_IMRT",
+      "status": "reference-gated",
+      "validation_level": "Reference-case exact"
+    },
+    {
+      "comparison_class": "exact-equivalent",
+      "group_key": "vmat_imrt_halcyon_ethos_tamura_2020",
+      "metric_key": "distal_pmw",
+      "paper": "Tamura/Park 2020",
+      "platform": "VMAT_IMRT",
+      "status": "reference-gated",
+      "validation_level": "Reference-case exact"
+    },
+    {
+      "comparison_class": "exact-equivalent",
+      "group_key": "vmat_imrt_halcyon_ethos_tamura_2020",
+      "metric_key": "proximal_weight_mean",
+      "paper": "Tamura/Park 2020",
+      "platform": "VMAT_IMRT",
+      "status": "reference-gated",
+      "validation_level": "Reference-case exact"
+    },
+    {
+      "comparison_class": "exact-equivalent",
+      "group_key": "vmat_imrt_halcyon_ethos_tamura_2020",
+      "metric_key": "distal_weight_mean",
+      "paper": "Tamura/Park 2020",
+      "platform": "VMAT_IMRT",
+      "status": "reference-gated",
+      "validation_level": "Reference-case exact"
+    },
+    {
+      "comparison_class": "exact-equivalent",
+      "group_key": "vmat_imrt_halcyon_ethos_quintero_2021",
+      "metric_key": "ul",
+      "paper": "Quintero/Esposito 2021",
+      "platform": "VMAT_IMRT",
+      "status": "reference-gated",
+      "validation_level": "Reference-case exact"
+    },
+    {
+      "comparison_class": "exact-equivalent",
+      "group_key": "vmat_imrt_halcyon_ethos_quintero_2021",
+      "metric_key": "proximal_ul",
+      "paper": "Quintero/Esposito 2021",
+      "platform": "VMAT_IMRT",
+      "status": "reference-gated",
+      "validation_level": "Reference-case exact"
+    },
+    {
+      "comparison_class": "exact-equivalent",
+      "group_key": "vmat_imrt_halcyon_ethos_quintero_2021",
+      "metric_key": "distal_ul",
+      "paper": "Quintero/Esposito 2021",
+      "platform": "VMAT_IMRT",
+      "status": "reference-gated",
+      "validation_level": "Reference-case exact"
+    },
+    {
+      "comparison_class": "exact-equivalent",
+      "group_key": "vmat_imrt_halcyon_ethos_quintero_2021",
+      "metric_key": "mcsul",
+      "paper": "Quintero/Esposito 2021",
+      "platform": "VMAT_IMRT",
+      "status": "reference-gated",
+      "validation_level": "Reference-case exact"
+    },
+    {
+      "comparison_class": "exact-equivalent",
+      "group_key": "vmat_imrt_halcyon_ethos_quintero_2021",
+      "metric_key": "proximal_mcsul",
+      "paper": "Quintero/Esposito 2021",
+      "platform": "VMAT_IMRT",
+      "status": "reference-gated",
+      "validation_level": "Reference-case exact"
+    },
+    {
+      "comparison_class": "exact-equivalent",
+      "group_key": "vmat_imrt_halcyon_ethos_quintero_2021",
+      "metric_key": "distal_mcsul",
+      "paper": "Quintero/Esposito 2021",
+      "platform": "VMAT_IMRT",
+      "status": "reference-gated",
+      "validation_level": "Reference-case exact"
+    },
+    {
+      "comparison_class": "exact-equivalent",
+      "group_key": "vmat_imrt_halcyon_ethos_quintero_2021",
+      "metric_key": "np",
+      "paper": "Quintero/Esposito 2021",
+      "platform": "VMAT_IMRT",
+      "status": "reference-gated",
+      "validation_level": "Reference-case exact"
+    },
+    {
+      "comparison_class": "exact-equivalent",
+      "group_key": "vmat_imrt_halcyon_ethos_quintero_2021",
+      "metric_key": "mucp",
+      "paper": "Quintero/Esposito 2021",
+      "platform": "VMAT_IMRT",
+      "status": "reference-gated",
+      "validation_level": "Reference-case exact"
+    },
+    {
+      "comparison_class": "exact-equivalent",
+      "group_key": "vmat_imrt_sport",
+      "metric_key": "sport_mlcx1",
+      "paper": "Li and Xing 2013",
+      "platform": "VMAT_IMRT",
+      "status": "reference-gated",
+      "validation_level": "Reference-case exact"
+    },
+    {
+      "comparison_class": "exact-equivalent",
+      "group_key": "vmat_imrt_sport",
+      "metric_key": "sport_mlcx2",
+      "paper": "Li and Xing 2013",
+      "platform": "VMAT_IMRT",
+      "status": "reference-gated",
+      "validation_level": "Reference-case exact"
+    }
+  ],
+  "summary": {
+    "paper_metric_rows": 107,
+    "papers_total": 6,
+    "reference_exact_rows": 44
+  }
+}

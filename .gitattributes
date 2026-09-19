@@ -1,0 +1,4 @@
+# Preserve the exact bytes covered by baseline and report SHA256 provenance.
+# Git must not translate line endings when adding or checking out this evidence.
+validation/reference_cases/**/*.json -text whitespace=trailing-space,space-before-tab,cr-at-eol
+run_reports/validation/** -text whitespace=trailing-space,space-before-tab,cr-at-eol
