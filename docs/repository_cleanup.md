@@ -41,7 +41,24 @@ Source DICOM data and the Python environment are preserved.
 
 ## Verification
 
-The complete Windows suite passed before integration: 335 passed, 1 skipped,
-39 subtests passed, including real GUI creation. It used Python 3.14.3 without
-manual Tcl/Tk path overrides. See [precision and motion validation](precision_motion_validation.md)
-for reference-gate results and the limits of the external evidence.
+The initial Windows full run passed, but a subsequent main-branch run reproduced
+an intermittent Tk initialization failure. A controlled comparison used the same
+four real GUI tests, Python 3.14.3, test order and environment: default `fd` output
+capture failed in two of three runs; `sys` capture and disabled capture each passed
+all three runs. `pytest.ini` now defaults to `--capture=sys`; the four tests also
+passed with that configuration and no command-line capture override. Product GUI
+code, test assertions and test selection are unchanged.
+
+This local evidence supports a Windows Tcl/output-capture interaction. The
+[ttkbootstrap project records the same capture workaround](https://github.com/israel-dryer/ttkbootstrap/blob/master/pyproject.toml).
+No Tcl/Tk path overrides or retries are needed for the configured test command.
+
+The final complete Windows suite on main passed: **336 passed, 1 skipped,
+99 subtests passed**, exit 0 in 113.42 seconds, using
+`.venv/Scripts/python.exe -m pytest tests -q --tb=short -rs`.
+
+The main-branch Python 3.11 headless suite passed with 332 tests, 1 skipped,
+1 deselected and 99 subtests. The missing Aurora sample accounts for the single
+skip. Git-stored contents also passed 29 baseline, archive and report SHA256 checks.
+See [precision and motion validation](precision_motion_validation.md) for the
+reference-gate results and the limits of the external evidence.

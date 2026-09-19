@@ -77,6 +77,11 @@ Run the full test suite, including independent numerical hand cases:
 python -m pytest tests -q
 ```
 
+The GUI tests require a working Tk installation and desktop display. `pytest.ini`
+uses Python-stream output capture to avoid intermittent Windows Tcl file-channel
+failures during repeated GUI creation. The test assertions remain active; see
+[integration and cleanup verification](docs/repository_cleanup.md).
+
 Run the Aurora-focused standalone prototype tests:
 
 ```bash

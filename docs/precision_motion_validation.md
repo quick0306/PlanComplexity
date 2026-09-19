@@ -74,16 +74,20 @@ from a green regression suite or numerical agreement on one external case.
 
 ## Verification on 2026-09-19
 
-- CI-style core suite: 331 passed, 1 skipped, 1 deselected, 39 subtests passed.
+- Main-branch CI-style core suite (Python 3.11): 332 passed, 1 skipped,
+  1 deselected, 99 subtests passed.
   Command: `python -m pytest tests --ignore=tests/test_aurora_gui_smoke.py --deselect=tests/test_aurora_service.py::AuroraServiceScaffoldingTests::test_aurora_entrypoints_call_real_main_functions -q`.
-- Combined Windows suite before integration: 335 passed, 1 skipped, 39 subtests
-  passed using Python 3.14.3: `.venv/Scripts/python.exe -m pytest tests -q -x --tb=short`.
-  This includes all four real GUI smoke/entrypoint checks. No `TCL_LIBRARY` or
-  `TK_LIBRARY` override was set.
-- Earlier combined runs with explicit Tcl/Tk path overrides failed during Tk
-  initialization despite the referenced files existing. The full run above passed
-  without those overrides; the Tcl internal root cause has not been established.
-  No product-code change or test exclusion was introduced to hide that failure.
+- Final combined Windows suite on main: 336 passed, 1 skipped, 99 subtests passed
+  in 113.42 seconds using Python 3.14.3:
+  `.venv/Scripts/python.exe -m pytest tests -q --tb=short -rs`.
+  This includes all four real GUI smoke/entrypoint checks. The single skip requires
+  an external Aurora sample (`AURORA_SAMPLE_RTPLAN`); synthetic Aurora checks run.
+- Earlier combined runs intermittently failed during Tk initialization, including
+  a run without manual Tcl/Tk path overrides. A nine-run controlled comparison
+  isolated pytest output capture as a distinguishing condition: `fd` failed 2/3
+  runs, while `sys` and disabled capture each passed 3/3. The final full run uses
+  `pytest.ini` with `--capture=sys`. No GUI assertions, test exclusions or product
+  startup changes were introduced. See [the cleanup record](repository_cleanup.md).
 - Strict reference suite: exit 0; 8 cases, 564 rows, 280 required numerical comparisons,
   zero numerical, formula-provenance or analysis-state failures.
 - Twelve built-in formula oracles passed. The broader synthetic contracts, precision
@@ -91,6 +95,10 @@ from a green regression suite or numerical agreement on one external case.
 - Six current baseline files match the independently checked migration snapshots and
   sidecar hashes. All twelve immediately preceding scalar/sidecar archives retain
   their recorded hashes. Migration: 239 changed values, 47 newly exported scalar keys.
+- Git-stored evidence passes 29 checks covering six current baselines, eighteen
+  historical scalar/sidecar files and five report artifacts. `.gitattributes`
+  preserves these bytes across checkouts; the new regression exercises both line
+  endings under three Git conversion settings.
 - External capture: 1 historical input, 10 values, 6 candidate pairs, 0 verified
   equivalent definitions; importer integrity check passed. The attempted live opaque
   UCoMX execution failed and produced no workbook; its evidence remains separate.
