@@ -26,9 +26,9 @@ class MetricSpec:
 
 
 VMAT_METRIC_SPECS = (
-    MetricSpec("ethos_sas10", "Ethos SAS10", description="Ethos report profile v1: pooled open-slot counts with gap > 0.5 mm; fraction, not percent. Two-sample display agreement (second sample has a plan-label caveat); see docs/ethos_report_profile.md."),
-    MetricSpec("ethos_one_minus_mcs", "Ethos 1-MCS", description="Ethos report profile v1: centered-MU mean of CP AAV*LSV, complemented; physical open-slot adjacency. Two-sample display agreement (second sample has a plan-label caveat); distinct from MCSv/MCS5."),
-    MetricSpec("ethos_penumbra_ratio", "Ethos Penumbra Ratio", description="Ethos report profile v1: finite tip/side strip union with 2.8/2.3 mm distances; fraction, not percent. Two-sample display agreement (second sample has a plan-label caveat); distinct from EAM."),
+    MetricSpec("ethos_sas10", "Varian Dual-layer SAS10", description="Varian Ethos/Halcyon dual-layer MLC v1: pooled open-slot counts with gap > 0.5 mm; fraction, not percent. Two-sample display agreement (second sample has a plan-label caveat); see docs/ethos_report_profile.md."),
+    MetricSpec("ethos_one_minus_mcs", "Varian Dual-layer 1-MCS", description="Varian Ethos/Halcyon dual-layer MLC v1: centered-MU mean of CP AAV*LSV, complemented; physical open-slot adjacency. Two-sample display agreement (second sample has a plan-label caveat); distinct from MCSv/MCS5."),
+    MetricSpec("ethos_penumbra_ratio", "Varian Dual-layer Penumbra Ratio", description="Varian Ethos/Halcyon dual-layer MLC v1: finite tip/side strip union with 2.8/2.3 mm distances; fraction, not percent. Two-sample display agreement (second sample has a plan-label caveat); distinct from EAM."),
     MetricSpec("mus", "MUs", "10.1118/1.4861821", description="Total monitor units delivered by the plan."),
     MetricSpec("pmu", "PMU", "10.1118/1.4861821", description="Monitor units normalized to a standard 2 Gy fraction."),
     MetricSpec("muca", "MUCA", description="Average monitor units delivered per control arc."),

@@ -84,7 +84,7 @@ def _vmat(record) -> dict:
             normalization=normalizers[key],
             aggregation="Beam-MU mean; SAS has no CP weights; MCS and PR use " + CP_WEIGHTS,
             missing_value="Unsupported layout, clipped/nonfinite geometry, invalid cumulative MU, entirely closed beam or incomplete beam coverage => None plus warning; no subset aggregation. Empty CP contributes zero MCS and PR.",
-            representation="ethos-report-v1: physical 56 x 5 mm intersection, native 28/29 x 10 mm staggered layers; no jaw clipping. Two-sample display agreement with a second-sample plan-label caveat, not universal vendor validation.",
+            representation="Varian Ethos/Halcyon dual-layer MLC (legacy formula ID ethos-report-v1): physical 56 x 5 mm intersection, native 28/29 x 10 mm staggered layers; no jaw clipping. Two-sample display agreement with a second-sample plan-label caveat, not universal vendor validation.",
             source_anchors=("ethos_report_metrics.py:calculate_ethos_beam_metrics", "ethos_report_metrics.py:supported_beam_layout"),
             evidence_status="analytic_cases_checked",
         )

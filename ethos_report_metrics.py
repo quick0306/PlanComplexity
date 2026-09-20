@@ -1,4 +1,4 @@
-"""Bounded Ethos report profile; see docs/ethos_report_profile.md for evidence.
+"""Bounded Varian Ethos/Halcyon dual-layer MLC; see docs/ethos_report_profile.md for evidence.
 
 Distinct from generic MCSv/SAS. Inputs are physical effective apertures in mm.
 """

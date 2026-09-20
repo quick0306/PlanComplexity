@@ -2,9 +2,9 @@ metric_specs:
 - key: ethos_sas10
   platform: VMAT_IMRT
   mode: VMAT_IMRT
-  group_key: vmat_imrt_ethos_report_profile
+  group_key: vmat_imrt_varian_ethos_halcyon_dual_layer_mlc
   metric_key: ethos_sas10
-  label: Ethos SAS10
+  label: Varian Dual-layer SAS10
   unit: dimensionless
   aggregation_scope: plan
   normalization_basis: Pooled open-slot count over all CPs, each endpoint counted once; no CP MU weighting.
@@ -28,9 +28,9 @@ metric_specs:
 - key: ethos_one_minus_mcs
   platform: VMAT_IMRT
   mode: VMAT_IMRT
-  group_key: vmat_imrt_ethos_report_profile
+  group_key: vmat_imrt_varian_ethos_halcyon_dual_layer_mlc
   metric_key: ethos_one_minus_mcs
-  label: Ethos 1-MCS
+  label: Varian Dual-layer 1-MCS
   unit: dimensionless
   aggregation_scope: plan
   normalization_basis: Open-slot bank-extrema envelope for AAV; each LSV bank uses all-open range, only physically adjacent open differences and their count. Constant bank/no adjacency=>1.
@@ -54,9 +54,9 @@ metric_specs:
 - key: ethos_penumbra_ratio
   platform: VMAT_IMRT
   mode: VMAT_IMRT
-  group_key: vmat_imrt_ethos_report_profile
+  group_key: vmat_imrt_varian_ethos_halcyon_dual_layer_mlc
   metric_key: ethos_penumbra_ratio
-  label: Ethos Penumbra Ratio
+  label: Varian Dual-layer Penumbra Ratio
   unit: dimensionless
   aggregation_scope: plan
   normalization_basis: Open aperture area at each CP; union of finite tip 2.8 mm and exposed side 2.3 mm strips, with overlaps counted once.

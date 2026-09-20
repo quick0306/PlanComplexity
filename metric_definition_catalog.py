@@ -475,7 +475,7 @@ def _write_platform_appendices(records: Sequence[MetricDefinitionRecord], output
 
 def _vmat_group(metric_key: str) -> str:
     if metric_key.startswith('ethos_'):
-        return 'Ethos report profile'
+        return 'Varian Ethos/Halcyon dual-layer MLC'
     if metric_key in {"lt_mean_leaf", "nl_pairs", "nl_leaves"} or metric_key.endswith(
         ("_effective", "_stacked")
     ):

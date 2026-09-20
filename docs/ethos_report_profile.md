@@ -1,4 +1,11 @@
-# Ethos report profile
+# Varian Ethos/Halcyon dual-layer MLC
+
+SAS10, 1-MCS and Penumbra Ratio are not Ethos-exclusive metrics. This implementation
+applies to the standard Varian dual-layer MLC shared by Ethos and Halcyon.
+The Ethos PDF reports provided comparison values; they do not restrict the
+implementation to Ethos. UI and CSV display labels use "Varian Dual-layer".
+The existing `ethos_*` data keys and `ethos-report-v1` formula identifier are
+retained for compatibility with previously exported results and API consumers.
 
 Implement three separately named report metrics without changing generic SAS,
 MCSv, MCS5 or Edge Metric. The report profile is inferred from one paired RP/PDF

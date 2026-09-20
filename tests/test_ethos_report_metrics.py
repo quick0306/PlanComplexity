@@ -103,31 +103,32 @@ def synthetic_beam(mu=100., gap=10.):
                 BeamLimitingDeviceSequence=devices, ControlPointSequence=cps)
 
 
-def test_production_aggregation_registry_gui_and_csv(tmp_path):
+@pytest.mark.parametrize('machine_id', ['Ethos', 'Halcyon'])
+def test_production_aggregation_registry_gui_and_csv(tmp_path, machine_id):
     import csv
     from halcyon_dual_layer_metrics import calculate_halcyon_dual_layer_metrics_with_warnings
     from ucomx_models import PlanAnalysisResult, AnalysisMode
     from ucomx_service import flatten_metrics, build_metric_rows, export_results_to_csv
     from metric_formula_contracts import build_metric_formula_contracts
     from analysis_exports import DUAL_MLC_CSV_HEADER, build_dual_mlc_row
-    plan = dict(machine_id='Ethos', beams={1: synthetic_beam(100, 5), 2: synthetic_beam(300, 20)})
+    plan = dict(machine_id=machine_id, beams={1: synthetic_beam(100, 5), 2: synthetic_beam(300, 20)})
     values, warnings = calculate_halcyon_dual_layer_metrics_with_warnings(plan, full_precision=True)
     assert values['ethos_sas10'] == .25
     assert values['ethos_one_minus_mcs'] == 0.
     assert not any('ETHOS_REPORT' in w for w in warnings)
-    metadata = dict(patient_id='synthetic', patient_name='', machine_id='Ethos',
+    metadata = dict(patient_id='synthetic', patient_name='', machine_id=machine_id,
                     calculation_model='', prescribed_dose=0, mu=400)
     result = PlanAnalysisResult('synthetic.dcm', AnalysisMode.VMAT_IMRT, metadata,
                                 values, flatten_metrics(values), True, warnings)
     gui = dict(build_metric_rows(result))
-    assert gui['Ethos SAS10'] == '0.25'
+    assert gui['Varian Dual-layer SAS10'] == '0.25'
     export_results_to_csv([result], str(tmp_path/'results.csv'))
     with (tmp_path/'results.csv').open(encoding='utf-8-sig') as f:
         record = next(csv.DictReader(f))
     assert float(record['ethos_sas10']) == .25
     assert record['ethos_report_formula_version'] == 'ethos-report-v1'
     row = dict(zip(DUAL_MLC_CSV_HEADER, build_dual_mlc_row(metadata, values)))
-    assert row['Ethos SAS10'] == .25
+    assert row['Varian Dual-layer SAS10'] == .25
     contracts = {c.metric_key: c for c in build_metric_formula_contracts() if c.platform=='VMAT_IMRT'}
     assert contracts['ethos_sas10'].formula_version == 'ethos-report-v1'
 
