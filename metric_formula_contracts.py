@@ -13,6 +13,7 @@ import json
 import re
 
 from formula_versions import formula_version_for_mode
+from ethos_report_metrics import ETHOS_REPORT_KEYS, ETHOS_REPORT_VERSION
 
 
 CP_WEIGHTS = "Centered CP MU: w0=du0/2, wlast=du_last/2, wi=(du_prev+du_next)/2; u=BeamMU*CMW/lastCMW."
@@ -71,6 +72,22 @@ def _representation(layer: str) -> str:
 
 def _vmat(record) -> dict:
     key, layer = _vmat_base(record.metric_key)
+    if key.startswith("ethos_"):
+        normalizers = {
+            'ethos_sas10': 'Pooled open-slot count over all CPs, each endpoint counted once; no CP MU weighting.',
+            'ethos_one_minus_mcs': 'Open-slot bank-extrema envelope for AAV; each LSV bank uses all-open range, only physically adjacent open differences and their count. Constant bank/no adjacency=>1.',
+            'ethos_penumbra_ratio': 'Open aperture area at each CP; union of finite tip 2.8 mm and exposed side 2.3 mm strips, with overlaps counted once.',
+        }
+        return dict(
+            sampling="Every CP, including endpoints, once for pooled SAS counts; CP products for MCS and CP ratios for PR.",
+            active_mask="Effective gap > 0.5 mm + 1e-8 mm; closure mask also used for area and envelope; physical adjacency is preserved.",
+            normalization=normalizers[key],
+            aggregation="Beam-MU mean; SAS has no CP weights; MCS and PR use " + CP_WEIGHTS,
+            missing_value="Unsupported layout, clipped/nonfinite geometry, invalid cumulative MU, entirely closed beam or incomplete beam coverage => None plus warning; no subset aggregation. Empty CP contributes zero MCS and PR.",
+            representation="ethos-report-v1: physical 56 x 5 mm intersection, native 28/29 x 10 mm staggered layers; no jaw clipping. Two-sample display agreement with a second-sample plan-label caveat, not universal vendor validation.",
+            source_anchors=("ethos_report_metrics.py:calculate_ethos_beam_metrics", "ethos_report_metrics.py:supported_beam_layout"),
+            evidence_status="analytic_cases_checked",
+        )
     result = dict(sampling="Each CP aperture.", active_mask=FULL_MASK,
                   normalization="No scale normalization; use the ratio, count, or physical quantity in the formula.",
                   aggregation=CP_MEAN, missing_value=CORE_MISSING,
@@ -319,7 +336,8 @@ def build_metric_formula_contracts() -> list[MetricFormulaContract]:
         contracts.append(MetricFormulaContract(
             platform=record.platform, metric_key=record.metric_key,
             formula=record.mathematical_definition, unit=record.unit,
-            formula_version=formula_version_for_mode(record.platform) or "aurora-unversioned-research-v2-v3-legacy",
+            formula_version=(ETHOS_REPORT_VERSION if record.metric_key in ETHOS_REPORT_KEYS else
+                             formula_version_for_mode(record.platform) or "aurora-unversioned-research-v2-v3-legacy"),
             **fields,
         ))
     return contracts

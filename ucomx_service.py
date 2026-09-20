@@ -20,6 +20,7 @@ from cyberknife_parser import build_cyberknife_plan_dict, parse_cyberknife_beams
 from DicomParse.dicom_rt import RTPlan
 from DicomParse.utilities import retrieve_dcm_filenames
 from formula_versions import formula_version_for_mode
+from ethos_report_metrics import ETHOS_REPORT_KEYS, ETHOS_REPORT_VERSION
 from metric_registry import (
     VMAT_DUAL_MLC_KEYS,
     metric_descriptions_with_aliases,
@@ -242,6 +243,8 @@ def analyze_plan_file(source_path: str, requested_mode: AnalysisMode = AnalysisM
             warning=f"Aperture geometry is empty or incomplete for this plan: {exc}",
         )
     flattened_metrics = flatten_metrics(metrics)
+    if any(key in metrics for key in ETHOS_REPORT_KEYS):
+        metadata['ethos_report_formula_version'] = ETHOS_REPORT_VERSION
     warnings = list(metric_warnings)
     if detected_mode != active_mode:
         warnings.append(f"Requested mode {active_mode.value} overrides detected mode {detected_mode.value}.")
@@ -420,6 +423,8 @@ def build_export_record(result: PlanAnalysisResult) -> Dict[str, Any]:
     record["prescribed_dose"] = result.metadata.get("prescribed_dose", "")
     record["mu"] = result.metadata.get("mu", "")
     record["metric_formula_version"] = result.metadata.get("metric_formula_version", "")
+    if any(key in result.flattened_metrics for key in ETHOS_REPORT_KEYS):
+        record['ethos_report_formula_version'] = ETHOS_REPORT_VERSION
     record["warnings"] = " | ".join(result.warnings)
     for key, value in result.flattened_metrics.items():
         record[key] = value

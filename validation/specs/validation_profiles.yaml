@@ -6,6 +6,7 @@ validation_profiles:
   require_reference_exact_green: true
   include_association_only_in_core_gate: false
   group_keys:
+  - vmat_imrt_ethos_report_profile
   - vmat_imrt_plan_prescription
   - vmat_imrt_leaf_travel
   - vmat_imrt_arc_geometry

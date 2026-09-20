@@ -24,6 +24,9 @@ from ComplexityMetric.aperture_series_metrics import (
     weighted_gap_moments,
 )
 from DicomParse.utilities import divide_or_default
+from ethos_report_metrics import (
+    ETHOS_REPORT_KEYS, calculate_ethos_beam_metrics, supported_beam_layout, unavailable,
+)
 
 
 DISTAL_DEVICE = "MLCX1"
@@ -65,6 +68,11 @@ def calculate_halcyon_dual_layer_metrics_with_warnings(
     if not _is_dual_layer_plan(plan_dict):
         return {}, []
 
+    invalid_treatment_mu = any(
+        not _valid_treatment_mu(beam)
+        for beam in plan_dict.get('beams', {}).values()
+        if beam.get('TreatmentDeliveryType') == 'TREATMENT'
+    )
     beams = list(_treatment_beams(plan_dict))
     alignment_failed = any(not _dual_layer_alignment_ok(beam) for beam in beams)
     beam_results = [
@@ -74,16 +82,20 @@ def calculate_halcyon_dual_layer_metrics_with_warnings(
     beam_results = [result for result in beam_results if result is not None and result.mu > 0.0]
     if not beam_results:
         if alignment_failed:
-            return {key: None for key in HYBRID_REPRESENTATION_KEYS}, [
+            return {key: None for key in HYBRID_REPRESENTATION_KEYS + ETHOS_REPORT_KEYS}, [
                 "[HALCYON_LAYER_ALIGNMENT] Effective and stacked metrics are unavailable because "
                 "the dual-layer control-point series are not aligned."
             ]
-        return {}, []
+        return unavailable('No treatment beam has a complete control-point series.')
 
     metrics = _aggregate_beam_results(beam_results, full_precision=full_precision)
     warnings = list(dict.fromkeys(warning for result in beam_results for warning in result.warnings))
+    if invalid_treatment_mu or len(beam_results) != len(beams):
+        missing, messages = unavailable('A treatment beam is incomplete; plan report metrics are unavailable.')
+        metrics.update(missing)
+        warnings.extend(messages)
     if alignment_failed:
-        for key in HYBRID_REPRESENTATION_KEYS:
+        for key in HYBRID_REPRESENTATION_KEYS + ETHOS_REPORT_KEYS:
             metrics[key] = None
         warnings.append(
             "[HALCYON_LAYER_ALIGNMENT] Effective and stacked metrics are unavailable because "
@@ -97,6 +109,9 @@ def _aggregate_beam_results(beam_results: Sequence[BeamPaperMetrics], *, full_pr
     metric_keys = list(beam_results[0].values.keys())
     metrics: Dict[str, float] = {}
     for key in metric_keys:
+        if key in ETHOS_REPORT_KEYS and any(result.values.get(key) is None for result in beam_results):
+            metrics[key] = None
+            continue
         observations = [
             (float(value), result.mu)
             for result in beam_results
@@ -126,12 +141,22 @@ def _is_dual_layer_plan(plan_dict: Dict[str, Any]) -> bool:
     machine_id = str(plan_dict.get("machine_id", "")).lower()
     if not any(token in machine_id for token in ("halcyon", "ethos")):
         return False
-    return any(_has_dual_layer_devices(beam) for beam in _treatment_beams(plan_dict))
+    return any(_has_dual_layer_devices(beam) for beam in plan_dict.get('beams', {}).values()
+               if beam.get('TreatmentDeliveryType') == 'TREATMENT')
+
+
+def _valid_treatment_mu(beam):
+    try:
+        mu = float(beam.get('MU'))
+    except (TypeError, ValueError):
+        return False
+    return math.isfinite(mu) and mu >= 0.
 
 
 def _treatment_beams(plan_dict: Dict[str, Any]) -> Iterable[Dict[str, Any]]:
     for beam in plan_dict.get("beams", {}).values():
-        if beam.get("TreatmentDeliveryType") == "TREATMENT" and float(beam.get("MU", 0.0) or 0.0) > 0.0:
+        if (beam.get("TreatmentDeliveryType") == "TREATMENT" and _valid_treatment_mu(beam)
+                and float(beam['MU']) > 0.0):
             yield beam
 
 
@@ -293,12 +318,18 @@ def _calculate_beam_paper_metrics(beam: Dict[str, Any]) -> BeamPaperMetrics | No
     )
     values.update(effective_values)
     values.update(stacked_values)
+    if supported_beam_layout(beam):
+        raw_cmw = [getattr(cp, 'CumulativeMetersetWeight', np.nan) for cp in beam['ControlPointSequence']]
+        report_values, report_warnings = calculate_ethos_beam_metrics(effective_apertures, raw_cmw)
+    else:
+        report_values, report_warnings = unavailable('Only standard staggered 28/29-pair Halcyon/Ethos geometry is supported.')
+    values.update(report_values)
     values["mcsv_effective"] = values["mcs5"]
     values["pa_effective"] = values["pa5"]
     return BeamPaperMetrics(
         values=values,
         mu=float(beam.get("MU", beam_mu) or beam_mu),
-        warnings=tuple(dict.fromkeys(effective_warnings + stacked_warnings)),
+        warnings=tuple(dict.fromkeys(effective_warnings + stacked_warnings + report_warnings)),
     )
 
 

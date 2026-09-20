@@ -1,4 +1,82 @@
 metric_specs:
+- key: ethos_sas10
+  platform: VMAT_IMRT
+  mode: VMAT_IMRT
+  group_key: vmat_imrt_ethos_report_profile
+  metric_key: ethos_sas10
+  label: Ethos SAS10
+  unit: dimensionless
+  aggregation_scope: plan
+  normalization_basis: Pooled open-slot count over all CPs, each endpoint counted once; no CP MU weighting.
+  validation_level: Formula-exact
+  comparison_class: not-comparable
+  default_tolerance_abs: 1.0e-06
+  default_tolerance_rel: 0.0001
+  expected_range:
+    kind: unit_interval
+    minimum: 0.0
+    maximum: 1.0
+  clinical_readiness: research
+  known_noncomparability:
+  - Distinct from generic MCSv, MCS5, SAS and EAM; no claim of universal vendor equivalence.
+  comparable_to: []
+  assumptions:
+  - Standard staggered 28/29-pair geometry and no jaw clipping; 1e-8 mm boundary tolerance.
+  - Two supplied report comparisons at display precision; second RP/PDF labels differ.
+  exclusions:
+  - Invalid MU, incomplete treatment beam coverage or entirely closed beam.
+- key: ethos_one_minus_mcs
+  platform: VMAT_IMRT
+  mode: VMAT_IMRT
+  group_key: vmat_imrt_ethos_report_profile
+  metric_key: ethos_one_minus_mcs
+  label: Ethos 1-MCS
+  unit: dimensionless
+  aggregation_scope: plan
+  normalization_basis: Open-slot bank-extrema envelope for AAV; each LSV bank uses all-open range, only physically adjacent open differences and their count. Constant bank/no adjacency=>1.
+  validation_level: Formula-exact
+  comparison_class: not-comparable
+  default_tolerance_abs: 1.0e-06
+  default_tolerance_rel: 0.0001
+  expected_range:
+    kind: unit_interval
+    minimum: 0.0
+    maximum: 1.0
+  clinical_readiness: research
+  known_noncomparability:
+  - Distinct from generic MCSv, MCS5, SAS and EAM; no claim of universal vendor equivalence.
+  comparable_to: []
+  assumptions:
+  - Standard staggered 28/29-pair geometry and no jaw clipping; 1e-8 mm boundary tolerance.
+  - Two supplied report comparisons at display precision; second RP/PDF labels differ.
+  exclusions:
+  - Invalid MU, incomplete treatment beam coverage or entirely closed beam.
+- key: ethos_penumbra_ratio
+  platform: VMAT_IMRT
+  mode: VMAT_IMRT
+  group_key: vmat_imrt_ethos_report_profile
+  metric_key: ethos_penumbra_ratio
+  label: Ethos Penumbra Ratio
+  unit: dimensionless
+  aggregation_scope: plan
+  normalization_basis: Open aperture area at each CP; union of finite tip 2.8 mm and exposed side 2.3 mm strips, with overlaps counted once.
+  validation_level: Formula-exact
+  comparison_class: not-comparable
+  default_tolerance_abs: 1.0e-06
+  default_tolerance_rel: 0.0001
+  expected_range:
+    kind: unit_interval
+    minimum: 0.0
+    maximum: 1.0
+  clinical_readiness: research
+  known_noncomparability:
+  - Distinct from generic MCSv, MCS5, SAS and EAM; no claim of universal vendor equivalence.
+  comparable_to: []
+  assumptions:
+  - Standard staggered 28/29-pair geometry and no jaw clipping; 1e-8 mm boundary tolerance.
+  - Two supplied report comparisons at display precision; second RP/PDF labels differ.
+  exclusions:
+  - Invalid MU, incomplete treatment beam coverage or entirely closed beam.
 - key: mus
   platform: VMAT_IMRT
   mode: VMAT_IMRT
