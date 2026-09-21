@@ -187,3 +187,14 @@ def test_negative_raw_cmw_is_not_repaired_by_dividing_by_negative_final_weight()
         dict(machine_id='Ethos', beams={1: b}), full_precision=True)
     assert all(values[k] is None for k in engine().ETHOS_REPORT_KEYS)
     assert any('ETHOS_REPORT' in w for w in warnings)
+
+
+def test_export_preserves_formula_version_of_an_existing_result():
+    from ucomx_models import PlanAnalysisResult, AnalysisMode
+    from ucomx_service import build_export_record
+    result = PlanAnalysisResult('synthetic.dcm', AnalysisMode.VMAT_IMRT,
+                                {'ethos_report_formula_version': 'ethos-report-v1'},
+                                {'ethos_sas10': .6}, {'ethos_sas10': .6}, True)
+    record = build_export_record(result)
+    assert record['ethos_report_formula_version'] == 'ethos-report-v1'
+    assert record['ethos_sas10'] == .6

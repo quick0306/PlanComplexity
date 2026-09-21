@@ -424,7 +424,8 @@ def build_export_record(result: PlanAnalysisResult) -> Dict[str, Any]:
     record["mu"] = result.metadata.get("mu", "")
     record["metric_formula_version"] = result.metadata.get("metric_formula_version", "")
     if any(key in result.flattened_metrics for key in ETHOS_REPORT_KEYS):
-        record['ethos_report_formula_version'] = ETHOS_REPORT_VERSION
+        record['ethos_report_formula_version'] = result.metadata.get(
+            'ethos_report_formula_version', ETHOS_REPORT_VERSION)
     record["warnings"] = " | ".join(result.warnings)
     for key, value in result.flattened_metrics.items():
         record[key] = value
