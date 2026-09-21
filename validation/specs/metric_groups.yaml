@@ -2,7 +2,7 @@ metric_groups:
 - group_key: vmat_imrt_varian_ethos_halcyon_dual_layer_mlc
   platform: VMAT_IMRT
   label: Varian Ethos/Halcyon dual-layer MLC
-  description: Bounded report profile with analytic tests and two supplied sample comparisons; second sample has a plan-label caveat.
+  description: Bounded report profile with analytic tests and 12 supplied plan comparisons; RP/PDF labels may differ.
 - group_key: vmat_imrt_plan_prescription
   platform: VMAT_IMRT
   label: Plan prescription

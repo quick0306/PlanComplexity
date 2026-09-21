@@ -31,6 +31,26 @@ def test_sas_pools_counts_instead_of_weighting_cp_fractions():
     assert not warnings
 
 
+def test_sas_excludes_zero_center_weight_but_keeps_one_sided_delivery():
+    small, large = aperture([0], [5]), aperture([0], [20])
+    # Centered weights [0,1,1,0,0]: both sides of the delivered interval count.
+    values, warnings = calculate([small, large, small, large, small], [0, 0, 2, 2, 2])
+    assert values['ethos_sas10'] == pytest.approx(.5)
+    assert not warnings
+    reference, _ = calculate([large, small], [0, 2])
+    for key in ['ethos_one_minus_mcs', 'ethos_penumbra_ratio']:
+        assert values[key] == pytest.approx(reference[key])
+
+
+def test_sas_is_unavailable_if_only_zero_weight_control_points_are_open():
+    small, closed = aperture([0], [5]), aperture([0], [0])
+    values, warnings = calculate([small, closed, closed, closed], [0, 0, 1, 1])
+    assert values['ethos_sas10'] is None
+    assert values['ethos_one_minus_mcs'] == 1.
+    assert values['ethos_penumbra_ratio'] == 0.
+    assert any('SAS10' in w for w in warnings)
+
+
 def test_mcs_preserves_physical_adjacency_and_excludes_closed_area_and_extrema():
     # Separated rectangular islands have no adjacent variation. Bridging the
     # closed middle slot would invent an offset of 20 mm.
@@ -126,11 +146,11 @@ def test_production_aggregation_registry_gui_and_csv(tmp_path, machine_id):
     with (tmp_path/'results.csv').open(encoding='utf-8-sig') as f:
         record = next(csv.DictReader(f))
     assert float(record['ethos_sas10']) == .25
-    assert record['ethos_report_formula_version'] == 'ethos-report-v1'
+    assert record['ethos_report_formula_version'] == 'ethos-report-v2'
     row = dict(zip(DUAL_MLC_CSV_HEADER, build_dual_mlc_row(metadata, values)))
     assert row['Varian Dual-layer SAS10'] == .25
     contracts = {c.metric_key: c for c in build_metric_formula_contracts() if c.platform=='VMAT_IMRT'}
-    assert contracts['ethos_sas10'].formula_version == 'ethos-report-v1'
+    assert contracts['ethos_sas10'].formula_version == 'ethos-report-v2'
 
 
 @pytest.mark.parametrize('problem', ['incomplete', 'unsupported', 'misaligned'])

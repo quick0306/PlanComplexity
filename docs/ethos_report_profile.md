@@ -4,13 +4,15 @@ SAS10, 1-MCS and Penumbra Ratio are not Ethos-exclusive metrics. This implementa
 applies to the standard Varian dual-layer MLC shared by Ethos and Halcyon.
 The Ethos PDF reports provided comparison values; they do not restrict the
 implementation to Ethos. UI and CSV display labels use "Varian Dual-layer".
-The existing `ethos_*` data keys and `ethos-report-v1` formula identifier are
-retained for compatibility with previously exported results and API consumers.
+The existing `ethos_*` data keys are retained for API compatibility. Formula
+identifier `ethos-report-v2` distinguishes the SAS10 zero-MU correction from v1.
 
 Implement three separately named report metrics without changing generic SAS,
-MCSv, MCS5 or Edge Metric. The report profile is inferred from one paired RP/PDF
-case, and checked on a second supplied sample. Each has nine beams and a
-MU-weighted plan comparison at report precision.
+MCSv, MCS5 or Edge Metric. The report profile was initially inferred from two
+supplied samples and subsequently checked against 12 plans (45 treatment beams
+plus 12 plan summaries). Version 2 excludes zero-center-MU CPs from SAS10 and
+matches all 57 SAS10 display values, correcting three failures in version 1.
+MCS and PR also match all 57 display values, with their formulas unchanged.
 It is not a claim to reproduce proprietary source code or every software version.
 
 Implementation plan: analytic failing tests; bounded geometry and MU validation;
@@ -29,8 +31,12 @@ mask invalid signs: start zero, finite, nondecreasing, positive final weight.
 Open means gap > 0.5 mm + 1e-8 mm numerical tolerance. This threshold is inferred,
 not explicitly established as a universal manufacturer rule by the supplied guide.
 
-- `ethos_sas10`: sum of counts(0.5 < gap <= 10 mm) over all CPs divided by sum
-  of open counts. Every CP counted once, including endpoints; no CP MU weighting.
+- `ethos_sas10`: sum of counts(0.5 < gap <= 10 mm) over CPs with positive
+  centered MU weight divided by their sum of open counts. Each eligible CP is
+  counted once, including endpoints; counts are not weighted by MU magnitude.
+  A CP adjacent to a positive-MU interval remains eligible even if its other
+  interval has zero MU. No eligible open slots means SAS10 is unavailable with
+  a warning; MCS and PR retain their existing calculations.
   The upper boundary also has 1e-8 mm tolerance. The second sample distinguishes
   the inclusive upper boundary: the strict <10 rule misses two beam rows and
   the plan row; <=10 matches both samples at displayed precision.

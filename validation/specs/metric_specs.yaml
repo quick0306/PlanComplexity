@@ -7,7 +7,7 @@ metric_specs:
   label: Varian Dual-layer SAS10
   unit: dimensionless
   aggregation_scope: plan
-  normalization_basis: Pooled open-slot count over all CPs, each endpoint counted once; no CP MU weighting.
+  normalization_basis: Pooled open-slot count over positive-center-MU CPs only, each eligible endpoint counted once; no weighting by CP MU magnitude.
   validation_level: Formula-exact
   comparison_class: not-comparable
   default_tolerance_abs: 1.0e-06
@@ -22,7 +22,7 @@ metric_specs:
   comparable_to: []
   assumptions:
   - Standard staggered 28/29-pair geometry and no jaw clipping; 1e-8 mm boundary tolerance.
-  - Two supplied report comparisons at display precision; second RP/PDF labels differ.
+  - 12 supplied report comparisons at display precision; RP/PDF labels may differ.
   exclusions:
   - Invalid MU, incomplete treatment beam coverage or entirely closed beam.
 - key: ethos_one_minus_mcs
@@ -48,7 +48,7 @@ metric_specs:
   comparable_to: []
   assumptions:
   - Standard staggered 28/29-pair geometry and no jaw clipping; 1e-8 mm boundary tolerance.
-  - Two supplied report comparisons at display precision; second RP/PDF labels differ.
+  - 12 supplied report comparisons at display precision; RP/PDF labels may differ.
   exclusions:
   - Invalid MU, incomplete treatment beam coverage or entirely closed beam.
 - key: ethos_penumbra_ratio
@@ -74,7 +74,7 @@ metric_specs:
   comparable_to: []
   assumptions:
   - Standard staggered 28/29-pair geometry and no jaw clipping; 1e-8 mm boundary tolerance.
-  - Two supplied report comparisons at display precision; second RP/PDF labels differ.
+  - 12 supplied report comparisons at display precision; RP/PDF labels may differ.
   exclusions:
   - Invalid MU, incomplete treatment beam coverage or entirely closed beam.
 - key: mus

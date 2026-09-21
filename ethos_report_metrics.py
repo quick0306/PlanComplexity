@@ -7,7 +7,7 @@ from __future__ import annotations
 import numpy as np
 
 ETHOS_REPORT_KEYS = ('ethos_sas10', 'ethos_one_minus_mcs', 'ethos_penumbra_ratio')
-ETHOS_REPORT_VERSION = 'ethos-report-v1'
+ETHOS_REPORT_VERSION = 'ethos-report-v2'
 CLOSURE_MM = .5
 GEOMETRY_TOL_MM = 1e-8
 TIP_MM = 2.8
@@ -96,8 +96,16 @@ def calculate_ethos_beam_metrics(apertures, cumulative_mu):
         penumbra[i] = 1 - core / areas[i]
     increments = np.diff(mu)
     weights = (np.r_[0., increments] + np.r_[increments, 0.]) / 2
+    # Pool each contributing CP once, regardless of the magnitude of its MU.
+    # A CP remains eligible when either adjacent interval delivers MU.
+    sas_opened = opened & (weights[:, None] > 0)
+    sas_count = np.count_nonzero(sas_opened)
+    sas = (float(np.count_nonzero(sas_opened & (gaps <= 10. + GEOMETRY_TOL_MM)) / sas_count)
+           if sas_count else None)
+    warnings = ([] if sas_count else
+                ['[ETHOS_REPORT_UNAVAILABLE] SAS10 has no open slots at positive-center-MU control points.'])
     return {
-        'ethos_sas10': float(np.count_nonzero(opened & (gaps <= 10. + GEOMETRY_TOL_MM)) / opened.sum()),
+        'ethos_sas10': sas,
         'ethos_one_minus_mcs': float(1 - np.average(areas / envelope * lsv, weights=weights)),
         'ethos_penumbra_ratio': float(np.average(penumbra, weights=weights)),
-    }, []
+    }, warnings

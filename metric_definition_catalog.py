@@ -514,7 +514,7 @@ def _vmat_group(metric_key: str) -> str:
 
 def _vmat_formula(metric_key: str) -> str:
     report_formulas = {
-        "ethos_sas10": "SAS10 = sum_CP count(0.5+1e-8 < gap <= 10+1e-8 mm) / sum_CP count(gap > 0.5+1e-8 mm); beam-MU mean",
+        "ethos_sas10": "SAS10 = sum_positive-center-MU-CP count(0.5+1e-8 < gap <= 10+1e-8 mm) / sum_positive-center-MU-CP count(gap > 0.5+1e-8 mm); beam-MU mean",
         "ethos_one_minus_mcs": "1-MCS = 1 - centered-CP-MU mean(A_open/E_open * LSV); E_open is the open-slot bank envelope; LSV multiplies bank scores 1-sum_physical_adjacent_open(abs(dx))/(N_adjacent_open*range_open_bank); beam-MU mean",
         "ethos_penumbra_ratio": "PR = centered-CP-MU mean(area(union of finite tip 2.8 mm and exposed side 2.3 mm strips)/A_open); beam-MU mean",
     }

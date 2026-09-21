@@ -74,17 +74,17 @@ def _vmat(record) -> dict:
     key, layer = _vmat_base(record.metric_key)
     if key.startswith("ethos_"):
         normalizers = {
-            'ethos_sas10': 'Pooled open-slot count over all CPs, each endpoint counted once; no CP MU weighting.',
+            'ethos_sas10': 'Pooled open-slot count over positive-center-MU CPs only, each eligible endpoint counted once; no weighting by CP MU magnitude.',
             'ethos_one_minus_mcs': 'Open-slot bank-extrema envelope for AAV; each LSV bank uses all-open range, only physically adjacent open differences and their count. Constant bank/no adjacency=>1.',
             'ethos_penumbra_ratio': 'Open aperture area at each CP; union of finite tip 2.8 mm and exposed side 2.3 mm strips, with overlaps counted once.',
         }
         return dict(
-            sampling="Every CP, including endpoints, once for pooled SAS counts; CP products for MCS and CP ratios for PR.",
+            sampling="Positive-center-MU CPs, including eligible endpoints, once for pooled SAS counts; CP products for MCS and CP ratios for PR.",
             active_mask="Effective gap > 0.5 mm + 1e-8 mm; closure mask also used for area and envelope; physical adjacency is preserved.",
             normalization=normalizers[key],
             aggregation="Beam-MU mean; SAS has no CP weights; MCS and PR use " + CP_WEIGHTS,
-            missing_value="Unsupported layout, clipped/nonfinite geometry, invalid cumulative MU, entirely closed beam or incomplete beam coverage => None plus warning; no subset aggregation. Empty CP contributes zero MCS and PR.",
-            representation="Varian Ethos/Halcyon dual-layer MLC (legacy formula ID ethos-report-v1): physical 56 x 5 mm intersection, native 28/29 x 10 mm staggered layers; no jaw clipping. Two-sample display agreement with a second-sample plan-label caveat, not universal vendor validation.",
+            missing_value="Unsupported layout, clipped/nonfinite geometry, invalid cumulative MU, entirely closed beam or incomplete beam coverage => None plus warning; no subset aggregation. Empty CP contributes zero MCS and PR; SAS alone is None with a warning when no eligible open slots remain.",
+            representation="Varian Ethos/Halcyon dual-layer MLC (legacy formula ID ethos-report-v2): physical 56 x 5 mm intersection, native 28/29 x 10 mm staggered layers; no jaw clipping. 12-plan display agreement with RP/PDF plan-label caveats, not universal vendor validation.",
             source_anchors=("ethos_report_metrics.py:calculate_ethos_beam_metrics", "ethos_report_metrics.py:supported_beam_layout"),
             evidence_status="analytic_cases_checked",
         )
