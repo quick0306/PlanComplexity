@@ -1,5 +1,7 @@
 # VMAT/IMRT Hybrid-v2 Metric Contract
 
+Current editable equations: [IMRT/VMAT](vmat_imrt_guide.md) and [Halcyon/Ethos](halcyon_ethos_guide.md).
+
 This records the preceding `hybrid-v2` formula set. The current default is
 `geometry-v4`, which retains the weighted definitions below while
 correcting full perimeter, native MLC boundaries, and dynamic-jaw AAV normalization.

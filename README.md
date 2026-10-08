@@ -6,6 +6,10 @@ VMAT/IMRT, TOMO, CyberKnife MLC, and Aurora SVMAT plans, with a desktop GUI insp
 ## Documentation
 
 Start with the [Chinese user guide](docs/user_guide.md) and [complete document index](docs/README.md).
+Editable Markdown/LaTeX guides cover [IMRT/VMAT](docs/vmat_imrt_guide.md),
+[Halcyon/Ethos](docs/halcyon_ethos_guide.md), [TOMO](docs/tomo_guide.md),
+[CyberKnife MLC](docs/cyberknife_guide.md), and [all Aurora families](docs/aurora_guide.md).
+The [complete equation index](docs/metric_math_index.md) maps every catalog record to its formula family.
 The current Aurora definition is [physical geometry with open-aperture conditional means](docs/aurora_aperture_metrics.md).
 Historical designs, comparisons and validation runs are explicitly separated from current instructions.
 

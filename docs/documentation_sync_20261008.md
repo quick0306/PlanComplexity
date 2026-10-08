@@ -2,6 +2,14 @@
 
 Implementation baseline: `cdc566b` (open-only Aurora update). This change synchronizes documentation and adds a reproducible application-summary PDF exporter; it does not change metric calculation behavior.
 
+## All-platform LaTeX follow-up
+
+Documentation baseline: `1c0d497`. Expanded the update beyond Aurora into five substantive editable Markdown/LaTeX guides: [IMRT/VMAT](vmat_imrt_guide.md), [Halcyon/Ethos](halcyon_ethos_guide.md), [TOMO](tomo_guide.md), [CyberKnife MLC](cyberknife_guide.md), [Aurora V2/V3/legacy/V4](aurora_guide.md). These explain inputs, sampling, weights, geometry, thresholds and missing values against current source and formula contracts. The [complete equation index](metric_math_index.md) maps all 434 registered records, including variants and containers; it does not claim 434 independent scalar formulas or external validation.
+
+The root README, document index, general user guide, current TOMO/Ethos and migration pages link the relevant guides. All five generated definition tables now link every record to the matching equation family. Two new tests enforce family/anchor existence and one-to-one index/appendix coverage. Calculations and existing executable behavior are unchanged. Earlier verification results below describe the preceding documentation revision; fresh results for this follow-up are recorded after verification.
+
+Follow-up verification: full suite 399 passed, 1 skipped, 99 subtests passed (58.07 s). All 60 Markdown files contain 1,619 checked relative link targets with zero broken paths. Final KaTeX strict parsing validated 122 inline/display LaTeX expressions in the five new guides, including the explicit CyberKnife segment-MU normalization. Definition/index export tests were rerun after the final refinement: 7 passed. This validates syntax and navigation, not independent clinical or external numerical equivalence. The generated equation index is also compared byte-for-byte to fresh output by the new coverage test.
+
 ## Findings and corrections
 
 - Replaced the candidate Aurora aperture draft with the implemented seven snake_case keys, physical geometry, MU/open-only aggregation, warnings and missing-value semantics.

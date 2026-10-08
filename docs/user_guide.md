@@ -25,6 +25,20 @@ Windows 用户运行 `dist/PyUCoMX.exe`。源码用户安装 `requirements.txt` 
 
 Aurora 的版本字段标识七项 V4 定义；其余 70 项保留研究/代理定义，不能因此统称为物理孔径指标。
 
+## 各模式的输入与解读
+
+| 模式/机器 | 输入与检查 | 首先核对 | 详细公式 |
+| --- | --- | --- | --- |
+| IMRT/VMAT | 标准 MLC、完整控制点、jaws、meterset | 静态 IMRT 无角运动时不能把运动类零值解释为实际交付平稳；时间是估计值 | [IMRT/VMAT](vmat_imrt_guide.md) |
+| Halcyon/Ethos | 可识别双层及边界，专属结构条件 | 原生层、effective、stacked 分开；报告 SAS10/1−MCS/PR 使用独立配置 | [Halcyon/Ethos](halcyon_ethos_guide.md) |
+| TOMO | 支持的螺旋 sinogram、时间与私有 creator | 内部闭合投影保留；缺时间/场宽的研究回退查看警告，未知床运动不填零 | [TOMO](tomo_guide.md) |
+| CyberKnife MLC | 标准 MLC 或可匹配的 XML 分段 | 无标准 MLC 的 Precision 计划需要 XML；cone/Iris 不在六项支持范围 | [CyberKnife](cyberknife_guide.md) |
+| Aurora SVMAT | 双层控制点、轴向信息；V4 还需真实 bank、边界、jaws、权重 | 旧 70 项代理与 V4 七项分别解释，不自动套用 Halcyon 结构 | [Aurora 全家族](aurora_guide.md) |
+
+同名指标不保证同定义。例如 TOMO MF 为均值/最大值；通用 MCS 使用端点均值乘积，Aurora 是开放端点上的间隙 LSV 改编，CyberKnife XML 又按分段计算。SAS 的严格阈值、计数/权重及闭合规则也因模式不同。请通过[逐键公式索引](metric_math_index.md)查到当前键的公式章节，再对照[逐项契约](metric_formula_contracts.md)。
+
+公式文档以 Markdown 保存，可直接编辑 LaTeX：行内用 `$A$`，独立公式用两行 `$$` 包围。源文件保留符号和方程；在支持数学渲染的 Markdown 预览器中查看。定义表和公式索引由导出器生成，应修改定义源或 `metric_math_links.py` 后重新导出，避免直接编辑生成文件。
+
 ## Aurora 七项的当前口径
 
 用真实叶片边界分别重建每层 A/B 叶片的开放区域，求双层交集并裁剪 X/Y jaws。采样为正 meterset 增量区间的末端控制点。

@@ -1,5 +1,7 @@
 # TOMO input contract (`tomo-v3`)
 
+Readable current equations and interpretation: [TOMO Markdown/LaTeX guide](tomo_guide.md).
+
 > Current TOMO-specific contract; see the [user guide](user_guide.md) for entry points and export. The Aurora open-aperture exclusion rule does not apply to TOMO sinogram projections or alter the zero-row rules below.
 
 The parser reads the selected treatment beam's `ControlPointSequence` from the

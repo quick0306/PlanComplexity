@@ -9,12 +9,20 @@
 | 安装、GUI、CLI、CSV、空值及版本比较 | [使用说明](user_guide.md)、[项目 README](../README.md) |
 | 全指标、分平台定义 | [全部](metric_definitions_all.md)、[VMAT/IMRT](metric_definitions_vmat_imrt.md)、[TOMO](metric_definitions_tomo.md)、[CyberKnife](metric_definitions_cyberknife_mlc.md)、[Aurora](metric_definitions_aurora.md) |
 | 公式、单位、采样、掩码、归一化、缺失规则 | [逐项公式契约](metric_formula_contracts.md) |
+| 可编辑的 Markdown / LaTeX 公式及全指标映射 | [逐键公式索引](metric_math_index.md) |
+| IMRT/VMAT：孔径、MCS、运动、MI、SPORT | [公式与使用](vmat_imrt_guide.md) |
+| Halcyon/Ethos：原生层、effective、stacked、报告配置 | [公式与使用](halcyon_ethos_guide.md) |
+| TOMO：开放时间、sinogram、调制、床运动 | [公式与使用](tomo_guide.md) |
+| CyberKnife MLC：XML 分段与标准 MLC 两条路径 | [公式与使用](cyberknife_guide.md) |
+| Aurora：V2、V3、legacy 与 V4 全家族 | [公式与使用](aurora_guide.md) |
 | Aurora 七项物理几何及开放条件均值 | [当前定义](aurora_aperture_metrics.md)、[版本迁移](aurora_v4_migration.md)、[DeepPlan 兼容](deepplan_aurora_compatibility.md) |
 | TOMO 与 Ethos 专属输入/算法边界 | [TOMO](tomo_input_contract.md)、[Ethos](ethos_report_profile.md) |
 | 精度与基线、发布及回退 | [精度说明](precision_motion_validation.md)、[参考包](reference_pack_v1.md)、[部署回退](deployment_rollback.md)、[临床前提](clinical_implementation_sop.md) |
 | 可下载 PDF | [项目简介](../output/pdf/plancomplexity_app_summary.pdf)、[Aurora 公式](../output/pdf/aurora_metric_formulas.pdf) |
 
 定义 Markdown 和本地 CSV 来自 `metric_definition_catalog.py`；公式契约来自 `metric_formula_contracts.py`；Aurora PDF 复用目录与注释；项目简介 PDF 从当前版本常量和目录生成。修改定义源后必须重新生成，避免手工修改导出文档后被覆盖。命令见[使用说明](user_guide.md)。
+
+五份平台公式说明是可手工编辑的 Markdown，使用 `$...$` 行内公式和 `$$...$$` 独立 LaTeX 公式。`metric_math_links.py` 定义逐家族链接，导出器自动生成逐键索引。新增指标家族必须显式补充公式章节及链接；覆盖测试防止静默遗漏。目录共 434 条记录（VMAT/IMRT 286、TOMO 65、CyberKnife 6、Aurora 77），包含层变体、别名和容器，不能称为 434 个独立标量指标。
 
 ## 历史、研究与计划
 

@@ -5,6 +5,7 @@ import re
 from dataclasses import asdict, dataclass
 from pathlib import Path
 from typing import Iterable, Sequence
+from metric_math_links import math_reference_line, write_math_index
 
 from aurora_svmat_lab.metrics import LEGACY_METRIC_ORDER, V2_METRIC_ORDER, V3_METRIC_ORDER, V4_METRIC_ORDER
 from aurora_svmat_lab.notes import get_metric_notes as get_aurora_metric_notes
@@ -98,6 +99,7 @@ def export_metric_definitions(*, csv_path: str | Path, markdown_path: str | Path
     _write_csv(records, Path(csv_path))
     _write_markdown(records, Path(markdown_path))
     _write_platform_appendices(records, Path(markdown_path).parent)
+    write_math_index(records, Path(markdown_path).parent)
     return records
 
 
@@ -423,6 +425,8 @@ def _write_markdown(records: Sequence[MetricDefinitionRecord], markdown_path: Pa
         "",
         "Definitions are written to match the current code implementation. They are not automatically identical to the original publication notation unless noted.",
         "",
+        "Readable Markdown/LaTeX equations and all-key navigation: [formula index](metric_math_index.md). Every record links to its mode-specific mathematical chapter; sampling and boundary details remain in [formula contracts](metric_formula_contracts.md).",
+        "",
     ]
     sections = [
         ("VMAT/IMRT", "VMAT_IMRT"),
@@ -440,6 +444,7 @@ def _write_markdown(records: Sequence[MetricDefinitionRecord], markdown_path: Pa
                     f"- Group: {record.group}",
                     f"- Symbol/short name: {record.symbol_or_short_name}",
                     f"- Mathematical definition: {record.mathematical_definition}",
+                    math_reference_line(record),
                     f"- Physical meaning: {record.physical_meaning}",
                     f"- Unit: {record.unit}",
                     f"- Inputs required: {record.inputs_required}",
@@ -466,6 +471,8 @@ def _write_platform_appendices(records: Sequence[MetricDefinitionRecord], output
             "",
             "This appendix is generated from the shared metric-definition catalog.",
             "",
+            "Read the linked LaTeX chapter together with the per-key definition and [formula contracts](metric_formula_contracts.md). All-key navigation: [formula index](metric_math_index.md).",
+            "",
         ]
         for record in platform_records:
             lines.extend(
@@ -475,6 +482,7 @@ def _write_platform_appendices(records: Sequence[MetricDefinitionRecord], output
                     f"- Group: {record.group}",
                     f"- Symbol/short name: {record.symbol_or_short_name}",
                     f"- Mathematical definition: {record.mathematical_definition}",
+                    math_reference_line(record),
                     f"- Physical meaning: {record.physical_meaning}",
                     f"- Unit: {record.unit}",
                     f"- Inputs required: {record.inputs_required}",

@@ -1,5 +1,7 @@
 # Geometry-v3 and TOMO-v2 migration
 
+Current editable equations: [IMRT/VMAT](vmat_imrt_guide.md), [CyberKnife](cyberknife_guide.md), [TOMO](tomo_guide.md).
+
 > Scope: historical VMAT/IMRT and CyberKnife geometry migration. Current versions and operation are indexed in [docs/README](README.md). Aurora uses its separate [dual-layer/open-only contract](aurora_aperture_metrics.md); do not transfer sampling or MCS definitions across modes.
 
 This document preserves the preceding `geometry-v3` / `tomo-v2` migration and its

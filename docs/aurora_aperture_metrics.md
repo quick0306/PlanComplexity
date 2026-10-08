@@ -1,5 +1,7 @@
 # Aurora 物理孔径指标：当前定义
 
+所有 Aurora 家族（V2/V3/legacy/V4）的可编辑 LaTeX 公式见 [Aurora 全平台说明](aurora_guide.md)。
+
 当前版本：`aurora-v4-physical-aperture-open-only`（2026-10-08）。本文替代原候选指标草案，导出键使用小写 snake_case。实现依据为 `aurora_svmat_lab/aperture_metrics.py`；逐项定义见[指标目录](metric_definitions_aurora.md)和[公式契约](metric_formula_contracts.md)，历史见[迁移记录](aurora_v4_migration.md)。
 
 ## 几何与采样

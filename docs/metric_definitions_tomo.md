@@ -2,11 +2,14 @@
 
 This appendix is generated from the shared metric-definition catalog.
 
+Read the linked LaTeX chapter together with the per-key definition and [formula contracts](metric_formula_contracts.md). All-key navigation: [formula index](metric_math_index.md).
+
 ## `mf` - MF
 
 - Group: Delivery
 - Symbol/short name: MF
 - Mathematical definition: MF = mean(non-zero LOT) / max(LOT)
+- LaTeX reference: [Readable equations and mode-specific conventions](tomo_guide.md#delivery)
 - Physical meaning: Ratio describing how strongly the sinogram is modulated overall.
 - Unit: dimensionless
 - Inputs required: Sinogram metadata: projection time, projections per rotation, field width, pitch, couch travel, dose
@@ -18,6 +21,7 @@ This appendix is generated from the shared metric-definition catalog.
 - Group: Delivery
 - Symbol/short name: N proj,rot
 - Mathematical definition: N proj,rot = configured projections per rotation
+- LaTeX reference: [Readable equations and mode-specific conventions](tomo_guide.md#delivery)
 - Physical meaning: Number of projections delivered in one full gantry rotation.
 - Unit: count
 - Inputs required: Sinogram metadata: projection time, projections per rotation, field width, pitch, couch travel, dose
@@ -29,6 +33,7 @@ This appendix is generated from the shared metric-definition catalog.
 - Group: Delivery
 - Symbol/short name: N proj
 - Mathematical definition: N proj = number of sinogram projections
+- LaTeX reference: [Readable equations and mode-specific conventions](tomo_guide.md#delivery)
 - Physical meaning: Total number of projections in the plan.
 - Unit: count
 - Inputs required: Sinogram metadata: projection time, projections per rotation, field width, pitch, couch travel, dose
@@ -40,6 +45,7 @@ This appendix is generated from the shared metric-definition catalog.
 - Group: Delivery
 - Symbol/short name: N rot
 - Mathematical definition: N rot = N proj / N proj,rot
+- LaTeX reference: [Readable equations and mode-specific conventions](tomo_guide.md#delivery)
 - Physical meaning: Total number of gantry rotations in the plan.
 - Unit: count
 - Inputs required: Sinogram metadata: projection time, projections per rotation, field width, pitch, couch travel, dose
@@ -51,6 +57,7 @@ This appendix is generated from the shared metric-definition catalog.
 - Group: Delivery
 - Symbol/short name: PT
 - Mathematical definition: PT = projection time
+- LaTeX reference: [Readable equations and mode-specific conventions](tomo_guide.md#delivery)
 - Physical meaning: Duration of each projection.
 - Unit: s
 - Inputs required: Sinogram metadata: projection time, projections per rotation, field width, pitch, couch travel, dose
@@ -62,6 +69,7 @@ This appendix is generated from the shared metric-definition catalog.
 - Group: Delivery
 - Symbol/short name: GP
 - Mathematical definition: GP = PT * N proj,rot
+- LaTeX reference: [Readable equations and mode-specific conventions](tomo_guide.md#delivery)
 - Physical meaning: Time required for one full gantry rotation.
 - Unit: s
 - Inputs required: Sinogram metadata: projection time, projections per rotation, field width, pitch, couch travel, dose
@@ -73,6 +81,7 @@ This appendix is generated from the shared metric-definition catalog.
 - Group: Delivery
 - Symbol/short name: TT
 - Mathematical definition: TT = PT * N proj
+- LaTeX reference: [Readable equations and mode-specific conventions](tomo_guide.md#delivery)
 - Physical meaning: Total beam-on treatment time.
 - Unit: s
 - Inputs required: Sinogram metadata: projection time, projections per rotation, field width, pitch, couch travel, dose
@@ -84,6 +93,7 @@ This appendix is generated from the shared metric-definition catalog.
 - Group: Delivery
 - Symbol/short name: FW
 - Mathematical definition: FW = nominal tomotherapy field width
+- LaTeX reference: [Readable equations and mode-specific conventions](tomo_guide.md#delivery)
 - Physical meaning: Nominal field width used for the plan.
 - Unit: mm
 - Inputs required: Sinogram metadata: projection time, projections per rotation, field width, pitch, couch travel, dose
@@ -95,6 +105,7 @@ This appendix is generated from the shared metric-definition catalog.
 - Group: Delivery
 - Symbol/short name: Pitch
 - Mathematical definition: Pitch = couch advance per rotation / field width
+- LaTeX reference: [Readable equations and mode-specific conventions](tomo_guide.md#delivery)
 - Physical meaning: Ratio between couch travel per rotation and field width.
 - Unit: dimensionless
 - Inputs required: Sinogram metadata: projection time, projections per rotation, field width, pitch, couch travel, dose
@@ -106,6 +117,7 @@ This appendix is generated from the shared metric-definition catalog.
 - Group: Delivery
 - Symbol/short name: CT
 - Mathematical definition: CT = total couch travel
+- LaTeX reference: [Readable equations and mode-specific conventions](tomo_guide.md#delivery)
 - Physical meaning: Total couch translation during treatment.
 - Unit: mm
 - Inputs required: Sinogram metadata: projection time, projections per rotation, field width, pitch, couch travel, dose
@@ -117,6 +129,7 @@ This appendix is generated from the shared metric-definition catalog.
 - Group: Delivery
 - Symbol/short name: CS
 - Mathematical definition: CS = CT / TT
+- LaTeX reference: [Readable equations and mode-specific conventions](tomo_guide.md#delivery)
 - Physical meaning: Average couch translation speed.
 - Unit: mm/s
 - Inputs required: Sinogram metadata: projection time, projections per rotation, field width, pitch, couch travel, dose
@@ -128,6 +141,7 @@ This appendix is generated from the shared metric-definition catalog.
 - Group: Delivery
 - Symbol/short name: TL
 - Mathematical definition: TL = couch translation - field width
+- LaTeX reference: [Readable equations and mode-specific conventions](tomo_guide.md#delivery)
 - Physical meaning: Estimated target length covered by the plan.
 - Unit: mm
 - Inputs required: Sinogram metadata: projection time, projections per rotation, field width, pitch, couch travel, dose
@@ -139,6 +153,7 @@ This appendix is generated from the shared metric-definition catalog.
 - Group: Delivery
 - Symbol/short name: TTDF
 - Mathematical definition: TTDF = TT / dose per fraction in cGy
+- LaTeX reference: [Readable equations and mode-specific conventions](tomo_guide.md#delivery)
 - Physical meaning: Treatment time normalized by dose per fraction.
 - Unit: s/cGy
 - Inputs required: Sinogram metadata: projection time, projections per rotation, field width, pitch, couch travel, dose
@@ -150,6 +165,7 @@ This appendix is generated from the shared metric-definition catalog.
 - Group: Leaf open time
 - Symbol/short name: mLOT
 - Mathematical definition: mLOT = mean(LOT)
+- LaTeX reference: [Readable equations and mode-specific conventions](tomo_guide.md#leaf-times)
 - Physical meaning: Mean leaf open time across all open leaves.
 - Unit: ms
 - Inputs required: Sinogram matrix, non-zero leaf open times, and per-leaf open/closed topology
@@ -161,6 +177,7 @@ This appendix is generated from the shared metric-definition catalog.
 - Group: Leaf open time
 - Symbol/short name: sdLOT
 - Mathematical definition: sdLOT = std(LOT)
+- LaTeX reference: [Readable equations and mode-specific conventions](tomo_guide.md#leaf-times)
 - Physical meaning: Standard deviation of leaf open time.
 - Unit: ms
 - Inputs required: Sinogram matrix, non-zero leaf open times, and per-leaf open/closed topology
@@ -172,6 +189,7 @@ This appendix is generated from the shared metric-definition catalog.
 - Group: Leaf open time
 - Symbol/short name: mdLOT
 - Mathematical definition: mdLOT = median(LOT)
+- LaTeX reference: [Readable equations and mode-specific conventions](tomo_guide.md#leaf-times)
 - Physical meaning: Median leaf open time.
 - Unit: ms
 - Inputs required: Sinogram matrix, non-zero leaf open times, and per-leaf open/closed topology
@@ -183,6 +201,7 @@ This appendix is generated from the shared metric-definition catalog.
 - Group: Leaf open time
 - Symbol/short name: moLOT
 - Mathematical definition: moLOT = mode(LOT)
+- LaTeX reference: [Readable equations and mode-specific conventions](tomo_guide.md#leaf-times)
 - Physical meaning: Most frequent leaf open time.
 - Unit: ms
 - Inputs required: Sinogram matrix, non-zero leaf open times, and per-leaf open/closed topology
@@ -194,6 +213,7 @@ This appendix is generated from the shared metric-definition catalog.
 - Group: Leaf open time
 - Symbol/short name: maxLOT
 - Mathematical definition: maxLOT = max(LOT)
+- LaTeX reference: [Readable equations and mode-specific conventions](tomo_guide.md#leaf-times)
 - Physical meaning: Maximum leaf open time.
 - Unit: ms
 - Inputs required: Sinogram matrix, non-zero leaf open times, and per-leaf open/closed topology
@@ -205,6 +225,7 @@ This appendix is generated from the shared metric-definition catalog.
 - Group: Leaf open time
 - Symbol/short name: minLOT
 - Mathematical definition: minLOT = min(non-zero LOT)
+- LaTeX reference: [Readable equations and mode-specific conventions](tomo_guide.md#leaf-times)
 - Physical meaning: Minimum non-zero leaf open time.
 - Unit: ms
 - Inputs required: Sinogram matrix, non-zero leaf open times, and per-leaf open/closed topology
@@ -216,6 +237,7 @@ This appendix is generated from the shared metric-definition catalog.
 - Group: Leaf open time
 - Symbol/short name: kLOT
 - Mathematical definition: kLOT = kurtosis(LOT)
+- LaTeX reference: [Readable equations and mode-specific conventions](tomo_guide.md#leaf-times)
 - Physical meaning: Kurtosis of the leaf open time distribution.
 - Unit: dimensionless
 - Inputs required: Sinogram matrix, non-zero leaf open times, and per-leaf open/closed topology
@@ -227,6 +249,7 @@ This appendix is generated from the shared metric-definition catalog.
 - Group: Leaf open time
 - Symbol/short name: sLOT
 - Mathematical definition: sLOT = skewness(LOT)
+- LaTeX reference: [Readable equations and mode-specific conventions](tomo_guide.md#leaf-times)
 - Physical meaning: Skewness of the leaf open time distribution.
 - Unit: dimensionless
 - Inputs required: Sinogram matrix, non-zero leaf open times, and per-leaf open/closed topology
@@ -238,6 +261,7 @@ This appendix is generated from the shared metric-definition catalog.
 - Group: Leaf open time
 - Symbol/short name: CLNS10
 - Mathematical definition: CLNS10 = count(0 < LOT < 10 ms) / count(non-zero LOT)
+- LaTeX reference: [Readable equations and mode-specific conventions](tomo_guide.md#leaf-times)
 - Physical meaning: Fraction of leaf open times shorter than 10 ms.
 - Unit: dimensionless
 - Inputs required: Sinogram matrix, non-zero leaf open times, and per-leaf open/closed topology
@@ -249,6 +273,7 @@ This appendix is generated from the shared metric-definition catalog.
 - Group: Leaf open time
 - Symbol/short name: CLNS20
 - Mathematical definition: CLNS20 = count(0 < LOT < 20 ms) / count(non-zero LOT)
+- LaTeX reference: [Readable equations and mode-specific conventions](tomo_guide.md#leaf-times)
 - Physical meaning: Fraction of leaf open times shorter than 20 ms.
 - Unit: dimensionless
 - Inputs required: Sinogram matrix, non-zero leaf open times, and per-leaf open/closed topology
@@ -260,6 +285,7 @@ This appendix is generated from the shared metric-definition catalog.
 - Group: Leaf open time
 - Symbol/short name: CLNS30
 - Mathematical definition: CLNS30 = count(0 < LOT < 30 ms) / count(non-zero LOT)
+- LaTeX reference: [Readable equations and mode-specific conventions](tomo_guide.md#leaf-times)
 - Physical meaning: Fraction of leaf open times shorter than 30 ms.
 - Unit: dimensionless
 - Inputs required: Sinogram matrix, non-zero leaf open times, and per-leaf open/closed topology
@@ -271,6 +297,7 @@ This appendix is generated from the shared metric-definition catalog.
 - Group: Leaf open time
 - Symbol/short name: CLNS50
 - Mathematical definition: CLNS50 = count(0 < LOT < 50 ms) / count(non-zero LOT)
+- LaTeX reference: [Readable equations and mode-specific conventions](tomo_guide.md#leaf-times)
 - Physical meaning: Fraction of leaf open times shorter than 50 ms.
 - Unit: dimensionless
 - Inputs required: Sinogram matrix, non-zero leaf open times, and per-leaf open/closed topology
@@ -282,6 +309,7 @@ This appendix is generated from the shared metric-definition catalog.
 - Group: Leaf open time
 - Symbol/short name: CLNSpt10
 - Mathematical definition: CLNSpt10 = count(LOT > projection time - 10 ms) / count(non-zero LOT)
+- LaTeX reference: [Readable equations and mode-specific conventions](tomo_guide.md#leaf-times)
 - Physical meaning: Fraction of leaf open times within 10 ms of the projection time.
 - Unit: dimensionless
 - Inputs required: Sinogram matrix, non-zero leaf open times, and per-leaf open/closed topology
@@ -293,6 +321,7 @@ This appendix is generated from the shared metric-definition catalog.
 - Group: Leaf open time
 - Symbol/short name: CLNSpt20
 - Mathematical definition: CLNSpt20 = count(LOT > projection time - 20 ms) / count(non-zero LOT)
+- LaTeX reference: [Readable equations and mode-specific conventions](tomo_guide.md#leaf-times)
 - Physical meaning: Fraction of leaf open times within 20 ms of the projection time.
 - Unit: dimensionless
 - Inputs required: Sinogram matrix, non-zero leaf open times, and per-leaf open/closed topology
@@ -304,6 +333,7 @@ This appendix is generated from the shared metric-definition catalog.
 - Group: Leaf open time
 - Symbol/short name: CLNSpt30
 - Mathematical definition: CLNSpt30 = count(LOT > projection time - 30 ms) / count(non-zero LOT)
+- LaTeX reference: [Readable equations and mode-specific conventions](tomo_guide.md#leaf-times)
 - Physical meaning: Fraction of leaf open times within 30 ms of the projection time.
 - Unit: dimensionless
 - Inputs required: Sinogram matrix, non-zero leaf open times, and per-leaf open/closed topology
@@ -315,6 +345,7 @@ This appendix is generated from the shared metric-definition catalog.
 - Group: Leaf open time
 - Symbol/short name: CLNSpt50
 - Mathematical definition: CLNSpt50 = count(LOT > projection time - 50 ms) / count(non-zero LOT)
+- LaTeX reference: [Readable equations and mode-specific conventions](tomo_guide.md#leaf-times)
 - Physical meaning: Fraction of leaf open times within 50 ms of the projection time.
 - Unit: dimensionless
 - Inputs required: Sinogram matrix, non-zero leaf open times, and per-leaf open/closed topology
@@ -326,6 +357,7 @@ This appendix is generated from the shared metric-definition catalog.
 - Group: Leaf open time
 - Symbol/short name: mFLOT
 - Mathematical definition: mFLOT = mean(FLOT)
+- LaTeX reference: [Readable equations and mode-specific conventions](tomo_guide.md#leaf-times)
 - Physical meaning: Mean fractional leaf open time.
 - Unit: dimensionless
 - Inputs required: Sinogram matrix, non-zero leaf open times, and per-leaf open/closed topology
@@ -337,6 +369,7 @@ This appendix is generated from the shared metric-definition catalog.
 - Group: Leaf open time
 - Symbol/short name: sdFLOT
 - Mathematical definition: sdFLOT = std(FLOT)
+- LaTeX reference: [Readable equations and mode-specific conventions](tomo_guide.md#leaf-times)
 - Physical meaning: Standard deviation of fractional leaf open time.
 - Unit: dimensionless
 - Inputs required: Sinogram matrix, non-zero leaf open times, and per-leaf open/closed topology
@@ -348,6 +381,7 @@ This appendix is generated from the shared metric-definition catalog.
 - Group: Leaf open time
 - Symbol/short name: mdFLOT
 - Mathematical definition: mdFLOT = median(FLOT)
+- LaTeX reference: [Readable equations and mode-specific conventions](tomo_guide.md#leaf-times)
 - Physical meaning: Median fractional leaf open time.
 - Unit: dimensionless
 - Inputs required: Sinogram matrix, non-zero leaf open times, and per-leaf open/closed topology
@@ -359,6 +393,7 @@ This appendix is generated from the shared metric-definition catalog.
 - Group: Leaf open time
 - Symbol/short name: moFLOT
 - Mathematical definition: moFLOT = mode(FLOT)
+- LaTeX reference: [Readable equations and mode-specific conventions](tomo_guide.md#leaf-times)
 - Physical meaning: Most frequent fractional leaf open time.
 - Unit: dimensionless
 - Inputs required: Sinogram matrix, non-zero leaf open times, and per-leaf open/closed topology
@@ -370,6 +405,7 @@ This appendix is generated from the shared metric-definition catalog.
 - Group: Leaf open time
 - Symbol/short name: maxFLOT
 - Mathematical definition: maxFLOT = max(FLOT)
+- LaTeX reference: [Readable equations and mode-specific conventions](tomo_guide.md#leaf-times)
 - Physical meaning: Maximum fractional leaf open time.
 - Unit: dimensionless
 - Inputs required: Sinogram matrix, non-zero leaf open times, and per-leaf open/closed topology
@@ -381,6 +417,7 @@ This appendix is generated from the shared metric-definition catalog.
 - Group: Leaf open time
 - Symbol/short name: minFLOT
 - Mathematical definition: minFLOT = min(non-zero FLOT)
+- LaTeX reference: [Readable equations and mode-specific conventions](tomo_guide.md#leaf-times)
 - Physical meaning: Minimum non-zero fractional leaf open time.
 - Unit: dimensionless
 - Inputs required: Sinogram matrix, non-zero leaf open times, and per-leaf open/closed topology
@@ -392,6 +429,7 @@ This appendix is generated from the shared metric-definition catalog.
 - Group: Leaf open time
 - Symbol/short name: CFNS0.1
 - Mathematical definition: CFNS0.1 = count(FLOT < 0.1) / count(non-zero FLOT)
+- LaTeX reference: [Readable equations and mode-specific conventions](tomo_guide.md#leaf-times)
 - Physical meaning: Fraction of fractional leaf open times below 0.1.
 - Unit: dimensionless
 - Inputs required: Sinogram matrix, non-zero leaf open times, and per-leaf open/closed topology
@@ -403,6 +441,7 @@ This appendix is generated from the shared metric-definition catalog.
 - Group: Leaf open time
 - Symbol/short name: CFNS0.25
 - Mathematical definition: CFNS0.25 = count(FLOT < 0.25) / count(non-zero FLOT)
+- LaTeX reference: [Readable equations and mode-specific conventions](tomo_guide.md#leaf-times)
 - Physical meaning: Fraction of fractional leaf open times below 0.25.
 - Unit: dimensionless
 - Inputs required: Sinogram matrix, non-zero leaf open times, and per-leaf open/closed topology
@@ -414,6 +453,7 @@ This appendix is generated from the shared metric-definition catalog.
 - Group: Leaf open time
 - Symbol/short name: CFNS0.5
 - Mathematical definition: CFNS0.5 = count(FLOT < 0.5) / count(non-zero FLOT)
+- LaTeX reference: [Readable equations and mode-specific conventions](tomo_guide.md#leaf-times)
 - Physical meaning: Fraction of fractional leaf open times below 0.5.
 - Unit: dimensionless
 - Inputs required: Sinogram matrix, non-zero leaf open times, and per-leaf open/closed topology
@@ -425,6 +465,7 @@ This appendix is generated from the shared metric-definition catalog.
 - Group: Leaf open time
 - Symbol/short name: CFNS0.75
 - Mathematical definition: CFNS0.75 = count(FLOT < 0.75) / count(non-zero FLOT)
+- LaTeX reference: [Readable equations and mode-specific conventions](tomo_guide.md#leaf-times)
 - Physical meaning: Fraction of fractional leaf open times below 0.75.
 - Unit: dimensionless
 - Inputs required: Sinogram matrix, non-zero leaf open times, and per-leaf open/closed topology
@@ -436,6 +477,7 @@ This appendix is generated from the shared metric-definition catalog.
 - Group: Sinogram geometry
 - Symbol/short name: TA
 - Mathematical definition: TA = mean projection treatment width across the sinogram
+- LaTeX reference: [Readable equations and mode-specific conventions](tomo_guide.md#sinogram-geometry)
 - Physical meaning: Average width of the treated sinogram area per projection.
 - Unit: leaf slots
 - Inputs required: Sinogram matrix, non-zero leaf open times, and per-leaf open/closed topology
@@ -447,6 +489,7 @@ This appendix is generated from the shared metric-definition catalog.
 - Group: Sinogram geometry
 - Symbol/short name: nCC
 - Mathematical definition: nCC = mean number of connected open components per projection
+- LaTeX reference: [Readable equations and mode-specific conventions](tomo_guide.md#sinogram-geometry)
 - Physical meaning: Average number of disconnected open components per projection.
 - Unit: count
 - Inputs required: Sinogram matrix, non-zero leaf open times, and per-leaf open/closed topology
@@ -458,6 +501,7 @@ This appendix is generated from the shared metric-definition catalog.
 - Group: Sinogram geometry
 - Symbol/short name: lengthCC
 - Mathematical definition: lengthCC = mean connected-component length in the sinogram
+- LaTeX reference: [Readable equations and mode-specific conventions](tomo_guide.md#sinogram-geometry)
 - Physical meaning: Average length of connected open sinogram components.
 - Unit: leaf slots
 - Inputs required: Sinogram matrix, non-zero leaf open times, and per-leaf open/closed topology
@@ -469,6 +513,7 @@ This appendix is generated from the shared metric-definition catalog.
 - Group: Sinogram geometry
 - Symbol/short name: fDISC
 - Mathematical definition: fDISC = fraction(projections with more than one connected component)
+- LaTeX reference: [Readable equations and mode-specific conventions](tomo_guide.md#sinogram-geometry)
 - Physical meaning: Fraction of projections with discontinuous open regions.
 - Unit: dimensionless
 - Inputs required: Sinogram matrix, non-zero leaf open times, and per-leaf open/closed topology
@@ -480,6 +525,7 @@ This appendix is generated from the shared metric-definition catalog.
 - Group: Sinogram geometry
 - Symbol/short name: CLS
 - Mathematical definition: CLS = mean[(N_leaves - open leaves) / N_leaves] over projections
+- LaTeX reference: [Readable equations and mode-specific conventions](tomo_guide.md#sinogram-geometry)
 - Physical meaning: Fraction of leaves that remain closed across the full sinogram width.
 - Unit: dimensionless
 - Inputs required: Sinogram matrix, non-zero leaf open times, and per-leaf open/closed topology
@@ -491,6 +537,7 @@ This appendix is generated from the shared metric-definition catalog.
 - Group: Sinogram geometry
 - Symbol/short name: CLSin
 - Mathematical definition: CLSin = mean_nonempty_rows(closed leaves inside treatment span / total number of leaf columns)
+- LaTeX reference: [Readable equations and mode-specific conventions](tomo_guide.md#sinogram-geometry)
 - Physical meaning: Closed leaf score within the treatment area.
 - Unit: dimensionless
 - Inputs required: Sinogram matrix, non-zero leaf open times, and per-leaf open/closed topology
@@ -502,6 +549,7 @@ This appendix is generated from the shared metric-definition catalog.
 - Group: Sinogram geometry
 - Symbol/short name: CLSinarea
 - Mathematical definition: CLSinarea = mean(closed leaves inside the treatment area / treatment area)
+- LaTeX reference: [Readable equations and mode-specific conventions](tomo_guide.md#sinogram-geometry)
 - Physical meaning: Closed leaf score within the treatment area, normalized by area.
 - Unit: dimensionless
 - Inputs required: Sinogram matrix, non-zero leaf open times, and per-leaf open/closed topology
@@ -513,6 +561,7 @@ This appendix is generated from the shared metric-definition catalog.
 - Group: Sinogram geometry
 - Symbol/short name: CLSindisc
 - Mathematical definition: CLSindisc = CLSin restricted to discontinuous projections
+- LaTeX reference: [Readable equations and mode-specific conventions](tomo_guide.md#sinogram-geometry)
 - Physical meaning: Closed leaf score within discontinuous treatment projections.
 - Unit: dimensionless
 - Inputs required: Sinogram matrix, non-zero leaf open times, and per-leaf open/closed topology
@@ -524,6 +573,7 @@ This appendix is generated from the shared metric-definition catalog.
 - Group: Sinogram geometry
 - Symbol/short name: CLSinareadisc
 - Mathematical definition: CLSinareadisc = area-normalized CLSin restricted to discontinuous projections
+- LaTeX reference: [Readable equations and mode-specific conventions](tomo_guide.md#sinogram-geometry)
 - Physical meaning: Area-normalized closed leaf score for discontinuous projections.
 - Unit: dimensionless
 - Inputs required: Sinogram matrix, non-zero leaf open times, and per-leaf open/closed topology
@@ -535,6 +585,7 @@ This appendix is generated from the shared metric-definition catalog.
 - Group: Sinogram geometry
 - Symbol/short name: Centroid
 - Mathematical definition: Centroid = mean lateral centroid of open leaves over projections
+- LaTeX reference: [Readable equations and mode-specific conventions](tomo_guide.md#sinogram-geometry)
 - Physical meaning: Average lateral position of the open sinogram barycenter.
 - Unit: leaf-index displacement
 - Inputs required: Sinogram matrix, non-zero leaf open times, and per-leaf open/closed topology
@@ -546,6 +597,7 @@ This appendix is generated from the shared metric-definition catalog.
 - Group: Sinogram geometry
 - Symbol/short name: L0NS
 - Mathematical definition: L0NS = mean fraction of open leaves with 0 open nearest neighbors
+- LaTeX reference: [Readable equations and mode-specific conventions](tomo_guide.md#sinogram-geometry)
 - Physical meaning: Fraction of open leaves with no open nearest neighbors.
 - Unit: proportion
 - Inputs required: Sinogram matrix, non-zero leaf open times, and per-leaf open/closed topology
@@ -557,6 +609,7 @@ This appendix is generated from the shared metric-definition catalog.
 - Group: Sinogram geometry
 - Symbol/short name: L1NS
 - Mathematical definition: L1NS = mean fraction of open leaves with 1 open nearest neighbor
+- LaTeX reference: [Readable equations and mode-specific conventions](tomo_guide.md#sinogram-geometry)
 - Physical meaning: Fraction of open leaves with one open nearest neighbor.
 - Unit: proportion
 - Inputs required: Sinogram matrix, non-zero leaf open times, and per-leaf open/closed topology
@@ -568,6 +621,7 @@ This appendix is generated from the shared metric-definition catalog.
 - Group: Sinogram geometry
 - Symbol/short name: L2NS
 - Mathematical definition: L2NS = mean fraction of open leaves with 2 open nearest neighbors
+- LaTeX reference: [Readable equations and mode-specific conventions](tomo_guide.md#sinogram-geometry)
 - Physical meaning: Fraction of open leaves with two open nearest neighbors.
 - Unit: proportion
 - Inputs required: Sinogram matrix, non-zero leaf open times, and per-leaf open/closed topology
@@ -579,6 +633,7 @@ This appendix is generated from the shared metric-definition catalog.
 - Group: Leaf open time
 - Symbol/short name: LOTV
 - Mathematical definition: LOTV = mean over leaves of [ sum(max(LOT) - abs(delta LOT)) / ((N_proj - 1) * max(LOT)) ]
+- LaTeX reference: [Readable equations and mode-specific conventions](tomo_guide.md#leaf-times)
 - Physical meaning: Variability of leaf open time across consecutive projections.
 - Unit: dimensionless
 - Inputs required: Sinogram matrix, non-zero leaf open times, and per-leaf open/closed topology
@@ -590,6 +645,7 @@ This appendix is generated from the shared metric-definition catalog.
 - Group: Leaf open time
 - Symbol/short name: ELOTV-1
 - Mathematical definition: ELOTV-1 = mean normalized abs(LOT_i - LOT_{i+1}) over leaves
+- LaTeX reference: [Readable equations and mode-specific conventions](tomo_guide.md#leaf-times)
 - Physical meaning: Extended leaf open time variability using a one-projection offset.
 - Unit: dimensionless
 - Inputs required: Sinogram matrix, non-zero leaf open times, and per-leaf open/closed topology
@@ -601,6 +657,7 @@ This appendix is generated from the shared metric-definition catalog.
 - Group: Leaf open time
 - Symbol/short name: ELOTV-5
 - Mathematical definition: ELOTV-5 = mean normalized abs(LOT_i - LOT_{i+5}) over leaves
+- LaTeX reference: [Readable equations and mode-specific conventions](tomo_guide.md#leaf-times)
 - Physical meaning: Extended leaf open time variability using a five-projection offset.
 - Unit: dimensionless
 - Inputs required: Sinogram matrix, non-zero leaf open times, and per-leaf open/closed topology
@@ -612,6 +669,7 @@ This appendix is generated from the shared metric-definition catalog.
 - Group: Sinogram modulation
 - Symbol/short name: PSTV
 - Mathematical definition: PSTV = EPSTV with delta projection = 1 and delta leaf = 1
+- LaTeX reference: [Readable equations and mode-specific conventions](tomo_guide.md#modulation)
 - Physical meaning: Plan sinogram time variability across neighboring projections and leaves.
 - Unit: dimensionless
 - Inputs required: Sinogram matrix, non-zero leaf open times, and per-leaf open/closed topology
@@ -623,6 +681,7 @@ This appendix is generated from the shared metric-definition catalog.
 - Group: Sinogram modulation
 - Symbol/short name: EPSTV-1,1
 - Mathematical definition: EPSTV-1,1 = mean of abs(delta projection) + abs(delta leaf) sinogram differences for offsets (1,1)
+- LaTeX reference: [Readable equations and mode-specific conventions](tomo_guide.md#modulation)
 - Physical meaning: Extended plan sinogram time variability using one-step projection and leaf offsets.
 - Unit: dimensionless
 - Inputs required: Sinogram matrix, non-zero leaf open times, and per-leaf open/closed topology
@@ -634,6 +693,7 @@ This appendix is generated from the shared metric-definition catalog.
 - Group: Sinogram modulation
 - Symbol/short name: EPSTV-1,0
 - Mathematical definition: EPSTV-1,0 = mean sinogram difference for projection offset 1 and leaf offset 0
+- LaTeX reference: [Readable equations and mode-specific conventions](tomo_guide.md#modulation)
 - Physical meaning: Extended plan sinogram time variability using only a projection offset.
 - Unit: dimensionless
 - Inputs required: Sinogram matrix, non-zero leaf open times, and per-leaf open/closed topology
@@ -645,6 +705,7 @@ This appendix is generated from the shared metric-definition catalog.
 - Group: Sinogram modulation
 - Symbol/short name: EPSTV-0,1
 - Mathematical definition: EPSTV-0,1 = mean sinogram difference for projection offset 0 and leaf offset 1
+- LaTeX reference: [Readable equations and mode-specific conventions](tomo_guide.md#modulation)
 - Physical meaning: Extended plan sinogram time variability using only a leaf offset.
 - Unit: dimensionless
 - Inputs required: Sinogram matrix, non-zero leaf open times, and per-leaf open/closed topology
@@ -656,6 +717,7 @@ This appendix is generated from the shared metric-definition catalog.
 - Group: Sinogram modulation
 - Symbol/short name: MI
 - Mathematical definition: MI = trapezoidal integral over threshold factor f of the mean fraction of directional sinogram differences exceeding f * sd(FLOT)
+- LaTeX reference: [Readable equations and mode-specific conventions](tomo_guide.md#modulation)
 - Physical meaning: Overall modulation index of the tomotherapy sinogram.
 - Unit: dimensionless
 - Inputs required: Sinogram matrix, non-zero leaf open times, and per-leaf open/closed topology
@@ -667,6 +729,7 @@ This appendix is generated from the shared metric-definition catalog.
 - Group: Sinogram modulation
 - Symbol/short name: nOC
 - Mathematical definition: nOC = mean per leaf of [2 * merged open intervals / N_proj]
+- LaTeX reference: [Readable equations and mode-specific conventions](tomo_guide.md#modulation)
 - Physical meaning: Average number of leaf openings and closures per leaf.
 - Unit: count
 - Inputs required: Sinogram matrix, non-zero leaf open times, and per-leaf open/closed topology
@@ -678,6 +741,7 @@ This appendix is generated from the shared metric-definition catalog.
 - Group: Sinogram modulation
 - Symbol/short name: mSA
 - Mathematical definition: mSA = sum(position * mean leaf opening) / sum(mean leaf opening)
+- LaTeX reference: [Readable equations and mode-specific conventions](tomo_guide.md#modulation)
 - Physical meaning: Mean left-right asymmetry of the sinogram.
 - Unit: leaf-index displacement
 - Inputs required: Sinogram matrix, non-zero leaf open times, and per-leaf open/closed topology
@@ -689,6 +753,7 @@ This appendix is generated from the shared metric-definition catalog.
 - Group: Sinogram modulation
 - Symbol/short name: mSI
 - Mathematical definition: mSI = mean leaf-open intensity over leaves
+- LaTeX reference: [Readable equations and mode-specific conventions](tomo_guide.md#modulation)
 - Physical meaning: Mean sinogram intensity.
 - Unit: dimensionless
 - Inputs required: Sinogram matrix, non-zero leaf open times, and per-leaf open/closed topology
@@ -700,6 +765,7 @@ This appendix is generated from the shared metric-definition catalog.
 - Group: Sinogram modulation
 - Symbol/short name: mdSI
 - Mathematical definition: mdSI = median leaf-open intensity over leaves
+- LaTeX reference: [Readable equations and mode-specific conventions](tomo_guide.md#modulation)
 - Physical meaning: Median sinogram intensity.
 - Unit: dimensionless
 - Inputs required: Sinogram matrix, non-zero leaf open times, and per-leaf open/closed topology
@@ -711,6 +777,7 @@ This appendix is generated from the shared metric-definition catalog.
 - Group: Sinogram modulation
 - Symbol/short name: sdSI
 - Mathematical definition: sdSI = std leaf-open intensity over leaves
+- LaTeX reference: [Readable equations and mode-specific conventions](tomo_guide.md#modulation)
 - Physical meaning: Standard deviation of sinogram intensity.
 - Unit: dimensionless
 - Inputs required: Sinogram matrix, non-zero leaf open times, and per-leaf open/closed topology
