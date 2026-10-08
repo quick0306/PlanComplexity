@@ -1,5 +1,7 @@
 # Aurora SVMAT Lab Implementation Plan
 
+> Historical design/plan, reviewed for version boundaries on 2026-10-08. It is not a current operating manual or proof that proposed work shipped. Use the [current documentation index](../../README.md), [user guide](../../user_guide.md) and [formula contracts](../../metric_formula_contracts.md). Commands and snippets below retain their original planning context.
+
 > **For agentic workers:** REQUIRED SUB-SKILL: Use superpowers:subagent-driven-development (recommended) or superpowers:executing-plans to implement this plan task-by-task. Steps use checkbox (`- [ ]`) syntax for tracking.
 
 **Goal:** Build a standalone Aurora SVMAT research application that parses Aurora RTPLAN files, reconstructs coupled gantry-MLC-axial motion, computes Aurora-specific complexity metrics, and displays or exports the results without depending on the current `PyUCoMX` runtime path.

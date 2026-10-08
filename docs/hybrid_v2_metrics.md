@@ -6,7 +6,7 @@ correcting full perimeter, native MLC boundaries, and dynamic-jaw AAV normalizat
 The statements about unchanged quantities below refer to the original hybrid-v2 migration;
 the [geometry-v3 history](geometry_v3_metrics.md) records the preceding migration and the
 [formula contracts](metric_formula_contracts.md) describe current definitions. TOMO now has its separate
-[`tomo-v3` input contract](tomo_input_contract.md). Aurora has its own formula version.
+[`tomo-v3` input contract](tomo_input_contract.md). Aurora has its separate [`aurora-v4-physical-aperture-open-only` contract](aurora_aperture_metrics.md); its endpoint/open-only rule does not replace the VMAT CP-weighting rules below. Native Halcyon MCSv layers remain exported as `mcsv_mlcx1` and `mcsv_mlcx2` alongside the effective scalar.
 
 ## Intentional formula changes
 

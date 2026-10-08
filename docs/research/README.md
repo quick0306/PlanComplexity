@@ -27,3 +27,5 @@ The following legacy documents are preserved at their repository-relative locati
 - [UCoMX comparator validation plan](../superpowers/plans/2026-07-09-ucomx-comparator-validation.md) — historical archival reference — non-executable; requires fresh planning and PHI/privacy/security review.
 
 Unsanitized examples and exact local paths were retained by explicit decision. Do not distribute these documents or use them clinically without an independent PHI review.
+
+Current software guidance is centralized in the [documentation index](../README.md) and [Chinese user guide](../user_guide.md). Aurora V4 now uses [physical geometry with open-only means](../aurora_aperture_metrics.md); old research narratives or unversioned comparisons do not redefine current exports.

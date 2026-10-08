@@ -1,5 +1,7 @@
 # Plan Complexity Research Guardrails
 
+> Research/provenance record: retained for its stated date and evidence scope. Current software instructions and metric semantics are in the [documentation index](../README.md), [user guide](../user_guide.md) and [formula contracts](../metric_formula_contracts.md). This record does not establish that deferred studies or designs are implemented.
+
 > Imported on 2026-08-11 from legacy project instructions and retained as scientific documentation.
 
 ## Scientific Focus

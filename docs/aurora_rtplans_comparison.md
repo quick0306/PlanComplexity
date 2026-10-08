@@ -1,4 +1,6 @@
-# Aurora RTPLAN File Comparison
+# Aurora RTPLAN File Comparison (Historical)
+
+This is an archived comparison from `jia.csv`, not a current-version result table. Its aperture values have no current physical/open-only provenance and must not be used as current mm² area or V4 baselines. Keep the original observations for traceability; recompute the original inputs with the [current contract](aurora_aperture_metrics.md) before scientific comparison.
 
 This table combines DICOM structural parameters with representative Aurora V4 results from `jia.csv`.
 

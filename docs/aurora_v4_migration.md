@@ -1,5 +1,7 @@
 # Aurora 77-metric restoration and formula migration
 
+Current behavior is `aurora-v4-physical-aperture-open-only`; see the [current definitions](aurora_aperture_metrics.md) and [user guide](user_guide.md). The earlier sections retain restoration-time history; the open-only section supersedes its closed-endpoint rule.
+
 ## Origin of the omission
 
 The April 2026 `codex/unified-validation-phase1` stash (`b8419fd`, stash@{0}) contains the seven V4 aperture metrics, their tests and documentation. The main branch shipped 21 V2 + 40 V3 + 9 legacy keys (70), omitting V4. A search limited to the stash untracked-files parent found only the design and incorrectly suggested no implementation existed. Inspecting the complete stash corrected that finding.

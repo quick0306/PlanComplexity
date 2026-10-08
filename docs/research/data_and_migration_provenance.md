@@ -1,5 +1,7 @@
 # Data and Migration Provenance
 
+> Research/provenance record: retained for its stated date and evidence scope. Current software instructions and metric semantics are in the [documentation index](../README.md), [user guide](../user_guide.md) and [formula contracts](../metric_formula_contracts.md). This record does not establish that deferred studies or designs are implemented.
+
 > Imported on 2026-08-12 from the 2026-05-22 legacy unified-workspace snapshot.
 > This document preserves migration-time provenance; it does not override current repository policy or describe a current inventory.
 

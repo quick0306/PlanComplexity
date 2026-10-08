@@ -1,5 +1,7 @@
 # Aurora SVMAT Lab Design
 
+> Historical design/plan, reviewed for version boundaries on 2026-10-08. It is not a current operating manual or proof that proposed work shipped. Use the [current documentation index](../../README.md), [user guide](../../user_guide.md) and [formula contracts](../../metric_formula_contracts.md). Commands and snippets below retain their original planning context.
+
 ## Goal
 
 Build a standalone research prototype for NeuRT Aurora SVMAT plan analysis that does not couple to the existing `PyUCoMX` application or service layer. The prototype will parse Aurora RTPLAN files, recover axial and rotational delivery trajectories, calculate Aurora-specific spiral-coupled complexity metrics, and present results through a lightweight desktop GUI and CSV export.

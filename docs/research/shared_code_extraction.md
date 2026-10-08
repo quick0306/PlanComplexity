@@ -1,5 +1,7 @@
 # Plan Complexity Metrics Shared-Code Extraction
 
+> Research/provenance record: retained for its stated date and evidence scope. Current software instructions and metric semantics are in the [documentation index](../README.md), [user guide](../user_guide.md) and [formula contracts](../metric_formula_contracts.md). This record does not establish that deferred studies or designs are implemented.
+
 > Imported on 2026-08-12 from the legacy unified-workspace snapshot's `02_Code/extraction_note.md`.
 > This document records deferred architecture work; it does not authorize an extraction or create a runtime dependency on the legacy workspace.
 

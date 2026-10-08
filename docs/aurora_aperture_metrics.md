@@ -1,256 +1,75 @@
-# Aurora Aperture Metrics Draft
+# Aurora 物理孔径指标：当前定义
 
-This note defines a VMAT-like aperture-complexity subset for Aurora SVMAT research. The goal is not to replace the existing Aurora coupling metrics, but to add a geometry-focused metric family that describes how complex the effective field shape is at each evaluation unit.
+当前版本：`aurora-v4-physical-aperture-open-only`（2026-10-08）。本文替代原候选指标草案，导出键使用小写 snake_case。实现依据为 `aurora_svmat_lab/aperture_metrics.py`；逐项定义见[指标目录](metric_definitions_aurora.md)和[公式契约](metric_formula_contracts.md)，历史见[迁移记录](aurora_v4_migration.md)。
 
-## Scope
+## 几何与采样
 
-This draft covers five candidate Aurora aperture metrics:
+每层 `LeafPositionBoundaries` 有 N+1 个严格递增边界，位置数组有 2N 个数，前后分别为 A/B 两组叶片位置。MLCX1 和 MLCX2 是两层独立 MLC，不是同一层的左右边界。
 
-- `mean_BA`
-- `mean_BI`
-- `mean_CA`
-- `mean_SAS5` and `mean_SAS10`
-- `mean_MCS_Aurora`
+在两层共同 Y 覆盖内，用边界位置的并集划分子条带。每条带求两层 X 开口交集，再按 X/Y jaws 裁剪。面积 `A=sum_s(h_s*g_s)`，单位 mm²。周长 P 是这些矩形并集的外露边界总长度，单位 mm，包含不连通区域边界，不重复计共享内边。
 
-These metrics are intended as research descriptors of aperture shape complexity. They should be reported alongside the existing Aurora delivery-coupling metrics such as `projection_pitch_*`, `projection_mu_density_*`, and `mlc_z_coupling_*`.
+仅接受相邻控制点区间的正 `ΔCMW`，使用末端 i+1 几何。CMW 必须起始为零、有限、非递减、最终值为正。零 MU 射束不贡献样本。端点采样不是连续交付重建，闭合端点不等于整个区间全程闭合。
 
-## Notation
+## 开放孔径条件权重
 
-Let:
-
-- `l = 1, 2, ..., L` index the leaf pairs
-- `i = 1, 2, ..., N` index the Aurora evaluation units
-- `alpha_i >= 0` be the weight assigned to evaluation unit `i`
-- `x1(i,l)` and `x2(i,l)` be the two side positions used to form the effective opening for leaf pair `l`
-- `g(i,l) = max(0, x2(i,l) - x1(i,l))` be the effective opening width for leaf pair `l`
-- `h(l)` be the physical width of leaf pair `l`
-
-Define the effective aperture for evaluation unit `i` as:
+令 O 为正权重、面积大于零的端点集合。七项统一使用：
 
 ```text
-Omega_i = union over open leaf pairs l of [b_(l-1), b_l] x [x1(i,l), x2(i,l)]
+w_i = delta_CMW_i / final_CMW_beam * BeamMeterset_beam
+OpenMUmean(f) = sum_(i in O)(w_i*f_i) / sum_(i in O)(w_i)
 ```
 
-with:
+完全闭合样本不进入分子和分母。排除后对所有保留样本统一归一化，不分别重新平衡射束。若任一射束缺少 MU，所有有贡献射束先按各自全部正区间归一化为单位相对总权重，再排除闭合样本，并提示回退。
+
+“不计闭合叶片”表示 SAS、LSV 仅用正间隙条带；开放区域与闭合区域相邻形成的真实边界仍计入周长。
+
+## 七项公式
+
+| 导出键 | 开放端点的量与汇总 | 单位 |
+| --- | --- | --- |
+| `mean_ba` | `OpenMUmean(A_i)` | mm² |
+| `mean_bi` | `OpenMUmean(P_i²/(4πA_i))` | 无量纲 |
+| `mean_ca` | `OpenMUmean(P_i/A_i)`，不是 circularity | mm⁻¹ |
+| `mean_sas5` | `OpenMUmean(count(0<g<5)/count(g>0))` | 无量纲 |
+| `mean_sas10` | `OpenMUmean(count(0<g<10)/count(g>0))` | 无量纲 |
+| `mean_mcs_aurora` | `OpenMUmean(AAV_i*LSV_i)` | 无量纲 |
+| `mcs_complexity_aurora` | `1-mean_mcs_aurora` | 无量纲 |
+
+SAS 阈值严格小于 5/10 mm，等于阈值不计入分子。开放物理子条带等计数，既非面积加权，也非原始单层叶对数。子条带由两层边界并集确定。
+
+每个射束分别定义面积包络：
 
 ```text
-A_i = Area(Omega_i)
-P_i = Perimeter(Omega_i)
+U_beam = sum_s max_positive_weight_endpoints(h_i,s*g_i,s)
+AAV_i = A_i/U_beam
 ```
 
-For any per-unit quantity `Q_i`, define the weighted plan mean as:
+闭合端点条带面积为零，不改变包络。包络包含实际 Y-jaw 裁剪，不能替换为整束最大总面积或银行极值包络。
+
+取按 Y 排列、移除零间隙后的正间隙序列。n≤1 时 LSV=1；否则：
 
 ```text
-mean(Q) = sum_i alpha_i * Q_i / sum_i alpha_i
+LSV_i = 1 - sum_(j=1..n-1)|g_(j+1)-g_j| / ((n-1)*max(g))
 ```
 
-Recommended default weighting:
+代码将 LSV 限制在 [0,1]。这是 Aurora 间隙序列改编指标，不是原始 McNiven 银行序列 MCS。
 
-```text
-alpha_i = delta w_i
-```
+## 缺失与排除
 
-where `delta w_i` is the cumulative meterset-weight increment over the corresponding Aurora interval. If absolute interval MU becomes available later, `delta MU_i` can replace `delta w_i`.
+| 情况 | 当前结果 |
+| --- | --- |
+| 同时存在闭合正权重端点和开放端点 | 排除闭合端点，七项继续计算；警告记录排除数量及权重比例。 |
+| 所有正权重端点闭合 | 七项均为 None；`AURORA_V4_NO_OPEN_APERTURE`。 |
+| 无正交付权重 | 七项均为 None；`AURORA_V4_UNAVAILABLE`。 |
+| 缺少/非法边界、jaws、叶片位置、CMW，或含歧义 MU | 七项均为 None 并提示；不静默丢弃非法射束。 |
+| 缺少 BeamMeterset | 使用全射束相对权重回退；`AURORA_V4_RELATIVE_WEIGHTS`。 |
 
-## Recommended Evaluation Unit
+七项字段始终保留，不可用值在 CSV 为空。排除比例对应当前权重方案；相对回退时不能称为真实 MU 比例。
 
-For Aurora, the preferred evaluation unit is the adjacent control-point interval, not the raw control point. This keeps the aperture metrics aligned with the current Aurora v2 and v3 interval-based metrics and with the natural weighting by `delta w_i`.
+## 版本比较与其他指标
 
-The effective aperture associated with interval `i` can be chosen as:
+Aurora 共 77 项：V2 21、V3 40、legacy 9、V4 7。其余 70 项研究代理定义保持原样，原开口宽度代理不是真实面积。
 
-- the end-control-point aperture
-- the midpoint surrogate between the two adjacent control points
+旧单位行高算法、`aurora-v4-physical-aperture` 初版与当前 open-only 版本不能直接混合七项结果。叶片宽度、双层交集、周长、射束权重和闭合口径均影响结果，差异不是通用的十倍换算。研究批次应统一版本复算并保存输入哈希、公式版本和代码提交。
 
-For consistency with the current Aurora implementation style, the end-control-point aperture is the simplest first choice.
-
-## Metric 1: Mean Beam Area
-
-Per-unit beam area:
-
-```text
-BA_i = A_i
-```
-
-Weighted plan mean:
-
-```text
-mean_BA = sum_i alpha_i * BA_i / sum_i alpha_i
-```
-
-Physical meaning:
-
-- measures the average effective field size
-- smaller values generally indicate tighter modulation
-
-## Metric 2: Mean Beam Irregularity
-
-Following the Du 2014 plan-irregularity form:
-
-```text
-BI_i = P_i^2 / (4 * pi * A_i)
-```
-
-Weighted plan mean:
-
-```text
-mean_BI = sum_i alpha_i * BI_i / sum_i alpha_i
-```
-
-Physical meaning:
-
-- equals its minimum for compact, regular shapes
-- increases for elongated, jagged, or fragmented apertures
-
-## Metric 3: Mean Circumference-to-Area Ratio
-
-Per-unit ratio:
-
-```text
-CA_i = P_i / A_i
-```
-
-Weighted plan mean:
-
-```text
-mean_CA = sum_i alpha_i * CA_i / sum_i alpha_i
-```
-
-Physical meaning:
-
-- describes how much boundary is needed per unit area
-- is sensitive to narrow slots and fragmented openings
-
-## Metric 4: Mean Small Aperture Score
-
-For a gap threshold `t`, define the per-unit small-aperture score:
-
-```text
-SAS_t(i) =
-    sum_l I(0 < g(i,l) < t) / sum_l I(g(i,l) > 0)
-```
-
-Weighted plan mean:
-
-```text
-mean_SAS_t = sum_i alpha_i * SAS_t(i) / sum_i alpha_i
-```
-
-Recommended reported thresholds:
-
-```text
-mean_SAS5
-mean_SAS10
-```
-
-Physical meaning:
-
-- quantifies how much of the effective field is carried by narrow openings
-- is expected to be more directly connected to delivery difficulty than area alone
-
-## Metric 5: Aurora-Adapted Modulation Complexity Score
-
-This should be treated as an Aurora-adapted metric rather than a direct reuse of the original VMAT MCS definition.
-
-First define the maximum effective opening for each leaf pair:
-
-```text
-g_max(l) = max_i g(i,l)
-```
-
-Define the area-variability term:
-
-```text
-AAV_i = sum_l g(i,l) / sum_l g_max(l)
-```
-
-Define a gap-sequence variability term using the effective gap profile:
-
-```text
-L_i = { l | g(i,l) > 0 }
-n_i = |L_i|
-```
-
-If `n_i <= 1`, set:
-
-```text
-LSV_i = 1
-```
-
-Otherwise:
-
-```text
-g_i,max = max_l g(i,l)
-
-LSV_i =
-    1 - [ sum_(l=1 to n_i-1) |g(i,l+1) - g(i,l)| ] / [ (n_i - 1) * g_i,max ]
-```
-
-Then define the per-unit Aurora-adapted modulation complexity score:
-
-```text
-MCS_i = AAV_i * LSV_i
-```
-
-Weighted plan mean:
-
-```text
-mean_MCS_Aurora = sum_i alpha_i * MCS_i / sum_i alpha_i
-```
-
-Interpretation:
-
-- higher `mean_MCS_Aurora` means smoother, less modulated aperture behavior
-- lower `mean_MCS_Aurora` means more irregular and more strongly modulated aperture behavior
-
-If a monotonic complexity-up score is preferred, define:
-
-```text
-MCS_complexity_Aurora = 1 - mean_MCS_Aurora
-```
-
-## Recommended Reporting Set
-
-For a first Aurora aperture-complexity subset, report:
-
-```text
-mean_BA
-mean_BI
-mean_CA
-mean_SAS5
-mean_SAS10
-mean_MCS_Aurora
-```
-
-If stronger emphasis on the effective-aperture interpretation is desired, the same quantities can be named:
-
-```text
-mean_BA_eff
-mean_BI_eff
-mean_CA_eff
-mean_SAS5_eff
-mean_SAS10_eff
-mean_MCS_Aurora_eff
-```
-
-## Important Methodological Notes
-
-### 1. These metrics depend on the effective-aperture definition
-
-The main methodological decision is not the final formula, but how Aurora's dual-layer geometry is collapsed into an effective aperture `Omega_i`. The formulas above are only meaningful once that definition is fixed.
-
-### 2. These metrics are geometry descriptors, not full delivery descriptors
-
-They describe the complexity of the aperture shape, but not the full Aurora delivery problem. They should therefore be interpreted together with:
-
-- `projection_pitch_*`
-- `projection_mu_density_*`
-- `projection_aperture_change_*`
-- `projection_leaf_travel_*`
-- `theta_z_coupling_*`
-- `mlc_z_coupling_*`
-- `reversal_*`
-- regional and dual-layer coordination metrics
-
-### 3. MCS should be labeled as adapted
-
-The proposed `mean_MCS_Aurora` is structurally inspired by VMAT-style MCS, but its gap definition and weighting are Aurora-specific. It should therefore be labeled as an Aurora-adapted metric in research outputs.
+实际计划的验证见[迁移记录](aurora_v4_migration.md)。这些检查针对实现和数值，不建立临床阈值或厂商等价性。

@@ -1,5 +1,7 @@
 # Legacy Plan Complexity Project Consolidation Implementation Plan
 
+> Historical design/plan, reviewed for version boundaries on 2026-10-08. It is not a current operating manual or proof that proposed work shipped. Use the [current documentation index](../../README.md), [user guide](../../user_guide.md) and [formula contracts](../../metric_formula_contracts.md). Commands and snippets below retain their original planning context.
+
 > **COMPLETED PLAN — HISTORICAL ARCHIVE ONLY (2026-08-12):** This consolidation was completed on 2026-08-12. This document is now historical archival material only and is non-executable.
 > This notice overrides every `REQUIRED SUB-SKILL` line, checkbox, imperative, command, path, and acceptance step below.
 > None of those items may be executed or treated as current guidance.

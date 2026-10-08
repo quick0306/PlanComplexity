@@ -1,5 +1,7 @@
 # Metric surface audit — 2026-10-08
 
+This records the restoration-stage audit against pre-restoration commit `4652b74`. The current V4 version is `aurora-v4-physical-aperture-open-only`; its closed-endpoint rule supersedes the initial rule described below. See [current definitions](aurora_aperture_metrics.md) and [documentation synchronization](documentation_sync_20261008.md).
+
 This audit compares calculation output keys, flattening, export ordering, labels and
 descriptions, formula contracts, definition exports, and validation specifications.
 It uses repository source and constructed synthetic inputs; no clinical plan files
@@ -10,7 +12,7 @@ independently validated scientific quantities.
 
 | Finding | Evidence | Resolution in this working change |
 | --- | --- | --- |
-| Seven Aurora V4 metrics absent from main and the compatibility branch | `git show HEAD:aurora_svmat_lab/metrics.py` and `git show codex/aurora-wisdomtech-compatibility:aurora_svmat_lab/metrics.py` have no V4 order; full stash `b8419fd` (`stash@{0}`) contains V4 calculation, GUI, documentation and tests; its untracked-files parent `79a8fb9` contains the design/plan | Restore the public keys using the separately documented physical geometry version; add catalog, GUI, export, contract and validation coverage |
+| Seven Aurora V4 metrics absent from main and the compatibility branch | `git show 4652b74:aurora_svmat_lab/metrics.py` and `git show codex/aurora-wisdomtech-compatibility:aurora_svmat_lab/metrics.py` have no V4 order; full stash `b8419fd` (`stash@{0}`) contains V4 calculation, GUI, documentation and tests; its untracked-files parent `79a8fb9` contains the design/plan | Restore the public keys using the separately documented physical geometry version; add catalog, GUI, export, contract and validation coverage |
 | Native Halcyon MCSv layer values disappear during aggregation | `analysis_helpers.calculate_core_metrics_with_warnings` constructs a native MCSv tuple, then updates it with Halcyon paper metrics; `halcyon_dual_layer_metrics._calculate_beam_paper_metrics` includes scalar `mcsv=effective_mcs`; flattening therefore cannot produce the catalog's `mcsv_mlcx1` and `mcsv_mlcx2` | Preserve native values under explicit layer keys before the scalar compatibility override |
 | Three Varian dual-layer metrics missing from generated definitions | At audit start, `metric_registry.py` and validation specifications contain `ethos_sas10`, `ethos_one_minus_mcs`, `ethos_penumbra_ratio`, but `docs/metric_definitions_all.md`, `docs/metric_definitions_vmat_imrt.md`, and the local definition CSV omit them | Regenerate definitions; add exact generated-document comparisons |
 | 32 flattened motion keys lack GUI descriptions | `metric_descriptions_with_aliases()` omits four speed/acceleration summaries and fourteen bins/summaries for each native MLC layer; all their GUI labels and formula definitions already exist | Add descriptions including native layer identity; specify nonzero means and sample standard deviations consistently with `MLCAttributes` |

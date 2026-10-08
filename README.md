@@ -3,6 +3,18 @@
 Utilities for parsing RT Plan DICOM files and calculating plan complexity metrics across
 VMAT/IMRT, TOMO, CyberKnife MLC, and Aurora SVMAT plans, with a desktop GUI inspired by UCoMX.
 
+## Documentation
+
+Start with the [Chinese user guide](docs/user_guide.md) and [complete document index](docs/README.md).
+The current Aurora definition is [physical geometry with open-aperture conditional means](docs/aurora_aperture_metrics.md).
+Historical designs, comparisons and validation runs are explicitly separated from current instructions.
+
+| Mode | Current formula version |
+| --- | --- |
+| VMAT/IMRT and CyberKnife MLC | `geometry-v4` |
+| TOMO | `tomo-v3` |
+| Aurora SVMAT V4 | `aurora-v4-physical-aperture-open-only` |
+
 ## Requirements
 
 - Python 3.10+
@@ -33,7 +45,7 @@ The main analyzer auto-detects VMAT/IMRT, TOMO, CyberKnife MLC, and Aurora SVMAT
 Aurora exposes 77 metric keys, including seven V4 physical-aperture descriptors. Exports record
 `aurora-v4-physical-aperture-open-only`; the prior 70 research/proxy definitions are retained. The
 [V4 migration contract](docs/aurora_v4_migration.md) explains the corrected dual-layer geometry,
-weights and unavailable values, and the [metric surface audit](docs/metric_surface_audit_20261008.md)
+weights, closed-endpoint exclusion and unavailable values, and the [metric surface audit](docs/metric_surface_audit_20261008.md)
 records cross-mode consistency checks and repaired omissions.
 
 Batch export metrics for standard linac plans:
@@ -70,12 +82,12 @@ The project does not provide an `RT_LENS` mode or vendor the upstream implementa
 comparisons may call `matteomaspero/rt-complexity-lens` directly.
 
 Validation explicitly requests `analyze_plan_file(..., full_precision=True)`; the default
-analysis output retains legacy rounding. The [external benchmark capture](docs/external_benchmarks.md)
+VMAT/IMRT and CyberKnife analysis output retains legacy rounding. TOMO and Aurora use their own float paths; TOMO mode estimation retains its binning rule. The [external benchmark capture](docs/external_benchmarks.md)
 records real UCoMX workbook cells and source/config hashes with its provenance and formula limitations.
 
-Use `--recursive` if the input directory contains nested folders.
+The two linac batch scripts accept `--recursive` for nested folders. The standalone Aurora CLI recursively scans `--input-dir` by default and has no `--recursive` flag.
 
-Use `--verbose` on any script to include debug logging.
+The analysis CLI commands above accept `--verbose`; documentation and validation tools have their own parser options.
 
 Run the full test suite, including independent numerical hand cases:
 
@@ -174,7 +186,7 @@ python aurora_svmat_cli.py --input-file path/to/RTPLAN.dcm --output-csv aurora_p
 Aurora prototype scope in the current version:
 - Aurora / DeepPlan RTPLAN parsing
 - Coupled axial and rotational trajectory reconstruction
-- V2 Aurora research metrics centered on paper-style physical quantities:
+- V2 Aurora motion descriptors and engineering proxies (21 keys):
   - longitudinal travel
   - total rotation and rotations
   - travel per rotation
@@ -183,7 +195,12 @@ Aurora prototype scope in the current version:
   - projection aperture-change mean / variability
   - projection leaf-travel mean / variability
   - theta-z, MU-z, and MLC-z coupling variability
-- Legacy engineering metrics are still exported for comparison
+- V3 peak, regional and dual-layer coordination descriptors (40 keys)
+- V4 physical dual-layer aperture descriptors (7 keys): `mean_ba`, `mean_bi`, `mean_ca`,
+  `mean_sas5`, `mean_sas10`, `mean_mcs_aurora`, `mcs_complexity_aurora`
+- All seven V4 means exclude area-zero endpoints and renormalize retained interval weights;
+  SAS and LSV exclude closed gaps. The MCS is an Aurora adaptation, not classic McNiven MCS.
+- Legacy engineering metrics (9 keys) are still exported for comparison
 - Standalone CSV export and desktop GUI
 
 The Aurora prototype is for research use only. Clinical use is strongly forbidden.
@@ -194,11 +211,12 @@ The Aurora prototype is for research use only. Clinical use is strongly forbidde
 - Input files are expected to be DICOM RT Plan files readable by `pydicom`.
 - `ucomx.py` / `ucomx_gui.py` provide a Python desktop workflow for:
   - VMAT/IMRT analysis using the existing DICOM/aperture metric engine.
-  - TOMO analysis using a new sinogram-based metric engine built from the UCoMX/TCoMX references.
+  - TOMO analysis using a sinogram-based metric engine built from the UCoMX/TCoMX references.
+  - Aurora SVMAT analysis with 77 research/physical-aperture keys and recorded V4 formula version.
   - CyberKnife MLC analysis using the paper-limited six-metric subset (`MCS`, `EM`, `PI`, `PM`, `LG`, `SAS10`).
 - The GUI metric panel now uses paper-oriented naming for the two motion metrics discussed below and
   includes a `Metric Notes` pane with short definitions.
-- CSV export now writes two files:
+- The main GUI/service CSV export writes two files (the standalone Aurora CLI has separate plan/beam/trajectory exports):
   - The requested result table, for example `results.csv`.
   - A companion column dictionary, for example `results_columns.csv`.
 - Folder batch analysis now uses light parallelism for independent RT Plan files, and
@@ -242,3 +260,17 @@ The Aurora prototype is for research use only. Clinical use is strongly forbidde
 - Some TOMO RTPLAN variants store sinogram data in vendor-specific tags. The parser includes
   standard and private-tag fallbacks, but different Tomo TPS exports may still require
   additional tag mapping.
+
+## Updating documentation artifacts
+
+```bash
+python tools/export_metric_definitions.py
+python -m metric_formula_contracts
+python tools/export_aurora_formula_pdf.py
+python tools/export_app_summary_pdf.py
+```
+
+Definition Markdown/CSV and the Aurora formula PDF derive from the catalog/contracts and notes.
+Keep source definitions and generated documents synchronized. The application summary PDF also reads
+current mode versions and catalog counts. CSVs and patient data remain local and Git-ignored.
+The [documentation audit](docs/documentation_sync_20261008.md) records scope, historical boundaries and verification.

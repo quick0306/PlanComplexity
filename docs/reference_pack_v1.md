@@ -14,8 +14,12 @@ Missing inputs or invalid artifact checksums also produce a nonzero process exit
 The six VMAT/IMRT, CyberKnife, and TOMO cases require `geometry-v4` or `tomo-v3` in
 `manifest.yaml`. Each retains a flat `expected_metrics.json` and a sibling
 `expected_metrics_provenance.json`: formula version, case/domain/mode, source SHA256,
-scalar-file SHA256, and generation time. The two unaffected Aurora fixtures remain explicitly
-reported as `legacy-unversioned`. The Precision case explicitly expects `supported: false`;
+scalar-file SHA256, and generation time. The two historical Aurora fixtures have no explicit formula-version lock in the manifest.
+Historical reports may label them `legacy-unversioned`; current runtime metadata records
+`aurora-v4-physical-aperture-open-only`. Their frozen legacy scalar subset does not validate
+the seven V4 values or establish complete current-schema coverage. Do not relabel or
+refreeze the archived evidence merely to match current metadata. A V4 baseline migration
+requires explicit provenance, independently checked values and the documented override flags. The Precision case explicitly expects `supported: false`;
 an empty metric mapping alone is insufficient to pass a case.
 
 The pre-migration scalar files are preserved byte-for-byte under

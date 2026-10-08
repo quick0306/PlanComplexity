@@ -1,5 +1,7 @@
 # TOMO motion, formula contracts, external evidence and precision
 
+> Historical design/plan, reviewed for version boundaries on 2026-10-08. It is not a current operating manual or proof that proposed work shipped. Use the [current documentation index](../../README.md), [user guide](../../user_guide.md) and [formula contracts](../../metric_formula_contracts.md). Commands and snippets below retain their original planning context.
+
 > **For agentic workers:** Use superpowers:subagent-driven-development with bounded file ownership and independent review. The user has approved this scope; preserve the current uncommitted geometry/unit fixes.
 
 **Goal:** Correct planned TOMO couch motion, make formula variants explicit, obtain traceable external evidence, and compare unrounded numerical results with independent synthetic tests.

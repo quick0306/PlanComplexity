@@ -1,5 +1,7 @@
 # Repository cleanup and main-branch integration
 
+> Historical integration/cleanup record dated 2026-09-19. The statements below about builds, counts and local state refer to that run. Current packaging and document generation are in the [user guide](user_guide.md) and [documentation index](README.md).
+
 The 2026-09-19 integration includes the geometry/unit corrections, TOMO motion
 contract, per-metric formulas, full-precision comparisons, versioned baseline
 migrations, external benchmark provenance, and their tests.

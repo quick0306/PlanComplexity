@@ -1,5 +1,7 @@
 # Varian Ethos/Halcyon dual-layer MLC
 
+> Current Varian dual-layer report profile within `geometry-v4`. Its open threshold and closed-beam behavior remain profile-specific; the [Aurora open-only rule](aurora_aperture_metrics.md) does not override them. See [current operation](user_guide.md).
+
 SAS10, 1-MCS and Penumbra Ratio are not Ethos-exclusive metrics. This implementation
 applies to the standard Varian dual-layer MLC shared by Ethos and Halcyon.
 The Ethos PDF reports provided comparison values; they do not restrict the

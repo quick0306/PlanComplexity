@@ -1,5 +1,7 @@
 # 用 GitHub 资源提高 PlanComplexity 科学性与准确性
 
+> Research/provenance record: retained for its stated date and evidence scope. Current software instructions and metric semantics are in the [documentation index](../README.md), [user guide](../user_guide.md) and [formula contracts](../metric_formula_contracts.md). This record does not establish that deferred studies or designs are implemented.
+
 核查日期：2026-09-19。范围：9 个相关 GitHub 仓库、UCoMX 官方发布页、关键源码和官方文档；其中 8 个仓库记录了固定提交，30 个下载成功的源码/文档文件记录了 SHA256。完整记录见同目录 `github_accuracy_review_2026-09-19.json`。
 
 结论：下一步优先补齐 TOMO 计划床运动读取和可追溯的外部数值验证，再扩展指标。GitHub 实现用于交叉核对；指标同名、代码同源、两种语言结果相同，都不足以证明物理量正确。本轮完成检索、源码核对和最小数值复现，未修改计算实现、依赖或已冻结的基准。

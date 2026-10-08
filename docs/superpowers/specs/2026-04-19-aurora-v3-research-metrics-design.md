@@ -1,5 +1,7 @@
 # Aurora V3 Research Metrics Design
 
+> Historical design/plan, reviewed for version boundaries on 2026-10-08. It is not a current operating manual or proof that proposed work shipped. Use the [current documentation index](../../README.md), [user guide](../../user_guide.md) and [formula contracts](../../metric_formula_contracts.md). Commands and snippets below retain their original planning context.
+
 ## Goal
 
 Extend the standalone Aurora SVMAT Lab with additional research-grade complexity metrics that can be computed directly from the currently available Aurora RTPLAN control-point data. The new metrics should remain interpretable, exportable, and consistent with the existing v2 paper-style physics metrics.

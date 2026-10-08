@@ -1,5 +1,7 @@
 # Geometry, Units, and Reference Validation Implementation Plan
 
+> Historical design/plan, reviewed for version boundaries on 2026-10-08. It is not a current operating manual or proof that proposed work shipped. Use the [current documentation index](../../README.md), [user guide](../../user_guide.md) and [formula contracts](../../metric_formula_contracts.md). Commands and snippets below retain their original planning context.
+
 > **For agentic workers:** Use superpowers:subagent-driven-development for bounded tasks and independent review. The user approved the preceding code-review recommendations and implementation order on 2026-09-19.
 
 **Goal:** Fix verified geometry/unit defects, prove them with independent hand cases, make reference failures actionable, and migrate audited baselines with formula provenance.

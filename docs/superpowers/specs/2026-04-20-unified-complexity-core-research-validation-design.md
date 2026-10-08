@@ -1,5 +1,7 @@
 # Unified Complexity Core Research Validation Design
 
+> Historical design/plan, reviewed for version boundaries on 2026-10-08. It is not a current operating manual or proof that proposed work shipped. Use the [current documentation index](../../README.md), [user guide](../../user_guide.md) and [formula contracts](../../metric_formula_contracts.md). Commands and snippets below retain their original planning context.
+
 ## Goal
 
 Build a unified research-grade validation framework for the current PlanComplexity project that:

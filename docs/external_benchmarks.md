@@ -1,5 +1,7 @@
 # External benchmark evidence
 
+> Historical external observations and fixed provenance. Documentation synchronization does not regenerate, relabel or extend these captures to Aurora V4. See [current definitions](metric_formula_contracts.md) and [baseline boundaries](reference_pack_v1.md).
+
 The checked-in capture is a numeric excerpt from an existing local UCoMX/VCoMX
 workbook. It supplies traceable external observations for one Halcyon reference
 input. It is not an authenticated historical execution, an exact-equivalence

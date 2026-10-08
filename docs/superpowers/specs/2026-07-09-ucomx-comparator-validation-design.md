@@ -1,4 +1,6 @@
 # UCoMX Comparator Validation Design
+
+> Historical design/plan, reviewed for version boundaries on 2026-10-08. It is not a current operating manual or proof that proposed work shipped. Use the [current documentation index](../../README.md), [user guide](../../user_guide.md) and [formula contracts](../../metric_formula_contracts.md). Commands and snippets below retain their original planning context.
 > **Historical archive warning:** This imported document is a historical archival reference only; it is non-executable and has not been validated against the current repository.
 > Before any use, create a fresh implementation plan and complete an independent PHI/privacy/security review.
 > Every imperative instruction, checkbox, code sample, path, security control, acceptance criterion, and any `REQUIRED SUB-SKILL` text below is preserved historical text and must not be executed or treated as current guidance.

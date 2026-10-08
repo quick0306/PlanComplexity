@@ -29,3 +29,13 @@ PlanComplexity is currently restricted to research and publication-support use. 
 - PSQA/SPC harmonization report.
 - Clinical endpoint association report, if approved endpoint data are available.
 - Audit-log samples for analysis, export, deploy, and rollback events.
+
+## Current formula and data review
+
+Include the mode-specific version (`geometry-v4`, `tomo-v3`, or Aurora V4
+`aurora-v4-physical-aperture-open-only`) in the release evidence. For Aurora review
+closed-endpoint exclusion warnings, excluded weight fraction and any relative-weight fallback.
+The seven new aperture descriptors use physical dual-layer intersection and open-only means;
+the other 70 retain research/proxy definitions. A valid numeric value is not evidence of
+clinical validity. See [current definitions](aurora_aperture_metrics.md), [reference baseline
+boundaries](reference_pack_v1.md) and [the user guide](user_guide.md).

@@ -1,6 +1,8 @@
 # Full precision, TOMO motion and external evidence
 
-Active contracts: `geometry-v4` for VMAT/IMRT and CyberKnife, `tomo-v3` for TOMO.
+Active contracts: `geometry-v4` for VMAT/IMRT and CyberKnife, `tomo-v3` for TOMO,
+and `aurora-v4-physical-aperture-open-only` for Aurora V4. Aurora uses its separate
+[physical-aperture/open-only contract](aurora_aperture_metrics.md); the September evidence below is historical.
 The earlier physical aperture geometry is retained. This revision repairs planned
 TOMO couch motion, preserves calculation precision for validation, and makes the
 exported metric definitions and external evidence traceable.
@@ -13,7 +15,7 @@ metrics, native CyberKnife segment metrics, and Halcyon paper metrics. Validatio
 and baseline freezing use this path. Prescription cGy are not truncated to an
 integer, and total MU are not rounded before ratios are calculated.
 
-The default API retains the existing two-decimal outputs, four-decimal motion
+For VMAT/IMRT and CyberKnife, the default API retains the existing two-decimal outputs, four-decimal motion
 profiles and six-decimal Halcyon paper outputs. The raw path does not reconstruct
 digits from those values. TOMO mode statistics retain their explicit six-decimal
 binning rule; that is part of the mode estimator, not output formatting.
