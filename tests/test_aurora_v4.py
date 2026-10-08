@@ -44,15 +44,58 @@ def test_v4_strict_sas_thresholds_and_missing_geometry():
     assert all(m[k] is None for k in KEYS)
     assert len(m)==77
 
-def test_v4_closed_interval_retained_and_zero_mu_interval_excluded():
+def test_v4_closed_interval_excluded_from_all_conditional_means():
     m=calculate_beam_metrics(beam(gaps=(20,0)))
-    assert m['mean_ba']==100
-    assert m['mean_mcs_aurora']==pytest.approx(.25)
-    assert m['mean_bi'] is None
-    assert m['mean_ca'] is None
+    assert m['mean_ba']==400
+    assert m['mean_mcs_aurora']==pytest.approx(1)
+    assert m['mean_bi']==pytest.approx(4/math.pi)
+    assert m['mean_ca']==pytest.approx(.2)
+    assert m['mean_sas5']==0
+    assert m['mean_sas10']==0
+    assert m['mcs_complexity_aurora']==0
     m=calculate_beam_metrics(beam(gaps=(20,0),weights=(0,1,1)))
     assert m['mean_ba']==400
     assert m['mean_mcs_aurora']==1
+
+def test_v4_conditional_mean_pools_open_mu_without_rebalancing_beams():
+    # Beam A delivers 25 open MU and 75 closed MU; B delivers 300 open MU.
+    a=beam(gaps=(20,0),mu=100)
+    b=beam(gaps=(4,4),mu=300)
+    m=calculate_plan_metrics([a,b])
+    assert m['mean_ba']==pytest.approx((25*400+300*80)/325)
+    assert m['mean_bi']==pytest.approx((25*4/math.pi+300*7.2/math.pi)/325)
+    assert m['mean_ca']==pytest.approx((25*.2+300*.6)/325)
+    assert m['mean_sas5']==pytest.approx(300/325)
+    assert m['mean_mcs_aurora']==pytest.approx(1)
+
+def test_v4_closed_only_plan_unavailable_and_closed_beam_has_no_contribution():
+    from aurora_svmat_lab.aperture_metrics import calculate_v4_metrics_with_warnings
+    closed=beam(gaps=(0,0),mu=900)
+    m,warnings=calculate_v4_metrics_with_warnings([closed])
+    assert all(m[k] is None for k in KEYS)
+    assert any('NO_OPEN_APERTURE' in message for message in warnings)
+    m,warnings=calculate_v4_metrics_with_warnings([closed,beam(gaps=(4,4),mu=100)])
+    assert m['mean_ba']==80
+    assert m['mean_sas5']==1
+    assert any('CLOSED_SAMPLES_EXCLUDED' in message for message in warnings)
+
+def test_v4_closed_leaves_are_excluded_from_sas_and_lsv():
+    b=beam(gaps=(4,4))
+    for cp in b.control_points:
+        cp.mlc_x1_positions_mm=(0,-2,0,2)
+    m=calculate_beam_metrics(b)
+    assert m['mean_ba']==40
+    assert m['mean_sas5']==1
+    assert m['mean_sas10']==1
+    assert m['mean_mcs_aurora']==1
+
+def test_v4_relative_fallback_precedes_closed_exclusion():
+    from aurora_svmat_lab.aperture_metrics import calculate_v4_metrics_with_warnings
+    a=beam(gaps=(20,0),mu=None)
+    b=beam(gaps=(4,4),mu=300)
+    m,warnings=calculate_v4_metrics_with_warnings([a,b])
+    assert m['mean_ba']==pytest.approx((.25*400+1*80)/1.25)
+    assert any('excluded weight fraction=0.375' in message for message in warnings)
 
 def test_v4_rejects_malformed_positions_and_nonmonotonic_weights():
     b=beam(); b.control_points[1].mlc_x2_positions_mm=(0,)
@@ -96,7 +139,7 @@ def test_v4_beam_plan_unified_exports_and_version_are_complete(tmp_path):
     from aurora_svmat_lab.models import AuroraAnalysisResult,AuroraPlanMetadata
     from formula_versions import AURORA_FORMULA_VERSION
     from ucomx_service import _adapt_aurora_result,export_results_to_csv
-    b=beam();b.metrics=calculate_beam_metrics(b)
+    b=beam(gaps=(20,0));b.metrics=calculate_beam_metrics(b)
     result=AuroraAnalysisResult(beams=[b],supported=True,plan_metrics=calculate_plan_metrics([b]),
       metadata=AuroraPlanMetadata(metric_formula_version=AURORA_FORMULA_VERSION))
     assert KEYS <= export_plan_rows([result])[0].keys()
@@ -108,6 +151,9 @@ def test_v4_beam_plan_unified_exports_and_version_are_complete(tmp_path):
         row,=csv.DictReader(f)
     assert KEYS <= row.keys()
     assert row['metric_formula_version']==AURORA_FORMULA_VERSION
+    assert float(row['mean_ba'])==400
+    assert float(row['mean_bi'])==pytest.approx(4/math.pi)
+    assert float(row['mean_ca'])==pytest.approx(.2)
     with path.with_name('metrics_columns.csv').open(encoding='utf-8-sig',newline='') as f:
         columns={r['column_name']:r for r in csv.DictReader(f)}
     assert set(columns)==set(unified.metrics)

@@ -9,7 +9,7 @@ from reportlab.lib.enums import TA_CENTER
 from reportlab.lib.pagesizes import A4
 from reportlab.lib.styles import ParagraphStyle, getSampleStyleSheet
 from reportlab.lib.units import mm
-from reportlab.platypus import PageBreak, Paragraph, SimpleDocTemplate, Spacer
+from reportlab.platypus import KeepTogether, PageBreak, Paragraph, SimpleDocTemplate, Spacer
 
 from metric_definition_catalog import build_metric_definition_catalog
 
@@ -60,15 +60,16 @@ def export_aurora_formula_pdf(output_path: str | Path) -> Path:
     story.append(PageBreak())
     story.extend(_build_metric_section(
         "Section 3. V4 Physical Aperture Metrics", _build_v4_entries(), styles,
-        intro=("Version: aurora-v4-physical-aperture. Real leaf boundaries define a common y-sub-strip grid. "
+        intro=("Version: aurora-v4-physical-aperture-open-only. Real leaf boundaries define a common y-sub-strip grid. "
                "Each layer's position vector is split into A/B banks; intervals are intersected across layers and clipped to jaws. "
                "A and P are exact area and union perimeter. These seven descriptors are a physical-geometry extension "
                "with adapted MCS, not exact McNiven MCS or a reproduction of the old unit-width design. "
                "Only positive cumulative-weight increments contribute, represented by endpoint i+1. Weights are "
                "delta CMW / beam final CMW times BeamMeterset. If any BeamMeterset is absent, every beam uses unit-normalized "
                "relative weights and a warning. Missing geometry or malformed/decreasing weights makes all seven unavailable. "
-               "A closed positive-weight endpoint contributes BA/SAS/MCS zero and complexity one; BI/CA become unavailable "
-               "for the entire aggregate, without dropping that endpoint."),
+               "All seven use open-aperture conditional means: exclude area-zero endpoints and renormalize over retained weights. "
+               "Closed leaves do not enter SAS or LSV. Exclusion count and weight fraction are disclosed in warnings; "
+               "no open endpoint makes all seven unavailable. Endpoint sampling does not imply the whole interval was closed."),
     ))
     story.append(PageBreak())
     story.extend(
@@ -145,12 +146,16 @@ def _build_metric_section(
     if intro:
         story.extend([Paragraph(intro, styles["body"]), Spacer(1, 4 * mm)])
     for entry in entries:
-        story.append(Paragraph(entry.metric_key, styles["metric_key"]))
-        story.append(Paragraph(entry.title, styles["metric_title"]))
+        block = [Paragraph(entry.metric_key, styles["metric_key"]),
+                 Paragraph(entry.title, styles["metric_title"])]
         for formula_line in entry.formula_lines:
-            story.append(Paragraph(escape(formula_line), styles["formula"]))
-        story.append(Paragraph(f"Meaning: {entry.physical_meaning}", styles["body"]))
-        story.append(Spacer(1, 4 * mm))
+            block.append(Paragraph(escape(formula_line), styles["formula"]))
+        block.append(Paragraph(f"Meaning: {entry.physical_meaning}", styles["body"]))
+        block.append(Spacer(1, 4 * mm))
+        if entry.metric_key in V4_METRIC_ORDER:
+            story.append(KeepTogether(block))
+        else:
+            story.extend(block)
     return story
 
 

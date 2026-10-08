@@ -19,7 +19,7 @@ Restored V4 therefore records a new formula version, `aurora-v4-physical-apertur
 - `mean_mcs_aurora`: weighted product of a beam-specific clipped-strip-area envelope ratio and gap-sequence variability. It is an Aurora adaptation, not the classic McNiven bank-based MCS.
 - `mcs_complexity_aurora`: 1 - mean_mcs_aurora.
 
-A positive-weight fully closed aperture contributes zero area/SAS/MCS, but BI and P/A are undefined. An aggregate with such an undefined shape value remains unavailable and carries a warning; no interval is silently dropped. The supplied UCC017 case exercises this boundary. Zero-MU intervals do not affect the V4 envelope or weighted averages.
+The initial physical-aperture version retained closed endpoints as zero BA/SAS/MCS and made BI/CA aggregates unavailable. This rule is superseded by the user-approved open-only update below. Zero-MU intervals do not affect the V4 envelope or weighted averages.
 
 ## Prevention and verification
 
@@ -28,3 +28,13 @@ A positive-weight fully closed aperture contributes zero area/SAS/MCS, but BI an
 The older 70 Aurora metrics retain their existing research/proxy definitions; this restoration does not relabel those proxies as physical aperture metrics or independently validate all scientific interpretations.
 
 Final validation on 2026-10-08: 393 tests passed, 1 skipped and 99 subtests passed. The build environment passed 29 focused tests. All three supplied Aurora plans export 77 keys in automatic and explicit Aurora modes; their prior 70 values remain identical. Additionally, 126 sampled real control-point apertures matched independent polygon intersection area and perimeter calculations. These are numerical/technical checks, not clinical validation.
+
+## Open-only update (2026-10-08)
+
+Current formula version: `aurora-v4-physical-aperture-open-only`. Preserve the same physical dual-layer reconstruction, jaws and endpoint sampling. For all seven descriptors retain only positive-weight endpoints with A>0 and calculate sum_open(w*f)/sum_open(w). Closed leaf gaps do not enter SAS or LSV. Closed endpoints do not contribute zero values to BA/SAS/MCS or one to complexity. The beam AAV envelope is unchanged because closed strips add zero area.
+
+Weights remain delta CMW/final CMW times beam MU; do not normalize each beam again after exclusions. If MU is missing, the existing per-beam relative fallback occurs before exclusions. Warnings disclose excluded endpoint count and weight fraction in the selected weighting scheme. Invalid geometry still invalidates the complete calculation, rather than silently excluding malformed beams. An entirely closed plan returns all seven unavailable with a no-open-aperture warning. The prior 70 metrics are unchanged.
+
+A closed endpoint does not establish that its entire finite-MU interval was closed. This update defines conditional endpoint descriptors and does not introduce interpolation or a continuous delivery reconstruction. Old surrogate, initial physical and open-only versions must remain distinguishable in exports.
+
+Open-only verification: 397 tests passed, 1 skipped and 99 subtests passed. Recalculated all 73 plans from the supplied 2.csv inventory: all prior 70 metric cells are identical, all seven new plan metrics are finite, and only TBI003, TMLI003, UCC002 and UCC017 change under the new conditional rule. Plan, beam and unified CSV exports retain all seven keys and the new formula version. PDF text and V4 page layout were checked.

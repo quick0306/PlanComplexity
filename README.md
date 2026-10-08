@@ -31,7 +31,7 @@ python main.py --input-file path/to/plan.dcm
 The main analyzer auto-detects VMAT/IMRT, TOMO, CyberKnife MLC, and Aurora SVMAT RTPLAN files.
 
 Aurora exposes 77 metric keys, including seven V4 physical-aperture descriptors. Exports record
-`aurora-v4-physical-aperture`; the prior 70 research/proxy definitions are retained. The
+`aurora-v4-physical-aperture-open-only`; the prior 70 research/proxy definitions are retained. The
 [V4 migration contract](docs/aurora_v4_migration.md) explains the corrected dual-layer geometry,
 weights and unavailable values, and the [metric surface audit](docs/metric_surface_audit_20261008.md)
 records cross-mode consistency checks and repaired omissions.

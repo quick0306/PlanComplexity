@@ -133,10 +133,18 @@ def calculate_v4_metrics_with_warnings(beams):
     total = sum(w for w, _ in samples)
     if total <= 0:
         return missing, ['[AURORA_V4_UNAVAILABLE] No positive delivered interval weight.']
-    result = {key: (sum(w * v[key] for w, v in samples) / total
-                    if all(v[key] is not None for _, v in samples) else None)
-              for key in V4_METRIC_ORDER}
     messages = ['[AURORA_V4_RELATIVE_WEIGHTS] Missing BeamMeterset; all beams use unit-normalized relative weights.'] if relative else []
-    if any(value is None for value in result.values()):
-        messages.append('[AURORA_V4_UNDEFINED_SHAPE] Positive-weight closed aperture makes BI and CA undefined.')
+    open_samples = [(w, v) for w, v in samples if v['mean_ba'] > 0]
+    open_weight = sum(w for w, _ in open_samples)
+    excluded_count = len(samples) - len(open_samples)
+    if excluded_count:
+        excluded_weight = sum(w for w, v in samples if v['mean_ba'] == 0)
+        messages.append('[AURORA_V4_CLOSED_SAMPLES_EXCLUDED] '
+                        f'{excluded_count} closed endpoint samples excluded from all seven means; '
+                        f'excluded weight fraction={excluded_weight / total:.12g}. '
+                        'Weights renormalized over open apertures only.')
+    if open_weight <= 0:
+        return missing, messages + ['[AURORA_V4_NO_OPEN_APERTURE] No positive-weight open endpoint aperture.']
+    result = {key: sum(w * v[key] for w, v in open_samples) / open_weight
+              for key in V4_METRIC_ORDER}
     return result, messages

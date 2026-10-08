@@ -2,7 +2,7 @@
 
 GEOMETRY_FORMULA_VERSION = "geometry-v4"
 TOMO_FORMULA_VERSION = "tomo-v3"
-AURORA_FORMULA_VERSION = "aurora-v4-physical-aperture"
+AURORA_FORMULA_VERSION = "aurora-v4-physical-aperture-open-only"
 
 
 def formula_version_for_mode(mode: str) -> str:

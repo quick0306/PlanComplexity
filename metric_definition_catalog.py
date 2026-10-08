@@ -381,8 +381,8 @@ def _build_aurora_metric_records() -> list[MetricDefinitionRecord]:
             physical_meaning=aurora_notes[metric_key], unit=_aurora_unit(metric_key),
             inputs_required="Physical LeafPositionBoundaries for both MLC layers; A/B bank positions; X/Y jaws; cumulative meterset weights; BeamMeterset MU when available",
             implementation_status="implemented",
-            notes=("aurora-v4-physical-aperture: physical dual-layer intersection; adapted gap-based MCS, "
-                   "not exact McNiven MCS or the old unit-width design. Positive delivered intervals use endpoint i+1. "
+            notes=("aurora-v4-physical-aperture-open-only: physical dual-layer intersection; adapted gap-based MCS, "
+                   "not exact McNiven MCS or the old unit-width design. Positive delivered intervals use endpoint i+1. All seven exclude area-zero endpoints and renormalize retained weights; closed leaves excluded from SAS/LSV. "
                    "Missing geometry or invalid weights makes all seven unavailable with a warning; missing any BeamMeterset "
                    "uses unit-normalized per-beam relative weights for every contributing beam with a warning."),
         ))
@@ -884,12 +884,12 @@ def _aurora_group(metric_key: str) -> str:
 
 def _aurora_formula(metric_key: str) -> str:
     formulas = {
-        "mean_ba": "MUmean(A_i); A_i=sum_s h_i,s*g_i,s, exact physical dual-layer intersection area",
-        "mean_bi": "MUmean(P_i^2/(4*pi*A_i)); P_i is the exact aperture-union perimeter; A_i=0 => unavailable",
-        "mean_ca": "MUmean(P_i/A_i); units mm^-1; A_i=0 => unavailable; this is not circularity",
-        "mean_sas5": "MUmean(count_s(0<g_i,s<5 mm)/count_s(g_i,s>0)); positive-height sub-strips only; closed => 0",
-        "mean_sas10": "MUmean(count_s(0<g_i,s<10 mm)/count_s(g_i,s>0)); positive-height sub-strips only; closed => 0",
-        "mean_mcs_aurora": "MUmean(AAV_i*LSV_i); AAV_i=A_i/sum_s max_positive_endpoint(h_i,s*g_i,s); LSV_i=1-sum_adj_open abs(delta g)/((n_open-1)*max_open(g)); n_open<=1 => LSV 1; zero envelope => MCS 0",
+        "mean_ba": "OpenMUmean(A_i); A_i=sum_s h_i,s*g_i,s, exact physical dual-layer intersection area",
+        "mean_bi": "OpenMUmean(P_i^2/(4*pi*A_i)); P_i is the exact aperture-union perimeter; A_i=0 => excluded",
+        "mean_ca": "OpenMUmean(P_i/A_i); units mm^-1; A_i=0 => excluded; this is not circularity",
+        "mean_sas5": "OpenMUmean(count_s(0<g_i,s<5 mm)/count_s(g_i,s>0)); positive-height sub-strips only; closed => excluded",
+        "mean_sas10": "OpenMUmean(count_s(0<g_i,s<10 mm)/count_s(g_i,s>0)); positive-height sub-strips only; closed => excluded",
+        "mean_mcs_aurora": "OpenMUmean(AAV_i*LSV_i); AAV_i=A_i/sum_s max_positive_endpoint(h_i,s*g_i,s); LSV_i=1-sum_adj_open abs(delta g)/((n_open-1)*max_open(g)); n_open<=1 => LSV 1; zero envelope => MCS 0",
         "mcs_complexity_aurora": "1-mean_mcs_aurora; complement of the physical-aperture adapted MCS",
 
         "longitudinal_travel_mm": "sum_i abs(delta z_i)",

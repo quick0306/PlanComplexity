@@ -4,12 +4,12 @@ from .metrics import AXIAL_REGIONS
 
 
 METRIC_NOTES: dict[str, str] = {
-    "mean_ba": "Delivered-weight mean physical beam aperture area after intersecting both MLC layers and clipping to X/Y jaws using real leaf boundaries.",
-    "mean_bi": "Delivered-weight mean boundary irregularity P squared / (4 pi A), from the exact physical aperture union; unavailable if any positive-weight aperture is closed.",
-    "mean_ca": "Delivered-weight mean perimeter-to-area ratio P/A in inverse millimeters; this CA is not circularity. Closed positive-weight apertures make it unavailable.",
-    "mean_sas5": "Delivered-weight mean fraction of positive open physical sub-strips with gap strictly below 5 mm; equal sub-strip counts, not area weighting; closed apertures contribute zero.",
-    "mean_sas10": "Delivered-weight mean fraction of positive open physical sub-strips with gap strictly below 10 mm; equal sub-strip counts, not area weighting; closed apertures contribute zero.",
-    "mean_mcs_aurora": "Delivered-weight mean AAV times gap-sequence LSV. AAV uses the beam sum of maximum clipped sub-strip areas at positive-weight endpoints. Adapted MCS, not exact McNiven MCS; differs from the old unit-width design.",
+    "mean_ba": "Open-aperture conditional delivered-weight mean physical area after intersecting both MLC layers and clipping to X/Y jaws using real leaf boundaries; closed endpoints excluded and weights renormalized.",
+    "mean_bi": "Open-aperture conditional delivered-weight mean P squared / (4 pi A), using exact physical union perimeter; closed endpoints excluded and weights renormalized; unavailable only when no valid open aperture remains.",
+    "mean_ca": "Open-aperture conditional delivered-weight mean P/A in inverse millimeters, not circularity; closed endpoints excluded and weights renormalized.",
+    "mean_sas5": "Open-aperture conditional delivered-weight mean fraction of positive open physical sub-strips with gap strictly below 5 mm; equal sub-strip counts; closed leaves and fully closed endpoints excluded.",
+    "mean_sas10": "Open-aperture conditional delivered-weight mean fraction of positive open physical sub-strips with gap strictly below 10 mm; equal sub-strip counts; closed leaves and fully closed endpoints excluded.",
+    "mean_mcs_aurora": "Open-aperture conditional delivered-weight mean AAV times positive-gap LSV. AAV uses beam maxima of clipped sub-strip areas. Closed endpoints excluded; weights renormalized. Adapted MCS, not exact McNiven MCS.",
     "mcs_complexity_aurora": "One minus the Aurora physical-aperture adapted MCS; larger values indicate greater modulation complexity under this version-specific definition.",
     "longitudinal_travel_mm": "Total absolute longitudinal travel reconstructed from adjacent control-point isocenter z positions.",
     "total_rotation_deg": "Total absolute gantry rotation reconstructed from the observed angle sequence rather than declared direction tags.",

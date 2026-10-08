@@ -30,7 +30,8 @@ class AuroraFormulaPdfTests(unittest.TestCase):
             self.assertIn("small_opening_fraction", extracted_text)
             self.assertIn("layer_correlation_index", extracted_text)
             self.assertIn("Section 3. V4 Physical Aperture Metrics", extracted_text)
-            self.assertIn("aurora-v4-physical-aperture", extracted_text)
+            self.assertIn("aurora-v4-physical-aperture-open-only", extracted_text)
+            self.assertIn("open-aperture conditional means", extracted_text)
             from aurora_svmat_lab.metrics import V4_METRIC_ORDER
             for key in V4_METRIC_ORDER:
                 self.assertIn(key, extracted_text)

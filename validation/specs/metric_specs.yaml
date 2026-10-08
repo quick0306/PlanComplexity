@@ -10543,6 +10543,7 @@ metric_specs:
     clinical or vendor equivalence.
   exclusions:
   - Missing physical boundaries or invalid meterset weights produce unavailable outputs.
+  - Area-zero endpoints and closed leaf gaps are excluded; weights are renormalized over open apertures only.
 - key: mean_bi
   platform: AURORA
   mode: AURORA
@@ -10572,6 +10573,7 @@ metric_specs:
     clinical or vendor equivalence.
   exclusions:
   - Missing physical boundaries or invalid meterset weights produce unavailable outputs.
+  - Area-zero endpoints and closed leaf gaps are excluded; weights are renormalized over open apertures only.
 - key: mean_ca
   platform: AURORA
   mode: AURORA
@@ -10600,6 +10602,7 @@ metric_specs:
     clinical or vendor equivalence.
   exclusions:
   - Missing physical boundaries or invalid meterset weights produce unavailable outputs.
+  - Area-zero endpoints and closed leaf gaps are excluded; weights are renormalized over open apertures only.
 - key: mean_sas5
   platform: AURORA
   mode: AURORA
@@ -10629,6 +10632,7 @@ metric_specs:
     clinical or vendor equivalence.
   exclusions:
   - Missing physical boundaries or invalid meterset weights produce unavailable outputs.
+  - Area-zero endpoints and closed leaf gaps are excluded; weights are renormalized over open apertures only.
 - key: mean_sas10
   platform: AURORA
   mode: AURORA
@@ -10658,6 +10662,7 @@ metric_specs:
     clinical or vendor equivalence.
   exclusions:
   - Missing physical boundaries or invalid meterset weights produce unavailable outputs.
+  - Area-zero endpoints and closed leaf gaps are excluded; weights are renormalized over open apertures only.
 - key: mean_mcs_aurora
   platform: AURORA
   mode: AURORA
@@ -10688,6 +10693,7 @@ metric_specs:
     clinical or vendor equivalence.
   exclusions:
   - Missing physical boundaries or invalid meterset weights produce unavailable outputs.
+  - Area-zero endpoints and closed leaf gaps are excluded; weights are renormalized over open apertures only.
 - key: mcs_complexity_aurora
   platform: AURORA
   mode: AURORA
@@ -10717,3 +10723,4 @@ metric_specs:
     clinical or vendor equivalence.
   exclusions:
   - Missing physical boundaries or invalid meterset weights produce unavailable outputs.
+  - Area-zero endpoints and closed leaf gaps are excluded; weights are renormalized over open apertures only.

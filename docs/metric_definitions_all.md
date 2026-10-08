@@ -4614,67 +4614,67 @@ Definitions are written to match the current code implementation. They are not a
 
 - Group: V4 physical aperture and adapted MCS
 - Symbol/short name: mean_ba
-- Mathematical definition: MUmean(A_i); A_i=sum_s h_i,s*g_i,s, exact physical dual-layer intersection area
-- Physical meaning: Delivered-weight mean physical beam aperture area after intersecting both MLC layers and clipping to X/Y jaws using real leaf boundaries.
+- Mathematical definition: OpenMUmean(A_i); A_i=sum_s h_i,s*g_i,s, exact physical dual-layer intersection area
+- Physical meaning: Open-aperture conditional delivered-weight mean physical area after intersecting both MLC layers and clipping to X/Y jaws using real leaf boundaries; closed endpoints excluded and weights renormalized.
 - Unit: mm^2
 - Inputs required: Physical LeafPositionBoundaries for both MLC layers; A/B bank positions; X/Y jaws; cumulative meterset weights; BeamMeterset MU when available
 - Status: implemented
-- Notes: aurora-v4-physical-aperture: physical dual-layer intersection; adapted gap-based MCS, not exact McNiven MCS or the old unit-width design. Positive delivered intervals use endpoint i+1. Missing geometry or invalid weights makes all seven unavailable with a warning; missing any BeamMeterset uses unit-normalized per-beam relative weights for every contributing beam with a warning.
+- Notes: aurora-v4-physical-aperture-open-only: physical dual-layer intersection; adapted gap-based MCS, not exact McNiven MCS or the old unit-width design. Positive delivered intervals use endpoint i+1. All seven exclude area-zero endpoints and renormalize retained weights; closed leaves excluded from SAS/LSV. Missing geometry or invalid weights makes all seven unavailable with a warning; missing any BeamMeterset uses unit-normalized per-beam relative weights for every contributing beam with a warning.
 
 ### `mean_bi` - mean_bi
 
 - Group: V4 physical aperture and adapted MCS
 - Symbol/short name: mean_bi
-- Mathematical definition: MUmean(P_i^2/(4*pi*A_i)); P_i is the exact aperture-union perimeter; A_i=0 => unavailable
-- Physical meaning: Delivered-weight mean boundary irregularity P squared / (4 pi A), from the exact physical aperture union; unavailable if any positive-weight aperture is closed.
+- Mathematical definition: OpenMUmean(P_i^2/(4*pi*A_i)); P_i is the exact aperture-union perimeter; A_i=0 => excluded
+- Physical meaning: Open-aperture conditional delivered-weight mean P squared / (4 pi A), using exact physical union perimeter; closed endpoints excluded and weights renormalized; unavailable only when no valid open aperture remains.
 - Unit: dimensionless
 - Inputs required: Physical LeafPositionBoundaries for both MLC layers; A/B bank positions; X/Y jaws; cumulative meterset weights; BeamMeterset MU when available
 - Status: implemented
-- Notes: aurora-v4-physical-aperture: physical dual-layer intersection; adapted gap-based MCS, not exact McNiven MCS or the old unit-width design. Positive delivered intervals use endpoint i+1. Missing geometry or invalid weights makes all seven unavailable with a warning; missing any BeamMeterset uses unit-normalized per-beam relative weights for every contributing beam with a warning.
+- Notes: aurora-v4-physical-aperture-open-only: physical dual-layer intersection; adapted gap-based MCS, not exact McNiven MCS or the old unit-width design. Positive delivered intervals use endpoint i+1. All seven exclude area-zero endpoints and renormalize retained weights; closed leaves excluded from SAS/LSV. Missing geometry or invalid weights makes all seven unavailable with a warning; missing any BeamMeterset uses unit-normalized per-beam relative weights for every contributing beam with a warning.
 
 ### `mean_ca` - mean_ca
 
 - Group: V4 physical aperture and adapted MCS
 - Symbol/short name: mean_ca
-- Mathematical definition: MUmean(P_i/A_i); units mm^-1; A_i=0 => unavailable; this is not circularity
-- Physical meaning: Delivered-weight mean perimeter-to-area ratio P/A in inverse millimeters; this CA is not circularity. Closed positive-weight apertures make it unavailable.
+- Mathematical definition: OpenMUmean(P_i/A_i); units mm^-1; A_i=0 => excluded; this is not circularity
+- Physical meaning: Open-aperture conditional delivered-weight mean P/A in inverse millimeters, not circularity; closed endpoints excluded and weights renormalized.
 - Unit: mm^-1
 - Inputs required: Physical LeafPositionBoundaries for both MLC layers; A/B bank positions; X/Y jaws; cumulative meterset weights; BeamMeterset MU when available
 - Status: implemented
-- Notes: aurora-v4-physical-aperture: physical dual-layer intersection; adapted gap-based MCS, not exact McNiven MCS or the old unit-width design. Positive delivered intervals use endpoint i+1. Missing geometry or invalid weights makes all seven unavailable with a warning; missing any BeamMeterset uses unit-normalized per-beam relative weights for every contributing beam with a warning.
+- Notes: aurora-v4-physical-aperture-open-only: physical dual-layer intersection; adapted gap-based MCS, not exact McNiven MCS or the old unit-width design. Positive delivered intervals use endpoint i+1. All seven exclude area-zero endpoints and renormalize retained weights; closed leaves excluded from SAS/LSV. Missing geometry or invalid weights makes all seven unavailable with a warning; missing any BeamMeterset uses unit-normalized per-beam relative weights for every contributing beam with a warning.
 
 ### `mean_sas5` - mean_sas5
 
 - Group: V4 physical aperture and adapted MCS
 - Symbol/short name: mean_sas5
-- Mathematical definition: MUmean(count_s(0<g_i,s<5 mm)/count_s(g_i,s>0)); positive-height sub-strips only; closed => 0
-- Physical meaning: Delivered-weight mean fraction of positive open physical sub-strips with gap strictly below 5 mm; equal sub-strip counts, not area weighting; closed apertures contribute zero.
+- Mathematical definition: OpenMUmean(count_s(0<g_i,s<5 mm)/count_s(g_i,s>0)); positive-height sub-strips only; closed => excluded
+- Physical meaning: Open-aperture conditional delivered-weight mean fraction of positive open physical sub-strips with gap strictly below 5 mm; equal sub-strip counts; closed leaves and fully closed endpoints excluded.
 - Unit: dimensionless
 - Inputs required: Physical LeafPositionBoundaries for both MLC layers; A/B bank positions; X/Y jaws; cumulative meterset weights; BeamMeterset MU when available
 - Status: implemented
-- Notes: aurora-v4-physical-aperture: physical dual-layer intersection; adapted gap-based MCS, not exact McNiven MCS or the old unit-width design. Positive delivered intervals use endpoint i+1. Missing geometry or invalid weights makes all seven unavailable with a warning; missing any BeamMeterset uses unit-normalized per-beam relative weights for every contributing beam with a warning.
+- Notes: aurora-v4-physical-aperture-open-only: physical dual-layer intersection; adapted gap-based MCS, not exact McNiven MCS or the old unit-width design. Positive delivered intervals use endpoint i+1. All seven exclude area-zero endpoints and renormalize retained weights; closed leaves excluded from SAS/LSV. Missing geometry or invalid weights makes all seven unavailable with a warning; missing any BeamMeterset uses unit-normalized per-beam relative weights for every contributing beam with a warning.
 
 ### `mean_sas10` - mean_sas10
 
 - Group: V4 physical aperture and adapted MCS
 - Symbol/short name: mean_sas10
-- Mathematical definition: MUmean(count_s(0<g_i,s<10 mm)/count_s(g_i,s>0)); positive-height sub-strips only; closed => 0
-- Physical meaning: Delivered-weight mean fraction of positive open physical sub-strips with gap strictly below 10 mm; equal sub-strip counts, not area weighting; closed apertures contribute zero.
+- Mathematical definition: OpenMUmean(count_s(0<g_i,s<10 mm)/count_s(g_i,s>0)); positive-height sub-strips only; closed => excluded
+- Physical meaning: Open-aperture conditional delivered-weight mean fraction of positive open physical sub-strips with gap strictly below 10 mm; equal sub-strip counts; closed leaves and fully closed endpoints excluded.
 - Unit: dimensionless
 - Inputs required: Physical LeafPositionBoundaries for both MLC layers; A/B bank positions; X/Y jaws; cumulative meterset weights; BeamMeterset MU when available
 - Status: implemented
-- Notes: aurora-v4-physical-aperture: physical dual-layer intersection; adapted gap-based MCS, not exact McNiven MCS or the old unit-width design. Positive delivered intervals use endpoint i+1. Missing geometry or invalid weights makes all seven unavailable with a warning; missing any BeamMeterset uses unit-normalized per-beam relative weights for every contributing beam with a warning.
+- Notes: aurora-v4-physical-aperture-open-only: physical dual-layer intersection; adapted gap-based MCS, not exact McNiven MCS or the old unit-width design. Positive delivered intervals use endpoint i+1. All seven exclude area-zero endpoints and renormalize retained weights; closed leaves excluded from SAS/LSV. Missing geometry or invalid weights makes all seven unavailable with a warning; missing any BeamMeterset uses unit-normalized per-beam relative weights for every contributing beam with a warning.
 
 ### `mean_mcs_aurora` - mean_mcs_aurora
 
 - Group: V4 physical aperture and adapted MCS
 - Symbol/short name: mean_mcs_aurora
-- Mathematical definition: MUmean(AAV_i*LSV_i); AAV_i=A_i/sum_s max_positive_endpoint(h_i,s*g_i,s); LSV_i=1-sum_adj_open abs(delta g)/((n_open-1)*max_open(g)); n_open<=1 => LSV 1; zero envelope => MCS 0
-- Physical meaning: Delivered-weight mean AAV times gap-sequence LSV. AAV uses the beam sum of maximum clipped sub-strip areas at positive-weight endpoints. Adapted MCS, not exact McNiven MCS; differs from the old unit-width design.
+- Mathematical definition: OpenMUmean(AAV_i*LSV_i); AAV_i=A_i/sum_s max_positive_endpoint(h_i,s*g_i,s); LSV_i=1-sum_adj_open abs(delta g)/((n_open-1)*max_open(g)); n_open<=1 => LSV 1; zero envelope => MCS 0
+- Physical meaning: Open-aperture conditional delivered-weight mean AAV times positive-gap LSV. AAV uses beam maxima of clipped sub-strip areas. Closed endpoints excluded; weights renormalized. Adapted MCS, not exact McNiven MCS.
 - Unit: dimensionless
 - Inputs required: Physical LeafPositionBoundaries for both MLC layers; A/B bank positions; X/Y jaws; cumulative meterset weights; BeamMeterset MU when available
 - Status: implemented
-- Notes: aurora-v4-physical-aperture: physical dual-layer intersection; adapted gap-based MCS, not exact McNiven MCS or the old unit-width design. Positive delivered intervals use endpoint i+1. Missing geometry or invalid weights makes all seven unavailable with a warning; missing any BeamMeterset uses unit-normalized per-beam relative weights for every contributing beam with a warning.
+- Notes: aurora-v4-physical-aperture-open-only: physical dual-layer intersection; adapted gap-based MCS, not exact McNiven MCS or the old unit-width design. Positive delivered intervals use endpoint i+1. All seven exclude area-zero endpoints and renormalize retained weights; closed leaves excluded from SAS/LSV. Missing geometry or invalid weights makes all seven unavailable with a warning; missing any BeamMeterset uses unit-normalized per-beam relative weights for every contributing beam with a warning.
 
 ### `mcs_complexity_aurora` - mcs_complexity_aurora
 
@@ -4685,7 +4685,7 @@ Definitions are written to match the current code implementation. They are not a
 - Unit: dimensionless
 - Inputs required: Physical LeafPositionBoundaries for both MLC layers; A/B bank positions; X/Y jaws; cumulative meterset weights; BeamMeterset MU when available
 - Status: implemented
-- Notes: aurora-v4-physical-aperture: physical dual-layer intersection; adapted gap-based MCS, not exact McNiven MCS or the old unit-width design. Positive delivered intervals use endpoint i+1. Missing geometry or invalid weights makes all seven unavailable with a warning; missing any BeamMeterset uses unit-normalized per-beam relative weights for every contributing beam with a warning.
+- Notes: aurora-v4-physical-aperture-open-only: physical dual-layer intersection; adapted gap-based MCS, not exact McNiven MCS or the old unit-width design. Positive delivered intervals use endpoint i+1. All seven exclude area-zero endpoints and renormalize retained weights; closed leaves excluded from SAS/LSV. Missing geometry or invalid weights makes all seven unavailable with a warning; missing any BeamMeterset uses unit-normalized per-beam relative weights for every contributing beam with a warning.
 
 ### `axial_travel_mm` - axial_travel_mm
 
