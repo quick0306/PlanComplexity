@@ -1,4 +1,5 @@
-﻿from typing import Dict, List, Tuple, Union
+﻿from ApertureMetric.device_geometry import is_dual_layer_beam, is_dual_layer_plan
+from typing import Dict, List, Tuple, Union
 
 import numpy as np
 
@@ -27,7 +28,7 @@ class StationParameterOptimizedRadiationTherapy(ComplexityMetric):
 
     def calculate_for_beam(self, beam: Dict[str, str]) -> Union[Tuple[float, float], float]:
         weights = self.get_weights_beam(beam)
-        if "halcyon" in beam["TreatmentMachineName"].lower() or "ethos" in beam["TreatmentMachineName"].lower():
+        if is_dual_layer_beam(beam):
             mlcx1_values, mlcx2_values = self.get_metrics_beam(beam)
             return (
                 self._weighted_station_average(weights, mlcx1_values),
@@ -39,7 +40,7 @@ class StationParameterOptimizedRadiationTherapy(ComplexityMetric):
     def get_metrics_beam(self, beam: Dict[str, str]) -> Union[Tuple[List[float], List[float]], List[float]]:
         cumulative_mu = MetersetsFromMetersetWeightsCreator().get_cumulative_metersets(beam)
         apertures = AperturesFromBeamCreator().create(beam)
-        if "halcyon" in beam["TreatmentMachineName"].lower() or "ethos" in beam["TreatmentMachineName"].lower():
+        if is_dual_layer_beam(beam):
             mlcx1_aperture = apertures[0::2]
             mlcx2_aperture = apertures[1::2]
             return (

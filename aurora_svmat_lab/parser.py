@@ -139,7 +139,10 @@ def _manufacturer_model_hints_compatible(dataset: Dataset) -> bool:
     manufacturer = str(getattr(dataset, "Manufacturer", "")).strip().lower()
     model = str(getattr(dataset, "ManufacturerModelName", "")).strip().lower()
     known_manufacturers = {"wisdomtech medical systems", "wisdomtech", "neurt"}
-    known_models = {"deepplan", "aurora", "aurora svmat"}
+    # DeepPlan 1.4 exports can identify the producing system as WisdomTech.
+    # This permits parsing; automatic delivery-mode selection still requires
+    # Aurora identity or axial motion in addition to dual-layer geometry.
+    known_models = {"deepplan", "wisdomtech", "aurora", "aurora svmat"}
 
     manufacturer_present = bool(manufacturer)
     model_present = bool(model)

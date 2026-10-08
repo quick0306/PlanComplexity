@@ -1,4 +1,5 @@
-﻿from typing import Dict, List, Tuple, Union
+﻿from ApertureMetric.device_geometry import is_dual_layer_beam, is_dual_layer_plan
+from typing import Dict, List, Tuple, Union
 
 from ApertureMetric.aperture_geometry import PyAperture
 from ApertureMetric.aperture_creator import AperturesFromBeamCreator
@@ -18,7 +19,7 @@ class PlanModulation(ComplexityMetric):
 
     def calculate_for_beam(self, beam: Dict[str, str]) -> Union[Tuple[float, float], float]:
         weights = self.get_weights_beam(beam)
-        if "halcyon" in beam["TreatmentMachineName"].lower() or "ethos" in beam["TreatmentMachineName"].lower():
+        if is_dual_layer_beam(beam):
             mlcx1_values, mlcx2_values = self.get_metrics_beam(beam)
             mlcx1_union, mlcx2_union = self.calculate_beam_union_area(beam)
             return (
@@ -34,7 +35,7 @@ class PlanModulation(ComplexityMetric):
         return [aperture.area() for aperture in apertures]
 
     def calculate_beam_union_area(self, beam: Dict[str, str]) -> Union[Tuple[float, float], float]:
-        if "halcyon" in beam["TreatmentMachineName"].lower() or "ethos" in beam["TreatmentMachineName"].lower():
+        if is_dual_layer_beam(beam):
             apertures = AperturesFromBeamCreator().create(beam)
             return self._max_union_area(apertures[0::2]), self._max_union_area(apertures[1::2])
 

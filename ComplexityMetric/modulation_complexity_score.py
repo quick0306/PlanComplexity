@@ -1,4 +1,5 @@
-﻿from typing import Dict, List, Tuple, Union
+﻿from ApertureMetric.device_geometry import is_dual_layer_beam, is_dual_layer_plan
+from typing import Dict, List, Tuple, Union
 
 from ComplexityMetric.complexity_metric import ComplexityMetric
 from ApertureMetric.aperture_geometry import PyAperture
@@ -16,7 +17,7 @@ class ModulationComplexityScore(ComplexityMetric):
 
     def calculate_for_beam(self, beam: Dict[str, str]) -> Union[Tuple[float, float], float]:
         weights = self.get_control_arc_weights(beam)
-        if 'halcyon' in beam['TreatmentMachineName'].lower() or 'ethos' in beam['TreatmentMachineName'].lower():
+        if is_dual_layer_beam(beam):
             apertures = AperturesFromBeamCreator().create(beam)
             mlcx1_values = self.calculate_per_aperture(apertures[0::2])
             mlcx2_values = self.calculate_per_aperture(apertures[1::2])

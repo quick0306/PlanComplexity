@@ -1,3 +1,4 @@
+from ApertureMetric.device_geometry import is_dual_layer_beam, is_dual_layer_plan
 from typing import Dict, List, Tuple, Union
 
 from ApertureMetric.aperture_creator import AperturesFromBeamCreator
@@ -24,9 +25,7 @@ class SmallApertureScore(ComplexityMetric):
     def calculate_for_plan_with_warnings(
         self, plan: Dict[str, str], x=5
     ) -> Tuple[PlanValue, List[str]]:
-        dual_layer = "halcyon" in plan["machine_id"].lower() or "ethos" in plan[
-            "machine_id"
-        ].lower()
+        dual_layer = is_dual_layer_plan(plan)
         layer_values: List[List[float]] = [[], []] if dual_layer else [[]]
         layer_weights: List[List[float]] = [[], []] if dual_layer else [[]]
         warnings: List[str] = []
@@ -64,9 +63,7 @@ class SmallApertureScore(ComplexityMetric):
         self, beam: Dict[str, str], x=5
     ) -> Union[Tuple[int, int], Tuple[Tuple[int, int], Tuple[int, int]]]:
         apertures = AperturesFromBeamCreator().create(beam)
-        if "halcyon" in beam["TreatmentMachineName"].lower() or "ethos" in beam[
-            "TreatmentMachineName"
-        ].lower():
+        if is_dual_layer_beam(beam):
             return self.count_aperture_leaf_gaps(apertures[0::2], x), self.count_aperture_leaf_gaps(
                 apertures[1::2], x
             )

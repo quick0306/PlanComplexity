@@ -1,3 +1,4 @@
+from ApertureMetric.device_geometry import is_dual_layer_beam, is_dual_layer_plan
 from typing import Dict, List, Tuple, Union
 
 import numpy as np
@@ -27,9 +28,7 @@ class MeanAsymmetryDistance(ComplexityMetric):
     def calculate_for_plan_with_warnings(
         self, plan: Dict[str, str]
     ) -> Tuple[PlanValue, List[str]]:
-        dual_layer = "halcyon" in plan["machine_id"].lower() or "ethos" in plan[
-            "machine_id"
-        ].lower()
+        dual_layer = is_dual_layer_plan(plan)
         layer_values: List[List[float]] = [[], []] if dual_layer else [[]]
         layer_weights: List[List[float]] = [[], []] if dual_layer else [[]]
         warnings: List[str] = []

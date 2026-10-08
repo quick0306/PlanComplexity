@@ -1,3 +1,4 @@
+from ApertureMetric.device_geometry import is_dual_layer_beam, is_dual_layer_plan
 from typing import Dict, List, Tuple, Union
 
 import numpy as np
@@ -30,9 +31,7 @@ class LeafGap(ComplexityMetric):
     def calculate_for_plan_with_warnings(
         self, plan: Dict[str, str]
     ) -> Tuple[PlanGapValue, List[str]]:
-        dual_layer = "halcyon" in plan["machine_id"].lower() or "ethos" in plan[
-            "machine_id"
-        ].lower()
+        dual_layer = is_dual_layer_plan(plan)
         layer_moments: List[List[GapMoments]] = [[], []] if dual_layer else [[]]
         layer_weights: List[List[float]] = [[], []] if dual_layer else [[]]
         warnings: List[str] = []
@@ -70,9 +69,7 @@ class LeafGap(ComplexityMetric):
         self, beam: Dict[str, str]
     ) -> Union[List[float], Tuple[List[float], List[float]]]:
         apertures = AperturesFromBeamCreator().create(beam)
-        if "halcyon" in beam["TreatmentMachineName"].lower() or "ethos" in beam[
-            "TreatmentMachineName"
-        ].lower():
+        if is_dual_layer_beam(beam):
             return self.get_aperture_leaf_gaps(apertures[0::2]), self.get_aperture_leaf_gaps(
                 apertures[1::2]
             )

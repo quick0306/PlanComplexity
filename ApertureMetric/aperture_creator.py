@@ -1,4 +1,5 @@
 ﻿from typing import Dict, List
+from ApertureMetric.device_geometry import is_dual_layer_beam
 
 import numpy as np
 from pydicom.dataset import Dataset
@@ -28,7 +29,7 @@ class AperturesFromBeamCreator:
         machine_name = beam["TreatmentMachineName"].lower()
         jaw = None
 
-        if "halcyon" in machine_name or "ethos" in machine_name:
+        if is_dual_layer_beam(beam):
             distal_boundaries = self.get_leaf_boundaries(beam, "MLCX1")
             proximal_boundaries = self.get_leaf_boundaries(beam, "MLCX2")
             last_mlcx1_positions = None
@@ -41,7 +42,9 @@ class AperturesFromBeamCreator:
                     leaf_mlcx1_positions = last_mlcx1_positions.copy()
                 if leaf_mlcx2_positions is None and last_mlcx2_positions is not None:
                     leaf_mlcx2_positions = last_mlcx2_positions.copy()
-                jaw = self.get_halcyon_jaw_positions(beam, control_point, previous_jaw=jaw)
+                jaw = (self.get_halcyon_jaw_positions(beam, control_point, previous_jaw=jaw)
+                       if "halcyon" in machine_name or "ethos" in machine_name
+                       else self.get_jaw_positions(beam, control_point, previous_jaw=jaw))
                 if leaf_mlcx1_positions is not None and leaf_mlcx2_positions is not None:
                     # DICOM control points inherit unchanged machine parameters; some
                     # TPS exports write final meterset control points without repeating

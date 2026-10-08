@@ -1,4 +1,5 @@
-﻿from typing import Dict, List, Tuple, Union, Optional
+﻿from ApertureMetric.device_geometry import is_dual_layer_beam, is_dual_layer_plan
+from typing import Dict, List, Tuple, Union, Optional
 import math
 
 import numpy as np
@@ -27,7 +28,7 @@ class ComplexityMetric:
         """Return the plan metric aggregated according to the metric definition."""
         weights = self.get_plan_aggregation_weights(plan)
         metrics = self.get_metrics_plan(plan)
-        if 'halcyon' in plan['machine_id'].lower() or 'ethos' in plan['machine_id'].lower():
+        if is_dual_layer_plan(plan):
             mlcx1_metrics = [metric[0] for metric in metrics]
             mlcx2_metrics = [metric[1] for metric in metrics]
             return (
@@ -70,7 +71,7 @@ class ComplexityMetric:
 
     def calculate_for_beam(self, beam: Dict[str, str]) -> Union[Tuple[float, float], float]:
         """Returns the complexity metric of a beam aggregated over its active control arcs."""
-        if 'halcyon' in beam['TreatmentMachineName'].lower() or 'ethos' in beam['TreatmentMachineName'].lower():
+        if is_dual_layer_beam(beam):
             MLCX1_values, MLCX2_values = self.get_metrics_beam(beam)
             weights = self.get_beam_aggregation_weights(beam, MLCX1_values)
             return self.weighted_sum(weights, MLCX1_values), self.weighted_sum(weights, MLCX2_values)
@@ -91,7 +92,7 @@ class ComplexityMetric:
 
     def get_metrics_beam(self, beam: Dict[str, str]) -> Union[Tuple[List[float], List[float]], List[float]]:
         """Returns the unweighted metrics of a beam's control points"""
-        if 'halcyon' in beam['TreatmentMachineName'].lower() or 'ethos' in beam['TreatmentMachineName'].lower():
+        if is_dual_layer_beam(beam):
             apertures = AperturesFromBeamCreator().create(beam)
             mlcx1_apertures = apertures[0::2]
             mlcx2_apertures = apertures[1::2]

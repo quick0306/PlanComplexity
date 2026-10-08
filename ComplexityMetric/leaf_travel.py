@@ -1,3 +1,4 @@
+from ApertureMetric.device_geometry import is_dual_layer_beam, is_dual_layer_plan
 from typing import Dict, List, Tuple, Union
 
 from ApertureMetric.aperture_creator import AperturesFromBeamCreator
@@ -11,7 +12,7 @@ class LeafTravel(ComplexityMetric):
     aggregation_mode = "mu"
 
     def calculate_for_beam(self, beam: Dict[str, str]) -> Union[Tuple[float, float], float]:
-        if "halcyon" in beam["TreatmentMachineName"].lower() or "ethos" in beam["TreatmentMachineName"].lower():
+        if is_dual_layer_beam(beam):
             apertures = AperturesFromBeamCreator().create(beam)
             mlcx1_values = self.calculate_per_aperture(apertures[0::2])
             mlcx2_values = self.calculate_per_aperture(apertures[1::2])

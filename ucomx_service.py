@@ -66,9 +66,9 @@ def detect_mode(metadata: Dict[str, Any]) -> AnalysisMode:
     manufacturer = str(metadata.get("manufacturer", "")).lower()
 
     if (
-        any(token in manufacturer for token in ("wisdomtech", "neurt"))
-        or any(token in model for token in ("deepplan", "aurora"))
-        or any(token in manufacturer_model for token in ("deepplan", "aurora"))
+        "aurora" in machine_id
+        or "aurora" in model
+        or "aurora" in manufacturer_model
         or "aurora" in plan_name
         or "aurora" in plan_label
     ):
@@ -85,7 +85,18 @@ def detect_mode(metadata: Dict[str, Any]) -> AnalysisMode:
 
 def detect_mode_from_file(source_path: str) -> AnalysisMode:
     ds = pydicom.dcmread(source_path, force=True, stop_before_pixels=True)
-    if is_aurora_rtplan(ds):
+    # A TPS vendor (including DeepPlan) does not identify the delivery technique.
+    # Require an Aurora identity or observed axial motion as well as dual MLCs.
+    treatment_beams = [b for b in getattr(ds, "BeamSequence", [])
+                       if str(getattr(b, "TreatmentDeliveryType", "")).upper() != "SETUP"]
+    aurora_identity = any("aurora" in str(value).lower() for value in (
+        getattr(ds, "ManufacturerModelName", ""), getattr(ds, "RTPlanName", ""),
+        getattr(ds, "RTPlanLabel", ""),
+        *(getattr(b, "TreatmentMachineName", "") for b in treatment_beams)))
+    axial_motion = any(len({float(cp.IsocenterPosition[2])
+                            for cp in getattr(b, "ControlPointSequence", [])
+                            if "IsocenterPosition" in cp}) > 1 for b in treatment_beams)
+    if is_aurora_rtplan(ds) and (aurora_identity or axial_motion):
         return AnalysisMode.AURORA
     manufacturer = str(getattr(ds, "Manufacturer", "")).lower()
     model = str(getattr(ds, "ManufacturerModelName", "")).lower()
@@ -186,6 +197,12 @@ def analyze_plan_file(source_path: str, requested_mode: AnalysisMode = AnalysisM
 
     if active_mode == AnalysisMode.TOMO:
         return _analyze_tomo_plan(source_path)
+
+    if active_mode == AnalysisMode.AURORA:
+        return _adapt_aurora_result(
+            source_path=source_path,
+            result=analyze_aurora_plan_file(source_path),
+        )
 
     if active_mode == AnalysisMode.CYBERKNIFE_MLC and not _has_standard_mlc_geometry(plan_dict):
         plan_dir = os.path.dirname(source_path)

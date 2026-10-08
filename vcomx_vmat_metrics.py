@@ -1,5 +1,7 @@
 ﻿from __future__ import annotations
 
+from ApertureMetric.device_geometry import is_dual_layer_plan
+
 from ComplexityMetric.aperture_shape_metrics import (
     maximum_aperture_area, leaf_sequence_variability,
 )
@@ -74,7 +76,7 @@ def calculate_vcomx_supplemental_metrics_with_warnings(
     total_control_arcs = sum(max(len(beam.get("ControlPointSequence", [])) - 1, 0) for beam in beams)
     total_gantry_travel = sum(abs(float(beam.get("GantryRotationAngle", 0.0) or 0.0)) for beam in beams)
     beam_weights = [float(beam.get("MU", 0.0)) for beam in beams]
-    dual_layer = any(token in str(plan_dict.get("machine_id", "")).lower() for token in ("halcyon", "ethos"))
+    dual_layer = is_dual_layer_plan(plan_dict)
 
     metrics: Dict[str, object] = {
         "mus": total_mu,

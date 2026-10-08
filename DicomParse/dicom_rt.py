@@ -243,6 +243,12 @@ class RTPlan:
                 referenced_beams = fg.ReferencedBeamSequence
                 number_of_fractions = fg.NumberOfFractionsPlanned
                 for referenced_beam in referenced_beams:
+                    beam_number = referenced_beam.ReferencedBeamNumber
+                    if any(item.BeamNumber == beam_number and item.TreatmentDeliveryType == 'SETUP'
+                           for item in beam_sequence):
+                        continue
+                    if beam_number not in beams:
+                        raise ValueError(f"Fraction group references missing beam {beam_number}.")
                     if "BeamDose" in referenced_beam:
                         # dose in cGy
                         beams[referenced_beam.ReferencedBeamNumber]["dose"] = referenced_beam.BeamDose * number_of_fractions * 100

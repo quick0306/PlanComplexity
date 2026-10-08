@@ -1,4 +1,5 @@
-﻿import numpy as np
+﻿from ApertureMetric.device_geometry import is_dual_layer_beam, is_dual_layer_plan
+import numpy as np
 
 from ApertureMetric.aperture_creator import AperturesFromBeamCreator
 from ApertureMetric.meterset_creator import MetersetsFromMetersetWeightsCreator
@@ -21,7 +22,7 @@ class ModulationIndexScore(ComplexityMetric):
         for _, beam in plan["beams"].items():
             mi.append(self.calculate_for_beam(beam, k))
 
-        if "halcyon" in plan["machine_id"].lower() or "ethos" in plan["machine_id"].lower():
+        if is_dual_layer_plan(plan):
             mlcx1_mi = [m[0] for m in mi]
             mlcx2_mi = [m[1] for m in mi]
 
@@ -42,7 +43,7 @@ class ModulationIndexScore(ComplexityMetric):
     def calculate_for_beam(self, beam, k=0.02):
         cumulative_metersets = MetersetsFromMetersetWeightsCreator().get_cumulative_metersets(beam)
 
-        if "halcyon" in beam["TreatmentMachineName"].lower() or "ethos" in beam["TreatmentMachineName"].lower():
+        if is_dual_layer_beam(beam):
             apertures = AperturesFromBeamCreator().create(beam)
             mlcx1_aperture = apertures[0::2]
             mlcx2_aperture = apertures[1::2]

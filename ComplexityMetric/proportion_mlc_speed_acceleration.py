@@ -1,4 +1,5 @@
-﻿from typing import Dict, Iterable, List, Sequence
+﻿from ApertureMetric.device_geometry import is_dual_layer_beam, is_dual_layer_plan
+from typing import Dict, Iterable, List, Sequence
 
 import numpy as np
 
@@ -44,7 +45,7 @@ class ProportionMLCSpeedAcceleration(ComplexityMetric):
     )
 
     def calculate_for_plan(self, plan: Dict[str, str] = None):
-        if "halcyon" in plan["machine_id"].lower() or "ethos" in plan["machine_id"].lower():
+        if is_dual_layer_plan(plan):
             mlcx1_speed = []
             mlcx1_acc = []
             mlcx1_summary = []
@@ -97,7 +98,7 @@ class ProportionMLCSpeedAcceleration(ComplexityMetric):
     def calculate_for_beam(self, beam: Dict[str, str]):
         cumulative_metersets = MetersetsFromMetersetWeightsCreator().get_cumulative_metersets(beam)
         apertures = AperturesFromBeamCreator().create(beam)
-        if "halcyon" in beam["TreatmentMachineName"].lower() or "ethos" in beam["TreatmentMachineName"].lower():
+        if is_dual_layer_beam(beam):
             mlcx1_aperture = apertures[0::2]
             mlcx2_aperture = apertures[1::2]
             return (
