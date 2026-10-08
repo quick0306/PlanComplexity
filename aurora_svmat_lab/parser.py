@@ -49,6 +49,18 @@ def parse_aurora_rtplan(source: str | Path | Dataset) -> AuroraAnalysisResult:
         raise ValueError("Aurora RTPLAN detection failed: expected dynamic dual-layer MLCX1/MLCX2 treatment beams.")
 
     parsed_beams = [_parse_beam(beam) for beam in beams]
+    for parsed in parsed_beams:
+        referenced_mu = {
+            float(ref.BeamMeterset)
+            for group in getattr(dataset, "FractionGroupSequence", [])
+            for ref in getattr(group, "ReferencedBeamSequence", [])
+            if int(ref.ReferencedBeamNumber) == parsed.beam_number and "BeamMeterset" in ref
+        }
+        if len(referenced_mu) == 1:
+            parsed.beam_meterset_mu = referenced_mu.pop()
+        elif len(referenced_mu) > 1:
+            # Ambiguous fraction-group MU must not be silently treated as absent.
+            parsed.beam_meterset_mu = float("nan")
     first_beam = parsed_beams[0] if parsed_beams else AuroraBeam()
     metadata = AuroraPlanMetadata(
         source_path=str(source) if isinstance(source, (str, Path)) else "",
@@ -167,12 +179,19 @@ def _parse_beam(beam: Dataset) -> AuroraBeam:
     control_points = list(getattr(beam, "ControlPointSequence", []))
     previous_state: dict[str, Any] = {}
     parsed_control_points = [_parse_control_point(control_point, previous_state) for control_point in control_points]
+    boundaries = {}
+    for item in getattr(beam, "BeamLimitingDeviceSequence", []):
+        edges = _to_float_tuple(getattr(item, "LeafPositionBoundaries", ()))
+        count = int(getattr(item, "NumberOfLeafJawPairs", 0))
+        boundaries[str(item.RTBeamLimitingDeviceType).upper()] = edges if len(edges) == count + 1 else ()
     return AuroraBeam(
         beam_number=int(_read_float_attr(beam, "BeamNumber", default=0.0) or 0),
         beam_name=str(getattr(beam, "BeamName", "")),
         treatment_machine_name=str(getattr(beam, "TreatmentMachineName", "")),
         delivery_type=str(getattr(beam, "TreatmentDeliveryType", "")),
         control_points=parsed_control_points,
+        leaf_boundaries_mlcx1=boundaries.get("MLCX1", ()),
+        leaf_boundaries_mlcx2=boundaries.get("MLCX2", ()),
     )
 
 

@@ -10,6 +10,8 @@ from .metrics import calculate_beam_metrics, calculate_plan_metrics
 from .models import AuroraAnalysisResult, AuroraBeam, AuroraMetricValue, AuroraPlanMetadata
 from .notes import get_metric_notes
 from .parser import parse_aurora_rtplan
+from .aperture_metrics import calculate_v4_metrics_with_warnings
+from formula_versions import AURORA_FORMULA_VERSION
 
 
 def analyze_dataset(dataset: Dataset, *, source_path: str = "") -> AuroraAnalysisResult:
@@ -27,6 +29,7 @@ def analyze_dataset(dataset: Dataset, *, source_path: str = "") -> AuroraAnalysi
         )
 
     result.source_path = source_path or result.source_path or base_metadata.source_path
+    result.metadata.metric_formula_version = AURORA_FORMULA_VERSION
     if result.metadata.source_path == "":
         result.metadata.source_path = result.source_path
 
@@ -37,6 +40,7 @@ def analyze_dataset(dataset: Dataset, *, source_path: str = "") -> AuroraAnalysi
         return result
 
     result.warnings = _collect_result_warnings(result.beams)
+    result.warnings.extend(calculate_v4_metrics_with_warnings(result.beams)[1])
     result.beams = [_decorate_beam(beam) for beam in result.beams]
     result.plan_metrics = calculate_plan_metrics(result.beams)
     result.metrics = _metric_records_from_map(result.plan_metrics)
@@ -141,6 +145,9 @@ def _metric_records_from_map(metric_values: dict[str, float | None]) -> list[Aur
         AuroraMetricValue(
             metric_name=metric_name,
             value=value,
+            unit={"mean_ba": "mm^2", "mean_bi": "dimensionless", "mean_ca": "1/mm",
+                  "mean_sas5": "dimensionless", "mean_sas10": "dimensionless",
+                  "mean_mcs_aurora": "dimensionless", "mcs_complexity_aurora": "dimensionless"}.get(metric_name, ""),
             description=notes.get(metric_name, ""),
         )
         for metric_name, value in metric_values.items()

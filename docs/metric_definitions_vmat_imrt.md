@@ -2,6 +2,39 @@
 
 This appendix is generated from the shared metric-definition catalog.
 
+## `ethos_sas10` - Varian Dual-layer SAS10
+
+- Group: Varian Ethos/Halcyon dual-layer MLC
+- Symbol/short name: Varian Dual-layer SAS10
+- Mathematical definition: SAS10 = sum_positive-center-MU-CP count(0.5+1e-8 < gap <= 10+1e-8 mm) / sum_positive-center-MU-CP count(gap > 0.5+1e-8 mm); beam-MU mean
+- Physical meaning: Varian Ethos/Halcyon dual-layer MLC v2: pooled open-slot counts at positive-center-MU control points with gap > 0.5 mm; fraction, not percent. 12-plan display agreement (RP/PDF labels may differ); see docs/ethos_report_profile.md.
+- Unit: dimensionless
+- Inputs required: MLC leaf positions, jaw positions, gantry angle, and control-point meterset weights
+- Status: implemented
+- Notes: None
+
+## `ethos_one_minus_mcs` - Varian Dual-layer 1-MCS
+
+- Group: Varian Ethos/Halcyon dual-layer MLC
+- Symbol/short name: Varian Dual-layer 1-MCS
+- Mathematical definition: 1-MCS = 1 - centered-CP-MU mean(A_open/E_open * LSV); E_open is the open-slot bank envelope; LSV multiplies bank scores 1-sum_physical_adjacent_open(abs(dx))/(N_adjacent_open*range_open_bank); beam-MU mean
+- Physical meaning: Varian Ethos/Halcyon dual-layer MLC v2: centered-MU mean of CP AAV*LSV, complemented; physical open-slot adjacency. 12-plan display agreement (RP/PDF labels may differ); distinct from MCSv/MCS5.
+- Unit: dimensionless
+- Inputs required: MLC leaf positions, jaw positions, gantry angle, and control-point meterset weights
+- Status: implemented
+- Notes: None
+
+## `ethos_penumbra_ratio` - Varian Dual-layer Penumbra Ratio
+
+- Group: Varian Ethos/Halcyon dual-layer MLC
+- Symbol/short name: Varian Dual-layer Penumbra Ratio
+- Mathematical definition: PR = centered-CP-MU mean(area(union of finite tip 2.8 mm and exposed side 2.3 mm strips)/A_open); beam-MU mean
+- Physical meaning: Varian Ethos/Halcyon dual-layer MLC v2: finite tip/side strip union with 2.8/2.3 mm distances; fraction, not percent. 12-plan display agreement (RP/PDF labels may differ); distinct from EAM.
+- Unit: dimensionless
+- Inputs required: MLC leaf positions, jaw positions, gantry angle, and control-point meterset weights
+- Status: implemented
+- Notes: None
+
 ## `mus` - MUs
 
 - Group: Plan prescription
@@ -2328,7 +2361,7 @@ This appendix is generated from the shared metric-definition catalog.
 - Group: Motion bins
 - Symbol/short name: Mean Leaf Speed (mm/s)
 - Mathematical definition: mean_leaf(mean_interval(speed))
-- Physical meaning: Leaf-wise mean proportions for Park et al. VMAT delivery bins. Speed bins: 0-4, 4-8, 8-12, 12-16, 16-20 mm/s. Acceleration bins: 0-40, 40-80, 80-120, 120-160, 160-200 mm/s^2. Requires a valid control-point time model; RTPLAN-only Elekta exports without usable timing inputs are reported as unavailable.
+- Physical meaning: Mean of per-leaf mean nonzero speeds over finite control-point intervals, in mm/s.
 - Unit: mm/s
 - Inputs required: Per-leaf motion time series with a valid control-point time model
 - Status: implemented_flattened
@@ -2339,7 +2372,7 @@ This appendix is generated from the shared metric-definition catalog.
 - Group: Motion bins
 - Symbol/short name: Mean Leaf Acceleration (mm/s^2)
 - Mathematical definition: mean_leaf(mean_interval(acceleration))
-- Physical meaning: Leaf-wise mean proportions for Park et al. VMAT delivery bins. Speed bins: 0-4, 4-8, 8-12, 12-16, 16-20 mm/s. Acceleration bins: 0-40, 40-80, 80-120, 120-160, 160-200 mm/s^2. Requires a valid control-point time model; RTPLAN-only Elekta exports without usable timing inputs are reported as unavailable.
+- Physical meaning: Mean of per-leaf mean nonzero absolute accelerations over finite control-point intervals, in mm/s^2.
 - Unit: mm/s^2
 - Inputs required: Per-leaf motion time series with a valid control-point time model
 - Status: implemented_flattened
@@ -2350,7 +2383,7 @@ This appendix is generated from the shared metric-definition catalog.
 - Group: Motion bins
 - Symbol/short name: Mean Leaf Speed SD (mm/s)
 - Mathematical definition: mean_leaf(std_interval(speed))
-- Physical meaning: Leaf-wise mean proportions for Park et al. VMAT delivery bins. Speed bins: 0-4, 4-8, 8-12, 12-16, 16-20 mm/s. Acceleration bins: 0-40, 40-80, 80-120, 120-160, 160-200 mm/s^2. Requires a valid control-point time model; RTPLAN-only Elekta exports without usable timing inputs are reported as unavailable.
+- Physical meaning: Mean of nonzero per-leaf sample speed standard deviations over finite control-point intervals (ddof=1), in mm/s.
 - Unit: mm/s
 - Inputs required: Per-leaf motion time series with a valid control-point time model
 - Status: implemented_flattened
@@ -2361,7 +2394,7 @@ This appendix is generated from the shared metric-definition catalog.
 - Group: Motion bins
 - Symbol/short name: Mean Leaf Acceleration SD (mm/s^2)
 - Mathematical definition: mean_leaf(std_interval(acceleration))
-- Physical meaning: Leaf-wise mean proportions for Park et al. VMAT delivery bins. Speed bins: 0-4, 4-8, 8-12, 12-16, 16-20 mm/s. Acceleration bins: 0-40, 40-80, 80-120, 120-160, 160-200 mm/s^2. Requires a valid control-point time model; RTPLAN-only Elekta exports without usable timing inputs are reported as unavailable.
+- Physical meaning: Mean of nonzero per-leaf sample absolute-acceleration standard deviations over finite control-point intervals (ddof=1), in mm/s^2.
 - Unit: mm/s^2
 - Inputs required: Per-leaf motion time series with a valid control-point time model
 - Status: implemented_flattened
@@ -2372,7 +2405,7 @@ This appendix is generated from the shared metric-definition catalog.
 - Group: Motion bins
 - Symbol/short name: MLCX1 Park Speed 0-4 mm/s
 - Mathematical definition: mean_leaf [ proportion(intervals with speed in 0-4 mm/s) ], restricted to MLCX1 leaf positions.
-- Physical meaning: MLCX1-only Park 2015 derived motion statistic.
+- Physical meaning: Leaf-wise mean proportion of valid control-point intervals with speed in 0-4 mm/s. Reported for native MLCX1.
 - Unit: proportion
 - Inputs required: MLCX1 motion traces with a valid control-point time model
 - Status: implemented_flattened
@@ -2383,7 +2416,7 @@ This appendix is generated from the shared metric-definition catalog.
 - Group: Motion bins
 - Symbol/short name: MLCX1 Park Speed 4-8 mm/s
 - Mathematical definition: mean_leaf [ proportion(intervals with speed in 4-8 mm/s) ], restricted to MLCX1 leaf positions.
-- Physical meaning: MLCX1-only Park 2015 derived motion statistic.
+- Physical meaning: Leaf-wise mean proportion of valid control-point intervals with speed in 4-8 mm/s. Reported for native MLCX1.
 - Unit: proportion
 - Inputs required: MLCX1 motion traces with a valid control-point time model
 - Status: implemented_flattened
@@ -2394,7 +2427,7 @@ This appendix is generated from the shared metric-definition catalog.
 - Group: Motion bins
 - Symbol/short name: MLCX1 Park Speed 8-12 mm/s
 - Mathematical definition: mean_leaf [ proportion(intervals with speed in 8-12 mm/s) ], restricted to MLCX1 leaf positions.
-- Physical meaning: MLCX1-only Park 2015 derived motion statistic.
+- Physical meaning: Leaf-wise mean proportion of valid control-point intervals with speed in 8-12 mm/s. Reported for native MLCX1.
 - Unit: proportion
 - Inputs required: MLCX1 motion traces with a valid control-point time model
 - Status: implemented_flattened
@@ -2405,7 +2438,7 @@ This appendix is generated from the shared metric-definition catalog.
 - Group: Motion bins
 - Symbol/short name: MLCX1 Park Speed 12-16 mm/s
 - Mathematical definition: mean_leaf [ proportion(intervals with speed in 12-16 mm/s) ], restricted to MLCX1 leaf positions.
-- Physical meaning: MLCX1-only Park 2015 derived motion statistic.
+- Physical meaning: Leaf-wise mean proportion of valid control-point intervals with speed in 12-16 mm/s. Reported for native MLCX1.
 - Unit: proportion
 - Inputs required: MLCX1 motion traces with a valid control-point time model
 - Status: implemented_flattened
@@ -2416,7 +2449,7 @@ This appendix is generated from the shared metric-definition catalog.
 - Group: Motion bins
 - Symbol/short name: MLCX1 Park Speed 16-20 mm/s
 - Mathematical definition: mean_leaf [ proportion(intervals with speed in 16-20 mm/s) ], restricted to MLCX1 leaf positions.
-- Physical meaning: MLCX1-only Park 2015 derived motion statistic.
+- Physical meaning: Leaf-wise mean proportion of valid control-point intervals with speed in 16-20 mm/s. Reported for native MLCX1.
 - Unit: proportion
 - Inputs required: MLCX1 motion traces with a valid control-point time model
 - Status: implemented_flattened
@@ -2427,7 +2460,7 @@ This appendix is generated from the shared metric-definition catalog.
 - Group: Motion bins
 - Symbol/short name: MLCX1 Park Acceleration 0-40 mm/s^2
 - Mathematical definition: mean_leaf [ proportion(intervals with acceleration in 0-40 mm/s^2) ], restricted to MLCX1 leaf positions.
-- Physical meaning: MLCX1-only Park 2015 derived motion statistic.
+- Physical meaning: Leaf-wise mean proportion of valid control-point intervals with acceleration in 0-40 mm/s^2. Reported for native MLCX1.
 - Unit: proportion
 - Inputs required: MLCX1 motion traces with a valid control-point time model
 - Status: implemented_flattened
@@ -2438,7 +2471,7 @@ This appendix is generated from the shared metric-definition catalog.
 - Group: Motion bins
 - Symbol/short name: MLCX1 Park Acceleration 40-80 mm/s^2
 - Mathematical definition: mean_leaf [ proportion(intervals with acceleration in 40-80 mm/s^2) ], restricted to MLCX1 leaf positions.
-- Physical meaning: MLCX1-only Park 2015 derived motion statistic.
+- Physical meaning: Leaf-wise mean proportion of valid control-point intervals with acceleration in 40-80 mm/s^2. Reported for native MLCX1.
 - Unit: proportion
 - Inputs required: MLCX1 motion traces with a valid control-point time model
 - Status: implemented_flattened
@@ -2449,7 +2482,7 @@ This appendix is generated from the shared metric-definition catalog.
 - Group: Motion bins
 - Symbol/short name: MLCX1 Park Acceleration 80-120 mm/s^2
 - Mathematical definition: mean_leaf [ proportion(intervals with acceleration in 80-120 mm/s^2) ], restricted to MLCX1 leaf positions.
-- Physical meaning: MLCX1-only Park 2015 derived motion statistic.
+- Physical meaning: Leaf-wise mean proportion of valid control-point intervals with acceleration in 80-120 mm/s^2. Reported for native MLCX1.
 - Unit: proportion
 - Inputs required: MLCX1 motion traces with a valid control-point time model
 - Status: implemented_flattened
@@ -2460,7 +2493,7 @@ This appendix is generated from the shared metric-definition catalog.
 - Group: Motion bins
 - Symbol/short name: MLCX1 Park Acceleration 120-160 mm/s^2
 - Mathematical definition: mean_leaf [ proportion(intervals with acceleration in 120-160 mm/s^2) ], restricted to MLCX1 leaf positions.
-- Physical meaning: MLCX1-only Park 2015 derived motion statistic.
+- Physical meaning: Leaf-wise mean proportion of valid control-point intervals with acceleration in 120-160 mm/s^2. Reported for native MLCX1.
 - Unit: proportion
 - Inputs required: MLCX1 motion traces with a valid control-point time model
 - Status: implemented_flattened
@@ -2471,7 +2504,7 @@ This appendix is generated from the shared metric-definition catalog.
 - Group: Motion bins
 - Symbol/short name: MLCX1 Park Acceleration 160-200 mm/s^2
 - Mathematical definition: mean_leaf [ proportion(intervals with acceleration in 160-200 mm/s^2) ], restricted to MLCX1 leaf positions.
-- Physical meaning: MLCX1-only Park 2015 derived motion statistic.
+- Physical meaning: Leaf-wise mean proportion of valid control-point intervals with acceleration in 160-200 mm/s^2. Reported for native MLCX1.
 - Unit: proportion
 - Inputs required: MLCX1 motion traces with a valid control-point time model
 - Status: implemented_flattened
@@ -2482,7 +2515,7 @@ This appendix is generated from the shared metric-definition catalog.
 - Group: Motion bins
 - Symbol/short name: MLCX1 Mean Leaf Speed (mm/s)
 - Mathematical definition: mean_leaf(mean_interval(speed)), restricted to MLCX1 leaf positions.
-- Physical meaning: MLCX1-only Park 2015 derived motion statistic.
+- Physical meaning: Mean of per-leaf mean nonzero speeds over finite control-point intervals, in mm/s. Reported for native MLCX1.
 - Unit: mm/s
 - Inputs required: MLCX1 motion traces with a valid control-point time model
 - Status: implemented_flattened
@@ -2493,7 +2526,7 @@ This appendix is generated from the shared metric-definition catalog.
 - Group: Motion bins
 - Symbol/short name: MLCX1 Mean Leaf Acceleration (mm/s^2)
 - Mathematical definition: mean_leaf(mean_interval(acceleration)), restricted to MLCX1 leaf positions.
-- Physical meaning: MLCX1-only Park 2015 derived motion statistic.
+- Physical meaning: Mean of per-leaf mean nonzero absolute accelerations over finite control-point intervals, in mm/s^2. Reported for native MLCX1.
 - Unit: mm/s^2
 - Inputs required: MLCX1 motion traces with a valid control-point time model
 - Status: implemented_flattened
@@ -2504,7 +2537,7 @@ This appendix is generated from the shared metric-definition catalog.
 - Group: Motion bins
 - Symbol/short name: MLCX1 Mean Leaf Speed SD (mm/s)
 - Mathematical definition: mean_leaf(std_interval(speed)), restricted to MLCX1 leaf positions.
-- Physical meaning: MLCX1-only Park 2015 derived motion statistic.
+- Physical meaning: Mean of nonzero per-leaf sample speed standard deviations over finite control-point intervals (ddof=1), in mm/s. Reported for native MLCX1.
 - Unit: mm/s
 - Inputs required: MLCX1 motion traces with a valid control-point time model
 - Status: implemented_flattened
@@ -2515,7 +2548,7 @@ This appendix is generated from the shared metric-definition catalog.
 - Group: Motion bins
 - Symbol/short name: MLCX1 Mean Leaf Acceleration SD (mm/s^2)
 - Mathematical definition: mean_leaf(std_interval(acceleration)), restricted to MLCX1 leaf positions.
-- Physical meaning: MLCX1-only Park 2015 derived motion statistic.
+- Physical meaning: Mean of nonzero per-leaf sample absolute-acceleration standard deviations over finite control-point intervals (ddof=1), in mm/s^2. Reported for native MLCX1.
 - Unit: mm/s^2
 - Inputs required: MLCX1 motion traces with a valid control-point time model
 - Status: implemented_flattened
@@ -2526,7 +2559,7 @@ This appendix is generated from the shared metric-definition catalog.
 - Group: Motion bins
 - Symbol/short name: MLCX2 Park Speed 0-4 mm/s
 - Mathematical definition: mean_leaf [ proportion(intervals with speed in 0-4 mm/s) ], restricted to MLCX2 leaf positions.
-- Physical meaning: MLCX2-only Park 2015 derived motion statistic.
+- Physical meaning: Leaf-wise mean proportion of valid control-point intervals with speed in 0-4 mm/s. Reported for native MLCX2.
 - Unit: proportion
 - Inputs required: MLCX2 motion traces with a valid control-point time model
 - Status: implemented_flattened
@@ -2537,7 +2570,7 @@ This appendix is generated from the shared metric-definition catalog.
 - Group: Motion bins
 - Symbol/short name: MLCX2 Park Speed 4-8 mm/s
 - Mathematical definition: mean_leaf [ proportion(intervals with speed in 4-8 mm/s) ], restricted to MLCX2 leaf positions.
-- Physical meaning: MLCX2-only Park 2015 derived motion statistic.
+- Physical meaning: Leaf-wise mean proportion of valid control-point intervals with speed in 4-8 mm/s. Reported for native MLCX2.
 - Unit: proportion
 - Inputs required: MLCX2 motion traces with a valid control-point time model
 - Status: implemented_flattened
@@ -2548,7 +2581,7 @@ This appendix is generated from the shared metric-definition catalog.
 - Group: Motion bins
 - Symbol/short name: MLCX2 Park Speed 8-12 mm/s
 - Mathematical definition: mean_leaf [ proportion(intervals with speed in 8-12 mm/s) ], restricted to MLCX2 leaf positions.
-- Physical meaning: MLCX2-only Park 2015 derived motion statistic.
+- Physical meaning: Leaf-wise mean proportion of valid control-point intervals with speed in 8-12 mm/s. Reported for native MLCX2.
 - Unit: proportion
 - Inputs required: MLCX2 motion traces with a valid control-point time model
 - Status: implemented_flattened
@@ -2559,7 +2592,7 @@ This appendix is generated from the shared metric-definition catalog.
 - Group: Motion bins
 - Symbol/short name: MLCX2 Park Speed 12-16 mm/s
 - Mathematical definition: mean_leaf [ proportion(intervals with speed in 12-16 mm/s) ], restricted to MLCX2 leaf positions.
-- Physical meaning: MLCX2-only Park 2015 derived motion statistic.
+- Physical meaning: Leaf-wise mean proportion of valid control-point intervals with speed in 12-16 mm/s. Reported for native MLCX2.
 - Unit: proportion
 - Inputs required: MLCX2 motion traces with a valid control-point time model
 - Status: implemented_flattened
@@ -2570,7 +2603,7 @@ This appendix is generated from the shared metric-definition catalog.
 - Group: Motion bins
 - Symbol/short name: MLCX2 Park Speed 16-20 mm/s
 - Mathematical definition: mean_leaf [ proportion(intervals with speed in 16-20 mm/s) ], restricted to MLCX2 leaf positions.
-- Physical meaning: MLCX2-only Park 2015 derived motion statistic.
+- Physical meaning: Leaf-wise mean proportion of valid control-point intervals with speed in 16-20 mm/s. Reported for native MLCX2.
 - Unit: proportion
 - Inputs required: MLCX2 motion traces with a valid control-point time model
 - Status: implemented_flattened
@@ -2581,7 +2614,7 @@ This appendix is generated from the shared metric-definition catalog.
 - Group: Motion bins
 - Symbol/short name: MLCX2 Park Acceleration 0-40 mm/s^2
 - Mathematical definition: mean_leaf [ proportion(intervals with acceleration in 0-40 mm/s^2) ], restricted to MLCX2 leaf positions.
-- Physical meaning: MLCX2-only Park 2015 derived motion statistic.
+- Physical meaning: Leaf-wise mean proportion of valid control-point intervals with acceleration in 0-40 mm/s^2. Reported for native MLCX2.
 - Unit: proportion
 - Inputs required: MLCX2 motion traces with a valid control-point time model
 - Status: implemented_flattened
@@ -2592,7 +2625,7 @@ This appendix is generated from the shared metric-definition catalog.
 - Group: Motion bins
 - Symbol/short name: MLCX2 Park Acceleration 40-80 mm/s^2
 - Mathematical definition: mean_leaf [ proportion(intervals with acceleration in 40-80 mm/s^2) ], restricted to MLCX2 leaf positions.
-- Physical meaning: MLCX2-only Park 2015 derived motion statistic.
+- Physical meaning: Leaf-wise mean proportion of valid control-point intervals with acceleration in 40-80 mm/s^2. Reported for native MLCX2.
 - Unit: proportion
 - Inputs required: MLCX2 motion traces with a valid control-point time model
 - Status: implemented_flattened
@@ -2603,7 +2636,7 @@ This appendix is generated from the shared metric-definition catalog.
 - Group: Motion bins
 - Symbol/short name: MLCX2 Park Acceleration 80-120 mm/s^2
 - Mathematical definition: mean_leaf [ proportion(intervals with acceleration in 80-120 mm/s^2) ], restricted to MLCX2 leaf positions.
-- Physical meaning: MLCX2-only Park 2015 derived motion statistic.
+- Physical meaning: Leaf-wise mean proportion of valid control-point intervals with acceleration in 80-120 mm/s^2. Reported for native MLCX2.
 - Unit: proportion
 - Inputs required: MLCX2 motion traces with a valid control-point time model
 - Status: implemented_flattened
@@ -2614,7 +2647,7 @@ This appendix is generated from the shared metric-definition catalog.
 - Group: Motion bins
 - Symbol/short name: MLCX2 Park Acceleration 120-160 mm/s^2
 - Mathematical definition: mean_leaf [ proportion(intervals with acceleration in 120-160 mm/s^2) ], restricted to MLCX2 leaf positions.
-- Physical meaning: MLCX2-only Park 2015 derived motion statistic.
+- Physical meaning: Leaf-wise mean proportion of valid control-point intervals with acceleration in 120-160 mm/s^2. Reported for native MLCX2.
 - Unit: proportion
 - Inputs required: MLCX2 motion traces with a valid control-point time model
 - Status: implemented_flattened
@@ -2625,7 +2658,7 @@ This appendix is generated from the shared metric-definition catalog.
 - Group: Motion bins
 - Symbol/short name: MLCX2 Park Acceleration 160-200 mm/s^2
 - Mathematical definition: mean_leaf [ proportion(intervals with acceleration in 160-200 mm/s^2) ], restricted to MLCX2 leaf positions.
-- Physical meaning: MLCX2-only Park 2015 derived motion statistic.
+- Physical meaning: Leaf-wise mean proportion of valid control-point intervals with acceleration in 160-200 mm/s^2. Reported for native MLCX2.
 - Unit: proportion
 - Inputs required: MLCX2 motion traces with a valid control-point time model
 - Status: implemented_flattened
@@ -2636,7 +2669,7 @@ This appendix is generated from the shared metric-definition catalog.
 - Group: Motion bins
 - Symbol/short name: MLCX2 Mean Leaf Speed (mm/s)
 - Mathematical definition: mean_leaf(mean_interval(speed)), restricted to MLCX2 leaf positions.
-- Physical meaning: MLCX2-only Park 2015 derived motion statistic.
+- Physical meaning: Mean of per-leaf mean nonzero speeds over finite control-point intervals, in mm/s. Reported for native MLCX2.
 - Unit: mm/s
 - Inputs required: MLCX2 motion traces with a valid control-point time model
 - Status: implemented_flattened
@@ -2647,7 +2680,7 @@ This appendix is generated from the shared metric-definition catalog.
 - Group: Motion bins
 - Symbol/short name: MLCX2 Mean Leaf Acceleration (mm/s^2)
 - Mathematical definition: mean_leaf(mean_interval(acceleration)), restricted to MLCX2 leaf positions.
-- Physical meaning: MLCX2-only Park 2015 derived motion statistic.
+- Physical meaning: Mean of per-leaf mean nonzero absolute accelerations over finite control-point intervals, in mm/s^2. Reported for native MLCX2.
 - Unit: mm/s^2
 - Inputs required: MLCX2 motion traces with a valid control-point time model
 - Status: implemented_flattened
@@ -2658,7 +2691,7 @@ This appendix is generated from the shared metric-definition catalog.
 - Group: Motion bins
 - Symbol/short name: MLCX2 Mean Leaf Speed SD (mm/s)
 - Mathematical definition: mean_leaf(std_interval(speed)), restricted to MLCX2 leaf positions.
-- Physical meaning: MLCX2-only Park 2015 derived motion statistic.
+- Physical meaning: Mean of nonzero per-leaf sample speed standard deviations over finite control-point intervals (ddof=1), in mm/s. Reported for native MLCX2.
 - Unit: mm/s
 - Inputs required: MLCX2 motion traces with a valid control-point time model
 - Status: implemented_flattened
@@ -2669,7 +2702,7 @@ This appendix is generated from the shared metric-definition catalog.
 - Group: Motion bins
 - Symbol/short name: MLCX2 Mean Leaf Acceleration SD (mm/s^2)
 - Mathematical definition: mean_leaf(std_interval(acceleration)), restricted to MLCX2 leaf positions.
-- Physical meaning: MLCX2-only Park 2015 derived motion statistic.
+- Physical meaning: Mean of nonzero per-leaf sample absolute-acceleration standard deviations over finite control-point intervals (ddof=1), in mm/s^2. Reported for native MLCX2.
 - Unit: mm/s^2
 - Inputs required: MLCX2 motion traces with a valid control-point time model
 - Status: implemented_flattened

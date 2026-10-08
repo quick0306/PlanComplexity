@@ -16,6 +16,7 @@ class AuroraPlanMetadata:
     sop_instance_uid: str = ""
     beam_count: int = 0
     notes: list[str] = field(default_factory=list)
+    metric_formula_version: str = ""
 
 
 @dataclass(slots=True)
@@ -44,6 +45,9 @@ class AuroraBeam:
     metrics: dict[str, float | None] = field(default_factory=dict)
     warnings: list[str] = field(default_factory=list)
     trajectory_summary: dict[str, float | None] = field(default_factory=dict)
+    leaf_boundaries_mlcx1: tuple[float, ...] = ()
+    leaf_boundaries_mlcx2: tuple[float, ...] = ()
+    beam_meterset_mu: float | None = None
 
 
 @dataclass(slots=True)

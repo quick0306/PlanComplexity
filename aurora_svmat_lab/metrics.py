@@ -5,6 +5,7 @@ from statistics import fmean, pstdev
 from typing import Any, Iterable, Sequence
 
 from .models import AuroraBeam, AuroraControlPoint
+from .aperture_metrics import V4_METRIC_ORDER, calculate_v4_metrics_with_warnings
 
 
 SMALL_OPENING_THRESHOLD_MM = 10.0
@@ -103,7 +104,7 @@ LEGACY_METRIC_ORDER: tuple[str, ...] = (
     "coupled_modulation_index",
 )
 
-FIRST_PASS_METRIC_ORDER: tuple[str, ...] = V2_METRIC_ORDER + V3_METRIC_ORDER + LEGACY_METRIC_ORDER
+FIRST_PASS_METRIC_ORDER: tuple[str, ...] = V2_METRIC_ORDER + V3_METRIC_ORDER + LEGACY_METRIC_ORDER + V4_METRIC_ORDER
 
 
 def calculate_observed_angle_deltas(
@@ -315,7 +316,7 @@ def calculate_beam_metrics(beam: AuroraBeam | Any) -> dict[str, float | None]:
         "leaf_travel_per_mm": calculate_leaf_travel_per_mm(beam),
         "coupled_modulation_index": calculate_coupled_modulation_index(beam),
     }
-    return {**calculate_v2_beam_metrics(beam), **calculate_v3_beam_metrics(beam), **legacy_metrics}
+    return {**calculate_v2_beam_metrics(beam), **calculate_v3_beam_metrics(beam), **legacy_metrics, **calculate_v4_metrics_with_warnings([beam])[0]}
 
 
 def calculate_plan_metrics(beams: Iterable[AuroraBeam | Any]) -> dict[str, float | None]:
@@ -381,7 +382,7 @@ def calculate_plan_metrics(beams: Iterable[AuroraBeam | Any]) -> dict[str, float
         ),
     }
     v3_metrics = _calculate_plan_v3_metrics(beam_list)
-    return {**v2_metrics, **v3_metrics, **legacy_metrics}
+    return {**v2_metrics, **v3_metrics, **legacy_metrics, **calculate_v4_metrics_with_warnings(beam_list)[0]}
 
 
 def _calculate_plan_v3_metrics(beams: Sequence[AuroraBeam | Any]) -> dict[str, float | None]:

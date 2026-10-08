@@ -7,7 +7,7 @@ The generic VMAT/IMRT parser excludes SETUP beams when applying fraction-group d
 Validation on 2026-10-08:
 
 - Full suite: 369 passed, 1 skipped, 99 subtests passed.
-- Three user-supplied Aurora plans: automatic and explicit Aurora analysis both succeed, each returning 70 metric records without program warnings in the executable build environment.
+- Three user-supplied Aurora plans: automatic and explicit Aurora analysis both succeed, each returning 70 metric records without program warnings in the executable build environment at the initial compatibility fix. The subsequent [V4 restoration](aurora_v4_migration.md) expands this to 77 records, with explicit warnings for undefined shape values.
 - Synthetic regression coverage includes WisdomTech axial-motion routing, conventional dual-layer plans, SETUP references, missing beam references, and a 30/29-pair area hand calculation.
 
 The Windows executable is built using `tools/build_windows_exe.ps1` and `PyUCoMX.spec`; the output is `dist/PyUCoMX.exe`.

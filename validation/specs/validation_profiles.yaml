@@ -33,3 +33,4 @@ validation_profiles:
   - aurora_v3_axial_regions
   - aurora_v3_dual_layer_coordination
   - aurora_legacy_engineering
+  - aurora_v4_physical_aperture_and_adapted_mcs

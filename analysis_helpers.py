@@ -101,6 +101,10 @@ def calculate_core_metrics_with_warnings(plan_dict, *, full_precision=False):
     halcyon_metrics, halcyon_warnings = calculate_halcyon_dual_layer_metrics_with_warnings(
         plan_dict, full_precision=full_precision
     )
+    # The paper-specific scalar MCS replaces the generic mcsv container. Keep
+    # the native layer values under their declared export keys before replacing it.
+    if "mcsv" in halcyon_metrics and isinstance(metrics.get("mcsv"), (tuple, list)):
+        metrics["mcsv_mlcx1"], metrics["mcsv_mlcx2"] = metrics["mcsv"]
     metrics.update(halcyon_metrics)
     warnings.extend(halcyon_warnings)
     return metrics, list(dict.fromkeys(warnings))

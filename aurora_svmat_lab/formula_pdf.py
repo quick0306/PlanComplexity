@@ -2,6 +2,7 @@ from __future__ import annotations
 
 from dataclasses import dataclass
 from pathlib import Path
+from xml.sax.saxutils import escape
 
 from reportlab.lib import colors
 from reportlab.lib.enums import TA_CENTER
@@ -12,7 +13,7 @@ from reportlab.platypus import PageBreak, Paragraph, SimpleDocTemplate, Spacer
 
 from metric_definition_catalog import build_metric_definition_catalog
 
-from .metrics import LEGACY_METRIC_ORDER, V2_METRIC_ORDER, V3_METRIC_ORDER
+from .metrics import LEGACY_METRIC_ORDER, V2_METRIC_ORDER, V3_METRIC_ORDER, V4_METRIC_ORDER
 from .notes import get_metric_notes
 
 
@@ -57,6 +58,19 @@ def export_aurora_formula_pdf(output_path: str | Path) -> Path:
         )
     )
     story.append(PageBreak())
+    story.extend(_build_metric_section(
+        "Section 3. V4 Physical Aperture Metrics", _build_v4_entries(), styles,
+        intro=("Version: aurora-v4-physical-aperture. Real leaf boundaries define a common y-sub-strip grid. "
+               "Each layer's position vector is split into A/B banks; intervals are intersected across layers and clipped to jaws. "
+               "A and P are exact area and union perimeter. These seven descriptors are a physical-geometry extension "
+               "with adapted MCS, not exact McNiven MCS or a reproduction of the old unit-width design. "
+               "Only positive cumulative-weight increments contribute, represented by endpoint i+1. Weights are "
+               "delta CMW / beam final CMW times BeamMeterset. If any BeamMeterset is absent, every beam uses unit-normalized "
+               "relative weights and a warning. Missing geometry or malformed/decreasing weights makes all seven unavailable. "
+               "A closed positive-weight endpoint contributes BA/SAS/MCS zero and complexity one; BI/CA become unavailable "
+               "for the entire aggregate, without dropping that endpoint."),
+    ))
+    story.append(PageBreak())
     story.extend(
         _build_metric_section(
             "Appendix A. Legacy Engineering Metrics",
@@ -78,7 +92,7 @@ def _build_cover(styles: dict[str, ParagraphStyle]) -> list[object]:
         Spacer(1, 18 * mm),
         Paragraph("Aurora SVMAT Metric Formula Reference", styles["title"]),
         Spacer(1, 4 * mm),
-        Paragraph("Main body: v2 and v3 research metrics. Appendix: legacy engineering metrics.", styles["subtitle"]),
+        Paragraph("Main body: v2/v3 research proxies and v4 physical aperture metrics. Appendix: legacy engineering metrics.", styles["subtitle"]),
         Spacer(1, 8 * mm),
         Paragraph(
             "This document records the explicit mathematical definitions currently implemented in Aurora SVMAT Lab. "
@@ -101,7 +115,7 @@ def _build_notation_section(styles: dict[str, ParagraphStyle]) -> list[object]:
         "theta_i is the gantry angle in degrees at control point i.",
         "z_i is the longitudinal or axial position in millimeters at control point i.",
         "w_i is the cumulative meterset weight at control point i.",
-        "A_i is the scalar aperture width surrogate at control point i, defined as the summed positive opening across both MLC layers.",
+        "For V2/V3/legacy only, A_i is the scalar aperture width surrogate at control point i, defined as the summed positive opening across both MLC layers.",
         "L_i is the total leaf-position vector at control point i across both layers.",
         "delta theta_i = wrapped(theta_(i+1) - theta_i), constrained to [-180, 180] degrees.",
         "delta z_i = z_(i+1) - z_i.",
@@ -134,7 +148,7 @@ def _build_metric_section(
         story.append(Paragraph(entry.metric_key, styles["metric_key"]))
         story.append(Paragraph(entry.title, styles["metric_title"]))
         for formula_line in entry.formula_lines:
-            story.append(Paragraph(formula_line, styles["formula"]))
+            story.append(Paragraph(escape(formula_line), styles["formula"]))
         story.append(Paragraph(f"Meaning: {entry.physical_meaning}", styles["body"]))
         story.append(Spacer(1, 4 * mm))
     return story
@@ -314,6 +328,12 @@ def _build_v2_entries() -> list[FormulaEntry]:
             physical_meaning=notes["mlcx2_z_coupling_cv"],
         ),
     ]
+
+
+def _build_v4_entries() -> list[FormulaEntry]:
+    records = _aurora_record_map()
+    return [FormulaEntry(key, key, (records[key]["mathematical_definition"],),
+                         records[key]["physical_meaning"]) for key in V4_METRIC_ORDER]
 
 
 def _build_v3_entries() -> list[FormulaEntry]:

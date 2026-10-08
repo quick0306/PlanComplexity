@@ -7,6 +7,27 @@ from pathlib import Path
 
 
 class MetricDefinitionExportTests(unittest.TestCase):
+    def test_aurora_v4_definitions_and_contracts_are_complete_and_versioned(self):
+        from aurora_svmat_lab.metrics import V4_METRIC_ORDER
+        from metric_definition_catalog import build_metric_definition_catalog
+        from metric_formula_contracts import build_metric_formula_contracts
+        records = {r.metric_key: r for r in build_metric_definition_catalog() if r.platform == "AURORA"}
+        contracts = {c.metric_key: c for c in build_metric_formula_contracts() if c.platform == "AURORA"}
+        self.assertEqual(len(V4_METRIC_ORDER), 7)
+        for key in V4_METRIC_ORDER:
+            self.assertTrue(records[key].physical_meaning)
+            self.assertTrue(records[key].mathematical_definition)
+            self.assertEqual(records[key].group, "V4 physical aperture and adapted MCS")
+            self.assertEqual(contracts[key].formula_version, "aurora-v4-physical-aperture")
+            self.assertIn("endpoint i+1", contracts[key].sampling)
+            self.assertIn("no subset aggregation", contracts[key].missing_value)
+        self.assertEqual(records["mean_ba"].unit, "mm^2")
+        self.assertEqual(records["mean_ca"].unit, "mm^-1")
+        self.assertIn("not circularity", records["mean_ca"].mathematical_definition)
+        self.assertIn("moving Y-jaw", contracts["mean_mcs_aurora"].normalization)
+        self.assertEqual(contracts["projection_pitch_mean"].formula_version, "aurora-unversioned-research-v2-v3-legacy")
+
+
     def test_hybrid_v2_metrics_are_uniquely_registered_and_documented(self):
         from metric_definition_catalog import build_metric_definition_catalog
         from metric_registry import VMAT_METRIC_SPECS

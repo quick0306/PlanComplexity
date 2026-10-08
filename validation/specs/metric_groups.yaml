@@ -122,3 +122,8 @@ metric_groups:
   label: Legacy engineering
   description: Canonical research validation family for Aurora Legacy engineering
     metrics.
+- group_key: aurora_v4_physical_aperture_and_adapted_mcs
+  platform: AURORA
+  label: V4 physical aperture and adapted MCS
+  description: Research physical dual-layer aperture area, boundary, small-gap and
+    adapted MCS metrics.

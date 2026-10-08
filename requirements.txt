@@ -8,3 +8,5 @@ pypdf
 PyYAML
 jsonschema
 Jinja2
+# Independent polygon oracle used by geometry regression tests.
+shapely==2.1.2

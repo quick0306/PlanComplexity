@@ -25,6 +25,7 @@ def export_plan_rows(results: Iterable[Any]) -> list[dict[str, Any]]:
             "plan_name": getattr(metadata, "plan_name", ""),
             "manufacturer": getattr(metadata, "manufacturer", ""),
             "manufacturer_model_name": getattr(metadata, "manufacturer_model_name", ""),
+            "metric_formula_version": getattr(metadata, "metric_formula_version", ""),
             "supported": bool(getattr(result, "supported", False)),
             "reason": getattr(result, "reason", ""),
             "warning_count": len(getattr(result, "warnings", []) or []),
@@ -46,6 +47,7 @@ def export_beam_rows(results: Iterable[Any]) -> list[dict[str, Any]]:
                 "plan_name": getattr(metadata, "plan_name", ""),
                 "beam_number": getattr(beam, "beam_number", ""),
                 "beam_name": getattr(beam, "beam_name", ""),
+                "metric_formula_version": getattr(metadata, "metric_formula_version", ""),
                 "supported": bool(getattr(result, "supported", False)),
                 "reason": getattr(result, "reason", ""),
             }

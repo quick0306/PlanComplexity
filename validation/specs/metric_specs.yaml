@@ -10515,3 +10515,205 @@ metric_specs:
   - Contract documents implementation semantics; external paper equivalence is not established by a regression
     reference.
   exclusions: []
+- key: mean_ba
+  platform: AURORA
+  mode: AURORA
+  group_key: aurora_v4_physical_aperture_and_adapted_mcs
+  metric_key: mean_ba
+  label: mean_ba
+  unit: mm^2
+  aggregation_scope: plan
+  normalization_basis: A=sum_s h_i,s*g_i,s in mm^2; no dimensionless normalization.
+  validation_level: Association-only
+  comparison_class: association-only
+  default_tolerance_abs: 1.0e-06
+  default_tolerance_rel: 0.0001
+  expected_range:
+    kind: nonnegative
+    minimum: 0.0
+    maximum: null
+  clinical_readiness: research
+  known_noncomparability:
+  - Physical dual-layer intersection differs from historical unit-height surrogate
+    Aurora V4.
+  - Adapted gap-based MCS is not exact McNiven MCS.
+  comparable_to: []
+  assumptions:
+  - Formula contract is implementation evidence; synthetic cases do not establish
+    clinical or vendor equivalence.
+  exclusions:
+  - Missing physical boundaries or invalid meterset weights produce unavailable outputs.
+- key: mean_bi
+  platform: AURORA
+  mode: AURORA
+  group_key: aurora_v4_physical_aperture_and_adapted_mcs
+  metric_key: mean_bi
+  label: mean_bi
+  unit: dimensionless
+  aggregation_scope: plan
+  normalization_basis: P^2/(4*pi*A); exact union-boundary perimeter, not sum of individual
+    rectangle perimeters.
+  validation_level: Association-only
+  comparison_class: association-only
+  default_tolerance_abs: 1.0e-06
+  default_tolerance_rel: 0.0001
+  expected_range:
+    kind: nonnegative
+    minimum: 0.0
+    maximum: null
+  clinical_readiness: research
+  known_noncomparability:
+  - Physical dual-layer intersection differs from historical unit-height surrogate
+    Aurora V4.
+  - Adapted gap-based MCS is not exact McNiven MCS.
+  comparable_to: []
+  assumptions:
+  - Formula contract is implementation evidence; synthetic cases do not establish
+    clinical or vendor equivalence.
+  exclusions:
+  - Missing physical boundaries or invalid meterset weights produce unavailable outputs.
+- key: mean_ca
+  platform: AURORA
+  mode: AURORA
+  group_key: aurora_v4_physical_aperture_and_adapted_mcs
+  metric_key: mean_ca
+  label: mean_ca
+  unit: mm^-1
+  aggregation_scope: plan
+  normalization_basis: P/A in mm^-1; perimeter-to-area ratio, not circularity.
+  validation_level: Association-only
+  comparison_class: association-only
+  default_tolerance_abs: 1.0e-06
+  default_tolerance_rel: 0.0001
+  expected_range:
+    kind: nonnegative
+    minimum: 0.0
+    maximum: null
+  clinical_readiness: research
+  known_noncomparability:
+  - Physical dual-layer intersection differs from historical unit-height surrogate
+    Aurora V4.
+  - Adapted gap-based MCS is not exact McNiven MCS.
+  comparable_to: []
+  assumptions:
+  - Formula contract is implementation evidence; synthetic cases do not establish
+    clinical or vendor equivalence.
+  exclusions:
+  - Missing physical boundaries or invalid meterset weights produce unavailable outputs.
+- key: mean_sas5
+  platform: AURORA
+  mode: AURORA
+  group_key: aurora_v4_physical_aperture_and_adapted_mcs
+  metric_key: mean_sas5
+  label: mean_sas5
+  unit: dimensionless
+  aggregation_scope: plan
+  normalization_basis: Count positive open sub-strips with gap strictly <5 mm / count
+    positive open sub-strips; equal counts, no width/area weighting.
+  validation_level: Association-only
+  comparison_class: association-only
+  default_tolerance_abs: 1.0e-06
+  default_tolerance_rel: 0.0001
+  expected_range:
+    kind: unit_interval
+    minimum: 0.0
+    maximum: 1.0
+  clinical_readiness: research
+  known_noncomparability:
+  - Physical dual-layer intersection differs from historical unit-height surrogate
+    Aurora V4.
+  - Adapted gap-based MCS is not exact McNiven MCS.
+  comparable_to: []
+  assumptions:
+  - Formula contract is implementation evidence; synthetic cases do not establish
+    clinical or vendor equivalence.
+  exclusions:
+  - Missing physical boundaries or invalid meterset weights produce unavailable outputs.
+- key: mean_sas10
+  platform: AURORA
+  mode: AURORA
+  group_key: aurora_v4_physical_aperture_and_adapted_mcs
+  metric_key: mean_sas10
+  label: mean_sas10
+  unit: dimensionless
+  aggregation_scope: plan
+  normalization_basis: Count positive open sub-strips with gap strictly <10 mm / count
+    positive open sub-strips; equal counts, no width/area weighting.
+  validation_level: Association-only
+  comparison_class: association-only
+  default_tolerance_abs: 1.0e-06
+  default_tolerance_rel: 0.0001
+  expected_range:
+    kind: unit_interval
+    minimum: 0.0
+    maximum: 1.0
+  clinical_readiness: research
+  known_noncomparability:
+  - Physical dual-layer intersection differs from historical unit-height surrogate
+    Aurora V4.
+  - Adapted gap-based MCS is not exact McNiven MCS.
+  comparable_to: []
+  assumptions:
+  - Formula contract is implementation evidence; synthetic cases do not establish
+    clinical or vendor equivalence.
+  exclusions:
+  - Missing physical boundaries or invalid meterset weights produce unavailable outputs.
+- key: mean_mcs_aurora
+  platform: AURORA
+  mode: AURORA
+  group_key: aurora_v4_physical_aperture_and_adapted_mcs
+  metric_key: mean_mcs_aurora
+  label: mean_mcs_aurora
+  unit: dimensionless
+  aggregation_scope: plan
+  normalization_basis: AAV=A_i/U_beam, U_beam=sum_s max_positive_endpoint(h_i,s*g_i,s),
+    including moving Y-jaw clipping; LSV=1-sum(abs(diff(open_gaps)))/((n_open-1)*max(open_gaps)),
+    with compressed positive-gap sequence; n_open<=1 =>1; MCS=AAV*LSV; zero U=>0.
+  validation_level: Association-only
+  comparison_class: association-only
+  default_tolerance_abs: 1.0e-06
+  default_tolerance_rel: 0.0001
+  expected_range:
+    kind: unit_interval
+    minimum: 0.0
+    maximum: 1.0
+  clinical_readiness: research
+  known_noncomparability:
+  - Physical dual-layer intersection differs from historical unit-height surrogate
+    Aurora V4.
+  - Adapted gap-based MCS is not exact McNiven MCS.
+  comparable_to: []
+  assumptions:
+  - Formula contract is implementation evidence; synthetic cases do not establish
+    clinical or vendor equivalence.
+  exclusions:
+  - Missing physical boundaries or invalid meterset weights produce unavailable outputs.
+- key: mcs_complexity_aurora
+  platform: AURORA
+  mode: AURORA
+  group_key: aurora_v4_physical_aperture_and_adapted_mcs
+  metric_key: mcs_complexity_aurora
+  label: mcs_complexity_aurora
+  unit: dimensionless
+  aggregation_scope: plan
+  normalization_basis: 1-mean_mcs_aurora; complement of the same delivered-weight
+    adapted MCS.
+  validation_level: Association-only
+  comparison_class: association-only
+  default_tolerance_abs: 1.0e-06
+  default_tolerance_rel: 0.0001
+  expected_range:
+    kind: unit_interval
+    minimum: 0.0
+    maximum: 1.0
+  clinical_readiness: research
+  known_noncomparability:
+  - Physical dual-layer intersection differs from historical unit-height surrogate
+    Aurora V4.
+  - Adapted gap-based MCS is not exact McNiven MCS.
+  comparable_to: []
+  assumptions:
+  - Formula contract is implementation evidence; synthetic cases do not establish
+    clinical or vendor equivalence.
+  exclusions:
+  - Missing physical boundaries or invalid meterset weights produce unavailable outputs.

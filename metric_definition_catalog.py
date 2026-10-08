@@ -6,7 +6,7 @@ from dataclasses import asdict, dataclass
 from pathlib import Path
 from typing import Iterable, Sequence
 
-from aurora_svmat_lab.metrics import LEGACY_METRIC_ORDER, V2_METRIC_ORDER, V3_METRIC_ORDER
+from aurora_svmat_lab.metrics import LEGACY_METRIC_ORDER, V2_METRIC_ORDER, V3_METRIC_ORDER, V4_METRIC_ORDER
 from aurora_svmat_lab.notes import get_metric_notes as get_aurora_metric_notes
 from metric_registry import (
     CYBERKNIFE_METRIC_SPECS,
@@ -373,6 +373,19 @@ def _build_aurora_metric_records() -> list[MetricDefinitionRecord]:
                 notes="Standalone Aurora SVMAT Lab metric.",
             )
         )
+    for metric_key in V4_METRIC_ORDER:
+        records.append(MetricDefinitionRecord(
+            platform="AURORA", group=_aurora_group(metric_key), metric_key=metric_key,
+            display_name=metric_key, symbol_or_short_name=metric_key,
+            mathematical_definition=_aurora_formula(metric_key),
+            physical_meaning=aurora_notes[metric_key], unit=_aurora_unit(metric_key),
+            inputs_required="Physical LeafPositionBoundaries for both MLC layers; A/B bank positions; X/Y jaws; cumulative meterset weights; BeamMeterset MU when available",
+            implementation_status="implemented",
+            notes=("aurora-v4-physical-aperture: physical dual-layer intersection; adapted gap-based MCS, "
+                   "not exact McNiven MCS or the old unit-width design. Positive delivered intervals use endpoint i+1. "
+                   "Missing geometry or invalid weights makes all seven unavailable with a warning; missing any BeamMeterset "
+                   "uses unit-normalized per-beam relative weights for every contributing beam with a warning."),
+        ))
     for metric_key in LEGACY_METRIC_ORDER:
         records.append(
             MetricDefinitionRecord(
@@ -849,6 +862,8 @@ def _cyberknife_unit(metric_key: str) -> str:
 
 
 def _aurora_group(metric_key: str) -> str:
+    if metric_key in V4_METRIC_ORDER:
+        return "V4 physical aperture and adapted MCS"
     if metric_key in V2_METRIC_ORDER:
         return "V2 paper-style physics"
     if metric_key in LEGACY_METRIC_ORDER:
@@ -869,6 +884,14 @@ def _aurora_group(metric_key: str) -> str:
 
 def _aurora_formula(metric_key: str) -> str:
     formulas = {
+        "mean_ba": "MUmean(A_i); A_i=sum_s h_i,s*g_i,s, exact physical dual-layer intersection area",
+        "mean_bi": "MUmean(P_i^2/(4*pi*A_i)); P_i is the exact aperture-union perimeter; A_i=0 => unavailable",
+        "mean_ca": "MUmean(P_i/A_i); units mm^-1; A_i=0 => unavailable; this is not circularity",
+        "mean_sas5": "MUmean(count_s(0<g_i,s<5 mm)/count_s(g_i,s>0)); positive-height sub-strips only; closed => 0",
+        "mean_sas10": "MUmean(count_s(0<g_i,s<10 mm)/count_s(g_i,s>0)); positive-height sub-strips only; closed => 0",
+        "mean_mcs_aurora": "MUmean(AAV_i*LSV_i); AAV_i=A_i/sum_s max_positive_endpoint(h_i,s*g_i,s); LSV_i=1-sum_adj_open abs(delta g)/((n_open-1)*max_open(g)); n_open<=1 => LSV 1; zero envelope => MCS 0",
+        "mcs_complexity_aurora": "1-mean_mcs_aurora; complement of the physical-aperture adapted MCS",
+
         "longitudinal_travel_mm": "sum_i abs(delta z_i)",
         "total_rotation_deg": "sum_i abs(delta theta_i)",
         "rotations": "total rotation / 360",
@@ -945,6 +968,8 @@ def _aurora_formula(metric_key: str) -> str:
 
 def _aurora_unit(metric_key: str) -> str:
     units = {
+        "mean_ba": "mm^2",
+        "mean_ca": "mm^-1",
         "longitudinal_travel_mm": "mm",
         "total_rotation_deg": "deg",
         "rotations": "turns",

@@ -1,11 +1,12 @@
 # VMAT/IMRT Hybrid-v2 Metric Contract
 
 This records the preceding `hybrid-v2` formula set. The current default is
-[`geometry-v3`](geometry_v3_metrics.md), which retains the weighted definitions below while
+`geometry-v4`, which retains the weighted definitions below while
 correcting full perimeter, native MLC boundaries, and dynamic-jaw AAV normalization.
 The statements about unchanged quantities below refer to the original hybrid-v2 migration;
-the geometry-v3 document lists subsequent changes. TOMO now has its separate
-[`tomo-v2` input contract](tomo_input_contract.md); Aurora remains unchanged.
+the [geometry-v3 history](geometry_v3_metrics.md) records the preceding migration and the
+[formula contracts](metric_formula_contracts.md) describe current definitions. TOMO now has its separate
+[`tomo-v3` input contract](tomo_input_contract.md). Aurora has its own formula version.
 
 ## Intentional formula changes
 

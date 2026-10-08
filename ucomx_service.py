@@ -298,6 +298,8 @@ def _adapt_aurora_result(*, source_path: str, result: Any) -> PlanAnalysisResult
         "prescribed_dose": "",
         "mu": "",
         "beam_type": "AURORA_SVMAT",
+        "metric_formula_version": getattr(aurora_metadata, "metric_formula_version", ""),
+        "numeric_precision": "float64",
         "beam_number": getattr(aurora_metadata, "beam_count", 0),
         "rotation_direction": "",
         "study_instance_uid": getattr(aurora_metadata, "study_instance_uid", ""),

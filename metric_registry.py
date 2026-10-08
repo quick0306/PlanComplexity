@@ -408,7 +408,16 @@ SPECIAL_FLATTENED_DESCRIPTIONS: Dict[str, str] = {
     "acc_80_120": "Leaf-wise mean proportion of valid control-point intervals with acceleration in 80-120 mm/s^2.",
     "acc_120_160": "Leaf-wise mean proportion of valid control-point intervals with acceleration in 120-160 mm/s^2.",
     "acc_160_200": "Leaf-wise mean proportion of valid control-point intervals with acceleration in 160-200 mm/s^2.",
+    "speed_average": "Mean of per-leaf mean nonzero speeds over finite control-point intervals, in mm/s.",
+    "acc_average": "Mean of per-leaf mean nonzero absolute accelerations over finite control-point intervals, in mm/s^2.",
+    "speed_std": "Mean of nonzero per-leaf sample speed standard deviations over finite control-point intervals (ddof=1), in mm/s.",
+    "acc_std": "Mean of nonzero per-leaf sample absolute-acceleration standard deviations over finite control-point intervals (ddof=1), in mm/s^2.",
 }
+
+for layer in ("mlcx1", "mlcx2"):
+    for key, description in list(SPECIAL_FLATTENED_DESCRIPTIONS.items()):
+        if key.startswith(("speed_", "acc_")):
+            SPECIAL_FLATTENED_DESCRIPTIONS[f"{layer}_{key}"] = f"{description} Reported for native {layer.upper()}."
 
 for metric_key, label in (("mi_0_2", "0.2"), ("mi_0_5", "0.5"), ("mi_1_0", "1.0"), ("mi_2_0", "2.0")):
     SPECIAL_FLATTENED_DESCRIPTIONS[f"{metric_key}_mis"] = f"Leaf speed contribution to the modulation index with threshold factor {label}."

@@ -29,6 +29,16 @@ class AuroraFormulaPdfTests(unittest.TestCase):
             self.assertIn("reversal_symmetry_index", extracted_text)
             self.assertIn("small_opening_fraction", extracted_text)
             self.assertIn("layer_correlation_index", extracted_text)
+            self.assertIn("Section 3. V4 Physical Aperture Metrics", extracted_text)
+            self.assertIn("aurora-v4-physical-aperture", extracted_text)
+            from aurora_svmat_lab.metrics import V4_METRIC_ORDER
+            for key in V4_METRIC_ORDER:
+                self.assertIn(key, extracted_text)
+            self.assertIn("0<g_i,s<5 mm", extracted_text)
+            self.assertIn("0<g_i,s<10 mm", extracted_text)
+            self.assertIn("n_open<=1", extracted_text)
+            self.assertIn("not circularity", extracted_text)
+            self.assertIn("not exact McNiven MCS", extracted_text)
             self.assertIn("Appendix A. Legacy Engineering Metrics", extracted_text)
             self.assertIn("coupled_modulation_index", extracted_text)
 

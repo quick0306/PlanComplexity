@@ -6,6 +6,39 @@ Definitions are written to match the current code implementation. They are not a
 
 ## VMAT/IMRT
 
+### `ethos_sas10` - Varian Dual-layer SAS10
+
+- Group: Varian Ethos/Halcyon dual-layer MLC
+- Symbol/short name: Varian Dual-layer SAS10
+- Mathematical definition: SAS10 = sum_positive-center-MU-CP count(0.5+1e-8 < gap <= 10+1e-8 mm) / sum_positive-center-MU-CP count(gap > 0.5+1e-8 mm); beam-MU mean
+- Physical meaning: Varian Ethos/Halcyon dual-layer MLC v2: pooled open-slot counts at positive-center-MU control points with gap > 0.5 mm; fraction, not percent. 12-plan display agreement (RP/PDF labels may differ); see docs/ethos_report_profile.md.
+- Unit: dimensionless
+- Inputs required: MLC leaf positions, jaw positions, gantry angle, and control-point meterset weights
+- Status: implemented
+- Notes: None
+
+### `ethos_one_minus_mcs` - Varian Dual-layer 1-MCS
+
+- Group: Varian Ethos/Halcyon dual-layer MLC
+- Symbol/short name: Varian Dual-layer 1-MCS
+- Mathematical definition: 1-MCS = 1 - centered-CP-MU mean(A_open/E_open * LSV); E_open is the open-slot bank envelope; LSV multiplies bank scores 1-sum_physical_adjacent_open(abs(dx))/(N_adjacent_open*range_open_bank); beam-MU mean
+- Physical meaning: Varian Ethos/Halcyon dual-layer MLC v2: centered-MU mean of CP AAV*LSV, complemented; physical open-slot adjacency. 12-plan display agreement (RP/PDF labels may differ); distinct from MCSv/MCS5.
+- Unit: dimensionless
+- Inputs required: MLC leaf positions, jaw positions, gantry angle, and control-point meterset weights
+- Status: implemented
+- Notes: None
+
+### `ethos_penumbra_ratio` - Varian Dual-layer Penumbra Ratio
+
+- Group: Varian Ethos/Halcyon dual-layer MLC
+- Symbol/short name: Varian Dual-layer Penumbra Ratio
+- Mathematical definition: PR = centered-CP-MU mean(area(union of finite tip 2.8 mm and exposed side 2.3 mm strips)/A_open); beam-MU mean
+- Physical meaning: Varian Ethos/Halcyon dual-layer MLC v2: finite tip/side strip union with 2.8/2.3 mm distances; fraction, not percent. 12-plan display agreement (RP/PDF labels may differ); distinct from EAM.
+- Unit: dimensionless
+- Inputs required: MLC leaf positions, jaw positions, gantry angle, and control-point meterset weights
+- Status: implemented
+- Notes: None
+
 ### `mus` - MUs
 
 - Group: Plan prescription
@@ -2332,7 +2365,7 @@ Definitions are written to match the current code implementation. They are not a
 - Group: Motion bins
 - Symbol/short name: Mean Leaf Speed (mm/s)
 - Mathematical definition: mean_leaf(mean_interval(speed))
-- Physical meaning: Leaf-wise mean proportions for Park et al. VMAT delivery bins. Speed bins: 0-4, 4-8, 8-12, 12-16, 16-20 mm/s. Acceleration bins: 0-40, 40-80, 80-120, 120-160, 160-200 mm/s^2. Requires a valid control-point time model; RTPLAN-only Elekta exports without usable timing inputs are reported as unavailable.
+- Physical meaning: Mean of per-leaf mean nonzero speeds over finite control-point intervals, in mm/s.
 - Unit: mm/s
 - Inputs required: Per-leaf motion time series with a valid control-point time model
 - Status: implemented_flattened
@@ -2343,7 +2376,7 @@ Definitions are written to match the current code implementation. They are not a
 - Group: Motion bins
 - Symbol/short name: Mean Leaf Acceleration (mm/s^2)
 - Mathematical definition: mean_leaf(mean_interval(acceleration))
-- Physical meaning: Leaf-wise mean proportions for Park et al. VMAT delivery bins. Speed bins: 0-4, 4-8, 8-12, 12-16, 16-20 mm/s. Acceleration bins: 0-40, 40-80, 80-120, 120-160, 160-200 mm/s^2. Requires a valid control-point time model; RTPLAN-only Elekta exports without usable timing inputs are reported as unavailable.
+- Physical meaning: Mean of per-leaf mean nonzero absolute accelerations over finite control-point intervals, in mm/s^2.
 - Unit: mm/s^2
 - Inputs required: Per-leaf motion time series with a valid control-point time model
 - Status: implemented_flattened
@@ -2354,7 +2387,7 @@ Definitions are written to match the current code implementation. They are not a
 - Group: Motion bins
 - Symbol/short name: Mean Leaf Speed SD (mm/s)
 - Mathematical definition: mean_leaf(std_interval(speed))
-- Physical meaning: Leaf-wise mean proportions for Park et al. VMAT delivery bins. Speed bins: 0-4, 4-8, 8-12, 12-16, 16-20 mm/s. Acceleration bins: 0-40, 40-80, 80-120, 120-160, 160-200 mm/s^2. Requires a valid control-point time model; RTPLAN-only Elekta exports without usable timing inputs are reported as unavailable.
+- Physical meaning: Mean of nonzero per-leaf sample speed standard deviations over finite control-point intervals (ddof=1), in mm/s.
 - Unit: mm/s
 - Inputs required: Per-leaf motion time series with a valid control-point time model
 - Status: implemented_flattened
@@ -2365,7 +2398,7 @@ Definitions are written to match the current code implementation. They are not a
 - Group: Motion bins
 - Symbol/short name: Mean Leaf Acceleration SD (mm/s^2)
 - Mathematical definition: mean_leaf(std_interval(acceleration))
-- Physical meaning: Leaf-wise mean proportions for Park et al. VMAT delivery bins. Speed bins: 0-4, 4-8, 8-12, 12-16, 16-20 mm/s. Acceleration bins: 0-40, 40-80, 80-120, 120-160, 160-200 mm/s^2. Requires a valid control-point time model; RTPLAN-only Elekta exports without usable timing inputs are reported as unavailable.
+- Physical meaning: Mean of nonzero per-leaf sample absolute-acceleration standard deviations over finite control-point intervals (ddof=1), in mm/s^2.
 - Unit: mm/s^2
 - Inputs required: Per-leaf motion time series with a valid control-point time model
 - Status: implemented_flattened
@@ -2376,7 +2409,7 @@ Definitions are written to match the current code implementation. They are not a
 - Group: Motion bins
 - Symbol/short name: MLCX1 Park Speed 0-4 mm/s
 - Mathematical definition: mean_leaf [ proportion(intervals with speed in 0-4 mm/s) ], restricted to MLCX1 leaf positions.
-- Physical meaning: MLCX1-only Park 2015 derived motion statistic.
+- Physical meaning: Leaf-wise mean proportion of valid control-point intervals with speed in 0-4 mm/s. Reported for native MLCX1.
 - Unit: proportion
 - Inputs required: MLCX1 motion traces with a valid control-point time model
 - Status: implemented_flattened
@@ -2387,7 +2420,7 @@ Definitions are written to match the current code implementation. They are not a
 - Group: Motion bins
 - Symbol/short name: MLCX1 Park Speed 4-8 mm/s
 - Mathematical definition: mean_leaf [ proportion(intervals with speed in 4-8 mm/s) ], restricted to MLCX1 leaf positions.
-- Physical meaning: MLCX1-only Park 2015 derived motion statistic.
+- Physical meaning: Leaf-wise mean proportion of valid control-point intervals with speed in 4-8 mm/s. Reported for native MLCX1.
 - Unit: proportion
 - Inputs required: MLCX1 motion traces with a valid control-point time model
 - Status: implemented_flattened
@@ -2398,7 +2431,7 @@ Definitions are written to match the current code implementation. They are not a
 - Group: Motion bins
 - Symbol/short name: MLCX1 Park Speed 8-12 mm/s
 - Mathematical definition: mean_leaf [ proportion(intervals with speed in 8-12 mm/s) ], restricted to MLCX1 leaf positions.
-- Physical meaning: MLCX1-only Park 2015 derived motion statistic.
+- Physical meaning: Leaf-wise mean proportion of valid control-point intervals with speed in 8-12 mm/s. Reported for native MLCX1.
 - Unit: proportion
 - Inputs required: MLCX1 motion traces with a valid control-point time model
 - Status: implemented_flattened
@@ -2409,7 +2442,7 @@ Definitions are written to match the current code implementation. They are not a
 - Group: Motion bins
 - Symbol/short name: MLCX1 Park Speed 12-16 mm/s
 - Mathematical definition: mean_leaf [ proportion(intervals with speed in 12-16 mm/s) ], restricted to MLCX1 leaf positions.
-- Physical meaning: MLCX1-only Park 2015 derived motion statistic.
+- Physical meaning: Leaf-wise mean proportion of valid control-point intervals with speed in 12-16 mm/s. Reported for native MLCX1.
 - Unit: proportion
 - Inputs required: MLCX1 motion traces with a valid control-point time model
 - Status: implemented_flattened
@@ -2420,7 +2453,7 @@ Definitions are written to match the current code implementation. They are not a
 - Group: Motion bins
 - Symbol/short name: MLCX1 Park Speed 16-20 mm/s
 - Mathematical definition: mean_leaf [ proportion(intervals with speed in 16-20 mm/s) ], restricted to MLCX1 leaf positions.
-- Physical meaning: MLCX1-only Park 2015 derived motion statistic.
+- Physical meaning: Leaf-wise mean proportion of valid control-point intervals with speed in 16-20 mm/s. Reported for native MLCX1.
 - Unit: proportion
 - Inputs required: MLCX1 motion traces with a valid control-point time model
 - Status: implemented_flattened
@@ -2431,7 +2464,7 @@ Definitions are written to match the current code implementation. They are not a
 - Group: Motion bins
 - Symbol/short name: MLCX1 Park Acceleration 0-40 mm/s^2
 - Mathematical definition: mean_leaf [ proportion(intervals with acceleration in 0-40 mm/s^2) ], restricted to MLCX1 leaf positions.
-- Physical meaning: MLCX1-only Park 2015 derived motion statistic.
+- Physical meaning: Leaf-wise mean proportion of valid control-point intervals with acceleration in 0-40 mm/s^2. Reported for native MLCX1.
 - Unit: proportion
 - Inputs required: MLCX1 motion traces with a valid control-point time model
 - Status: implemented_flattened
@@ -2442,7 +2475,7 @@ Definitions are written to match the current code implementation. They are not a
 - Group: Motion bins
 - Symbol/short name: MLCX1 Park Acceleration 40-80 mm/s^2
 - Mathematical definition: mean_leaf [ proportion(intervals with acceleration in 40-80 mm/s^2) ], restricted to MLCX1 leaf positions.
-- Physical meaning: MLCX1-only Park 2015 derived motion statistic.
+- Physical meaning: Leaf-wise mean proportion of valid control-point intervals with acceleration in 40-80 mm/s^2. Reported for native MLCX1.
 - Unit: proportion
 - Inputs required: MLCX1 motion traces with a valid control-point time model
 - Status: implemented_flattened
@@ -2453,7 +2486,7 @@ Definitions are written to match the current code implementation. They are not a
 - Group: Motion bins
 - Symbol/short name: MLCX1 Park Acceleration 80-120 mm/s^2
 - Mathematical definition: mean_leaf [ proportion(intervals with acceleration in 80-120 mm/s^2) ], restricted to MLCX1 leaf positions.
-- Physical meaning: MLCX1-only Park 2015 derived motion statistic.
+- Physical meaning: Leaf-wise mean proportion of valid control-point intervals with acceleration in 80-120 mm/s^2. Reported for native MLCX1.
 - Unit: proportion
 - Inputs required: MLCX1 motion traces with a valid control-point time model
 - Status: implemented_flattened
@@ -2464,7 +2497,7 @@ Definitions are written to match the current code implementation. They are not a
 - Group: Motion bins
 - Symbol/short name: MLCX1 Park Acceleration 120-160 mm/s^2
 - Mathematical definition: mean_leaf [ proportion(intervals with acceleration in 120-160 mm/s^2) ], restricted to MLCX1 leaf positions.
-- Physical meaning: MLCX1-only Park 2015 derived motion statistic.
+- Physical meaning: Leaf-wise mean proportion of valid control-point intervals with acceleration in 120-160 mm/s^2. Reported for native MLCX1.
 - Unit: proportion
 - Inputs required: MLCX1 motion traces with a valid control-point time model
 - Status: implemented_flattened
@@ -2475,7 +2508,7 @@ Definitions are written to match the current code implementation. They are not a
 - Group: Motion bins
 - Symbol/short name: MLCX1 Park Acceleration 160-200 mm/s^2
 - Mathematical definition: mean_leaf [ proportion(intervals with acceleration in 160-200 mm/s^2) ], restricted to MLCX1 leaf positions.
-- Physical meaning: MLCX1-only Park 2015 derived motion statistic.
+- Physical meaning: Leaf-wise mean proportion of valid control-point intervals with acceleration in 160-200 mm/s^2. Reported for native MLCX1.
 - Unit: proportion
 - Inputs required: MLCX1 motion traces with a valid control-point time model
 - Status: implemented_flattened
@@ -2486,7 +2519,7 @@ Definitions are written to match the current code implementation. They are not a
 - Group: Motion bins
 - Symbol/short name: MLCX1 Mean Leaf Speed (mm/s)
 - Mathematical definition: mean_leaf(mean_interval(speed)), restricted to MLCX1 leaf positions.
-- Physical meaning: MLCX1-only Park 2015 derived motion statistic.
+- Physical meaning: Mean of per-leaf mean nonzero speeds over finite control-point intervals, in mm/s. Reported for native MLCX1.
 - Unit: mm/s
 - Inputs required: MLCX1 motion traces with a valid control-point time model
 - Status: implemented_flattened
@@ -2497,7 +2530,7 @@ Definitions are written to match the current code implementation. They are not a
 - Group: Motion bins
 - Symbol/short name: MLCX1 Mean Leaf Acceleration (mm/s^2)
 - Mathematical definition: mean_leaf(mean_interval(acceleration)), restricted to MLCX1 leaf positions.
-- Physical meaning: MLCX1-only Park 2015 derived motion statistic.
+- Physical meaning: Mean of per-leaf mean nonzero absolute accelerations over finite control-point intervals, in mm/s^2. Reported for native MLCX1.
 - Unit: mm/s^2
 - Inputs required: MLCX1 motion traces with a valid control-point time model
 - Status: implemented_flattened
@@ -2508,7 +2541,7 @@ Definitions are written to match the current code implementation. They are not a
 - Group: Motion bins
 - Symbol/short name: MLCX1 Mean Leaf Speed SD (mm/s)
 - Mathematical definition: mean_leaf(std_interval(speed)), restricted to MLCX1 leaf positions.
-- Physical meaning: MLCX1-only Park 2015 derived motion statistic.
+- Physical meaning: Mean of nonzero per-leaf sample speed standard deviations over finite control-point intervals (ddof=1), in mm/s. Reported for native MLCX1.
 - Unit: mm/s
 - Inputs required: MLCX1 motion traces with a valid control-point time model
 - Status: implemented_flattened
@@ -2519,7 +2552,7 @@ Definitions are written to match the current code implementation. They are not a
 - Group: Motion bins
 - Symbol/short name: MLCX1 Mean Leaf Acceleration SD (mm/s^2)
 - Mathematical definition: mean_leaf(std_interval(acceleration)), restricted to MLCX1 leaf positions.
-- Physical meaning: MLCX1-only Park 2015 derived motion statistic.
+- Physical meaning: Mean of nonzero per-leaf sample absolute-acceleration standard deviations over finite control-point intervals (ddof=1), in mm/s^2. Reported for native MLCX1.
 - Unit: mm/s^2
 - Inputs required: MLCX1 motion traces with a valid control-point time model
 - Status: implemented_flattened
@@ -2530,7 +2563,7 @@ Definitions are written to match the current code implementation. They are not a
 - Group: Motion bins
 - Symbol/short name: MLCX2 Park Speed 0-4 mm/s
 - Mathematical definition: mean_leaf [ proportion(intervals with speed in 0-4 mm/s) ], restricted to MLCX2 leaf positions.
-- Physical meaning: MLCX2-only Park 2015 derived motion statistic.
+- Physical meaning: Leaf-wise mean proportion of valid control-point intervals with speed in 0-4 mm/s. Reported for native MLCX2.
 - Unit: proportion
 - Inputs required: MLCX2 motion traces with a valid control-point time model
 - Status: implemented_flattened
@@ -2541,7 +2574,7 @@ Definitions are written to match the current code implementation. They are not a
 - Group: Motion bins
 - Symbol/short name: MLCX2 Park Speed 4-8 mm/s
 - Mathematical definition: mean_leaf [ proportion(intervals with speed in 4-8 mm/s) ], restricted to MLCX2 leaf positions.
-- Physical meaning: MLCX2-only Park 2015 derived motion statistic.
+- Physical meaning: Leaf-wise mean proportion of valid control-point intervals with speed in 4-8 mm/s. Reported for native MLCX2.
 - Unit: proportion
 - Inputs required: MLCX2 motion traces with a valid control-point time model
 - Status: implemented_flattened
@@ -2552,7 +2585,7 @@ Definitions are written to match the current code implementation. They are not a
 - Group: Motion bins
 - Symbol/short name: MLCX2 Park Speed 8-12 mm/s
 - Mathematical definition: mean_leaf [ proportion(intervals with speed in 8-12 mm/s) ], restricted to MLCX2 leaf positions.
-- Physical meaning: MLCX2-only Park 2015 derived motion statistic.
+- Physical meaning: Leaf-wise mean proportion of valid control-point intervals with speed in 8-12 mm/s. Reported for native MLCX2.
 - Unit: proportion
 - Inputs required: MLCX2 motion traces with a valid control-point time model
 - Status: implemented_flattened
@@ -2563,7 +2596,7 @@ Definitions are written to match the current code implementation. They are not a
 - Group: Motion bins
 - Symbol/short name: MLCX2 Park Speed 12-16 mm/s
 - Mathematical definition: mean_leaf [ proportion(intervals with speed in 12-16 mm/s) ], restricted to MLCX2 leaf positions.
-- Physical meaning: MLCX2-only Park 2015 derived motion statistic.
+- Physical meaning: Leaf-wise mean proportion of valid control-point intervals with speed in 12-16 mm/s. Reported for native MLCX2.
 - Unit: proportion
 - Inputs required: MLCX2 motion traces with a valid control-point time model
 - Status: implemented_flattened
@@ -2574,7 +2607,7 @@ Definitions are written to match the current code implementation. They are not a
 - Group: Motion bins
 - Symbol/short name: MLCX2 Park Speed 16-20 mm/s
 - Mathematical definition: mean_leaf [ proportion(intervals with speed in 16-20 mm/s) ], restricted to MLCX2 leaf positions.
-- Physical meaning: MLCX2-only Park 2015 derived motion statistic.
+- Physical meaning: Leaf-wise mean proportion of valid control-point intervals with speed in 16-20 mm/s. Reported for native MLCX2.
 - Unit: proportion
 - Inputs required: MLCX2 motion traces with a valid control-point time model
 - Status: implemented_flattened
@@ -2585,7 +2618,7 @@ Definitions are written to match the current code implementation. They are not a
 - Group: Motion bins
 - Symbol/short name: MLCX2 Park Acceleration 0-40 mm/s^2
 - Mathematical definition: mean_leaf [ proportion(intervals with acceleration in 0-40 mm/s^2) ], restricted to MLCX2 leaf positions.
-- Physical meaning: MLCX2-only Park 2015 derived motion statistic.
+- Physical meaning: Leaf-wise mean proportion of valid control-point intervals with acceleration in 0-40 mm/s^2. Reported for native MLCX2.
 - Unit: proportion
 - Inputs required: MLCX2 motion traces with a valid control-point time model
 - Status: implemented_flattened
@@ -2596,7 +2629,7 @@ Definitions are written to match the current code implementation. They are not a
 - Group: Motion bins
 - Symbol/short name: MLCX2 Park Acceleration 40-80 mm/s^2
 - Mathematical definition: mean_leaf [ proportion(intervals with acceleration in 40-80 mm/s^2) ], restricted to MLCX2 leaf positions.
-- Physical meaning: MLCX2-only Park 2015 derived motion statistic.
+- Physical meaning: Leaf-wise mean proportion of valid control-point intervals with acceleration in 40-80 mm/s^2. Reported for native MLCX2.
 - Unit: proportion
 - Inputs required: MLCX2 motion traces with a valid control-point time model
 - Status: implemented_flattened
@@ -2607,7 +2640,7 @@ Definitions are written to match the current code implementation. They are not a
 - Group: Motion bins
 - Symbol/short name: MLCX2 Park Acceleration 80-120 mm/s^2
 - Mathematical definition: mean_leaf [ proportion(intervals with acceleration in 80-120 mm/s^2) ], restricted to MLCX2 leaf positions.
-- Physical meaning: MLCX2-only Park 2015 derived motion statistic.
+- Physical meaning: Leaf-wise mean proportion of valid control-point intervals with acceleration in 80-120 mm/s^2. Reported for native MLCX2.
 - Unit: proportion
 - Inputs required: MLCX2 motion traces with a valid control-point time model
 - Status: implemented_flattened
@@ -2618,7 +2651,7 @@ Definitions are written to match the current code implementation. They are not a
 - Group: Motion bins
 - Symbol/short name: MLCX2 Park Acceleration 120-160 mm/s^2
 - Mathematical definition: mean_leaf [ proportion(intervals with acceleration in 120-160 mm/s^2) ], restricted to MLCX2 leaf positions.
-- Physical meaning: MLCX2-only Park 2015 derived motion statistic.
+- Physical meaning: Leaf-wise mean proportion of valid control-point intervals with acceleration in 120-160 mm/s^2. Reported for native MLCX2.
 - Unit: proportion
 - Inputs required: MLCX2 motion traces with a valid control-point time model
 - Status: implemented_flattened
@@ -2629,7 +2662,7 @@ Definitions are written to match the current code implementation. They are not a
 - Group: Motion bins
 - Symbol/short name: MLCX2 Park Acceleration 160-200 mm/s^2
 - Mathematical definition: mean_leaf [ proportion(intervals with acceleration in 160-200 mm/s^2) ], restricted to MLCX2 leaf positions.
-- Physical meaning: MLCX2-only Park 2015 derived motion statistic.
+- Physical meaning: Leaf-wise mean proportion of valid control-point intervals with acceleration in 160-200 mm/s^2. Reported for native MLCX2.
 - Unit: proportion
 - Inputs required: MLCX2 motion traces with a valid control-point time model
 - Status: implemented_flattened
@@ -2640,7 +2673,7 @@ Definitions are written to match the current code implementation. They are not a
 - Group: Motion bins
 - Symbol/short name: MLCX2 Mean Leaf Speed (mm/s)
 - Mathematical definition: mean_leaf(mean_interval(speed)), restricted to MLCX2 leaf positions.
-- Physical meaning: MLCX2-only Park 2015 derived motion statistic.
+- Physical meaning: Mean of per-leaf mean nonzero speeds over finite control-point intervals, in mm/s. Reported for native MLCX2.
 - Unit: mm/s
 - Inputs required: MLCX2 motion traces with a valid control-point time model
 - Status: implemented_flattened
@@ -2651,7 +2684,7 @@ Definitions are written to match the current code implementation. They are not a
 - Group: Motion bins
 - Symbol/short name: MLCX2 Mean Leaf Acceleration (mm/s^2)
 - Mathematical definition: mean_leaf(mean_interval(acceleration)), restricted to MLCX2 leaf positions.
-- Physical meaning: MLCX2-only Park 2015 derived motion statistic.
+- Physical meaning: Mean of per-leaf mean nonzero absolute accelerations over finite control-point intervals, in mm/s^2. Reported for native MLCX2.
 - Unit: mm/s^2
 - Inputs required: MLCX2 motion traces with a valid control-point time model
 - Status: implemented_flattened
@@ -2662,7 +2695,7 @@ Definitions are written to match the current code implementation. They are not a
 - Group: Motion bins
 - Symbol/short name: MLCX2 Mean Leaf Speed SD (mm/s)
 - Mathematical definition: mean_leaf(std_interval(speed)), restricted to MLCX2 leaf positions.
-- Physical meaning: MLCX2-only Park 2015 derived motion statistic.
+- Physical meaning: Mean of nonzero per-leaf sample speed standard deviations over finite control-point intervals (ddof=1), in mm/s. Reported for native MLCX2.
 - Unit: mm/s
 - Inputs required: MLCX2 motion traces with a valid control-point time model
 - Status: implemented_flattened
@@ -2673,7 +2706,7 @@ Definitions are written to match the current code implementation. They are not a
 - Group: Motion bins
 - Symbol/short name: MLCX2 Mean Leaf Acceleration SD (mm/s^2)
 - Mathematical definition: mean_leaf(std_interval(acceleration)), restricted to MLCX2 leaf positions.
-- Physical meaning: MLCX2-only Park 2015 derived motion statistic.
+- Physical meaning: Mean of nonzero per-leaf sample absolute-acceleration standard deviations over finite control-point intervals (ddof=1), in mm/s^2. Reported for native MLCX2.
 - Unit: mm/s^2
 - Inputs required: MLCX2 motion traces with a valid control-point time model
 - Status: implemented_flattened
@@ -4576,6 +4609,83 @@ Definitions are written to match the current code implementation. They are not a
 - Inputs required: Aurora RTPLAN control points: gantry angle, isocenter z, cumulative meterset weight, MLCX1 and MLCX2
 - Status: implemented
 - Notes: Standalone Aurora SVMAT Lab metric.
+
+### `mean_ba` - mean_ba
+
+- Group: V4 physical aperture and adapted MCS
+- Symbol/short name: mean_ba
+- Mathematical definition: MUmean(A_i); A_i=sum_s h_i,s*g_i,s, exact physical dual-layer intersection area
+- Physical meaning: Delivered-weight mean physical beam aperture area after intersecting both MLC layers and clipping to X/Y jaws using real leaf boundaries.
+- Unit: mm^2
+- Inputs required: Physical LeafPositionBoundaries for both MLC layers; A/B bank positions; X/Y jaws; cumulative meterset weights; BeamMeterset MU when available
+- Status: implemented
+- Notes: aurora-v4-physical-aperture: physical dual-layer intersection; adapted gap-based MCS, not exact McNiven MCS or the old unit-width design. Positive delivered intervals use endpoint i+1. Missing geometry or invalid weights makes all seven unavailable with a warning; missing any BeamMeterset uses unit-normalized per-beam relative weights for every contributing beam with a warning.
+
+### `mean_bi` - mean_bi
+
+- Group: V4 physical aperture and adapted MCS
+- Symbol/short name: mean_bi
+- Mathematical definition: MUmean(P_i^2/(4*pi*A_i)); P_i is the exact aperture-union perimeter; A_i=0 => unavailable
+- Physical meaning: Delivered-weight mean boundary irregularity P squared / (4 pi A), from the exact physical aperture union; unavailable if any positive-weight aperture is closed.
+- Unit: dimensionless
+- Inputs required: Physical LeafPositionBoundaries for both MLC layers; A/B bank positions; X/Y jaws; cumulative meterset weights; BeamMeterset MU when available
+- Status: implemented
+- Notes: aurora-v4-physical-aperture: physical dual-layer intersection; adapted gap-based MCS, not exact McNiven MCS or the old unit-width design. Positive delivered intervals use endpoint i+1. Missing geometry or invalid weights makes all seven unavailable with a warning; missing any BeamMeterset uses unit-normalized per-beam relative weights for every contributing beam with a warning.
+
+### `mean_ca` - mean_ca
+
+- Group: V4 physical aperture and adapted MCS
+- Symbol/short name: mean_ca
+- Mathematical definition: MUmean(P_i/A_i); units mm^-1; A_i=0 => unavailable; this is not circularity
+- Physical meaning: Delivered-weight mean perimeter-to-area ratio P/A in inverse millimeters; this CA is not circularity. Closed positive-weight apertures make it unavailable.
+- Unit: mm^-1
+- Inputs required: Physical LeafPositionBoundaries for both MLC layers; A/B bank positions; X/Y jaws; cumulative meterset weights; BeamMeterset MU when available
+- Status: implemented
+- Notes: aurora-v4-physical-aperture: physical dual-layer intersection; adapted gap-based MCS, not exact McNiven MCS or the old unit-width design. Positive delivered intervals use endpoint i+1. Missing geometry or invalid weights makes all seven unavailable with a warning; missing any BeamMeterset uses unit-normalized per-beam relative weights for every contributing beam with a warning.
+
+### `mean_sas5` - mean_sas5
+
+- Group: V4 physical aperture and adapted MCS
+- Symbol/short name: mean_sas5
+- Mathematical definition: MUmean(count_s(0<g_i,s<5 mm)/count_s(g_i,s>0)); positive-height sub-strips only; closed => 0
+- Physical meaning: Delivered-weight mean fraction of positive open physical sub-strips with gap strictly below 5 mm; equal sub-strip counts, not area weighting; closed apertures contribute zero.
+- Unit: dimensionless
+- Inputs required: Physical LeafPositionBoundaries for both MLC layers; A/B bank positions; X/Y jaws; cumulative meterset weights; BeamMeterset MU when available
+- Status: implemented
+- Notes: aurora-v4-physical-aperture: physical dual-layer intersection; adapted gap-based MCS, not exact McNiven MCS or the old unit-width design. Positive delivered intervals use endpoint i+1. Missing geometry or invalid weights makes all seven unavailable with a warning; missing any BeamMeterset uses unit-normalized per-beam relative weights for every contributing beam with a warning.
+
+### `mean_sas10` - mean_sas10
+
+- Group: V4 physical aperture and adapted MCS
+- Symbol/short name: mean_sas10
+- Mathematical definition: MUmean(count_s(0<g_i,s<10 mm)/count_s(g_i,s>0)); positive-height sub-strips only; closed => 0
+- Physical meaning: Delivered-weight mean fraction of positive open physical sub-strips with gap strictly below 10 mm; equal sub-strip counts, not area weighting; closed apertures contribute zero.
+- Unit: dimensionless
+- Inputs required: Physical LeafPositionBoundaries for both MLC layers; A/B bank positions; X/Y jaws; cumulative meterset weights; BeamMeterset MU when available
+- Status: implemented
+- Notes: aurora-v4-physical-aperture: physical dual-layer intersection; adapted gap-based MCS, not exact McNiven MCS or the old unit-width design. Positive delivered intervals use endpoint i+1. Missing geometry or invalid weights makes all seven unavailable with a warning; missing any BeamMeterset uses unit-normalized per-beam relative weights for every contributing beam with a warning.
+
+### `mean_mcs_aurora` - mean_mcs_aurora
+
+- Group: V4 physical aperture and adapted MCS
+- Symbol/short name: mean_mcs_aurora
+- Mathematical definition: MUmean(AAV_i*LSV_i); AAV_i=A_i/sum_s max_positive_endpoint(h_i,s*g_i,s); LSV_i=1-sum_adj_open abs(delta g)/((n_open-1)*max_open(g)); n_open<=1 => LSV 1; zero envelope => MCS 0
+- Physical meaning: Delivered-weight mean AAV times gap-sequence LSV. AAV uses the beam sum of maximum clipped sub-strip areas at positive-weight endpoints. Adapted MCS, not exact McNiven MCS; differs from the old unit-width design.
+- Unit: dimensionless
+- Inputs required: Physical LeafPositionBoundaries for both MLC layers; A/B bank positions; X/Y jaws; cumulative meterset weights; BeamMeterset MU when available
+- Status: implemented
+- Notes: aurora-v4-physical-aperture: physical dual-layer intersection; adapted gap-based MCS, not exact McNiven MCS or the old unit-width design. Positive delivered intervals use endpoint i+1. Missing geometry or invalid weights makes all seven unavailable with a warning; missing any BeamMeterset uses unit-normalized per-beam relative weights for every contributing beam with a warning.
+
+### `mcs_complexity_aurora` - mcs_complexity_aurora
+
+- Group: V4 physical aperture and adapted MCS
+- Symbol/short name: mcs_complexity_aurora
+- Mathematical definition: 1-mean_mcs_aurora; complement of the physical-aperture adapted MCS
+- Physical meaning: One minus the Aurora physical-aperture adapted MCS; larger values indicate greater modulation complexity under this version-specific definition.
+- Unit: dimensionless
+- Inputs required: Physical LeafPositionBoundaries for both MLC layers; A/B bank positions; X/Y jaws; cumulative meterset weights; BeamMeterset MU when available
+- Status: implemented
+- Notes: aurora-v4-physical-aperture: physical dual-layer intersection; adapted gap-based MCS, not exact McNiven MCS or the old unit-width design. Positive delivered intervals use endpoint i+1. Missing geometry or invalid weights makes all seven unavailable with a warning; missing any BeamMeterset uses unit-normalized per-beam relative weights for every contributing beam with a warning.
 
 ### `axial_travel_mm` - axial_travel_mm
 

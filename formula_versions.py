@@ -2,6 +2,7 @@
 
 GEOMETRY_FORMULA_VERSION = "geometry-v4"
 TOMO_FORMULA_VERSION = "tomo-v3"
+AURORA_FORMULA_VERSION = "aurora-v4-physical-aperture"
 
 
 def formula_version_for_mode(mode: str) -> str:
@@ -9,4 +10,6 @@ def formula_version_for_mode(mode: str) -> str:
         return GEOMETRY_FORMULA_VERSION
     if mode == "TOMO":
         return TOMO_FORMULA_VERSION
+    if mode == "AURORA":
+        return AURORA_FORMULA_VERSION
     return ""
