@@ -140,6 +140,14 @@ class UCoMXApp(tk.Tk):
         self.metadata_tree.column("value", width=280, anchor="w")
         self.metadata_tree.pack(fill=tk.BOTH, expand=True)
 
+        self.metric_profile_var = tk.StringVar(value='All metrics')
+        self.metric_profile_box = ttk.Combobox(
+            metrics_frame, textvariable=self.metric_profile_var, state='readonly',
+            values=('All metrics', 'LRT candidates (50)', 'LRT Effective', 'LRT Distal',
+                    'LRT Proximal', 'LRT delivery', 'LRT system reference'),
+        )
+        self.metric_profile_box.pack(fill=tk.X, pady=(0, 6))
+        self.metric_profile_box.bind('<<ComboboxSelected>>', self._on_select_result)
         self.metrics_tree = ttk.Treeview(metrics_frame, columns=("metric", "value"), show="headings")
         self.metrics_tree.heading("metric", text="Metric (paper naming)")
         self.metrics_tree.heading("value", text="Value")
@@ -333,7 +341,7 @@ class UCoMXApp(tk.Tk):
 
         for name, value in build_metadata_rows(result):
             self.metadata_tree.insert("", "end", values=(name, value))
-        for name, value in build_metric_rows(result):
+        for name, value in build_metric_rows(result, profile=self.metric_profile_var.get()):
             self.metrics_tree.insert("", "end", values=(name, value))
         for name, note in build_metric_reference_rows(result):
             self.reference_tree.insert("", "end", values=(name, note))

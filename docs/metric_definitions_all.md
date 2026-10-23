@@ -3440,6 +3440,618 @@ Readable Markdown/LaTeX equations and all-key navigation: [formula index](metric
 - Status: implemented_flattened
 - Notes: Layer-specific flattened export for SPORT.
 
+### `MCSv_Eff` - MCSv_Eff
+
+- Group: LRT Eff
+- Symbol/short name: MCSv_Eff
+- Mathematical definition: sum_i d_i * mean(AAV_i,AAV_i+1) * mean(LSV_i,LSV_i+1) / sum_i d_i
+- LaTeX reference: [Readable equations and mode-specific conventions](lrt_three_layer.md#geometry)
+- Physical meaning: sum_i d_i * mean(AAV_i,AAV_i+1) * mean(LSV_i,LSV_i+1) / sum_i d_i
+- Unit: dimensionless
+- Inputs required: Standard Halcyon/Ethos DICOM MLCX1/MLCX2, jaws, ordered CPs, valid CMW and MU
+- Status: implemented
+- Notes: None
+
+### `LSV_Eff` - LSV_Eff
+
+- Group: LRT Eff
+- Symbol/short name: LSV_Eff
+- Mathematical definition: <LSV_i>_c; each bank = 1-sum_adjacent(abs(dx))/((N-1)*range); multiply banks
+- LaTeX reference: [Readable equations and mode-specific conventions](lrt_three_layer.md#geometry)
+- Physical meaning: <LSV_i>_c; each bank = 1-sum_adjacent(abs(dx))/((N-1)*range); multiply banks
+- Unit: dimensionless
+- Inputs required: Standard Halcyon/Ethos DICOM MLCX1/MLCX2, jaws, ordered CPs, valid CMW and MU
+- Status: implemented
+- Notes: None
+
+### `AAV_Eff` - AAV_Eff
+
+- Group: LRT Eff
+- Symbol/short name: AAV_Eff
+- Mathematical definition: <A_i/E>_c; E = sum_slot (max_CP right-min_CP left)_+ * max_CP exposed_height
+- LaTeX reference: [Readable equations and mode-specific conventions](lrt_three_layer.md#geometry)
+- Physical meaning: <A_i/E>_c; E = sum_slot (max_CP right-min_CP left)_+ * max_CP exposed_height
+- Unit: dimensionless
+- Inputs required: Standard Halcyon/Ethos DICOM MLCX1/MLCX2, jaws, ordered CPs, valid CMW and MU
+- Status: implemented
+- Notes: None
+
+### `PA_Eff` - PA_Eff
+
+- Group: LRT Eff
+- Symbol/short name: PA_Eff
+- Mathematical definition: <A_i>_c, A_i = sum_j jaw-clipped positive gap * exposed strip height
+- LaTeX reference: [Readable equations and mode-specific conventions](lrt_three_layer.md#geometry)
+- Physical meaning: <A_i>_c, A_i = sum_j jaw-clipped positive gap * exposed strip height
+- Unit: mm^2
+- Inputs required: Standard Halcyon/Ethos DICOM MLCX1/MLCX2, jaws, ordered CPs, valid CMW and MU
+- Status: implemented
+- Notes: None
+
+### `MAD_Eff` - MAD_Eff
+
+- Group: LRT Eff
+- Symbol/short name: MAD_Eff
+- Mathematical definition: <mean_active_slot abs((left+right)/2)>_c; omit empty CPs
+- LaTeX reference: [Readable equations and mode-specific conventions](lrt_three_layer.md#geometry)
+- Physical meaning: <mean_active_slot abs((left+right)/2)>_c; omit empty CPs
+- Unit: mm
+- Inputs required: Standard Halcyon/Ethos DICOM MLCX1/MLCX2, jaws, ordered CPs, valid CMW and MU
+- Status: implemented
+- Notes: None
+
+### `ALG_Eff` - ALG_Eff
+
+- Group: LRT Eff
+- Symbol/short name: ALG_Eff
+- Mathematical definition: <mean_active_slot(right-left)>_c; omit empty CPs
+- LaTeX reference: [Readable equations and mode-specific conventions](lrt_three_layer.md#geometry)
+- Physical meaning: <mean_active_slot(right-left)>_c; omit empty CPs
+- Unit: mm
+- Inputs required: Standard Halcyon/Ethos DICOM MLCX1/MLCX2, jaws, ordered CPs, valid CMW and MU
+- Status: implemented
+- Notes: None
+
+### `SLG_Eff` - SLG_Eff
+
+- Group: LRT Eff
+- Symbol/short name: SLG_Eff
+- Mathematical definition: sqrt(<mean_active_slot(gap-ALG_beam)^2>_c); omit empty CPs; beam-MU mean of beam SDs
+- LaTeX reference: [Readable equations and mode-specific conventions](lrt_three_layer.md#geometry)
+- Physical meaning: sqrt(<mean_active_slot(gap-ALG_beam)^2>_c); omit empty CPs; beam-MU mean of beam SDs
+- Unit: mm
+- Inputs required: Standard Halcyon/Ethos DICOM MLCX1/MLCX2, jaws, ordered CPs, valid CMW and MU
+- Status: implemented
+- Notes: None
+
+### `SAS5_Eff` - SAS5_Eff
+
+- Group: LRT Eff
+- Symbol/short name: SAS5_Eff
+- Mathematical definition: <count(0<raw_gap<5 mm)/count(raw_gap>0)>_c; omit empty CPs
+- LaTeX reference: [Readable equations and mode-specific conventions](lrt_three_layer.md#geometry)
+- Physical meaning: <count(0<raw_gap<5 mm)/count(raw_gap>0)>_c; omit empty CPs
+- Unit: dimensionless
+- Inputs required: Standard Halcyon/Ethos DICOM MLCX1/MLCX2, jaws, ordered CPs, valid CMW and MU
+- Status: implemented
+- Notes: None
+
+### `SAS10_Eff` - SAS10_Eff
+
+- Group: LRT Eff
+- Symbol/short name: SAS10_Eff
+- Mathematical definition: <count(0<raw_gap<10 mm)/count(raw_gap>0)>_c; omit empty CPs
+- LaTeX reference: [Readable equations and mode-specific conventions](lrt_three_layer.md#geometry)
+- Physical meaning: <count(0<raw_gap<10 mm)/count(raw_gap>0)>_c; omit empty CPs
+- Unit: dimensionless
+- Inputs required: Standard Halcyon/Ethos DICOM MLCX1/MLCX2, jaws, ordered CPs, valid CMW and MU
+- Status: implemented
+- Notes: None
+
+### `SAS20_Eff` - SAS20_Eff
+
+- Group: LRT Eff
+- Symbol/short name: SAS20_Eff
+- Mathematical definition: <count(0<raw_gap<20 mm)/count(raw_gap>0)>_c; omit empty CPs
+- LaTeX reference: [Readable equations and mode-specific conventions](lrt_three_layer.md#geometry)
+- Physical meaning: <count(0<raw_gap<20 mm)/count(raw_gap>0)>_c; omit empty CPs
+- Unit: dimensionless
+- Inputs required: Standard Halcyon/Ethos DICOM MLCX1/MLCX2, jaws, ordered CPs, valid CMW and MU
+- Status: implemented
+- Notes: None
+
+### `LT_Eff` - LT_Eff
+
+- Group: LRT Eff
+- Symbol/short name: LT_Eff
+- Mathematical definition: sum_interval d_i * sum_leaf abs(x_i+1-x_i) / sum_interval d_i
+- LaTeX reference: [Readable equations and mode-specific conventions](lrt_three_layer.md#geometry)
+- Physical meaning: sum_interval d_i * sum_leaf abs(x_i+1-x_i) / sum_interval d_i
+- Unit: mm
+- Inputs required: Standard Halcyon/Ethos DICOM MLCX1/MLCX2, jaws, ordered CPs, valid CMW and MU
+- Status: implemented
+- Notes: None
+
+### `LTmean_Eff` - LTmean_Eff
+
+- Group: LRT Eff
+- Symbol/short name: LTmean_Eff
+- Mathematical definition: sum_leaf raw trajectory travel / count(moving leaves); unweighted intervals
+- LaTeX reference: [Readable equations and mode-specific conventions](lrt_three_layer.md#geometry)
+- Physical meaning: sum_leaf raw trajectory travel / count(moving leaves); unweighted intervals
+- Unit: mm/moving leaf (Eff: virtual leaf)
+- Inputs required: Standard Halcyon/Ethos DICOM MLCX1/MLCX2, jaws, ordered CPs, valid CMW and MU
+- Status: implemented
+- Notes: None
+
+### `NL_Eff` - NL_Eff
+
+- Group: LRT Eff
+- Symbol/short name: NL_Eff
+- Mathematical definition: <count(raw_gap>0 and Y jaw overlap>0)>_c
+- LaTeX reference: [Readable equations and mode-specific conventions](lrt_three_layer.md#geometry)
+- Physical meaning: <count(raw_gap>0 and Y jaw overlap>0)>_c
+- Unit: active pairs (Eff: virtual pairs)
+- Inputs required: Standard Halcyon/Ethos DICOM MLCX1/MLCX2, jaws, ordered CPs, valid CMW and MU
+- Status: implemented
+- Notes: None
+
+### `PI_Eff` - PI_Eff
+
+- Group: LRT Eff
+- Symbol/short name: PI_Eff
+- Mathematical definition: <P_i^2/(4*pi*A_i)>_c; zero area contributes 0
+- LaTeX reference: [Readable equations and mode-specific conventions](lrt_three_layer.md#geometry)
+- Physical meaning: <P_i^2/(4*pi*A_i)>_c; zero area contributes 0
+- Unit: dimensionless
+- Inputs required: Standard Halcyon/Ethos DICOM MLCX1/MLCX2, jaws, ordered CPs, valid CMW and MU
+- Status: implemented
+- Notes: None
+
+### `PM_Eff` - PM_Eff
+
+- Group: LRT Eff
+- Symbol/short name: PM_Eff
+- Mathematical definition: 1-<A_i>_c/U; U=sum_slot max_CP(jaw-clipped slot area); U=0 => 0
+- LaTeX reference: [Readable equations and mode-specific conventions](lrt_three_layer.md#geometry)
+- Physical meaning: 1-<A_i>_c/U; U=sum_slot max_CP(jaw-clipped slot area); U=0 => 0
+- Unit: dimensionless
+- Inputs required: Standard Halcyon/Ethos DICOM MLCX1/MLCX2, jaws, ordered CPs, valid CMW and MU
+- Status: implemented
+- Notes: None
+
+### `PR_Eff` - PR_Eff
+
+- Group: LRT Eff
+- Symbol/short name: PR_Eff
+- Mathematical definition: <1-C_i/A_open_i>_c; finite tip 2.8 mm, exposed side 2.3 mm; gap>0.5+1e-8 mm
+- LaTeX reference: [Readable equations and mode-specific conventions](lrt_three_layer.md#geometry)
+- Physical meaning: <1-C_i/A_open_i>_c; finite tip 2.8 mm, exposed side 2.3 mm; gap>0.5+1e-8 mm
+- Unit: dimensionless
+- Inputs required: Standard Halcyon/Ethos DICOM MLCX1/MLCX2, jaws, ordered CPs, valid CMW and MU
+- Status: implemented
+- Notes: None
+
+### `MCSv_D` - MCSv_D
+
+- Group: LRT D
+- Symbol/short name: MCSv_D
+- Mathematical definition: sum_i d_i * mean(AAV_i,AAV_i+1) * mean(LSV_i,LSV_i+1) / sum_i d_i
+- LaTeX reference: [Readable equations and mode-specific conventions](lrt_three_layer.md#geometry)
+- Physical meaning: sum_i d_i * mean(AAV_i,AAV_i+1) * mean(LSV_i,LSV_i+1) / sum_i d_i
+- Unit: dimensionless
+- Inputs required: Standard Halcyon/Ethos DICOM MLCX1/MLCX2, jaws, ordered CPs, valid CMW and MU
+- Status: implemented
+- Notes: None
+
+### `LSV_D` - LSV_D
+
+- Group: LRT D
+- Symbol/short name: LSV_D
+- Mathematical definition: <LSV_i>_c; each bank = 1-sum_adjacent(abs(dx))/((N-1)*range); multiply banks
+- LaTeX reference: [Readable equations and mode-specific conventions](lrt_three_layer.md#geometry)
+- Physical meaning: <LSV_i>_c; each bank = 1-sum_adjacent(abs(dx))/((N-1)*range); multiply banks
+- Unit: dimensionless
+- Inputs required: Standard Halcyon/Ethos DICOM MLCX1/MLCX2, jaws, ordered CPs, valid CMW and MU
+- Status: implemented
+- Notes: None
+
+### `AAV_D` - AAV_D
+
+- Group: LRT D
+- Symbol/short name: AAV_D
+- Mathematical definition: <A_i/E>_c; E = sum_slot (max_CP right-min_CP left)_+ * max_CP exposed_height
+- LaTeX reference: [Readable equations and mode-specific conventions](lrt_three_layer.md#geometry)
+- Physical meaning: <A_i/E>_c; E = sum_slot (max_CP right-min_CP left)_+ * max_CP exposed_height
+- Unit: dimensionless
+- Inputs required: Standard Halcyon/Ethos DICOM MLCX1/MLCX2, jaws, ordered CPs, valid CMW and MU
+- Status: implemented
+- Notes: None
+
+### `PA_D` - PA_D
+
+- Group: LRT D
+- Symbol/short name: PA_D
+- Mathematical definition: <A_i>_c, A_i = sum_j jaw-clipped positive gap * exposed strip height
+- LaTeX reference: [Readable equations and mode-specific conventions](lrt_three_layer.md#geometry)
+- Physical meaning: <A_i>_c, A_i = sum_j jaw-clipped positive gap * exposed strip height
+- Unit: mm^2
+- Inputs required: Standard Halcyon/Ethos DICOM MLCX1/MLCX2, jaws, ordered CPs, valid CMW and MU
+- Status: implemented
+- Notes: None
+
+### `MAD_D` - MAD_D
+
+- Group: LRT D
+- Symbol/short name: MAD_D
+- Mathematical definition: <mean_active_slot abs((left+right)/2)>_c; omit empty CPs
+- LaTeX reference: [Readable equations and mode-specific conventions](lrt_three_layer.md#geometry)
+- Physical meaning: <mean_active_slot abs((left+right)/2)>_c; omit empty CPs
+- Unit: mm
+- Inputs required: Standard Halcyon/Ethos DICOM MLCX1/MLCX2, jaws, ordered CPs, valid CMW and MU
+- Status: implemented
+- Notes: None
+
+### `ALG_D` - ALG_D
+
+- Group: LRT D
+- Symbol/short name: ALG_D
+- Mathematical definition: <mean_active_slot(right-left)>_c; omit empty CPs
+- LaTeX reference: [Readable equations and mode-specific conventions](lrt_three_layer.md#geometry)
+- Physical meaning: <mean_active_slot(right-left)>_c; omit empty CPs
+- Unit: mm
+- Inputs required: Standard Halcyon/Ethos DICOM MLCX1/MLCX2, jaws, ordered CPs, valid CMW and MU
+- Status: implemented
+- Notes: None
+
+### `SLG_D` - SLG_D
+
+- Group: LRT D
+- Symbol/short name: SLG_D
+- Mathematical definition: sqrt(<mean_active_slot(gap-ALG_beam)^2>_c); omit empty CPs; beam-MU mean of beam SDs
+- LaTeX reference: [Readable equations and mode-specific conventions](lrt_three_layer.md#geometry)
+- Physical meaning: sqrt(<mean_active_slot(gap-ALG_beam)^2>_c); omit empty CPs; beam-MU mean of beam SDs
+- Unit: mm
+- Inputs required: Standard Halcyon/Ethos DICOM MLCX1/MLCX2, jaws, ordered CPs, valid CMW and MU
+- Status: implemented
+- Notes: None
+
+### `SAS5_D` - SAS5_D
+
+- Group: LRT D
+- Symbol/short name: SAS5_D
+- Mathematical definition: <count(0<raw_gap<5 mm)/count(raw_gap>0)>_c; omit empty CPs
+- LaTeX reference: [Readable equations and mode-specific conventions](lrt_three_layer.md#geometry)
+- Physical meaning: <count(0<raw_gap<5 mm)/count(raw_gap>0)>_c; omit empty CPs
+- Unit: dimensionless
+- Inputs required: Standard Halcyon/Ethos DICOM MLCX1/MLCX2, jaws, ordered CPs, valid CMW and MU
+- Status: implemented
+- Notes: None
+
+### `SAS10_D` - SAS10_D
+
+- Group: LRT D
+- Symbol/short name: SAS10_D
+- Mathematical definition: <count(0<raw_gap<10 mm)/count(raw_gap>0)>_c; omit empty CPs
+- LaTeX reference: [Readable equations and mode-specific conventions](lrt_three_layer.md#geometry)
+- Physical meaning: <count(0<raw_gap<10 mm)/count(raw_gap>0)>_c; omit empty CPs
+- Unit: dimensionless
+- Inputs required: Standard Halcyon/Ethos DICOM MLCX1/MLCX2, jaws, ordered CPs, valid CMW and MU
+- Status: implemented
+- Notes: None
+
+### `SAS20_D` - SAS20_D
+
+- Group: LRT D
+- Symbol/short name: SAS20_D
+- Mathematical definition: <count(0<raw_gap<20 mm)/count(raw_gap>0)>_c; omit empty CPs
+- LaTeX reference: [Readable equations and mode-specific conventions](lrt_three_layer.md#geometry)
+- Physical meaning: <count(0<raw_gap<20 mm)/count(raw_gap>0)>_c; omit empty CPs
+- Unit: dimensionless
+- Inputs required: Standard Halcyon/Ethos DICOM MLCX1/MLCX2, jaws, ordered CPs, valid CMW and MU
+- Status: implemented
+- Notes: None
+
+### `LT_D` - LT_D
+
+- Group: LRT D
+- Symbol/short name: LT_D
+- Mathematical definition: sum_interval d_i * sum_leaf abs(x_i+1-x_i) / sum_interval d_i
+- LaTeX reference: [Readable equations and mode-specific conventions](lrt_three_layer.md#geometry)
+- Physical meaning: sum_interval d_i * sum_leaf abs(x_i+1-x_i) / sum_interval d_i
+- Unit: mm
+- Inputs required: Standard Halcyon/Ethos DICOM MLCX1/MLCX2, jaws, ordered CPs, valid CMW and MU
+- Status: implemented
+- Notes: None
+
+### `LTmean_D` - LTmean_D
+
+- Group: LRT D
+- Symbol/short name: LTmean_D
+- Mathematical definition: sum_leaf raw trajectory travel / count(moving leaves); unweighted intervals
+- LaTeX reference: [Readable equations and mode-specific conventions](lrt_three_layer.md#geometry)
+- Physical meaning: sum_leaf raw trajectory travel / count(moving leaves); unweighted intervals
+- Unit: mm/moving leaf (Eff: virtual leaf)
+- Inputs required: Standard Halcyon/Ethos DICOM MLCX1/MLCX2, jaws, ordered CPs, valid CMW and MU
+- Status: implemented
+- Notes: None
+
+### `NL_D` - NL_D
+
+- Group: LRT D
+- Symbol/short name: NL_D
+- Mathematical definition: <count(raw_gap>0 and Y jaw overlap>0)>_c
+- LaTeX reference: [Readable equations and mode-specific conventions](lrt_three_layer.md#geometry)
+- Physical meaning: <count(raw_gap>0 and Y jaw overlap>0)>_c
+- Unit: active pairs (Eff: virtual pairs)
+- Inputs required: Standard Halcyon/Ethos DICOM MLCX1/MLCX2, jaws, ordered CPs, valid CMW and MU
+- Status: implemented
+- Notes: None
+
+### `PI_D` - PI_D
+
+- Group: LRT D
+- Symbol/short name: PI_D
+- Mathematical definition: <P_i^2/(4*pi*A_i)>_c; zero area contributes 0
+- LaTeX reference: [Readable equations and mode-specific conventions](lrt_three_layer.md#geometry)
+- Physical meaning: <P_i^2/(4*pi*A_i)>_c; zero area contributes 0
+- Unit: dimensionless
+- Inputs required: Standard Halcyon/Ethos DICOM MLCX1/MLCX2, jaws, ordered CPs, valid CMW and MU
+- Status: implemented
+- Notes: None
+
+### `PM_D` - PM_D
+
+- Group: LRT D
+- Symbol/short name: PM_D
+- Mathematical definition: 1-<A_i>_c/U; U=sum_slot max_CP(jaw-clipped slot area); U=0 => 0
+- LaTeX reference: [Readable equations and mode-specific conventions](lrt_three_layer.md#geometry)
+- Physical meaning: 1-<A_i>_c/U; U=sum_slot max_CP(jaw-clipped slot area); U=0 => 0
+- Unit: dimensionless
+- Inputs required: Standard Halcyon/Ethos DICOM MLCX1/MLCX2, jaws, ordered CPs, valid CMW and MU
+- Status: implemented
+- Notes: None
+
+### `PR_D` - PR_D
+
+- Group: LRT D
+- Symbol/short name: PR_D
+- Mathematical definition: <1-C_i/A_open_i>_c; finite tip 2.8 mm, exposed side 2.3 mm; gap>0.5+1e-8 mm
+- LaTeX reference: [Readable equations and mode-specific conventions](lrt_three_layer.md#geometry)
+- Physical meaning: <1-C_i/A_open_i>_c; finite tip 2.8 mm, exposed side 2.3 mm; gap>0.5+1e-8 mm
+- Unit: dimensionless
+- Inputs required: Standard Halcyon/Ethos DICOM MLCX1/MLCX2, jaws, ordered CPs, valid CMW and MU
+- Status: implemented
+- Notes: None
+
+### `MCSv_P` - MCSv_P
+
+- Group: LRT P
+- Symbol/short name: MCSv_P
+- Mathematical definition: sum_i d_i * mean(AAV_i,AAV_i+1) * mean(LSV_i,LSV_i+1) / sum_i d_i
+- LaTeX reference: [Readable equations and mode-specific conventions](lrt_three_layer.md#geometry)
+- Physical meaning: sum_i d_i * mean(AAV_i,AAV_i+1) * mean(LSV_i,LSV_i+1) / sum_i d_i
+- Unit: dimensionless
+- Inputs required: Standard Halcyon/Ethos DICOM MLCX1/MLCX2, jaws, ordered CPs, valid CMW and MU
+- Status: implemented
+- Notes: None
+
+### `LSV_P` - LSV_P
+
+- Group: LRT P
+- Symbol/short name: LSV_P
+- Mathematical definition: <LSV_i>_c; each bank = 1-sum_adjacent(abs(dx))/((N-1)*range); multiply banks
+- LaTeX reference: [Readable equations and mode-specific conventions](lrt_three_layer.md#geometry)
+- Physical meaning: <LSV_i>_c; each bank = 1-sum_adjacent(abs(dx))/((N-1)*range); multiply banks
+- Unit: dimensionless
+- Inputs required: Standard Halcyon/Ethos DICOM MLCX1/MLCX2, jaws, ordered CPs, valid CMW and MU
+- Status: implemented
+- Notes: None
+
+### `AAV_P` - AAV_P
+
+- Group: LRT P
+- Symbol/short name: AAV_P
+- Mathematical definition: <A_i/E>_c; E = sum_slot (max_CP right-min_CP left)_+ * max_CP exposed_height
+- LaTeX reference: [Readable equations and mode-specific conventions](lrt_three_layer.md#geometry)
+- Physical meaning: <A_i/E>_c; E = sum_slot (max_CP right-min_CP left)_+ * max_CP exposed_height
+- Unit: dimensionless
+- Inputs required: Standard Halcyon/Ethos DICOM MLCX1/MLCX2, jaws, ordered CPs, valid CMW and MU
+- Status: implemented
+- Notes: None
+
+### `PA_P` - PA_P
+
+- Group: LRT P
+- Symbol/short name: PA_P
+- Mathematical definition: <A_i>_c, A_i = sum_j jaw-clipped positive gap * exposed strip height
+- LaTeX reference: [Readable equations and mode-specific conventions](lrt_three_layer.md#geometry)
+- Physical meaning: <A_i>_c, A_i = sum_j jaw-clipped positive gap * exposed strip height
+- Unit: mm^2
+- Inputs required: Standard Halcyon/Ethos DICOM MLCX1/MLCX2, jaws, ordered CPs, valid CMW and MU
+- Status: implemented
+- Notes: None
+
+### `MAD_P` - MAD_P
+
+- Group: LRT P
+- Symbol/short name: MAD_P
+- Mathematical definition: <mean_active_slot abs((left+right)/2)>_c; omit empty CPs
+- LaTeX reference: [Readable equations and mode-specific conventions](lrt_three_layer.md#geometry)
+- Physical meaning: <mean_active_slot abs((left+right)/2)>_c; omit empty CPs
+- Unit: mm
+- Inputs required: Standard Halcyon/Ethos DICOM MLCX1/MLCX2, jaws, ordered CPs, valid CMW and MU
+- Status: implemented
+- Notes: None
+
+### `ALG_P` - ALG_P
+
+- Group: LRT P
+- Symbol/short name: ALG_P
+- Mathematical definition: <mean_active_slot(right-left)>_c; omit empty CPs
+- LaTeX reference: [Readable equations and mode-specific conventions](lrt_three_layer.md#geometry)
+- Physical meaning: <mean_active_slot(right-left)>_c; omit empty CPs
+- Unit: mm
+- Inputs required: Standard Halcyon/Ethos DICOM MLCX1/MLCX2, jaws, ordered CPs, valid CMW and MU
+- Status: implemented
+- Notes: None
+
+### `SLG_P` - SLG_P
+
+- Group: LRT P
+- Symbol/short name: SLG_P
+- Mathematical definition: sqrt(<mean_active_slot(gap-ALG_beam)^2>_c); omit empty CPs; beam-MU mean of beam SDs
+- LaTeX reference: [Readable equations and mode-specific conventions](lrt_three_layer.md#geometry)
+- Physical meaning: sqrt(<mean_active_slot(gap-ALG_beam)^2>_c); omit empty CPs; beam-MU mean of beam SDs
+- Unit: mm
+- Inputs required: Standard Halcyon/Ethos DICOM MLCX1/MLCX2, jaws, ordered CPs, valid CMW and MU
+- Status: implemented
+- Notes: None
+
+### `SAS5_P` - SAS5_P
+
+- Group: LRT P
+- Symbol/short name: SAS5_P
+- Mathematical definition: <count(0<raw_gap<5 mm)/count(raw_gap>0)>_c; omit empty CPs
+- LaTeX reference: [Readable equations and mode-specific conventions](lrt_three_layer.md#geometry)
+- Physical meaning: <count(0<raw_gap<5 mm)/count(raw_gap>0)>_c; omit empty CPs
+- Unit: dimensionless
+- Inputs required: Standard Halcyon/Ethos DICOM MLCX1/MLCX2, jaws, ordered CPs, valid CMW and MU
+- Status: implemented
+- Notes: None
+
+### `SAS10_P` - SAS10_P
+
+- Group: LRT P
+- Symbol/short name: SAS10_P
+- Mathematical definition: <count(0<raw_gap<10 mm)/count(raw_gap>0)>_c; omit empty CPs
+- LaTeX reference: [Readable equations and mode-specific conventions](lrt_three_layer.md#geometry)
+- Physical meaning: <count(0<raw_gap<10 mm)/count(raw_gap>0)>_c; omit empty CPs
+- Unit: dimensionless
+- Inputs required: Standard Halcyon/Ethos DICOM MLCX1/MLCX2, jaws, ordered CPs, valid CMW and MU
+- Status: implemented
+- Notes: None
+
+### `SAS20_P` - SAS20_P
+
+- Group: LRT P
+- Symbol/short name: SAS20_P
+- Mathematical definition: <count(0<raw_gap<20 mm)/count(raw_gap>0)>_c; omit empty CPs
+- LaTeX reference: [Readable equations and mode-specific conventions](lrt_three_layer.md#geometry)
+- Physical meaning: <count(0<raw_gap<20 mm)/count(raw_gap>0)>_c; omit empty CPs
+- Unit: dimensionless
+- Inputs required: Standard Halcyon/Ethos DICOM MLCX1/MLCX2, jaws, ordered CPs, valid CMW and MU
+- Status: implemented
+- Notes: None
+
+### `LT_P` - LT_P
+
+- Group: LRT P
+- Symbol/short name: LT_P
+- Mathematical definition: sum_interval d_i * sum_leaf abs(x_i+1-x_i) / sum_interval d_i
+- LaTeX reference: [Readable equations and mode-specific conventions](lrt_three_layer.md#geometry)
+- Physical meaning: sum_interval d_i * sum_leaf abs(x_i+1-x_i) / sum_interval d_i
+- Unit: mm
+- Inputs required: Standard Halcyon/Ethos DICOM MLCX1/MLCX2, jaws, ordered CPs, valid CMW and MU
+- Status: implemented
+- Notes: None
+
+### `LTmean_P` - LTmean_P
+
+- Group: LRT P
+- Symbol/short name: LTmean_P
+- Mathematical definition: sum_leaf raw trajectory travel / count(moving leaves); unweighted intervals
+- LaTeX reference: [Readable equations and mode-specific conventions](lrt_three_layer.md#geometry)
+- Physical meaning: sum_leaf raw trajectory travel / count(moving leaves); unweighted intervals
+- Unit: mm/moving leaf (Eff: virtual leaf)
+- Inputs required: Standard Halcyon/Ethos DICOM MLCX1/MLCX2, jaws, ordered CPs, valid CMW and MU
+- Status: implemented
+- Notes: None
+
+### `NL_P` - NL_P
+
+- Group: LRT P
+- Symbol/short name: NL_P
+- Mathematical definition: <count(raw_gap>0 and Y jaw overlap>0)>_c
+- LaTeX reference: [Readable equations and mode-specific conventions](lrt_three_layer.md#geometry)
+- Physical meaning: <count(raw_gap>0 and Y jaw overlap>0)>_c
+- Unit: active pairs (Eff: virtual pairs)
+- Inputs required: Standard Halcyon/Ethos DICOM MLCX1/MLCX2, jaws, ordered CPs, valid CMW and MU
+- Status: implemented
+- Notes: None
+
+### `PI_P` - PI_P
+
+- Group: LRT P
+- Symbol/short name: PI_P
+- Mathematical definition: <P_i^2/(4*pi*A_i)>_c; zero area contributes 0
+- LaTeX reference: [Readable equations and mode-specific conventions](lrt_three_layer.md#geometry)
+- Physical meaning: <P_i^2/(4*pi*A_i)>_c; zero area contributes 0
+- Unit: dimensionless
+- Inputs required: Standard Halcyon/Ethos DICOM MLCX1/MLCX2, jaws, ordered CPs, valid CMW and MU
+- Status: implemented
+- Notes: None
+
+### `PM_P` - PM_P
+
+- Group: LRT P
+- Symbol/short name: PM_P
+- Mathematical definition: 1-<A_i>_c/U; U=sum_slot max_CP(jaw-clipped slot area); U=0 => 0
+- LaTeX reference: [Readable equations and mode-specific conventions](lrt_three_layer.md#geometry)
+- Physical meaning: 1-<A_i>_c/U; U=sum_slot max_CP(jaw-clipped slot area); U=0 => 0
+- Unit: dimensionless
+- Inputs required: Standard Halcyon/Ethos DICOM MLCX1/MLCX2, jaws, ordered CPs, valid CMW and MU
+- Status: implemented
+- Notes: None
+
+### `PR_P` - PR_P
+
+- Group: LRT P
+- Symbol/short name: PR_P
+- Mathematical definition: <1-C_i/A_open_i>_c; finite tip 2.8 mm, exposed side 2.3 mm; gap>0.5+1e-8 mm
+- LaTeX reference: [Readable equations and mode-specific conventions](lrt_three_layer.md#geometry)
+- Physical meaning: <1-C_i/A_open_i>_c; finite tip 2.8 mm, exposed side 2.3 mm; gap>0.5+1e-8 mm
+- Unit: dimensionless
+- Inputs required: Standard Halcyon/Ethos DICOM MLCX1/MLCX2, jaws, ordered CPs, valid CMW and MU
+- Status: implemented
+- Notes: None
+
+### `MU` - LRT MU
+
+- Group: LRT Delivery
+- Symbol/short name: LRT MU
+- Mathematical definition: sum_beam MU_beam
+- LaTeX reference: [Readable equations and mode-specific conventions](lrt_three_layer.md#delivery)
+- Physical meaning: sum_beam MU_beam
+- Unit: MU
+- Inputs required: Standard Halcyon/Ethos DICOM MLCX1/MLCX2, jaws, ordered CPs, valid CMW and MU
+- Status: implemented
+- Notes: None
+
+### `MU_per_CP` - MU_per_CP
+
+- Group: LRT Delivery
+- Symbol/short name: MU_per_CP
+- Mathematical definition: sum_beam MU_beam / sum_beam N_CP (includes both endpoints)
+- LaTeX reference: [Readable equations and mode-specific conventions](lrt_three_layer.md#delivery)
+- Physical meaning: sum_beam MU_beam / sum_beam N_CP (includes both endpoints)
+- Unit: MU/CP
+- Inputs required: Standard Halcyon/Ethos DICOM MLCX1/MLCX2, jaws, ordered CPs, valid CMW and MU
+- Status: implemented
+- Notes: None
+
+### `PR_System` - PR_System
+
+- Group: LRT System reference
+- Symbol/short name: PR_System
+- Mathematical definition: Unchanged legacy ethos_penumbra_ratio value; report-profile reconstruction, not a newly observed TPS value
+- LaTeX reference: [Readable equations and mode-specific conventions](lrt_three_layer.md#reference)
+- Physical meaning: Unchanged legacy ethos_penumbra_ratio value; report-profile reconstruction, not a newly observed TPS value
+- Unit: dimensionless
+- Inputs required: Explicit legacy report-profile value; never filled from PR_Eff
+- Status: implemented
+- Notes: None
+
 ## TOMO
 
 ### `mf` - MF

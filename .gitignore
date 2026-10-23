@@ -133,6 +133,10 @@ dmypy.json
 data/
 .idea/
 .worktrees/
+test_runs/
+.test_runs/
+# Local LRT manifests, per-beam results and PDF agreement reports.
+/reports/
 
 # Local exports and document-production intermediates.
 /run_reports/real_rtplan*.json

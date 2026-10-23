@@ -220,6 +220,16 @@ VMAT_METRIC_SPECS = tuple(spec for spec in VMAT_METRIC_SPECS if spec.key != "spo
     spec for spec in VMAT_METRIC_SPECS if spec.key == "sport"
 )
 
+from lrt_metric_schema import EXPORT_KEYS as LRT_EXPORT_KEYS, FORMULAS as LRT_FORMULAS, metric_base as lrt_metric_base
+
+# Canonical research fields are separate specs, so generic GUI and CSV paths
+# expose them without altering the names or values of historical metrics.
+VMAT_METRIC_SPECS += tuple(
+    MetricSpec(key, 'LRT MU' if key == 'MU' else key,
+               description=LRT_FORMULAS[lrt_metric_base(key)])
+    for key in LRT_EXPORT_KEYS
+)
+
 CYBERKNIFE_METRIC_SPECS = (
     MetricSpec("mcs", "MCS", "10.1002/mp.14667", gui_label="MCS (CyberKnife MLC)", description="Overall modulation complexity of the delivered CyberKnife MLC apertures."),
     MetricSpec("em", "EM", "10.1118/1.4762566", description="Relative amount of aperture edge compared with open field area."),

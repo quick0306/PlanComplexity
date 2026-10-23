@@ -292,6 +292,57 @@
 | VMAT_IMRT | `sport` | SPORT Modulation Index (Li and Xing 2013) | mm*MU/deg | [SPORT](vmat_imrt_guide.md#sport) |
 | VMAT_IMRT | `sport_mlcx1` | SPORT MLCX1 | mm*MU/deg | [SPORT](vmat_imrt_guide.md#sport) |
 | VMAT_IMRT | `sport_mlcx2` | SPORT MLCX2 | mm*MU/deg | [SPORT](vmat_imrt_guide.md#sport) |
+| VMAT_IMRT | `MCSv_Eff` | MCSv_Eff | dimensionless | [LRT Eff](lrt_three_layer.md#geometry) |
+| VMAT_IMRT | `LSV_Eff` | LSV_Eff | dimensionless | [LRT Eff](lrt_three_layer.md#geometry) |
+| VMAT_IMRT | `AAV_Eff` | AAV_Eff | dimensionless | [LRT Eff](lrt_three_layer.md#geometry) |
+| VMAT_IMRT | `PA_Eff` | PA_Eff | mm^2 | [LRT Eff](lrt_three_layer.md#geometry) |
+| VMAT_IMRT | `MAD_Eff` | MAD_Eff | mm | [LRT Eff](lrt_three_layer.md#geometry) |
+| VMAT_IMRT | `ALG_Eff` | ALG_Eff | mm | [LRT Eff](lrt_three_layer.md#geometry) |
+| VMAT_IMRT | `SLG_Eff` | SLG_Eff | mm | [LRT Eff](lrt_three_layer.md#geometry) |
+| VMAT_IMRT | `SAS5_Eff` | SAS5_Eff | dimensionless | [LRT Eff](lrt_three_layer.md#geometry) |
+| VMAT_IMRT | `SAS10_Eff` | SAS10_Eff | dimensionless | [LRT Eff](lrt_three_layer.md#geometry) |
+| VMAT_IMRT | `SAS20_Eff` | SAS20_Eff | dimensionless | [LRT Eff](lrt_three_layer.md#geometry) |
+| VMAT_IMRT | `LT_Eff` | LT_Eff | mm | [LRT Eff](lrt_three_layer.md#geometry) |
+| VMAT_IMRT | `LTmean_Eff` | LTmean_Eff | mm/moving leaf (Eff: virtual leaf) | [LRT Eff](lrt_three_layer.md#geometry) |
+| VMAT_IMRT | `NL_Eff` | NL_Eff | active pairs (Eff: virtual pairs) | [LRT Eff](lrt_three_layer.md#geometry) |
+| VMAT_IMRT | `PI_Eff` | PI_Eff | dimensionless | [LRT Eff](lrt_three_layer.md#geometry) |
+| VMAT_IMRT | `PM_Eff` | PM_Eff | dimensionless | [LRT Eff](lrt_three_layer.md#geometry) |
+| VMAT_IMRT | `PR_Eff` | PR_Eff | dimensionless | [LRT Eff](lrt_three_layer.md#geometry) |
+| VMAT_IMRT | `MCSv_D` | MCSv_D | dimensionless | [LRT D](lrt_three_layer.md#geometry) |
+| VMAT_IMRT | `LSV_D` | LSV_D | dimensionless | [LRT D](lrt_three_layer.md#geometry) |
+| VMAT_IMRT | `AAV_D` | AAV_D | dimensionless | [LRT D](lrt_three_layer.md#geometry) |
+| VMAT_IMRT | `PA_D` | PA_D | mm^2 | [LRT D](lrt_three_layer.md#geometry) |
+| VMAT_IMRT | `MAD_D` | MAD_D | mm | [LRT D](lrt_three_layer.md#geometry) |
+| VMAT_IMRT | `ALG_D` | ALG_D | mm | [LRT D](lrt_three_layer.md#geometry) |
+| VMAT_IMRT | `SLG_D` | SLG_D | mm | [LRT D](lrt_three_layer.md#geometry) |
+| VMAT_IMRT | `SAS5_D` | SAS5_D | dimensionless | [LRT D](lrt_three_layer.md#geometry) |
+| VMAT_IMRT | `SAS10_D` | SAS10_D | dimensionless | [LRT D](lrt_three_layer.md#geometry) |
+| VMAT_IMRT | `SAS20_D` | SAS20_D | dimensionless | [LRT D](lrt_three_layer.md#geometry) |
+| VMAT_IMRT | `LT_D` | LT_D | mm | [LRT D](lrt_three_layer.md#geometry) |
+| VMAT_IMRT | `LTmean_D` | LTmean_D | mm/moving leaf (Eff: virtual leaf) | [LRT D](lrt_three_layer.md#geometry) |
+| VMAT_IMRT | `NL_D` | NL_D | active pairs (Eff: virtual pairs) | [LRT D](lrt_three_layer.md#geometry) |
+| VMAT_IMRT | `PI_D` | PI_D | dimensionless | [LRT D](lrt_three_layer.md#geometry) |
+| VMAT_IMRT | `PM_D` | PM_D | dimensionless | [LRT D](lrt_three_layer.md#geometry) |
+| VMAT_IMRT | `PR_D` | PR_D | dimensionless | [LRT D](lrt_three_layer.md#geometry) |
+| VMAT_IMRT | `MCSv_P` | MCSv_P | dimensionless | [LRT P](lrt_three_layer.md#geometry) |
+| VMAT_IMRT | `LSV_P` | LSV_P | dimensionless | [LRT P](lrt_three_layer.md#geometry) |
+| VMAT_IMRT | `AAV_P` | AAV_P | dimensionless | [LRT P](lrt_three_layer.md#geometry) |
+| VMAT_IMRT | `PA_P` | PA_P | mm^2 | [LRT P](lrt_three_layer.md#geometry) |
+| VMAT_IMRT | `MAD_P` | MAD_P | mm | [LRT P](lrt_three_layer.md#geometry) |
+| VMAT_IMRT | `ALG_P` | ALG_P | mm | [LRT P](lrt_three_layer.md#geometry) |
+| VMAT_IMRT | `SLG_P` | SLG_P | mm | [LRT P](lrt_three_layer.md#geometry) |
+| VMAT_IMRT | `SAS5_P` | SAS5_P | dimensionless | [LRT P](lrt_three_layer.md#geometry) |
+| VMAT_IMRT | `SAS10_P` | SAS10_P | dimensionless | [LRT P](lrt_three_layer.md#geometry) |
+| VMAT_IMRT | `SAS20_P` | SAS20_P | dimensionless | [LRT P](lrt_three_layer.md#geometry) |
+| VMAT_IMRT | `LT_P` | LT_P | mm | [LRT P](lrt_three_layer.md#geometry) |
+| VMAT_IMRT | `LTmean_P` | LTmean_P | mm/moving leaf (Eff: virtual leaf) | [LRT P](lrt_three_layer.md#geometry) |
+| VMAT_IMRT | `NL_P` | NL_P | active pairs (Eff: virtual pairs) | [LRT P](lrt_three_layer.md#geometry) |
+| VMAT_IMRT | `PI_P` | PI_P | dimensionless | [LRT P](lrt_three_layer.md#geometry) |
+| VMAT_IMRT | `PM_P` | PM_P | dimensionless | [LRT P](lrt_three_layer.md#geometry) |
+| VMAT_IMRT | `PR_P` | PR_P | dimensionless | [LRT P](lrt_three_layer.md#geometry) |
+| VMAT_IMRT | `MU` | LRT MU | MU | [LRT Delivery](lrt_three_layer.md#delivery) |
+| VMAT_IMRT | `MU_per_CP` | MU_per_CP | MU/CP | [LRT Delivery](lrt_three_layer.md#delivery) |
+| VMAT_IMRT | `PR_System` | PR_System | dimensionless | [LRT System reference](lrt_three_layer.md#reference) |
 | TOMO | `mf` | MF | dimensionless | [Delivery](tomo_guide.md#delivery) |
 | TOMO | `nproj_rot` | N proj,rot | count | [Delivery](tomo_guide.md#delivery) |
 | TOMO | `nproj` | N proj | count | [Delivery](tomo_guide.md#delivery) |

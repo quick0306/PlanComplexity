@@ -470,9 +470,19 @@ def export_metric_reference_csv(results: Sequence[PlanAnalysisResult], output_cs
     return reference_csv
 
 
-def build_metric_rows(result: PlanAnalysisResult) -> List[List[str]]:
+def build_metric_rows(result: PlanAnalysisResult, *, profile: str = 'All metrics') -> List[List[str]]:
+    from lrt_metric_schema import CANDIDATE_KEYS, REFERENCE_KEYS, GEOMETRY_KEYS, DELIVERY_KEYS
+    profiles = {'LRT candidates (50)': CANDIDATE_KEYS,
+                'LRT Effective': tuple(k for k in GEOMETRY_KEYS if k.endswith('_Eff')),
+                'LRT Distal': tuple(k for k in GEOMETRY_KEYS if k.endswith('_D')),
+                'LRT Proximal': tuple(k for k in GEOMETRY_KEYS if k.endswith('_P')),
+                'LRT delivery': DELIVERY_KEYS, 'LRT system reference': REFERENCE_KEYS}
+    if profile != 'All metrics' and profile not in profiles:
+        raise ValueError(f'Unknown metric profile: {profile}')
     rows: List[List[str]] = []
     for key, value in result.flattened_metrics.items():
+        if profile != 'All metrics' and key not in profiles[profile]:
+            continue
         rows.append([METRIC_GUI_LABELS.get(key, METRIC_LABELS.get(key, _humanize_key(key))), _stringify(value)])
     return rows
 

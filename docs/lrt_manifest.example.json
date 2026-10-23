@@ -1,0 +1,8 @@
+[
+  {
+    "case": "SYNTHETIC_CASE",
+    "beam": 1,
+    "path": "ABSOLUTE_PATH_TO_RTPLAN.dcm",
+    "sha256": "SHA256_OF_RTPLAN"
+  }
+]

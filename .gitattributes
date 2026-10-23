@@ -4,3 +4,5 @@ validation/reference_cases/**/*.json -text whitespace=trailing-space,space-befor
 run_reports/validation/** -text whitespace=trailing-space,space-before-tab,cr-at-eol
 # Generated PDF references contain byte offsets and must never undergo CRLF conversion.
 *.pdf binary
+reports/**/*.json -text
+reports/*.json -text

@@ -10724,3 +10724,1380 @@ metric_specs:
   exclusions:
   - Missing physical boundaries or invalid meterset weights produce unavailable outputs.
   - Area-zero endpoints and closed leaf gaps are excluded; weights are renormalized over open apertures only.
+- key: MCSv_Eff
+  platform: VMAT_IMRT
+  mode: VMAT_IMRT
+  group_key: vmat_imrt_lrt_eff
+  metric_key: MCSv_Eff
+  label: MCSv_Eff
+  unit: dimensionless
+  aggregation_scope: plan
+  normalization_basis: See exact per-key formula; PM uses sum of slotwise maximum
+    areas, not a geometric union. No parameter fitting.
+  validation_level: Formula-exact
+  comparison_class: not-comparable
+  default_tolerance_abs: 1.0e-10
+  default_tolerance_rel: 1.0e-10
+  expected_range:
+    kind: unit_interval
+    minimum: 0.0
+    maximum: 1.0
+  clinical_readiness: research
+  known_noncomparability:
+  - Versioned canonical common-kernel metrics; historical fields retain separate algorithms.
+  comparable_to: []
+  assumptions:
+  - Standard Halcyon/Ethos layout and valid CMW; PR uses fixed nominal 2.8/2.3 mm
+    bands.
+  exclusions:
+  - Unsupported geometry, incomplete CPs, invalid MU.
+- key: LSV_Eff
+  platform: VMAT_IMRT
+  mode: VMAT_IMRT
+  group_key: vmat_imrt_lrt_eff
+  metric_key: LSV_Eff
+  label: LSV_Eff
+  unit: dimensionless
+  aggregation_scope: plan
+  normalization_basis: See exact per-key formula; PM uses sum of slotwise maximum
+    areas, not a geometric union. No parameter fitting.
+  validation_level: Formula-exact
+  comparison_class: not-comparable
+  default_tolerance_abs: 1.0e-10
+  default_tolerance_rel: 1.0e-10
+  expected_range:
+    kind: unit_interval
+    minimum: 0.0
+    maximum: 1.0
+  clinical_readiness: research
+  known_noncomparability:
+  - Versioned canonical common-kernel metrics; historical fields retain separate algorithms.
+  comparable_to: []
+  assumptions:
+  - Standard Halcyon/Ethos layout and valid CMW; PR uses fixed nominal 2.8/2.3 mm
+    bands.
+  exclusions:
+  - Unsupported geometry, incomplete CPs, invalid MU.
+- key: AAV_Eff
+  platform: VMAT_IMRT
+  mode: VMAT_IMRT
+  group_key: vmat_imrt_lrt_eff
+  metric_key: AAV_Eff
+  label: AAV_Eff
+  unit: dimensionless
+  aggregation_scope: plan
+  normalization_basis: See exact per-key formula; PM uses sum of slotwise maximum
+    areas, not a geometric union. No parameter fitting.
+  validation_level: Formula-exact
+  comparison_class: not-comparable
+  default_tolerance_abs: 1.0e-10
+  default_tolerance_rel: 1.0e-10
+  expected_range:
+    kind: unit_interval
+    minimum: 0.0
+    maximum: 1.0
+  clinical_readiness: research
+  known_noncomparability:
+  - Versioned canonical common-kernel metrics; historical fields retain separate algorithms.
+  comparable_to: []
+  assumptions:
+  - Standard Halcyon/Ethos layout and valid CMW; PR uses fixed nominal 2.8/2.3 mm
+    bands.
+  exclusions:
+  - Unsupported geometry, incomplete CPs, invalid MU.
+- key: PA_Eff
+  platform: VMAT_IMRT
+  mode: VMAT_IMRT
+  group_key: vmat_imrt_lrt_eff
+  metric_key: PA_Eff
+  label: PA_Eff
+  unit: mm^2
+  aggregation_scope: plan
+  normalization_basis: See exact per-key formula; PM uses sum of slotwise maximum
+    areas, not a geometric union. No parameter fitting.
+  validation_level: Formula-exact
+  comparison_class: not-comparable
+  default_tolerance_abs: 1.0e-10
+  default_tolerance_rel: 1.0e-10
+  expected_range:
+    kind: nonnegative
+    minimum: 0.0
+    maximum: null
+  clinical_readiness: research
+  known_noncomparability:
+  - Versioned canonical common-kernel metrics; historical fields retain separate algorithms.
+  comparable_to: []
+  assumptions:
+  - Standard Halcyon/Ethos layout and valid CMW; PR uses fixed nominal 2.8/2.3 mm
+    bands.
+  exclusions:
+  - Unsupported geometry, incomplete CPs, invalid MU.
+- key: MAD_Eff
+  platform: VMAT_IMRT
+  mode: VMAT_IMRT
+  group_key: vmat_imrt_lrt_eff
+  metric_key: MAD_Eff
+  label: MAD_Eff
+  unit: mm
+  aggregation_scope: plan
+  normalization_basis: See exact per-key formula; PM uses sum of slotwise maximum
+    areas, not a geometric union. No parameter fitting.
+  validation_level: Formula-exact
+  comparison_class: not-comparable
+  default_tolerance_abs: 1.0e-10
+  default_tolerance_rel: 1.0e-10
+  expected_range:
+    kind: nonnegative
+    minimum: 0.0
+    maximum: null
+  clinical_readiness: research
+  known_noncomparability:
+  - Versioned canonical common-kernel metrics; historical fields retain separate algorithms.
+  comparable_to: []
+  assumptions:
+  - Standard Halcyon/Ethos layout and valid CMW; PR uses fixed nominal 2.8/2.3 mm
+    bands.
+  exclusions:
+  - Unsupported geometry, incomplete CPs, invalid MU.
+- key: ALG_Eff
+  platform: VMAT_IMRT
+  mode: VMAT_IMRT
+  group_key: vmat_imrt_lrt_eff
+  metric_key: ALG_Eff
+  label: ALG_Eff
+  unit: mm
+  aggregation_scope: plan
+  normalization_basis: See exact per-key formula; PM uses sum of slotwise maximum
+    areas, not a geometric union. No parameter fitting.
+  validation_level: Formula-exact
+  comparison_class: not-comparable
+  default_tolerance_abs: 1.0e-10
+  default_tolerance_rel: 1.0e-10
+  expected_range:
+    kind: nonnegative
+    minimum: 0.0
+    maximum: null
+  clinical_readiness: research
+  known_noncomparability:
+  - Versioned canonical common-kernel metrics; historical fields retain separate algorithms.
+  comparable_to: []
+  assumptions:
+  - Standard Halcyon/Ethos layout and valid CMW; PR uses fixed nominal 2.8/2.3 mm
+    bands.
+  exclusions:
+  - Unsupported geometry, incomplete CPs, invalid MU.
+- key: SLG_Eff
+  platform: VMAT_IMRT
+  mode: VMAT_IMRT
+  group_key: vmat_imrt_lrt_eff
+  metric_key: SLG_Eff
+  label: SLG_Eff
+  unit: mm
+  aggregation_scope: plan
+  normalization_basis: See exact per-key formula; PM uses sum of slotwise maximum
+    areas, not a geometric union. No parameter fitting.
+  validation_level: Formula-exact
+  comparison_class: not-comparable
+  default_tolerance_abs: 1.0e-10
+  default_tolerance_rel: 1.0e-10
+  expected_range:
+    kind: nonnegative
+    minimum: 0.0
+    maximum: null
+  clinical_readiness: research
+  known_noncomparability:
+  - Versioned canonical common-kernel metrics; historical fields retain separate algorithms.
+  comparable_to: []
+  assumptions:
+  - Standard Halcyon/Ethos layout and valid CMW; PR uses fixed nominal 2.8/2.3 mm
+    bands.
+  exclusions:
+  - Unsupported geometry, incomplete CPs, invalid MU.
+- key: SAS5_Eff
+  platform: VMAT_IMRT
+  mode: VMAT_IMRT
+  group_key: vmat_imrt_lrt_eff
+  metric_key: SAS5_Eff
+  label: SAS5_Eff
+  unit: dimensionless
+  aggregation_scope: plan
+  normalization_basis: See exact per-key formula; PM uses sum of slotwise maximum
+    areas, not a geometric union. No parameter fitting.
+  validation_level: Formula-exact
+  comparison_class: not-comparable
+  default_tolerance_abs: 1.0e-10
+  default_tolerance_rel: 1.0e-10
+  expected_range:
+    kind: unit_interval
+    minimum: 0.0
+    maximum: 1.0
+  clinical_readiness: research
+  known_noncomparability:
+  - Versioned canonical common-kernel metrics; historical fields retain separate algorithms.
+  comparable_to: []
+  assumptions:
+  - Standard Halcyon/Ethos layout and valid CMW; PR uses fixed nominal 2.8/2.3 mm
+    bands.
+  exclusions:
+  - Unsupported geometry, incomplete CPs, invalid MU.
+- key: SAS10_Eff
+  platform: VMAT_IMRT
+  mode: VMAT_IMRT
+  group_key: vmat_imrt_lrt_eff
+  metric_key: SAS10_Eff
+  label: SAS10_Eff
+  unit: dimensionless
+  aggregation_scope: plan
+  normalization_basis: See exact per-key formula; PM uses sum of slotwise maximum
+    areas, not a geometric union. No parameter fitting.
+  validation_level: Formula-exact
+  comparison_class: not-comparable
+  default_tolerance_abs: 1.0e-10
+  default_tolerance_rel: 1.0e-10
+  expected_range:
+    kind: unit_interval
+    minimum: 0.0
+    maximum: 1.0
+  clinical_readiness: research
+  known_noncomparability:
+  - Versioned canonical common-kernel metrics; historical fields retain separate algorithms.
+  comparable_to: []
+  assumptions:
+  - Standard Halcyon/Ethos layout and valid CMW; PR uses fixed nominal 2.8/2.3 mm
+    bands.
+  exclusions:
+  - Unsupported geometry, incomplete CPs, invalid MU.
+- key: SAS20_Eff
+  platform: VMAT_IMRT
+  mode: VMAT_IMRT
+  group_key: vmat_imrt_lrt_eff
+  metric_key: SAS20_Eff
+  label: SAS20_Eff
+  unit: dimensionless
+  aggregation_scope: plan
+  normalization_basis: See exact per-key formula; PM uses sum of slotwise maximum
+    areas, not a geometric union. No parameter fitting.
+  validation_level: Formula-exact
+  comparison_class: not-comparable
+  default_tolerance_abs: 1.0e-10
+  default_tolerance_rel: 1.0e-10
+  expected_range:
+    kind: unit_interval
+    minimum: 0.0
+    maximum: 1.0
+  clinical_readiness: research
+  known_noncomparability:
+  - Versioned canonical common-kernel metrics; historical fields retain separate algorithms.
+  comparable_to: []
+  assumptions:
+  - Standard Halcyon/Ethos layout and valid CMW; PR uses fixed nominal 2.8/2.3 mm
+    bands.
+  exclusions:
+  - Unsupported geometry, incomplete CPs, invalid MU.
+- key: LT_Eff
+  platform: VMAT_IMRT
+  mode: VMAT_IMRT
+  group_key: vmat_imrt_lrt_eff
+  metric_key: LT_Eff
+  label: LT_Eff
+  unit: mm
+  aggregation_scope: plan
+  normalization_basis: See exact per-key formula; PM uses sum of slotwise maximum
+    areas, not a geometric union. No parameter fitting.
+  validation_level: Formula-exact
+  comparison_class: not-comparable
+  default_tolerance_abs: 1.0e-10
+  default_tolerance_rel: 1.0e-10
+  expected_range:
+    kind: nonnegative
+    minimum: 0.0
+    maximum: null
+  clinical_readiness: research
+  known_noncomparability:
+  - Versioned canonical common-kernel metrics; historical fields retain separate algorithms.
+  comparable_to: []
+  assumptions:
+  - Standard Halcyon/Ethos layout and valid CMW; PR uses fixed nominal 2.8/2.3 mm
+    bands.
+  exclusions:
+  - Unsupported geometry, incomplete CPs, invalid MU.
+- key: LTmean_Eff
+  platform: VMAT_IMRT
+  mode: VMAT_IMRT
+  group_key: vmat_imrt_lrt_eff
+  metric_key: LTmean_Eff
+  label: LTmean_Eff
+  unit: 'mm/moving leaf (Eff: virtual leaf)'
+  aggregation_scope: plan
+  normalization_basis: See exact per-key formula; PM uses sum of slotwise maximum
+    areas, not a geometric union. No parameter fitting.
+  validation_level: Formula-exact
+  comparison_class: not-comparable
+  default_tolerance_abs: 1.0e-10
+  default_tolerance_rel: 1.0e-10
+  expected_range:
+    kind: nonnegative
+    minimum: 0.0
+    maximum: null
+  clinical_readiness: research
+  known_noncomparability:
+  - Versioned canonical common-kernel metrics; historical fields retain separate algorithms.
+  comparable_to: []
+  assumptions:
+  - Standard Halcyon/Ethos layout and valid CMW; PR uses fixed nominal 2.8/2.3 mm
+    bands.
+  exclusions:
+  - Unsupported geometry, incomplete CPs, invalid MU.
+- key: NL_Eff
+  platform: VMAT_IMRT
+  mode: VMAT_IMRT
+  group_key: vmat_imrt_lrt_eff
+  metric_key: NL_Eff
+  label: NL_Eff
+  unit: 'active pairs (Eff: virtual pairs)'
+  aggregation_scope: plan
+  normalization_basis: See exact per-key formula; PM uses sum of slotwise maximum
+    areas, not a geometric union. No parameter fitting.
+  validation_level: Formula-exact
+  comparison_class: not-comparable
+  default_tolerance_abs: 1.0e-10
+  default_tolerance_rel: 1.0e-10
+  expected_range:
+    kind: nonnegative
+    minimum: 0.0
+    maximum: null
+  clinical_readiness: research
+  known_noncomparability:
+  - Versioned canonical common-kernel metrics; historical fields retain separate algorithms.
+  comparable_to: []
+  assumptions:
+  - Standard Halcyon/Ethos layout and valid CMW; PR uses fixed nominal 2.8/2.3 mm
+    bands.
+  exclusions:
+  - Unsupported geometry, incomplete CPs, invalid MU.
+- key: PI_Eff
+  platform: VMAT_IMRT
+  mode: VMAT_IMRT
+  group_key: vmat_imrt_lrt_eff
+  metric_key: PI_Eff
+  label: PI_Eff
+  unit: dimensionless
+  aggregation_scope: plan
+  normalization_basis: See exact per-key formula; PM uses sum of slotwise maximum
+    areas, not a geometric union. No parameter fitting.
+  validation_level: Formula-exact
+  comparison_class: not-comparable
+  default_tolerance_abs: 1.0e-10
+  default_tolerance_rel: 1.0e-10
+  expected_range:
+    kind: nonnegative
+    minimum: 0.0
+    maximum: null
+  clinical_readiness: research
+  known_noncomparability:
+  - Versioned canonical common-kernel metrics; historical fields retain separate algorithms.
+  comparable_to: []
+  assumptions:
+  - Standard Halcyon/Ethos layout and valid CMW; PR uses fixed nominal 2.8/2.3 mm
+    bands.
+  exclusions:
+  - Unsupported geometry, incomplete CPs, invalid MU.
+- key: PM_Eff
+  platform: VMAT_IMRT
+  mode: VMAT_IMRT
+  group_key: vmat_imrt_lrt_eff
+  metric_key: PM_Eff
+  label: PM_Eff
+  unit: dimensionless
+  aggregation_scope: plan
+  normalization_basis: See exact per-key formula; PM uses sum of slotwise maximum
+    areas, not a geometric union. No parameter fitting.
+  validation_level: Formula-exact
+  comparison_class: not-comparable
+  default_tolerance_abs: 1.0e-10
+  default_tolerance_rel: 1.0e-10
+  expected_range:
+    kind: unit_interval
+    minimum: 0.0
+    maximum: 1.0
+  clinical_readiness: research
+  known_noncomparability:
+  - Versioned canonical common-kernel metrics; historical fields retain separate algorithms.
+  comparable_to: []
+  assumptions:
+  - Standard Halcyon/Ethos layout and valid CMW; PR uses fixed nominal 2.8/2.3 mm
+    bands.
+  exclusions:
+  - Unsupported geometry, incomplete CPs, invalid MU.
+- key: PR_Eff
+  platform: VMAT_IMRT
+  mode: VMAT_IMRT
+  group_key: vmat_imrt_lrt_eff
+  metric_key: PR_Eff
+  label: PR_Eff
+  unit: dimensionless
+  aggregation_scope: plan
+  normalization_basis: See exact per-key formula; PM uses sum of slotwise maximum
+    areas, not a geometric union. No parameter fitting.
+  validation_level: Formula-exact
+  comparison_class: not-comparable
+  default_tolerance_abs: 1.0e-10
+  default_tolerance_rel: 1.0e-10
+  expected_range:
+    kind: unit_interval
+    minimum: 0.0
+    maximum: 1.0
+  clinical_readiness: research
+  known_noncomparability:
+  - Versioned canonical common-kernel metrics; historical fields retain separate algorithms.
+  comparable_to: []
+  assumptions:
+  - Standard Halcyon/Ethos layout and valid CMW; PR uses fixed nominal 2.8/2.3 mm
+    bands.
+  exclusions:
+  - Unsupported geometry, incomplete CPs, invalid MU.
+- key: MCSv_D
+  platform: VMAT_IMRT
+  mode: VMAT_IMRT
+  group_key: vmat_imrt_lrt_d
+  metric_key: MCSv_D
+  label: MCSv_D
+  unit: dimensionless
+  aggregation_scope: plan
+  normalization_basis: See exact per-key formula; PM uses sum of slotwise maximum
+    areas, not a geometric union. No parameter fitting.
+  validation_level: Formula-exact
+  comparison_class: not-comparable
+  default_tolerance_abs: 1.0e-10
+  default_tolerance_rel: 1.0e-10
+  expected_range:
+    kind: unit_interval
+    minimum: 0.0
+    maximum: 1.0
+  clinical_readiness: research
+  known_noncomparability:
+  - Versioned canonical common-kernel metrics; historical fields retain separate algorithms.
+  comparable_to: []
+  assumptions:
+  - Standard Halcyon/Ethos layout and valid CMW; PR uses fixed nominal 2.8/2.3 mm
+    bands.
+  exclusions:
+  - Unsupported geometry, incomplete CPs, invalid MU.
+- key: LSV_D
+  platform: VMAT_IMRT
+  mode: VMAT_IMRT
+  group_key: vmat_imrt_lrt_d
+  metric_key: LSV_D
+  label: LSV_D
+  unit: dimensionless
+  aggregation_scope: plan
+  normalization_basis: See exact per-key formula; PM uses sum of slotwise maximum
+    areas, not a geometric union. No parameter fitting.
+  validation_level: Formula-exact
+  comparison_class: not-comparable
+  default_tolerance_abs: 1.0e-10
+  default_tolerance_rel: 1.0e-10
+  expected_range:
+    kind: unit_interval
+    minimum: 0.0
+    maximum: 1.0
+  clinical_readiness: research
+  known_noncomparability:
+  - Versioned canonical common-kernel metrics; historical fields retain separate algorithms.
+  comparable_to: []
+  assumptions:
+  - Standard Halcyon/Ethos layout and valid CMW; PR uses fixed nominal 2.8/2.3 mm
+    bands.
+  exclusions:
+  - Unsupported geometry, incomplete CPs, invalid MU.
+- key: AAV_D
+  platform: VMAT_IMRT
+  mode: VMAT_IMRT
+  group_key: vmat_imrt_lrt_d
+  metric_key: AAV_D
+  label: AAV_D
+  unit: dimensionless
+  aggregation_scope: plan
+  normalization_basis: See exact per-key formula; PM uses sum of slotwise maximum
+    areas, not a geometric union. No parameter fitting.
+  validation_level: Formula-exact
+  comparison_class: not-comparable
+  default_tolerance_abs: 1.0e-10
+  default_tolerance_rel: 1.0e-10
+  expected_range:
+    kind: unit_interval
+    minimum: 0.0
+    maximum: 1.0
+  clinical_readiness: research
+  known_noncomparability:
+  - Versioned canonical common-kernel metrics; historical fields retain separate algorithms.
+  comparable_to: []
+  assumptions:
+  - Standard Halcyon/Ethos layout and valid CMW; PR uses fixed nominal 2.8/2.3 mm
+    bands.
+  exclusions:
+  - Unsupported geometry, incomplete CPs, invalid MU.
+- key: PA_D
+  platform: VMAT_IMRT
+  mode: VMAT_IMRT
+  group_key: vmat_imrt_lrt_d
+  metric_key: PA_D
+  label: PA_D
+  unit: mm^2
+  aggregation_scope: plan
+  normalization_basis: See exact per-key formula; PM uses sum of slotwise maximum
+    areas, not a geometric union. No parameter fitting.
+  validation_level: Formula-exact
+  comparison_class: not-comparable
+  default_tolerance_abs: 1.0e-10
+  default_tolerance_rel: 1.0e-10
+  expected_range:
+    kind: nonnegative
+    minimum: 0.0
+    maximum: null
+  clinical_readiness: research
+  known_noncomparability:
+  - Versioned canonical common-kernel metrics; historical fields retain separate algorithms.
+  comparable_to: []
+  assumptions:
+  - Standard Halcyon/Ethos layout and valid CMW; PR uses fixed nominal 2.8/2.3 mm
+    bands.
+  exclusions:
+  - Unsupported geometry, incomplete CPs, invalid MU.
+- key: MAD_D
+  platform: VMAT_IMRT
+  mode: VMAT_IMRT
+  group_key: vmat_imrt_lrt_d
+  metric_key: MAD_D
+  label: MAD_D
+  unit: mm
+  aggregation_scope: plan
+  normalization_basis: See exact per-key formula; PM uses sum of slotwise maximum
+    areas, not a geometric union. No parameter fitting.
+  validation_level: Formula-exact
+  comparison_class: not-comparable
+  default_tolerance_abs: 1.0e-10
+  default_tolerance_rel: 1.0e-10
+  expected_range:
+    kind: nonnegative
+    minimum: 0.0
+    maximum: null
+  clinical_readiness: research
+  known_noncomparability:
+  - Versioned canonical common-kernel metrics; historical fields retain separate algorithms.
+  comparable_to: []
+  assumptions:
+  - Standard Halcyon/Ethos layout and valid CMW; PR uses fixed nominal 2.8/2.3 mm
+    bands.
+  exclusions:
+  - Unsupported geometry, incomplete CPs, invalid MU.
+- key: ALG_D
+  platform: VMAT_IMRT
+  mode: VMAT_IMRT
+  group_key: vmat_imrt_lrt_d
+  metric_key: ALG_D
+  label: ALG_D
+  unit: mm
+  aggregation_scope: plan
+  normalization_basis: See exact per-key formula; PM uses sum of slotwise maximum
+    areas, not a geometric union. No parameter fitting.
+  validation_level: Formula-exact
+  comparison_class: not-comparable
+  default_tolerance_abs: 1.0e-10
+  default_tolerance_rel: 1.0e-10
+  expected_range:
+    kind: nonnegative
+    minimum: 0.0
+    maximum: null
+  clinical_readiness: research
+  known_noncomparability:
+  - Versioned canonical common-kernel metrics; historical fields retain separate algorithms.
+  comparable_to: []
+  assumptions:
+  - Standard Halcyon/Ethos layout and valid CMW; PR uses fixed nominal 2.8/2.3 mm
+    bands.
+  exclusions:
+  - Unsupported geometry, incomplete CPs, invalid MU.
+- key: SLG_D
+  platform: VMAT_IMRT
+  mode: VMAT_IMRT
+  group_key: vmat_imrt_lrt_d
+  metric_key: SLG_D
+  label: SLG_D
+  unit: mm
+  aggregation_scope: plan
+  normalization_basis: See exact per-key formula; PM uses sum of slotwise maximum
+    areas, not a geometric union. No parameter fitting.
+  validation_level: Formula-exact
+  comparison_class: not-comparable
+  default_tolerance_abs: 1.0e-10
+  default_tolerance_rel: 1.0e-10
+  expected_range:
+    kind: nonnegative
+    minimum: 0.0
+    maximum: null
+  clinical_readiness: research
+  known_noncomparability:
+  - Versioned canonical common-kernel metrics; historical fields retain separate algorithms.
+  comparable_to: []
+  assumptions:
+  - Standard Halcyon/Ethos layout and valid CMW; PR uses fixed nominal 2.8/2.3 mm
+    bands.
+  exclusions:
+  - Unsupported geometry, incomplete CPs, invalid MU.
+- key: SAS5_D
+  platform: VMAT_IMRT
+  mode: VMAT_IMRT
+  group_key: vmat_imrt_lrt_d
+  metric_key: SAS5_D
+  label: SAS5_D
+  unit: dimensionless
+  aggregation_scope: plan
+  normalization_basis: See exact per-key formula; PM uses sum of slotwise maximum
+    areas, not a geometric union. No parameter fitting.
+  validation_level: Formula-exact
+  comparison_class: not-comparable
+  default_tolerance_abs: 1.0e-10
+  default_tolerance_rel: 1.0e-10
+  expected_range:
+    kind: unit_interval
+    minimum: 0.0
+    maximum: 1.0
+  clinical_readiness: research
+  known_noncomparability:
+  - Versioned canonical common-kernel metrics; historical fields retain separate algorithms.
+  comparable_to: []
+  assumptions:
+  - Standard Halcyon/Ethos layout and valid CMW; PR uses fixed nominal 2.8/2.3 mm
+    bands.
+  exclusions:
+  - Unsupported geometry, incomplete CPs, invalid MU.
+- key: SAS10_D
+  platform: VMAT_IMRT
+  mode: VMAT_IMRT
+  group_key: vmat_imrt_lrt_d
+  metric_key: SAS10_D
+  label: SAS10_D
+  unit: dimensionless
+  aggregation_scope: plan
+  normalization_basis: See exact per-key formula; PM uses sum of slotwise maximum
+    areas, not a geometric union. No parameter fitting.
+  validation_level: Formula-exact
+  comparison_class: not-comparable
+  default_tolerance_abs: 1.0e-10
+  default_tolerance_rel: 1.0e-10
+  expected_range:
+    kind: unit_interval
+    minimum: 0.0
+    maximum: 1.0
+  clinical_readiness: research
+  known_noncomparability:
+  - Versioned canonical common-kernel metrics; historical fields retain separate algorithms.
+  comparable_to: []
+  assumptions:
+  - Standard Halcyon/Ethos layout and valid CMW; PR uses fixed nominal 2.8/2.3 mm
+    bands.
+  exclusions:
+  - Unsupported geometry, incomplete CPs, invalid MU.
+- key: SAS20_D
+  platform: VMAT_IMRT
+  mode: VMAT_IMRT
+  group_key: vmat_imrt_lrt_d
+  metric_key: SAS20_D
+  label: SAS20_D
+  unit: dimensionless
+  aggregation_scope: plan
+  normalization_basis: See exact per-key formula; PM uses sum of slotwise maximum
+    areas, not a geometric union. No parameter fitting.
+  validation_level: Formula-exact
+  comparison_class: not-comparable
+  default_tolerance_abs: 1.0e-10
+  default_tolerance_rel: 1.0e-10
+  expected_range:
+    kind: unit_interval
+    minimum: 0.0
+    maximum: 1.0
+  clinical_readiness: research
+  known_noncomparability:
+  - Versioned canonical common-kernel metrics; historical fields retain separate algorithms.
+  comparable_to: []
+  assumptions:
+  - Standard Halcyon/Ethos layout and valid CMW; PR uses fixed nominal 2.8/2.3 mm
+    bands.
+  exclusions:
+  - Unsupported geometry, incomplete CPs, invalid MU.
+- key: LT_D
+  platform: VMAT_IMRT
+  mode: VMAT_IMRT
+  group_key: vmat_imrt_lrt_d
+  metric_key: LT_D
+  label: LT_D
+  unit: mm
+  aggregation_scope: plan
+  normalization_basis: See exact per-key formula; PM uses sum of slotwise maximum
+    areas, not a geometric union. No parameter fitting.
+  validation_level: Formula-exact
+  comparison_class: not-comparable
+  default_tolerance_abs: 1.0e-10
+  default_tolerance_rel: 1.0e-10
+  expected_range:
+    kind: nonnegative
+    minimum: 0.0
+    maximum: null
+  clinical_readiness: research
+  known_noncomparability:
+  - Versioned canonical common-kernel metrics; historical fields retain separate algorithms.
+  comparable_to: []
+  assumptions:
+  - Standard Halcyon/Ethos layout and valid CMW; PR uses fixed nominal 2.8/2.3 mm
+    bands.
+  exclusions:
+  - Unsupported geometry, incomplete CPs, invalid MU.
+- key: LTmean_D
+  platform: VMAT_IMRT
+  mode: VMAT_IMRT
+  group_key: vmat_imrt_lrt_d
+  metric_key: LTmean_D
+  label: LTmean_D
+  unit: 'mm/moving leaf (Eff: virtual leaf)'
+  aggregation_scope: plan
+  normalization_basis: See exact per-key formula; PM uses sum of slotwise maximum
+    areas, not a geometric union. No parameter fitting.
+  validation_level: Formula-exact
+  comparison_class: not-comparable
+  default_tolerance_abs: 1.0e-10
+  default_tolerance_rel: 1.0e-10
+  expected_range:
+    kind: nonnegative
+    minimum: 0.0
+    maximum: null
+  clinical_readiness: research
+  known_noncomparability:
+  - Versioned canonical common-kernel metrics; historical fields retain separate algorithms.
+  comparable_to: []
+  assumptions:
+  - Standard Halcyon/Ethos layout and valid CMW; PR uses fixed nominal 2.8/2.3 mm
+    bands.
+  exclusions:
+  - Unsupported geometry, incomplete CPs, invalid MU.
+- key: NL_D
+  platform: VMAT_IMRT
+  mode: VMAT_IMRT
+  group_key: vmat_imrt_lrt_d
+  metric_key: NL_D
+  label: NL_D
+  unit: 'active pairs (Eff: virtual pairs)'
+  aggregation_scope: plan
+  normalization_basis: See exact per-key formula; PM uses sum of slotwise maximum
+    areas, not a geometric union. No parameter fitting.
+  validation_level: Formula-exact
+  comparison_class: not-comparable
+  default_tolerance_abs: 1.0e-10
+  default_tolerance_rel: 1.0e-10
+  expected_range:
+    kind: nonnegative
+    minimum: 0.0
+    maximum: null
+  clinical_readiness: research
+  known_noncomparability:
+  - Versioned canonical common-kernel metrics; historical fields retain separate algorithms.
+  comparable_to: []
+  assumptions:
+  - Standard Halcyon/Ethos layout and valid CMW; PR uses fixed nominal 2.8/2.3 mm
+    bands.
+  exclusions:
+  - Unsupported geometry, incomplete CPs, invalid MU.
+- key: PI_D
+  platform: VMAT_IMRT
+  mode: VMAT_IMRT
+  group_key: vmat_imrt_lrt_d
+  metric_key: PI_D
+  label: PI_D
+  unit: dimensionless
+  aggregation_scope: plan
+  normalization_basis: See exact per-key formula; PM uses sum of slotwise maximum
+    areas, not a geometric union. No parameter fitting.
+  validation_level: Formula-exact
+  comparison_class: not-comparable
+  default_tolerance_abs: 1.0e-10
+  default_tolerance_rel: 1.0e-10
+  expected_range:
+    kind: nonnegative
+    minimum: 0.0
+    maximum: null
+  clinical_readiness: research
+  known_noncomparability:
+  - Versioned canonical common-kernel metrics; historical fields retain separate algorithms.
+  comparable_to: []
+  assumptions:
+  - Standard Halcyon/Ethos layout and valid CMW; PR uses fixed nominal 2.8/2.3 mm
+    bands.
+  exclusions:
+  - Unsupported geometry, incomplete CPs, invalid MU.
+- key: PM_D
+  platform: VMAT_IMRT
+  mode: VMAT_IMRT
+  group_key: vmat_imrt_lrt_d
+  metric_key: PM_D
+  label: PM_D
+  unit: dimensionless
+  aggregation_scope: plan
+  normalization_basis: See exact per-key formula; PM uses sum of slotwise maximum
+    areas, not a geometric union. No parameter fitting.
+  validation_level: Formula-exact
+  comparison_class: not-comparable
+  default_tolerance_abs: 1.0e-10
+  default_tolerance_rel: 1.0e-10
+  expected_range:
+    kind: unit_interval
+    minimum: 0.0
+    maximum: 1.0
+  clinical_readiness: research
+  known_noncomparability:
+  - Versioned canonical common-kernel metrics; historical fields retain separate algorithms.
+  comparable_to: []
+  assumptions:
+  - Standard Halcyon/Ethos layout and valid CMW; PR uses fixed nominal 2.8/2.3 mm
+    bands.
+  exclusions:
+  - Unsupported geometry, incomplete CPs, invalid MU.
+- key: PR_D
+  platform: VMAT_IMRT
+  mode: VMAT_IMRT
+  group_key: vmat_imrt_lrt_d
+  metric_key: PR_D
+  label: PR_D
+  unit: dimensionless
+  aggregation_scope: plan
+  normalization_basis: See exact per-key formula; PM uses sum of slotwise maximum
+    areas, not a geometric union. No parameter fitting.
+  validation_level: Formula-exact
+  comparison_class: not-comparable
+  default_tolerance_abs: 1.0e-10
+  default_tolerance_rel: 1.0e-10
+  expected_range:
+    kind: unit_interval
+    minimum: 0.0
+    maximum: 1.0
+  clinical_readiness: research
+  known_noncomparability:
+  - Versioned canonical common-kernel metrics; historical fields retain separate algorithms.
+  comparable_to: []
+  assumptions:
+  - Standard Halcyon/Ethos layout and valid CMW; PR uses fixed nominal 2.8/2.3 mm
+    bands.
+  exclusions:
+  - Unsupported geometry, incomplete CPs, invalid MU.
+- key: MCSv_P
+  platform: VMAT_IMRT
+  mode: VMAT_IMRT
+  group_key: vmat_imrt_lrt_p
+  metric_key: MCSv_P
+  label: MCSv_P
+  unit: dimensionless
+  aggregation_scope: plan
+  normalization_basis: See exact per-key formula; PM uses sum of slotwise maximum
+    areas, not a geometric union. No parameter fitting.
+  validation_level: Formula-exact
+  comparison_class: not-comparable
+  default_tolerance_abs: 1.0e-10
+  default_tolerance_rel: 1.0e-10
+  expected_range:
+    kind: unit_interval
+    minimum: 0.0
+    maximum: 1.0
+  clinical_readiness: research
+  known_noncomparability:
+  - Versioned canonical common-kernel metrics; historical fields retain separate algorithms.
+  comparable_to: []
+  assumptions:
+  - Standard Halcyon/Ethos layout and valid CMW; PR uses fixed nominal 2.8/2.3 mm
+    bands.
+  exclusions:
+  - Unsupported geometry, incomplete CPs, invalid MU.
+- key: LSV_P
+  platform: VMAT_IMRT
+  mode: VMAT_IMRT
+  group_key: vmat_imrt_lrt_p
+  metric_key: LSV_P
+  label: LSV_P
+  unit: dimensionless
+  aggregation_scope: plan
+  normalization_basis: See exact per-key formula; PM uses sum of slotwise maximum
+    areas, not a geometric union. No parameter fitting.
+  validation_level: Formula-exact
+  comparison_class: not-comparable
+  default_tolerance_abs: 1.0e-10
+  default_tolerance_rel: 1.0e-10
+  expected_range:
+    kind: unit_interval
+    minimum: 0.0
+    maximum: 1.0
+  clinical_readiness: research
+  known_noncomparability:
+  - Versioned canonical common-kernel metrics; historical fields retain separate algorithms.
+  comparable_to: []
+  assumptions:
+  - Standard Halcyon/Ethos layout and valid CMW; PR uses fixed nominal 2.8/2.3 mm
+    bands.
+  exclusions:
+  - Unsupported geometry, incomplete CPs, invalid MU.
+- key: AAV_P
+  platform: VMAT_IMRT
+  mode: VMAT_IMRT
+  group_key: vmat_imrt_lrt_p
+  metric_key: AAV_P
+  label: AAV_P
+  unit: dimensionless
+  aggregation_scope: plan
+  normalization_basis: See exact per-key formula; PM uses sum of slotwise maximum
+    areas, not a geometric union. No parameter fitting.
+  validation_level: Formula-exact
+  comparison_class: not-comparable
+  default_tolerance_abs: 1.0e-10
+  default_tolerance_rel: 1.0e-10
+  expected_range:
+    kind: unit_interval
+    minimum: 0.0
+    maximum: 1.0
+  clinical_readiness: research
+  known_noncomparability:
+  - Versioned canonical common-kernel metrics; historical fields retain separate algorithms.
+  comparable_to: []
+  assumptions:
+  - Standard Halcyon/Ethos layout and valid CMW; PR uses fixed nominal 2.8/2.3 mm
+    bands.
+  exclusions:
+  - Unsupported geometry, incomplete CPs, invalid MU.
+- key: PA_P
+  platform: VMAT_IMRT
+  mode: VMAT_IMRT
+  group_key: vmat_imrt_lrt_p
+  metric_key: PA_P
+  label: PA_P
+  unit: mm^2
+  aggregation_scope: plan
+  normalization_basis: See exact per-key formula; PM uses sum of slotwise maximum
+    areas, not a geometric union. No parameter fitting.
+  validation_level: Formula-exact
+  comparison_class: not-comparable
+  default_tolerance_abs: 1.0e-10
+  default_tolerance_rel: 1.0e-10
+  expected_range:
+    kind: nonnegative
+    minimum: 0.0
+    maximum: null
+  clinical_readiness: research
+  known_noncomparability:
+  - Versioned canonical common-kernel metrics; historical fields retain separate algorithms.
+  comparable_to: []
+  assumptions:
+  - Standard Halcyon/Ethos layout and valid CMW; PR uses fixed nominal 2.8/2.3 mm
+    bands.
+  exclusions:
+  - Unsupported geometry, incomplete CPs, invalid MU.
+- key: MAD_P
+  platform: VMAT_IMRT
+  mode: VMAT_IMRT
+  group_key: vmat_imrt_lrt_p
+  metric_key: MAD_P
+  label: MAD_P
+  unit: mm
+  aggregation_scope: plan
+  normalization_basis: See exact per-key formula; PM uses sum of slotwise maximum
+    areas, not a geometric union. No parameter fitting.
+  validation_level: Formula-exact
+  comparison_class: not-comparable
+  default_tolerance_abs: 1.0e-10
+  default_tolerance_rel: 1.0e-10
+  expected_range:
+    kind: nonnegative
+    minimum: 0.0
+    maximum: null
+  clinical_readiness: research
+  known_noncomparability:
+  - Versioned canonical common-kernel metrics; historical fields retain separate algorithms.
+  comparable_to: []
+  assumptions:
+  - Standard Halcyon/Ethos layout and valid CMW; PR uses fixed nominal 2.8/2.3 mm
+    bands.
+  exclusions:
+  - Unsupported geometry, incomplete CPs, invalid MU.
+- key: ALG_P
+  platform: VMAT_IMRT
+  mode: VMAT_IMRT
+  group_key: vmat_imrt_lrt_p
+  metric_key: ALG_P
+  label: ALG_P
+  unit: mm
+  aggregation_scope: plan
+  normalization_basis: See exact per-key formula; PM uses sum of slotwise maximum
+    areas, not a geometric union. No parameter fitting.
+  validation_level: Formula-exact
+  comparison_class: not-comparable
+  default_tolerance_abs: 1.0e-10
+  default_tolerance_rel: 1.0e-10
+  expected_range:
+    kind: nonnegative
+    minimum: 0.0
+    maximum: null
+  clinical_readiness: research
+  known_noncomparability:
+  - Versioned canonical common-kernel metrics; historical fields retain separate algorithms.
+  comparable_to: []
+  assumptions:
+  - Standard Halcyon/Ethos layout and valid CMW; PR uses fixed nominal 2.8/2.3 mm
+    bands.
+  exclusions:
+  - Unsupported geometry, incomplete CPs, invalid MU.
+- key: SLG_P
+  platform: VMAT_IMRT
+  mode: VMAT_IMRT
+  group_key: vmat_imrt_lrt_p
+  metric_key: SLG_P
+  label: SLG_P
+  unit: mm
+  aggregation_scope: plan
+  normalization_basis: See exact per-key formula; PM uses sum of slotwise maximum
+    areas, not a geometric union. No parameter fitting.
+  validation_level: Formula-exact
+  comparison_class: not-comparable
+  default_tolerance_abs: 1.0e-10
+  default_tolerance_rel: 1.0e-10
+  expected_range:
+    kind: nonnegative
+    minimum: 0.0
+    maximum: null
+  clinical_readiness: research
+  known_noncomparability:
+  - Versioned canonical common-kernel metrics; historical fields retain separate algorithms.
+  comparable_to: []
+  assumptions:
+  - Standard Halcyon/Ethos layout and valid CMW; PR uses fixed nominal 2.8/2.3 mm
+    bands.
+  exclusions:
+  - Unsupported geometry, incomplete CPs, invalid MU.
+- key: SAS5_P
+  platform: VMAT_IMRT
+  mode: VMAT_IMRT
+  group_key: vmat_imrt_lrt_p
+  metric_key: SAS5_P
+  label: SAS5_P
+  unit: dimensionless
+  aggregation_scope: plan
+  normalization_basis: See exact per-key formula; PM uses sum of slotwise maximum
+    areas, not a geometric union. No parameter fitting.
+  validation_level: Formula-exact
+  comparison_class: not-comparable
+  default_tolerance_abs: 1.0e-10
+  default_tolerance_rel: 1.0e-10
+  expected_range:
+    kind: unit_interval
+    minimum: 0.0
+    maximum: 1.0
+  clinical_readiness: research
+  known_noncomparability:
+  - Versioned canonical common-kernel metrics; historical fields retain separate algorithms.
+  comparable_to: []
+  assumptions:
+  - Standard Halcyon/Ethos layout and valid CMW; PR uses fixed nominal 2.8/2.3 mm
+    bands.
+  exclusions:
+  - Unsupported geometry, incomplete CPs, invalid MU.
+- key: SAS10_P
+  platform: VMAT_IMRT
+  mode: VMAT_IMRT
+  group_key: vmat_imrt_lrt_p
+  metric_key: SAS10_P
+  label: SAS10_P
+  unit: dimensionless
+  aggregation_scope: plan
+  normalization_basis: See exact per-key formula; PM uses sum of slotwise maximum
+    areas, not a geometric union. No parameter fitting.
+  validation_level: Formula-exact
+  comparison_class: not-comparable
+  default_tolerance_abs: 1.0e-10
+  default_tolerance_rel: 1.0e-10
+  expected_range:
+    kind: unit_interval
+    minimum: 0.0
+    maximum: 1.0
+  clinical_readiness: research
+  known_noncomparability:
+  - Versioned canonical common-kernel metrics; historical fields retain separate algorithms.
+  comparable_to: []
+  assumptions:
+  - Standard Halcyon/Ethos layout and valid CMW; PR uses fixed nominal 2.8/2.3 mm
+    bands.
+  exclusions:
+  - Unsupported geometry, incomplete CPs, invalid MU.
+- key: SAS20_P
+  platform: VMAT_IMRT
+  mode: VMAT_IMRT
+  group_key: vmat_imrt_lrt_p
+  metric_key: SAS20_P
+  label: SAS20_P
+  unit: dimensionless
+  aggregation_scope: plan
+  normalization_basis: See exact per-key formula; PM uses sum of slotwise maximum
+    areas, not a geometric union. No parameter fitting.
+  validation_level: Formula-exact
+  comparison_class: not-comparable
+  default_tolerance_abs: 1.0e-10
+  default_tolerance_rel: 1.0e-10
+  expected_range:
+    kind: unit_interval
+    minimum: 0.0
+    maximum: 1.0
+  clinical_readiness: research
+  known_noncomparability:
+  - Versioned canonical common-kernel metrics; historical fields retain separate algorithms.
+  comparable_to: []
+  assumptions:
+  - Standard Halcyon/Ethos layout and valid CMW; PR uses fixed nominal 2.8/2.3 mm
+    bands.
+  exclusions:
+  - Unsupported geometry, incomplete CPs, invalid MU.
+- key: LT_P
+  platform: VMAT_IMRT
+  mode: VMAT_IMRT
+  group_key: vmat_imrt_lrt_p
+  metric_key: LT_P
+  label: LT_P
+  unit: mm
+  aggregation_scope: plan
+  normalization_basis: See exact per-key formula; PM uses sum of slotwise maximum
+    areas, not a geometric union. No parameter fitting.
+  validation_level: Formula-exact
+  comparison_class: not-comparable
+  default_tolerance_abs: 1.0e-10
+  default_tolerance_rel: 1.0e-10
+  expected_range:
+    kind: nonnegative
+    minimum: 0.0
+    maximum: null
+  clinical_readiness: research
+  known_noncomparability:
+  - Versioned canonical common-kernel metrics; historical fields retain separate algorithms.
+  comparable_to: []
+  assumptions:
+  - Standard Halcyon/Ethos layout and valid CMW; PR uses fixed nominal 2.8/2.3 mm
+    bands.
+  exclusions:
+  - Unsupported geometry, incomplete CPs, invalid MU.
+- key: LTmean_P
+  platform: VMAT_IMRT
+  mode: VMAT_IMRT
+  group_key: vmat_imrt_lrt_p
+  metric_key: LTmean_P
+  label: LTmean_P
+  unit: 'mm/moving leaf (Eff: virtual leaf)'
+  aggregation_scope: plan
+  normalization_basis: See exact per-key formula; PM uses sum of slotwise maximum
+    areas, not a geometric union. No parameter fitting.
+  validation_level: Formula-exact
+  comparison_class: not-comparable
+  default_tolerance_abs: 1.0e-10
+  default_tolerance_rel: 1.0e-10
+  expected_range:
+    kind: nonnegative
+    minimum: 0.0
+    maximum: null
+  clinical_readiness: research
+  known_noncomparability:
+  - Versioned canonical common-kernel metrics; historical fields retain separate algorithms.
+  comparable_to: []
+  assumptions:
+  - Standard Halcyon/Ethos layout and valid CMW; PR uses fixed nominal 2.8/2.3 mm
+    bands.
+  exclusions:
+  - Unsupported geometry, incomplete CPs, invalid MU.
+- key: NL_P
+  platform: VMAT_IMRT
+  mode: VMAT_IMRT
+  group_key: vmat_imrt_lrt_p
+  metric_key: NL_P
+  label: NL_P
+  unit: 'active pairs (Eff: virtual pairs)'
+  aggregation_scope: plan
+  normalization_basis: See exact per-key formula; PM uses sum of slotwise maximum
+    areas, not a geometric union. No parameter fitting.
+  validation_level: Formula-exact
+  comparison_class: not-comparable
+  default_tolerance_abs: 1.0e-10
+  default_tolerance_rel: 1.0e-10
+  expected_range:
+    kind: nonnegative
+    minimum: 0.0
+    maximum: null
+  clinical_readiness: research
+  known_noncomparability:
+  - Versioned canonical common-kernel metrics; historical fields retain separate algorithms.
+  comparable_to: []
+  assumptions:
+  - Standard Halcyon/Ethos layout and valid CMW; PR uses fixed nominal 2.8/2.3 mm
+    bands.
+  exclusions:
+  - Unsupported geometry, incomplete CPs, invalid MU.
+- key: PI_P
+  platform: VMAT_IMRT
+  mode: VMAT_IMRT
+  group_key: vmat_imrt_lrt_p
+  metric_key: PI_P
+  label: PI_P
+  unit: dimensionless
+  aggregation_scope: plan
+  normalization_basis: See exact per-key formula; PM uses sum of slotwise maximum
+    areas, not a geometric union. No parameter fitting.
+  validation_level: Formula-exact
+  comparison_class: not-comparable
+  default_tolerance_abs: 1.0e-10
+  default_tolerance_rel: 1.0e-10
+  expected_range:
+    kind: nonnegative
+    minimum: 0.0
+    maximum: null
+  clinical_readiness: research
+  known_noncomparability:
+  - Versioned canonical common-kernel metrics; historical fields retain separate algorithms.
+  comparable_to: []
+  assumptions:
+  - Standard Halcyon/Ethos layout and valid CMW; PR uses fixed nominal 2.8/2.3 mm
+    bands.
+  exclusions:
+  - Unsupported geometry, incomplete CPs, invalid MU.
+- key: PM_P
+  platform: VMAT_IMRT
+  mode: VMAT_IMRT
+  group_key: vmat_imrt_lrt_p
+  metric_key: PM_P
+  label: PM_P
+  unit: dimensionless
+  aggregation_scope: plan
+  normalization_basis: See exact per-key formula; PM uses sum of slotwise maximum
+    areas, not a geometric union. No parameter fitting.
+  validation_level: Formula-exact
+  comparison_class: not-comparable
+  default_tolerance_abs: 1.0e-10
+  default_tolerance_rel: 1.0e-10
+  expected_range:
+    kind: unit_interval
+    minimum: 0.0
+    maximum: 1.0
+  clinical_readiness: research
+  known_noncomparability:
+  - Versioned canonical common-kernel metrics; historical fields retain separate algorithms.
+  comparable_to: []
+  assumptions:
+  - Standard Halcyon/Ethos layout and valid CMW; PR uses fixed nominal 2.8/2.3 mm
+    bands.
+  exclusions:
+  - Unsupported geometry, incomplete CPs, invalid MU.
+- key: PR_P
+  platform: VMAT_IMRT
+  mode: VMAT_IMRT
+  group_key: vmat_imrt_lrt_p
+  metric_key: PR_P
+  label: PR_P
+  unit: dimensionless
+  aggregation_scope: plan
+  normalization_basis: See exact per-key formula; PM uses sum of slotwise maximum
+    areas, not a geometric union. No parameter fitting.
+  validation_level: Formula-exact
+  comparison_class: not-comparable
+  default_tolerance_abs: 1.0e-10
+  default_tolerance_rel: 1.0e-10
+  expected_range:
+    kind: unit_interval
+    minimum: 0.0
+    maximum: 1.0
+  clinical_readiness: research
+  known_noncomparability:
+  - Versioned canonical common-kernel metrics; historical fields retain separate algorithms.
+  comparable_to: []
+  assumptions:
+  - Standard Halcyon/Ethos layout and valid CMW; PR uses fixed nominal 2.8/2.3 mm
+    bands.
+  exclusions:
+  - Unsupported geometry, incomplete CPs, invalid MU.
+- key: MU
+  platform: VMAT_IMRT
+  mode: VMAT_IMRT
+  group_key: vmat_imrt_lrt_delivery
+  metric_key: MU
+  label: LRT MU
+  unit: MU
+  aggregation_scope: plan
+  normalization_basis: See exact per-key formula; PM uses sum of slotwise maximum
+    areas, not a geometric union. No parameter fitting.
+  validation_level: Formula-exact
+  comparison_class: not-comparable
+  default_tolerance_abs: 1.0e-10
+  default_tolerance_rel: 1.0e-10
+  expected_range:
+    kind: nonnegative
+    minimum: 0.0
+    maximum: null
+  clinical_readiness: research
+  known_noncomparability:
+  - Versioned canonical common-kernel metrics; historical fields retain separate algorithms.
+  comparable_to: []
+  assumptions:
+  - Standard Halcyon/Ethos layout and valid CMW; PR uses fixed nominal 2.8/2.3 mm
+    bands.
+  exclusions:
+  - Unsupported geometry, incomplete CPs, invalid MU.
+- key: MU_per_CP
+  platform: VMAT_IMRT
+  mode: VMAT_IMRT
+  group_key: vmat_imrt_lrt_delivery
+  metric_key: MU_per_CP
+  label: MU_per_CP
+  unit: MU/CP
+  aggregation_scope: plan
+  normalization_basis: See exact per-key formula; PM uses sum of slotwise maximum
+    areas, not a geometric union. No parameter fitting.
+  validation_level: Formula-exact
+  comparison_class: not-comparable
+  default_tolerance_abs: 1.0e-10
+  default_tolerance_rel: 1.0e-10
+  expected_range:
+    kind: nonnegative
+    minimum: 0.0
+    maximum: null
+  clinical_readiness: research
+  known_noncomparability:
+  - Versioned canonical common-kernel metrics; historical fields retain separate algorithms.
+  comparable_to: []
+  assumptions:
+  - Standard Halcyon/Ethos layout and valid CMW; PR uses fixed nominal 2.8/2.3 mm
+    bands.
+  exclusions:
+  - Unsupported geometry, incomplete CPs, invalid MU.
+- key: PR_System
+  platform: VMAT_IMRT
+  mode: VMAT_IMRT
+  group_key: vmat_imrt_lrt_system_reference
+  metric_key: PR_System
+  label: PR_System
+  unit: dimensionless
+  aggregation_scope: plan
+  normalization_basis: See exact per-key formula; PM uses sum of slotwise maximum
+    areas, not a geometric union. No parameter fitting.
+  validation_level: Formula-exact
+  comparison_class: not-comparable
+  default_tolerance_abs: 1.0e-10
+  default_tolerance_rel: 1.0e-10
+  expected_range:
+    kind: unit_interval
+    minimum: 0.0
+    maximum: 1.0
+  clinical_readiness: research
+  known_noncomparability:
+  - Versioned canonical common-kernel metrics; historical fields retain separate algorithms.
+  comparable_to: []
+  assumptions:
+  - Standard Halcyon/Ethos layout and valid CMW; PR uses fixed nominal 2.8/2.3 mm
+    bands.
+  exclusions:
+  - Unsupported geometry, incomplete CPs, invalid MU.

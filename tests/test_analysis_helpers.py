@@ -215,7 +215,10 @@ class AnalysisHelpersTests(unittest.TestCase):
         row = build_standard_row(metadata, metrics)
 
         self.assertEqual(row[:7], ["P001", "Alice", "Plan A", "TB-1", "AAA", 6000, 325.4])
-        self.assertEqual(row[-1], "sport")
+        # New LRT columns append after the complete historical header. SPORT
+        # retains its original position; it is no longer the last new column.
+        self.assertEqual(row[-52], "sport")
+        self.assertEqual(row[-51:], [''] * 51)
         self.assertGreater(len(row), 53)
 
     def test_build_dual_mlc_row_keeps_dual_machine_fields(self):

@@ -3,6 +3,11 @@ from pathlib import Path
 
 
 VMAT_SECTIONS = {
+    'LRT Eff': ('lrt_three_layer.md', 'geometry'),
+    'LRT D': ('lrt_three_layer.md', 'geometry'),
+    'LRT P': ('lrt_three_layer.md', 'geometry'),
+    'LRT Delivery': ('lrt_three_layer.md', 'delivery'),
+    'LRT System reference': ('lrt_three_layer.md', 'reference'),
     'Plan prescription': ('vmat_imrt_guide.md', 'plan'),
     'Arc geometry': ('vmat_imrt_guide.md', 'plan'),
     'Leaf travel': ('vmat_imrt_guide.md', 'travel'),

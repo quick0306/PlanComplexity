@@ -16,6 +16,7 @@ Historical designs, comparisons and validation runs are explicitly separated fro
 | Mode | Current formula version |
 | --- | --- |
 | VMAT/IMRT and CyberKnife MLC | `geometry-v4` |
+| Halcyon/Ethos canonical Effective/D/P fields | `lrt-three-layer-v1` |
 | TOMO | `tomo-v3` |
 | Aurora SVMAT V4 | `aurora-v4-physical-aperture-open-only` |
 
@@ -72,6 +73,12 @@ and Quintero et al. 2021:
   component outputs.
 - Quintero-style Halcyon-v2 metrics: `MUcp`, `UL`, `MCSUL`, and `NP`.
 - Hybrid-v2 physical effective-aperture metrics use the `*_effective` suffix.
+- The versioned [LRT three-layer interface](docs/lrt_three_layer.md) adds 16 metrics
+  per layer (`*_Eff`, `*_D`, `*_P`), including PI, PM and PR, plus `MU`, `MU_per_CP`
+  and the explicit `PR_System` reference. All 51 fields are exported; the default
+  candidate pool has 50 fields and excludes the duplicate system reference.
+  Historical fields retain their names and calculations. The GUI profile selector
+  displays the candidate pool or each layer separately.
 - RT Complexity Lens-inspired stacked diagnostics use the `*_stacked` suffix. This geometry is
   deliberately non-physical: it concatenates jaw-evaluated MLCX1 and MLCX2 slots for algorithm
   comparison and must not be interpreted as a transmitted aperture.

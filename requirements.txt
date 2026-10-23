@@ -10,3 +10,6 @@ jsonschema
 Jinja2
 # Independent polygon oracle used by geometry regression tests.
 shapely==2.1.2
+# Independent Ethos PDF extraction and PR agreement figures.
+PyMuPDF==1.28.2
+matplotlib==3.10.9

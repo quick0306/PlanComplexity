@@ -107,6 +107,16 @@ def calculate_core_metrics_with_warnings(plan_dict, *, full_precision=False):
         metrics["mcsv_mlcx1"], metrics["mcsv_mlcx2"] = metrics["mcsv"]
     metrics.update(halcyon_metrics)
     warnings.extend(halcyon_warnings)
+    # Versioned three-layer fields coexist with every unchanged historical key.
+    # This explicit reference is the old report-profile reconstruction, not an
+    # observed PDF value and never an implicit substitution with PR_Eff.
+    from lrt_three_layer import calculate_lrt_plan_metrics
+    lrt_values, lrt_warnings = calculate_lrt_plan_metrics(
+        plan_dict, pr_system=halcyon_metrics.get('ethos_penumbra_ratio'),
+        full_precision=full_precision,
+    )
+    metrics.update(lrt_values)
+    warnings.extend(lrt_warnings)
     return metrics, list(dict.fromkeys(warnings))
 
 

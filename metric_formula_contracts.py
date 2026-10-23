@@ -72,6 +72,19 @@ def _representation(layer: str) -> str:
 
 
 def _vmat(record) -> dict:
+    from lrt_metric_schema import EXPORT_KEYS, GEOMETRY_KEYS, metric_base
+    if record.metric_key in EXPORT_KEYS:
+        key = record.metric_key
+        return dict(
+            sampling='Ordered complete control points; interval metrics retain adjacency; MU_per_CP includes endpoints.',
+            active_mask=('PR: gap>0.5+1e-8 mm, finite tip/side strips; other metrics retain their documented raw-gap or jaw-clipped mask, identically across layers.'),
+            normalization='See exact per-key formula; PM uses sum of slotwise maximum areas, not a geometric union. No parameter fitting.',
+            aggregation='Common centered-CP-MU kernel at all layers, beam-MU mean; LTmean is unweighted trajectory travel; MU_per_CP is total MU/total CP count.',
+            missing_value='Invalid layout, CMW, CP order or missing first positions => all canonical fields None with warning; PR partial rows<4.6 mm => PR None. Empty CP PI/PR=0; all-closed beam PR=None.',
+            representation=(key.rsplit('_',1)[1] if key in GEOMETRY_KEYS else 'Explicit reference or delivery count'),
+            source_anchors=('lrt_three_layer.py:calculate_lrt_beam_metrics', 'lrt_three_layer.py:finite_strip_pr'),
+            evidence_status='analytic_cases_checked',
+        )
     key, layer = _vmat_base(record.metric_key)
     if key.startswith("ethos_"):
         normalizers = {
@@ -350,6 +363,7 @@ def _aurora(record) -> dict:
 
 def build_metric_formula_contracts() -> list[MetricFormulaContract]:
     from metric_definition_catalog import build_metric_definition_catalog
+    from lrt_metric_schema import EXPORT_KEYS, SCHEMA_VERSION
     builders = {"VMAT_IMRT": _vmat, "TOMO": _tomo, "CYBERKNIFE_MLC": _cyberknife, "AURORA": _aurora}
     contracts = []
     for record in build_metric_definition_catalog():
@@ -357,7 +371,8 @@ def build_metric_formula_contracts() -> list[MetricFormulaContract]:
         contracts.append(MetricFormulaContract(
             platform=record.platform, metric_key=record.metric_key,
             formula=record.mathematical_definition, unit=record.unit,
-            formula_version=(ETHOS_REPORT_VERSION if record.metric_key in ETHOS_REPORT_KEYS else
+            formula_version=(SCHEMA_VERSION if record.platform == 'VMAT_IMRT' and record.metric_key in EXPORT_KEYS else
+                             ETHOS_REPORT_VERSION if record.metric_key in ETHOS_REPORT_KEYS else
                              (AURORA_FORMULA_VERSION if record.metric_key in V4_METRIC_ORDER else
                               "aurora-unversioned-research-v2-v3-legacy") if record.platform == "AURORA" else
                              formula_version_for_mode(record.platform)),

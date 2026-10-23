@@ -1,6 +1,6 @@
 # 项目文档索引
 
-以当前代码为准，核对日期 2026-10-08。入口从[中文使用说明](user_guide.md)开始。当前模式版本是 VMAT/IMRT、CyberKnife 的 `geometry-v4`，TOMO 的 `tomo-v3`，Aurora V4 的 `aurora-v4-physical-aperture-open-only`。
+以当前代码为准，核对日期 2026-10-23。入口从[中文使用说明](user_guide.md)开始。当前模式版本是 VMAT/IMRT、CyberKnife 的 `geometry-v4`，TOMO 的 `tomo-v3`，Aurora V4 的 `aurora-v4-physical-aperture-open-only`。Halcyon/Ethos 新增三层字段另使用 `lrt-three-layer-v1`，旧字段及其版本保持原定义。
 
 ## 当前使用与定义
 
@@ -12,6 +12,7 @@
 | 可编辑的 Markdown / LaTeX 公式及全指标映射 | [逐键公式索引](metric_math_index.md) |
 | IMRT/VMAT：孔径、MCS、运动、MI、SPORT | [公式与使用](vmat_imrt_guide.md) |
 | Halcyon/Ethos：原生层、effective、stacked、报告配置 | [公式与使用](halcyon_ethos_guide.md) |
+| LRT 三层统一指标、PI/PM/PR、50项候选及51列输出 | [定义与复算](lrt_three_layer.md)、[输入清单示例](lrt_manifest.example.json) |
 | TOMO：开放时间、sinogram、调制、床运动 | [公式与使用](tomo_guide.md) |
 | CyberKnife MLC：XML 分段与标准 MLC 两条路径 | [公式与使用](cyberknife_guide.md) |
 | Aurora：V2、V3、legacy 与 V4 全家族 | [公式与使用](aurora_guide.md) |
@@ -22,7 +23,7 @@
 
 定义 Markdown 和本地 CSV 来自 `metric_definition_catalog.py`；公式契约来自 `metric_formula_contracts.py`；Aurora PDF 复用目录与注释；项目简介 PDF 从当前版本常量和目录生成。修改定义源后必须重新生成，避免手工修改导出文档后被覆盖。命令见[使用说明](user_guide.md)。
 
-五份平台公式说明是可手工编辑的 Markdown，使用 `$...$` 行内公式和 `$$...$$` 独立 LaTeX 公式。`metric_math_links.py` 定义逐家族链接，导出器自动生成逐键索引。新增指标家族必须显式补充公式章节及链接；覆盖测试防止静默遗漏。目录共 434 条记录（VMAT/IMRT 286、TOMO 65、CyberKnife 6、Aurora 77），包含层变体、别名和容器，不能称为 434 个独立标量指标。
+平台公式说明和三层接口说明是可手工编辑的 Markdown，使用 `$...$` 行内公式和 `$$...$$` 独立 LaTeX 公式。`metric_math_links.py` 定义逐家族链接，导出器自动生成逐键索引。新增指标家族必须显式补充公式章节及链接；覆盖测试防止静默遗漏。目录共 485 条记录（VMAT/IMRT 337、TOMO 65、CyberKnife 6、Aurora 77），包含层变体、别名和容器，不能称为 485 个独立标量指标。
 
 ## 历史、研究与计划
 

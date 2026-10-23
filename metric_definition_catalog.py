@@ -495,6 +495,9 @@ def _write_platform_appendices(records: Sequence[MetricDefinitionRecord], output
 
 
 def _vmat_group(metric_key: str) -> str:
+    from lrt_metric_schema import EXPORT_KEYS, metric_group
+    if metric_key in EXPORT_KEYS:
+        return metric_group(metric_key)
     if metric_key.startswith('ethos_'):
         return 'Varian Ethos/Halcyon dual-layer MLC'
     if metric_key in {"lt_mean_leaf", "nl_pairs", "nl_leaves"} or metric_key.endswith(
@@ -534,6 +537,9 @@ def _vmat_group(metric_key: str) -> str:
 
 
 def _vmat_formula(metric_key: str) -> str:
+    from lrt_metric_schema import EXPORT_KEYS, FORMULAS, metric_base
+    if metric_key in EXPORT_KEYS:
+        return FORMULAS[metric_base(metric_key)]
     report_formulas = {
         "ethos_sas10": "SAS10 = sum_positive-center-MU-CP count(0.5+1e-8 < gap <= 10+1e-8 mm) / sum_positive-center-MU-CP count(gap > 0.5+1e-8 mm); beam-MU mean",
         "ethos_one_minus_mcs": "1-MCS = 1 - centered-CP-MU mean(A_open/E_open * LSV); E_open is the open-slot bank envelope; LSV multiplies bank scores 1-sum_physical_adjacent_open(abs(dx))/(N_adjacent_open*range_open_bank); beam-MU mean",
@@ -659,6 +665,9 @@ def _vmat_formula(metric_key: str) -> str:
 
 
 def _vmat_unit(metric_key: str) -> str:
+    from lrt_metric_schema import EXPORT_KEYS, UNITS, metric_base
+    if metric_key in EXPORT_KEYS:
+        return UNITS.get(metric_base(metric_key), 'dimensionless')
     effective_virtual_units = {
         "lt_mean_leaf_effective": "mm/moving effective virtual leaf",
         "nl_pairs_effective": "active effective virtual leaf pairs",
@@ -723,6 +732,11 @@ def _vmat_unit(metric_key: str) -> str:
 
 
 def _vmat_inputs(metric_key: str) -> str:
+    from lrt_metric_schema import EXPORT_KEYS
+    if metric_key in EXPORT_KEYS:
+        return ('Explicit legacy report-profile value; never filled from PR_Eff'
+                if metric_key == 'PR_System' else
+                'Standard Halcyon/Ethos DICOM MLCX1/MLCX2, jaws, ordered CPs, valid CMW and MU')
     if metric_key.endswith(("_effective", "_stacked")):
         return "Aligned Halcyon/Ethos MLCX1 and MLCX2 apertures with control-point and beam MU"
     if metric_key in {
