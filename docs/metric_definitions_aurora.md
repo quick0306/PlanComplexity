@@ -104,10 +104,10 @@ Read the linked LaTeX chapter together with the per-key definition and [formula 
 
 - Group: V2 paper-style physics
 - Symbol/short name: projection_aperture_change_mean
-- Mathematical definition: mean_i(abs(delta W_i) / abs(delta z_i)); W=sum_zip max(MLCX2-MLCX1,0) is an opening-width proxy, not area
+- Mathematical definition: mean_i(abs(delta A_eff_i)/abs(delta z_i)); A_eff is the jaw-clipped physical dual-layer intersection with gaps<=1+1e-8 mm closed
 - LaTeX reference: [Readable equations and mode-specific conventions](aurora_guide.md#motion)
-- Physical meaning: Mean projection aperture-change rate, defined as absolute aperture-width change per millimeter of longitudinal travel.
-- Unit: mm/mm
+- Physical meaning: Mean absolute change in physical dual-layer intersection area per millimeter of couch travel, mm^2/mm; the 1 mm closure mask is shared with SAS and MCS.
+- Unit: mm^2/mm
 - Inputs required: Aurora RTPLAN control points: gantry angle, isocenter z, cumulative meterset weight, MLCX1 and MLCX2
 - Status: implemented
 - Notes: Standalone Aurora SVMAT Lab metric.
@@ -116,7 +116,7 @@ Read the linked LaTeX chapter together with the per-key definition and [formula 
 
 - Group: V2 paper-style physics
 - Symbol/short name: projection_aperture_change_cv
-- Mathematical definition: population_std(abs(delta W_i)/abs(delta z_i))/abs(mean(abs(delta W_i)/abs(delta z_i))); W is opening-width proxy
+- Mathematical definition: population_std(abs(delta A_eff_i)/abs(delta z_i))/abs(mean(abs(delta A_eff_i)/abs(delta z_i)))
 - LaTeX reference: [Readable equations and mode-specific conventions](aurora_guide.md#motion)
 - Physical meaning: Coefficient of variation of the projection aperture-change rate.
 - Unit: dimensionless
@@ -296,9 +296,9 @@ Read the linked LaTeX chapter together with the per-key definition and [formula 
 
 - Group: V3 small-opening burden
 - Symbol/short name: small_opening_fraction
-- Mathematical definition: weighted count(gap < 10 mm and gap > 0) / weighted count(gap > 0)
+- Mathematical definition: mean_sas10; OpenMUmean(count_s(1+1e-8<g<10 mm)/count_s(g>1+1e-8))
 - LaTeX reference: [Readable equations and mode-specific conventions](aurora_guide.md#research)
-- Physical meaning: Weighted fraction of effective openings smaller than 10 mm.
+- Physical meaning: Open-aperture delivered-MU mean of the fraction of effective sub-strips with 1+1e-8 < gap < 10 mm; exactly the same value as mean_sas10.
 - Unit: dimensionless
 - Inputs required: Aurora RTPLAN control points: gantry angle, isocenter z, cumulative meterset weight, MLCX1 and MLCX2
 - Status: implemented
@@ -308,9 +308,9 @@ Read the linked LaTeX chapter together with the per-key definition and [formula 
 
 - Group: V3 small-opening burden
 - Symbol/short name: near_closed_fraction
-- Mathematical definition: weighted count(gap < 2 mm and gap > 0) / weighted count(gap > 0)
+- Mathematical definition: OpenMUmean(count_s(1+1e-8<g<2 mm)/count_s(g>1+1e-8))
 - LaTeX reference: [Readable equations and mode-specific conventions](aurora_guide.md#research)
-- Physical meaning: Weighted fraction of effective openings smaller than 2 mm.
+- Physical meaning: Open-aperture delivered-MU mean fraction of effective sub-strips with 1+1e-8 < gap < 2 mm; the same closure mask and denominator as SAS.
 - Unit: dimensionless
 - Inputs required: Aurora RTPLAN control points: gantry angle, isocenter z, cumulative meterset weight, MLCX1 and MLCX2
 - Status: implemented
@@ -320,9 +320,9 @@ Read the linked LaTeX chapter together with the per-key definition and [formula 
 
 - Group: V3 small-opening burden
 - Symbol/short name: effective_small_gap_burden
-- Mathematical definition: weighted mean of max(0,1-gap/10 mm) over positive zipped-channel gap proxies; abs(delta CMW) weights, zero increment falls back to 1
+- Mathematical definition: OpenMUmean(mean_open_strips(max(0,1-g/10 mm))); same 1 mm closure and delivered-MU weights as SAS
 - LaTeX reference: [Readable equations and mode-specific conventions](aurora_guide.md#research)
-- Physical meaning: Weighted severity score for narrow effective openings, with smaller openings contributing more burden.
+- Physical meaning: Open-aperture delivered-MU mean of the within-CP average max(0,1-gap/10 mm) over open effective sub-strips; no zero-MU fallback.
 - Unit: dimensionless
 - Inputs required: Aurora RTPLAN control points: gantry angle, isocenter z, cumulative meterset weight, MLCX1 and MLCX2
 - Status: implemented
@@ -407,7 +407,7 @@ Read the linked LaTeX chapter together with the per-key definition and [formula 
 - Mathematical definition: nearest-rank 95th percentile of projection_aperture_change_i
 - LaTeX reference: [Readable equations and mode-specific conventions](aurora_guide.md#research)
 - Physical meaning: 95th percentile of the projection aperture-change rate.
-- Unit: mm/mm
+- Unit: mm^2/mm
 - Inputs required: Aurora RTPLAN control points: gantry angle, isocenter z, cumulative meterset weight, MLCX1 and MLCX2
 - Status: implemented
 - Notes: Standalone Aurora SVMAT Lab metric.
@@ -419,7 +419,7 @@ Read the linked LaTeX chapter together with the per-key definition and [formula 
 - Mathematical definition: max(projection_aperture_change_i)
 - LaTeX reference: [Readable equations and mode-specific conventions](aurora_guide.md#research)
 - Physical meaning: Maximum projection aperture-change rate observed across adjacent control-point intervals.
-- Unit: mm/mm
+- Unit: mm^2/mm
 - Inputs required: Aurora RTPLAN control points: gantry angle, isocenter z, cumulative meterset weight, MLCX1 and MLCX2
 - Status: implemented
 - Notes: Standalone Aurora SVMAT Lab metric.
@@ -431,7 +431,7 @@ Read the linked LaTeX chapter together with the per-key definition and [formula 
 - Mathematical definition: mean of the three largest projection_aperture_change_i values
 - LaTeX reference: [Readable equations and mode-specific conventions](aurora_guide.md#research)
 - Physical meaning: Mean of the three largest projection aperture-change rates.
-- Unit: mm/mm
+- Unit: mm^2/mm
 - Inputs required: Aurora RTPLAN control points: gantry angle, isocenter z, cumulative meterset weight, MLCX1 and MLCX2
 - Status: implemented
 - Notes: Standalone Aurora SVMAT Lab metric.
@@ -503,7 +503,7 @@ Read the linked LaTeX chapter together with the per-key definition and [formula 
 - Mathematical definition: mean(projection_aperture_change_i) over head-third intervals
 - LaTeX reference: [Readable equations and mode-specific conventions](aurora_guide.md#research)
 - Physical meaning: Mean projection aperture-change rate inside the head longitudinal third of the covered z-range.
-- Unit: mm/mm
+- Unit: mm^2/mm
 - Inputs required: Aurora RTPLAN control points: gantry angle, isocenter z, cumulative meterset weight, MLCX1 and MLCX2
 - Status: implemented
 - Notes: Standalone Aurora SVMAT Lab metric.
@@ -575,7 +575,7 @@ Read the linked LaTeX chapter together with the per-key definition and [formula 
 - Mathematical definition: mean(projection_aperture_change_i) over mid-third intervals
 - LaTeX reference: [Readable equations and mode-specific conventions](aurora_guide.md#research)
 - Physical meaning: Mean projection aperture-change rate inside the mid longitudinal third of the covered z-range.
-- Unit: mm/mm
+- Unit: mm^2/mm
 - Inputs required: Aurora RTPLAN control points: gantry angle, isocenter z, cumulative meterset weight, MLCX1 and MLCX2
 - Status: implemented
 - Notes: Standalone Aurora SVMAT Lab metric.
@@ -647,7 +647,7 @@ Read the linked LaTeX chapter together with the per-key definition and [formula 
 - Mathematical definition: mean(projection_aperture_change_i) over tail-third intervals
 - LaTeX reference: [Readable equations and mode-specific conventions](aurora_guide.md#research)
 - Physical meaning: Mean projection aperture-change rate inside the tail longitudinal third of the covered z-range.
-- Unit: mm/mm
+- Unit: mm^2/mm
 - Inputs required: Aurora RTPLAN control points: gantry angle, isocenter z, cumulative meterset weight, MLCX1 and MLCX2
 - Status: implemented
 - Notes: Standalone Aurora SVMAT Lab metric.
@@ -716,9 +716,9 @@ Read the linked LaTeX chapter together with the per-key definition and [formula 
 
 - Group: V3 dual-layer coordination
 - Symbol/short name: x1_x2_aperture_disparity
-- Mathematical definition: mean over control points of abs(sum|MLCX1| - sum|MLCX2|) / (sum|MLCX1| + sum|MLCX2|)
+- Mathematical definition: OpenMUmean(abs(A_MLCX1-A_MLCX2)/(A_MLCX1+A_MLCX2)); native jaw-clipped areas on common Y coverage with 1 mm closure
 - LaTeX reference: [Readable equations and mode-specific conventions](aurora_guide.md#research)
-- Physical meaning: Surrogate side-opening disparity, computed from the relative difference in MLCX1 and MLCX2 position magnitudes.
+- Physical meaning: Open-aperture delivered-MU mean abs(A1-A2)/(A1+A2); native physical layer areas use the same Y coverage, jaws and 1 mm closure mask.
 - Unit: dimensionless
 - Inputs required: Aurora RTPLAN control points: gantry angle, isocenter z, cumulative meterset weight, MLCX1 and MLCX2
 - Status: implemented
@@ -742,11 +742,11 @@ Read the linked LaTeX chapter together with the per-key definition and [formula 
 - Symbol/short name: mean_ba
 - Mathematical definition: OpenMUmean(A_i); A_i=sum_s h_i,s*g_i,s, exact physical dual-layer intersection area
 - LaTeX reference: [Readable equations and mode-specific conventions](aurora_guide.md#aperture)
-- Physical meaning: Open-aperture conditional delivered-weight mean physical area after intersecting both MLC layers and clipping to X/Y jaws using real leaf boundaries; closed endpoints excluded and weights renormalized.
+- Physical meaning: Open-aperture conditional delivered-weight mean physical area with the 1 mm closure mask after intersecting both MLC layers and clipping to X/Y jaws using real leaf boundaries; closed endpoints excluded and weights renormalized.
 - Unit: mm^2
 - Inputs required: Physical LeafPositionBoundaries for both MLC layers; A/B bank positions; X/Y jaws; cumulative meterset weights; BeamMeterset MU when available
 - Status: implemented
-- Notes: aurora-v4-physical-aperture-open-only: physical dual-layer intersection; adapted gap-based MCS, not exact McNiven MCS or the old unit-width design. Positive delivered intervals use endpoint i+1. All seven exclude area-zero endpoints and renormalize retained weights; closed leaves excluded from SAS/LSV. Missing geometry or invalid weights makes all seven unavailable with a warning; missing any BeamMeterset uses unit-normalized per-beam relative weights for every contributing beam with a warning.
+- Notes: aurora-v5-unified-physical-closure1mm: physical dual-layer intersection; adapted gap-based MCS, not exact McNiven MCS or the old unit-width design. Positive delivered intervals use endpoint i+1; gaps <=1+1e-8 mm are closed. All seven exclude area-zero endpoints and renormalize retained weights; closed leaves excluded from SAS/LSV. Missing geometry or invalid weights makes all seven unavailable with a warning; missing any BeamMeterset uses unit-normalized per-beam relative weights for every contributing beam with a warning.
 
 ## `mean_bi` - mean_bi
 
@@ -758,7 +758,7 @@ Read the linked LaTeX chapter together with the per-key definition and [formula 
 - Unit: dimensionless
 - Inputs required: Physical LeafPositionBoundaries for both MLC layers; A/B bank positions; X/Y jaws; cumulative meterset weights; BeamMeterset MU when available
 - Status: implemented
-- Notes: aurora-v4-physical-aperture-open-only: physical dual-layer intersection; adapted gap-based MCS, not exact McNiven MCS or the old unit-width design. Positive delivered intervals use endpoint i+1. All seven exclude area-zero endpoints and renormalize retained weights; closed leaves excluded from SAS/LSV. Missing geometry or invalid weights makes all seven unavailable with a warning; missing any BeamMeterset uses unit-normalized per-beam relative weights for every contributing beam with a warning.
+- Notes: aurora-v5-unified-physical-closure1mm: physical dual-layer intersection; adapted gap-based MCS, not exact McNiven MCS or the old unit-width design. Positive delivered intervals use endpoint i+1; gaps <=1+1e-8 mm are closed. All seven exclude area-zero endpoints and renormalize retained weights; closed leaves excluded from SAS/LSV. Missing geometry or invalid weights makes all seven unavailable with a warning; missing any BeamMeterset uses unit-normalized per-beam relative weights for every contributing beam with a warning.
 
 ## `mean_ca` - mean_ca
 
@@ -770,43 +770,43 @@ Read the linked LaTeX chapter together with the per-key definition and [formula 
 - Unit: mm^-1
 - Inputs required: Physical LeafPositionBoundaries for both MLC layers; A/B bank positions; X/Y jaws; cumulative meterset weights; BeamMeterset MU when available
 - Status: implemented
-- Notes: aurora-v4-physical-aperture-open-only: physical dual-layer intersection; adapted gap-based MCS, not exact McNiven MCS or the old unit-width design. Positive delivered intervals use endpoint i+1. All seven exclude area-zero endpoints and renormalize retained weights; closed leaves excluded from SAS/LSV. Missing geometry or invalid weights makes all seven unavailable with a warning; missing any BeamMeterset uses unit-normalized per-beam relative weights for every contributing beam with a warning.
+- Notes: aurora-v5-unified-physical-closure1mm: physical dual-layer intersection; adapted gap-based MCS, not exact McNiven MCS or the old unit-width design. Positive delivered intervals use endpoint i+1; gaps <=1+1e-8 mm are closed. All seven exclude area-zero endpoints and renormalize retained weights; closed leaves excluded from SAS/LSV. Missing geometry or invalid weights makes all seven unavailable with a warning; missing any BeamMeterset uses unit-normalized per-beam relative weights for every contributing beam with a warning.
 
 ## `mean_sas5` - mean_sas5
 
 - Group: V4 physical aperture and adapted MCS
 - Symbol/short name: mean_sas5
-- Mathematical definition: OpenMUmean(count_s(0<g_i,s<5 mm)/count_s(g_i,s>0)); positive-height sub-strips only; closed => excluded
+- Mathematical definition: OpenMUmean(count_s(1+1e-8<g_i,s<5 mm)/count_s(g_i,s>1+1e-8)); positive-height sub-strips only; closed => excluded
 - LaTeX reference: [Readable equations and mode-specific conventions](aurora_guide.md#aperture)
-- Physical meaning: Open-aperture conditional delivered-weight mean fraction of positive open physical sub-strips with gap strictly below 5 mm; equal sub-strip counts; closed leaves and fully closed endpoints excluded.
+- Physical meaning: Open-aperture conditional delivered-weight mean fraction of open physical sub-strips (gap > 1+1e-8 mm) with gap strictly below 5 mm; equal sub-strip counts; closed leaves and fully closed endpoints excluded.
 - Unit: dimensionless
 - Inputs required: Physical LeafPositionBoundaries for both MLC layers; A/B bank positions; X/Y jaws; cumulative meterset weights; BeamMeterset MU when available
 - Status: implemented
-- Notes: aurora-v4-physical-aperture-open-only: physical dual-layer intersection; adapted gap-based MCS, not exact McNiven MCS or the old unit-width design. Positive delivered intervals use endpoint i+1. All seven exclude area-zero endpoints and renormalize retained weights; closed leaves excluded from SAS/LSV. Missing geometry or invalid weights makes all seven unavailable with a warning; missing any BeamMeterset uses unit-normalized per-beam relative weights for every contributing beam with a warning.
+- Notes: aurora-v5-unified-physical-closure1mm: physical dual-layer intersection; adapted gap-based MCS, not exact McNiven MCS or the old unit-width design. Positive delivered intervals use endpoint i+1; gaps <=1+1e-8 mm are closed. All seven exclude area-zero endpoints and renormalize retained weights; closed leaves excluded from SAS/LSV. Missing geometry or invalid weights makes all seven unavailable with a warning; missing any BeamMeterset uses unit-normalized per-beam relative weights for every contributing beam with a warning.
 
 ## `mean_sas10` - mean_sas10
 
 - Group: V4 physical aperture and adapted MCS
 - Symbol/short name: mean_sas10
-- Mathematical definition: OpenMUmean(count_s(0<g_i,s<10 mm)/count_s(g_i,s>0)); positive-height sub-strips only; closed => excluded
+- Mathematical definition: OpenMUmean(count_s(1+1e-8<g_i,s<10 mm)/count_s(g_i,s>1+1e-8)); positive-height sub-strips only; closed => excluded
 - LaTeX reference: [Readable equations and mode-specific conventions](aurora_guide.md#aperture)
-- Physical meaning: Open-aperture conditional delivered-weight mean fraction of positive open physical sub-strips with gap strictly below 10 mm; equal sub-strip counts; closed leaves and fully closed endpoints excluded.
+- Physical meaning: Open-aperture conditional delivered-weight mean fraction of open physical sub-strips (gap > 1+1e-8 mm) with gap strictly below 10 mm; equal sub-strip counts; closed leaves and fully closed endpoints excluded.
 - Unit: dimensionless
 - Inputs required: Physical LeafPositionBoundaries for both MLC layers; A/B bank positions; X/Y jaws; cumulative meterset weights; BeamMeterset MU when available
 - Status: implemented
-- Notes: aurora-v4-physical-aperture-open-only: physical dual-layer intersection; adapted gap-based MCS, not exact McNiven MCS or the old unit-width design. Positive delivered intervals use endpoint i+1. All seven exclude area-zero endpoints and renormalize retained weights; closed leaves excluded from SAS/LSV. Missing geometry or invalid weights makes all seven unavailable with a warning; missing any BeamMeterset uses unit-normalized per-beam relative weights for every contributing beam with a warning.
+- Notes: aurora-v5-unified-physical-closure1mm: physical dual-layer intersection; adapted gap-based MCS, not exact McNiven MCS or the old unit-width design. Positive delivered intervals use endpoint i+1; gaps <=1+1e-8 mm are closed. All seven exclude area-zero endpoints and renormalize retained weights; closed leaves excluded from SAS/LSV. Missing geometry or invalid weights makes all seven unavailable with a warning; missing any BeamMeterset uses unit-normalized per-beam relative weights for every contributing beam with a warning.
 
 ## `mean_mcs_aurora` - mean_mcs_aurora
 
 - Group: V4 physical aperture and adapted MCS
 - Symbol/short name: mean_mcs_aurora
-- Mathematical definition: OpenMUmean(AAV_i*LSV_i); AAV_i=A_i/sum_s max_positive_endpoint(h_i,s*g_i,s); LSV_i=1-sum_adj_open abs(delta g)/((n_open-1)*max_open(g)); n_open<=1 => LSV 1; zero envelope => MCS 0
+- Mathematical definition: OpenMUmean(AAV_i*LSV_i); AAV_i=A_i/sum_s max_positive_endpoint(h_i,s*g_i,s); LSV_i=1-sum_adj_open abs(delta g)/((n_open-1)*max_open(g)); n_open<=1 => LSV 1; zero envelope => MCS 0; including moving Y-jaw clipping
 - LaTeX reference: [Readable equations and mode-specific conventions](aurora_guide.md#aperture)
-- Physical meaning: Open-aperture conditional delivered-weight mean AAV times positive-gap LSV. AAV uses beam maxima of clipped sub-strip areas. Closed endpoints excluded; weights renormalized. Adapted MCS, not exact McNiven MCS.
+- Physical meaning: Open-aperture conditional delivered-weight mean AAV times open-gap LSV (gap > 1+1e-8 mm). AAV uses beam maxima of clipped sub-strip areas. Closed endpoints excluded; weights renormalized. Adapted MCS, not exact McNiven MCS.
 - Unit: dimensionless
 - Inputs required: Physical LeafPositionBoundaries for both MLC layers; A/B bank positions; X/Y jaws; cumulative meterset weights; BeamMeterset MU when available
 - Status: implemented
-- Notes: aurora-v4-physical-aperture-open-only: physical dual-layer intersection; adapted gap-based MCS, not exact McNiven MCS or the old unit-width design. Positive delivered intervals use endpoint i+1. All seven exclude area-zero endpoints and renormalize retained weights; closed leaves excluded from SAS/LSV. Missing geometry or invalid weights makes all seven unavailable with a warning; missing any BeamMeterset uses unit-normalized per-beam relative weights for every contributing beam with a warning.
+- Notes: aurora-v5-unified-physical-closure1mm: physical dual-layer intersection; adapted gap-based MCS, not exact McNiven MCS or the old unit-width design. Positive delivered intervals use endpoint i+1; gaps <=1+1e-8 mm are closed. All seven exclude area-zero endpoints and renormalize retained weights; closed leaves excluded from SAS/LSV. Missing geometry or invalid weights makes all seven unavailable with a warning; missing any BeamMeterset uses unit-normalized per-beam relative weights for every contributing beam with a warning.
 
 ## `mcs_complexity_aurora` - mcs_complexity_aurora
 
@@ -818,7 +818,7 @@ Read the linked LaTeX chapter together with the per-key definition and [formula 
 - Unit: dimensionless
 - Inputs required: Physical LeafPositionBoundaries for both MLC layers; A/B bank positions; X/Y jaws; cumulative meterset weights; BeamMeterset MU when available
 - Status: implemented
-- Notes: aurora-v4-physical-aperture-open-only: physical dual-layer intersection; adapted gap-based MCS, not exact McNiven MCS or the old unit-width design. Positive delivered intervals use endpoint i+1. All seven exclude area-zero endpoints and renormalize retained weights; closed leaves excluded from SAS/LSV. Missing geometry or invalid weights makes all seven unavailable with a warning; missing any BeamMeterset uses unit-normalized per-beam relative weights for every contributing beam with a warning.
+- Notes: aurora-v5-unified-physical-closure1mm: physical dual-layer intersection; adapted gap-based MCS, not exact McNiven MCS or the old unit-width design. Positive delivered intervals use endpoint i+1; gaps <=1+1e-8 mm are closed. All seven exclude area-zero endpoints and renormalize retained weights; closed leaves excluded from SAS/LSV. Missing geometry or invalid weights makes all seven unavailable with a warning; missing any BeamMeterset uses unit-normalized per-beam relative weights for every contributing beam with a warning.
 
 ## `axial_travel_mm` - axial_travel_mm
 
@@ -886,7 +886,7 @@ Read the linked LaTeX chapter together with the per-key definition and [formula 
 - Symbol/short name: mu_per_mm
 - Mathematical definition: MU_total / axial travel
 - LaTeX reference: [Readable equations and mode-specific conventions](aurora_guide.md#motion)
-- Physical meaning: Legacy engineering MU density per millimeter of axial travel. Uses explicit total MU when available, otherwise cumulative meterset-weight span as a transparent proxy.
+- Physical meaning: Absolute DICOM BeamMeterset MU summed across beams, divided by total axial travel. Missing or invalid beam MU yields unavailable, never a relative-weight proxy.
 - Unit: MU/mm
 - Inputs required: Aurora RTPLAN control points: gantry angle, isocenter z, cumulative meterset weight, MLCX1 and MLCX2
 - Status: implemented
@@ -896,10 +896,10 @@ Read the linked LaTeX chapter together with the per-key definition and [formula 
 
 - Group: Legacy engineering
 - Symbol/short name: aperture_change_per_mm
-- Mathematical definition: sum_i abs(delta W_i)/sum_i abs(delta z_i), retaining dz>0; W is summed positive opening width, not area
+- Mathematical definition: sum_i abs(delta A_eff_i)/sum_i abs(delta z_i), retaining dz>0; physical area with the common 1 mm closure mask
 - LaTeX reference: [Readable equations and mode-specific conventions](aurora_guide.md#motion)
-- Physical meaning: Legacy engineering metric for total absolute aperture-width change normalized by total axial travel.
-- Unit: mm/mm
+- Physical meaning: Total absolute effective area change divided by total positive couch travel, mm^2/mm; physical layers are intersected on their boundary grid and clipped to jaws.
+- Unit: mm^2/mm
 - Inputs required: Aurora RTPLAN control points: gantry angle, isocenter z, cumulative meterset weight, MLCX1 and MLCX2
 - Status: implemented
 - Notes: Retained for comparison against the v2 paper-style metrics.
@@ -920,9 +920,9 @@ Read the linked LaTeX chapter together with the per-key definition and [formula 
 
 - Group: Legacy engineering
 - Symbol/short name: coupled_modulation_index
-- Mathematical definition: mean(x/(1+x)) over available aperture-change/mm, leaf-travel/mm, MU-density CV and pitch CV; equal component weights
+- Mathematical definition: mean(x/(1+x)); x=(area-change rate/(1 mm^2/mm), leaf-travel rate/(1 mm/mm), MU-density CV, pitch CV); area geometry required
 - LaTeX reference: [Readable equations and mode-specific conventions](aurora_guide.md#motion)
-- Physical meaning: Legacy engineering aggregate of normalized aperture change, leaf travel, MU-density variability, and pitch variability.
+- Physical meaning: Equal mean of x/(1+x) for area-change rate scaled by 1 mm^2/mm, leaf-travel rate scaled by 1 mm/mm, and the two CVs. Required physical area geometry must be valid.
 - Unit: dimensionless
 - Inputs required: Aurora RTPLAN control points: gantry angle, isocenter z, cumulative meterset weight, MLCX1 and MLCX2
 - Status: implemented

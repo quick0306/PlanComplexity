@@ -7,6 +7,39 @@ from aurora_svmat_lab.models import AuroraBeam, AuroraControlPoint
 from aurora_svmat_lab.metrics import calculate_beam_metrics, calculate_plan_metrics
 
 
+
+def physical_fixture(builder):
+    """Give motion fixtures explicit A/B banks, leaf boundaries, jaws and 1 MU.
+
+    The original prototype fixtures supplied one coordinate per channel and
+    intentionally omitted physical metadata; they cannot test physical apertures.
+    """
+    def wrapped(*args, **kwargs):
+        beam = builder(*args, **kwargs)
+        if builder.__name__ == "build_small_opening_beam":
+            for cp in beam.control_points:
+                banks = tuple(cp.mlc_x1_positions_mm) + tuple(cp.mlc_x2_positions_mm)
+                cp.mlc_x1_positions_mm = banks
+                cp.mlc_x2_positions_mm = banks
+        for cp in beam.control_points:
+            for attr in ("mlc_x1_positions_mm", "mlc_x2_positions_mm"):
+                values = getattr(cp, attr)
+                if len(values) % 2:
+                    setattr(cp, attr, tuple(values) + (100.0,))
+            cp.jaw_x = (-200.0, 200.0)
+            cp.jaw_y = (-10.0, 10.0)
+        first = beam.control_points[0]
+        for positions_attr, boundaries_attr in (
+            ("mlc_x1_positions_mm", "leaf_boundaries_mlcx1"),
+            ("mlc_x2_positions_mm", "leaf_boundaries_mlcx2"),
+        ):
+            count = len(getattr(first, positions_attr)) // 2
+            setattr(beam, boundaries_attr, tuple(-10.0 + 20.0*j/count for j in range(count+1)))
+        beam.beam_meterset_mu = getattr(beam, "total_mu", 1.0)
+        return beam
+    return wrapped
+
+
 def build_control_point(
     *,
     index: int,
@@ -26,6 +59,7 @@ def build_control_point(
     )
 
 
+@physical_fixture
 def build_multi_rotation_beam() -> AuroraBeam:
     control_points = []
     for index in range(11):
@@ -42,6 +76,7 @@ def build_multi_rotation_beam() -> AuroraBeam:
     return AuroraBeam(beam_number=1, beam_name="Rotation Beam", control_points=control_points)
 
 
+@physical_fixture
 def build_modulated_beam() -> AuroraBeam:
     return AuroraBeam(
         beam_number=2,
@@ -75,6 +110,7 @@ def build_modulated_beam() -> AuroraBeam:
     )
 
 
+@physical_fixture
 def build_zero_travel_beam() -> SimpleNamespace:
     control_points = [
         build_control_point(
@@ -102,6 +138,7 @@ def build_zero_travel_beam() -> SimpleNamespace:
     )
 
 
+@physical_fixture
 def build_variable_pitch_beam() -> AuroraBeam:
     return AuroraBeam(
         beam_number=5,
@@ -135,6 +172,7 @@ def build_variable_pitch_beam() -> AuroraBeam:
     )
 
 
+@physical_fixture
 def build_small_opening_beam() -> AuroraBeam:
     return AuroraBeam(
         beam_number=7,
@@ -176,6 +214,7 @@ def build_small_opening_beam() -> AuroraBeam:
     )
 
 
+@physical_fixture
 def build_dual_layer_synergy_beam() -> AuroraBeam:
     return AuroraBeam(
         beam_number=8,
@@ -217,6 +256,7 @@ def build_dual_layer_synergy_beam() -> AuroraBeam:
     )
 
 
+@physical_fixture
 def build_reversed_beam(source_beam: AuroraBeam, *, beam_number: int, beam_name: str) -> AuroraBeam:
     control_points = list(reversed(source_beam.control_points))
     rebuilt = [
@@ -224,7 +264,7 @@ def build_reversed_beam(source_beam: AuroraBeam, *, beam_number: int, beam_name:
             index=index,
             angle=control_point.gantry_angle_deg,
             axial=control_point.axial_position_mm,
-            meterset_weight=control_point.cumulative_meterset_weight,
+            meterset_weight=1.0-control_point.cumulative_meterset_weight,
             x1=tuple(control_point.mlc_x1_positions_mm),
             x2=tuple(control_point.mlc_x2_positions_mm),
         )
@@ -379,17 +419,17 @@ class AuroraMetricTests(unittest.TestCase):
         metrics = calculate_beam_metrics(build_small_opening_beam())
 
         self.assertAlmostEqual(metrics["small_opening_fraction"], 0.6)
-        self.assertAlmostEqual(metrics["near_closed_fraction"], 0.1)
-        self.assertAlmostEqual(metrics["effective_small_gap_burden"], 0.31)
+        self.assertAlmostEqual(metrics["near_closed_fraction"], 0.0)
+        self.assertAlmostEqual(metrics["effective_small_gap_burden"], 0.23)
 
         self.assertAlmostEqual(metrics["projection_pitch_max"], 1.0 / 9.0)
         self.assertAlmostEqual(metrics["projection_pitch_top3_mean"], 1.0 / 9.0)
         self.assertAlmostEqual(metrics["projection_mu_density_max_proxy"], 0.05)
         self.assertAlmostEqual(metrics["projection_mu_density_top3_mean_proxy"], (0.02 + 0.05 + 0.03) / 3.0)
-        self.assertAlmostEqual(metrics["projection_aperture_change_max"], 1.0)
-        self.assertAlmostEqual(metrics["projection_aperture_change_top3_mean"], (1.0 + 0.6 + 1.0) / 3.0)
-        self.assertAlmostEqual(metrics["projection_leaf_travel_max"], 2.2)
-        self.assertAlmostEqual(metrics["projection_leaf_travel_top3_mean"], (1.0 + 0.6 + 2.2) / 3.0)
+        self.assertAlmostEqual(metrics["projection_aperture_change_max"], 11.0)
+        self.assertAlmostEqual(metrics["projection_aperture_change_top3_mean"], (11.0 + 7.0 + 10.0) / 3.0)
+        self.assertAlmostEqual(metrics["projection_leaf_travel_max"], 4.4)
+        self.assertAlmostEqual(metrics["projection_leaf_travel_top3_mean"], (2.0 + 1.2 + 4.4) / 3.0)
 
         self.assertAlmostEqual(metrics["head_mu_density_mean_proxy"], 0.02)
         self.assertAlmostEqual(metrics["mid_mu_density_mean_proxy"], 0.05)
@@ -398,19 +438,19 @@ class AuroraMetricTests(unittest.TestCase):
         self.assertAlmostEqual(metrics["mid_mu_density_cv_proxy"], 0.0)
         self.assertAlmostEqual(metrics["tail_mu_density_cv_proxy"], 0.0)
 
-        self.assertAlmostEqual(metrics["head_aperture_change_mean"], 1.0)
-        self.assertAlmostEqual(metrics["mid_aperture_change_mean"], 0.6)
-        self.assertAlmostEqual(metrics["tail_aperture_change_mean"], 1.0)
-        self.assertAlmostEqual(metrics["head_leaf_travel_mean"], 1.0)
-        self.assertAlmostEqual(metrics["mid_leaf_travel_mean"], 0.6)
-        self.assertAlmostEqual(metrics["tail_leaf_travel_mean"], 2.2)
+        self.assertAlmostEqual(metrics["head_aperture_change_mean"], 11.0)
+        self.assertAlmostEqual(metrics["mid_aperture_change_mean"], 7.0)
+        self.assertAlmostEqual(metrics["tail_aperture_change_mean"], 10.0)
+        self.assertAlmostEqual(metrics["head_leaf_travel_mean"], 2.0)
+        self.assertAlmostEqual(metrics["mid_leaf_travel_mean"], 1.2)
+        self.assertAlmostEqual(metrics["tail_leaf_travel_mean"], 4.4)
 
     def test_v3_dual_layer_synergy_metrics_are_interpretable(self):
         metrics = calculate_beam_metrics(build_dual_layer_synergy_beam())
 
         self.assertAlmostEqual(metrics["layer_imbalance_index"], 1.0 / 3.0)
         self.assertAlmostEqual(metrics["layer_correlation_index"], 1.0)
-        self.assertAlmostEqual(metrics["x1_x2_aperture_disparity"], 1.0 / 3.0)
+        self.assertAlmostEqual(metrics["x1_x2_aperture_disparity"], .2*2/194 + .4*4/188 + .4*7/179)
         self.assertAlmostEqual(metrics["x1_x2_leaf_travel_ratio"], 0.5)
 
     def test_v3_reversal_metrics_detect_balanced_bidirectional_pair(self):

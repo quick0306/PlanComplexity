@@ -1,0 +1,17 @@
+{
+  "reason": "Preserve unversioned Aurora coordinate-proxy baselines before physical V5 migration.",
+  "cases": [
+    {
+      "case_id": "aurora_canonical",
+      "source_checksum": "e64ed0e3b449677a0fca0a22c3912354f3168e975edd09ed75e8aaaa71b96353",
+      "previous_metrics_checksum": "4967f2886f07850bb35b741392688c888bdedd7c9adac54feebef9fb4619b8ba",
+      "previous_metric_count": 70
+    },
+    {
+      "case_id": "aurora_research_edge",
+      "source_checksum": "38e8d9f0eb7dfd489616696c59b546ba85be7538d42239b35e8ccd29e1091ab4",
+      "previous_metrics_checksum": "292133471c7b1ee822c5c52927853543f83e5174b4fec2a27310f42429120001",
+      "previous_metric_count": 70
+    }
+  ]
+}

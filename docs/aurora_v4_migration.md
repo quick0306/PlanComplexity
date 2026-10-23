@@ -1,3 +1,7 @@
+# Historical Aurora V4 migration
+
+Current calculations use `aurora-v5-unified-physical-closure1mm`. See [V5 migration](aurora_v5_migration.md). The sections below preserve the V4 history and are not current calculation instructions.
+
 # Aurora 77-metric restoration and formula migration
 
 Current behavior is `aurora-v4-physical-aperture-open-only`; see the [current definitions](aurora_aperture_metrics.md) and [user guide](user_guide.md). The earlier sections retain restoration-time history; the open-only section supersedes its closed-endpoint rule.

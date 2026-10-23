@@ -12,6 +12,7 @@ from .metrics import (
     calculate_plan_metrics,
 )
 from .models import AuroraControlPoint
+from .physical_aperture import aperture_area_values, geometry_scope, CLOSURE_MM
 
 
 def export_plan_rows(results: Iterable[Any]) -> list[dict[str, Any]]:
@@ -56,6 +57,7 @@ def export_beam_rows(results: Iterable[Any]) -> list[dict[str, Any]]:
     return rows
 
 
+@geometry_scope
 def export_projection_rows(results: Iterable[Any]) -> list[dict[str, Any]]:
     rows: list[dict[str, Any]] = []
     for result in results:
@@ -65,6 +67,7 @@ def export_projection_rows(results: Iterable[Any]) -> list[dict[str, Any]]:
     return rows
 
 
+@geometry_scope
 def export_trajectory_rows(results: Iterable[Any]) -> list[dict[str, Any]]:
     rows: list[dict[str, Any]] = []
     for result in results:
@@ -72,6 +75,7 @@ def export_trajectory_rows(results: Iterable[Any]) -> list[dict[str, Any]]:
         for beam in getattr(result, "beams", []) or []:
             control_points = list(getattr(beam, "control_points", []) or [])
             observed_angle_deltas = calculate_observed_angle_deltas(control_points)
+            areas = aperture_area_values(beam)
             for index, control_point in enumerate(control_points):
                 previous_cp = control_points[index - 1] if index > 0 else None
                 row = {
@@ -99,7 +103,9 @@ def export_trajectory_rows(results: Iterable[Any]) -> list[dict[str, Any]]:
                         if previous_cp is not None
                         else None
                     ),
-                    "aperture_width_mm": _aperture_width_mm(control_point),
+                    "effective_aperture_area_mm2": areas[index] if areas and index < len(areas) else None,
+                    "aperture_closure_threshold_mm": CLOSURE_MM,
+                    "metric_formula_version": getattr(metadata, "metric_formula_version", ""),
                 }
                 if previous_cp is not None:
                     row.update(
@@ -113,7 +119,9 @@ def export_trajectory_rows(results: Iterable[Any]) -> list[dict[str, Any]]:
                                 row["delta_cumulative_meterset_weight"],
                                 row["delta_axial_mm"],
                             ),
-                            "projection_aperture_change": _projection_aperture_change(previous_cp, control_point),
+                            "projection_aperture_change": _projection_aperture_change(previous_cp, control_point,
+                                areas[index - 1] if areas and index > 0 else None,
+                                areas[index] if areas and index < len(areas) else None),
                             "projection_leaf_travel": _projection_leaf_travel(previous_cp, control_point),
                             "projection_leaf_travel_mlcx1": _projection_leaf_travel_for_layer(
                                 previous_cp,
@@ -187,17 +195,14 @@ def write_metric_rows_to_csv(path: str | Path, rows: list[dict[str, Any]]) -> No
         writer.writerows(rows)
 
 
-def _aperture_width_mm(control_point: AuroraControlPoint) -> float:
-    return sum(
-        max(0.0, x2_mm - x1_mm)
-        for x1_mm, x2_mm in zip(control_point.mlc_x1_positions_mm, control_point.mlc_x2_positions_mm)
-    )
+
 
 
 def _projection_rows_for_beam(result: Any, metadata: Any, beam: Any) -> list[dict[str, Any]]:
     rows: list[dict[str, Any]] = []
     control_points = list(getattr(beam, "control_points", []) or [])
     observed_angle_deltas = calculate_observed_angle_deltas(control_points)
+    areas = aperture_area_values(beam)
     for interval_index, (previous_cp, control_point) in enumerate(zip(control_points, control_points[1:]), start=1):
         delta_gantry_deg = observed_angle_deltas[interval_index - 1]
         delta_axial_mm = control_point.axial_position_mm - previous_cp.axial_position_mm
@@ -217,7 +222,13 @@ def _projection_rows_for_beam(result: Any, metadata: Any, beam: Any) -> list[dic
                 "delta_cumulative_meterset_weight": delta_weight,
                 "projection_pitch": _projection_pitch(delta_axial_mm, delta_gantry_deg),
                 "projection_mu_density_proxy": _projection_mu_density_proxy(delta_weight, delta_axial_mm),
-                "projection_aperture_change": _projection_aperture_change(previous_cp, control_point),
+                "effective_aperture_area_start_mm2": areas[interval_index - 1] if areas and interval_index < len(areas) else None,
+                "effective_aperture_area_end_mm2": areas[interval_index] if areas and interval_index < len(areas) else None,
+                "aperture_closure_threshold_mm": CLOSURE_MM,
+                "metric_formula_version": getattr(metadata, "metric_formula_version", ""),
+                "projection_aperture_change": _projection_aperture_change(previous_cp, control_point,
+                    areas[interval_index - 1] if areas and interval_index < len(areas) else None,
+                    areas[interval_index] if areas and interval_index < len(areas) else None),
                 "projection_leaf_travel": _projection_leaf_travel(previous_cp, control_point),
                 "projection_leaf_travel_mlcx1": _projection_leaf_travel_for_layer(previous_cp, control_point, "mlcx1"),
                 "projection_leaf_travel_mlcx2": _projection_leaf_travel_for_layer(previous_cp, control_point, "mlcx2"),
@@ -238,11 +249,12 @@ def _projection_mu_density_proxy(delta_weight: float | None, delta_axial_mm: flo
     return abs(delta_weight) / abs(delta_axial_mm)
 
 
-def _projection_aperture_change(previous_cp: AuroraControlPoint, control_point: AuroraControlPoint) -> float | None:
-    delta_axial_mm = control_point.axial_position_mm - previous_cp.axial_position_mm
-    if delta_axial_mm == 0.0:
+def _projection_aperture_change(previous_cp: AuroraControlPoint, control_point: AuroraControlPoint,
+                                previous_area=None, current_area=None) -> float | None:
+    distance = abs(control_point.axial_position_mm - previous_cp.axial_position_mm)
+    if distance == 0 or previous_area is None or current_area is None:
         return None
-    return abs(_aperture_width_mm(control_point) - _aperture_width_mm(previous_cp)) / abs(delta_axial_mm)
+    return abs(current_area - previous_area) / distance
 
 
 def _projection_leaf_travel(previous_cp: AuroraControlPoint, control_point: AuroraControlPoint) -> float | None:

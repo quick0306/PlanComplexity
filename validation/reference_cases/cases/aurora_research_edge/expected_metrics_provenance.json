@@ -1,0 +1,10 @@
+{
+  "case_id": "aurora_research_edge",
+  "domain": "AURORA",
+  "expected_metrics_checksum": "5688bf2f40ca3cfbc8457bcd7f93a0a32bf6284d51435cb432356e48d544f677",
+  "formula_version": "aurora-v5-unified-physical-closure1mm",
+  "generated_at": "2026-10-23T14:33:30Z",
+  "mode": "AURORA",
+  "schema_version": 1,
+  "source_checksum": "38e8d9f0eb7dfd489616696c59b546ba85be7538d42239b35e8ccd29e1091ab4"
+}

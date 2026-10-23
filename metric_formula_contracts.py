@@ -313,51 +313,55 @@ def _cyberknife(record) -> dict:
 
 def _aurora(record) -> dict:
     key = record.metric_key
-    if key in V4_METRIC_ORDER:
-        normalizers = {
-            "mean_ba": "A=sum_s h_i,s*g_i,s in mm^2; no dimensionless normalization.",
-            "mean_bi": "P^2/(4*pi*A); exact union-boundary perimeter, not sum of individual rectangle perimeters.",
-            "mean_ca": "P/A in mm^-1; perimeter-to-area ratio, not circularity.",
-            "mean_sas5": "Count positive open sub-strips with gap strictly <5 mm / count positive open sub-strips; equal counts, no width/area weighting.",
-            "mean_sas10": "Count positive open sub-strips with gap strictly <10 mm / count positive open sub-strips; equal counts, no width/area weighting.",
-            "mean_mcs_aurora": "AAV=A_i/U_beam, U_beam=sum_s max_positive_endpoint(h_i,s*g_i,s), including moving Y-jaw clipping; LSV=1-sum(abs(diff(open_gaps)))/((n_open-1)*max(open_gaps)), with compressed positive-gap sequence; n_open<=1 =>1; MCS=AAV*LSV; zero U=>0.",
-            "mcs_complexity_aurora": "1-mean_mcs_aurora; complement of the same delivered-weight adapted MCS.",
-        }
-        return dict(
-            sampling="Within-beam adjacent CP intervals with strictly positive delta CMW only; use endpoint i+1 geometry. Initial CMW must be zero; finite nondecreasing sequence and positive final CMW required; zero-MU beams excluded.",
-            active_mask="Real LeafPositionBoundaries on both layers define their common physical Y coverage and union of boundary positions. Split each position vector into A/B banks, intersect layer intervals, clip to X/Y jaws. Use positive-height, positive-gap sub-strips; A and P describe the exact rectangle union.",
-            normalization=normalizers[key],
-            aggregation="Open-aperture conditional weighted mean: sum_open(w_i*f_i)/sum_open(w_i), with w_i=delta CMW/final beam CMW*BeamMeterset MU. All seven exclude area-zero endpoints. If any BeamMeterset is absent, normalize each beam over all its positive intervals before excluding closed samples; no mixed MU/relative units and no rebalancing after exclusion.",
-            missing_value="Missing/invalid boundaries, jaws, banks or cumulative weights => all seven None plus warning. No positive-weight open endpoint => all seven None. Closed endpoints excluded from numerator and denominator with a warning reporting excluded sample count and weight fraction. Closed leaves excluded from SAS and LSV; geometric boundaries still determine aperture perimeter.",
-            representation="Aurora V4 physical dual-layer intersection with version-specific gap-based adapted MCS; not exact bank-based McNiven MCS and not exact reproduction of the old unit-width design. Unchanged V2/V3/legacy metrics remain research proxies.",
-            source_anchors=("aurora_svmat_lab/aperture_metrics.py:_aperture", "aurora_svmat_lab/aperture_metrics.py:_area_perimeter", "aurora_svmat_lab/aperture_metrics.py:_samples", "aurora_svmat_lab/aperture_metrics.py:calculate_v4_metrics_with_warnings"),
-            evidence_status="implementation_contract", precision="Unrounded Python floating-point values; None remains unavailable.",
+    geometry = ("Split MLCX1/MLCX2 into their own A/B banks; use the union of physical "
+                "LeafPositionBoundaries over common Y coverage, intersect the layers and clip "
+                "to X/Y jaws. Effective gaps <=1+1e-8 mm are closed everywhere.")
+    weighted = ("OpenMUmean=sum_open(w_i*f_i)/sum_open(w_i). Use positive delta CMW endpoints i+1 and w=deltaCMW/finalCMW*BeamMeterset; "
+                "exclude area-zero endpoints and pool open weights without rebalancing beams. "
+                "If any beam MU is missing, all beams use unit-normalized relative weights, "
+                "disclosed in warnings. Zero increments never create samples.")
+    mean_keys = {*V4_METRIC_ORDER, "small_opening_fraction", "near_closed_fraction",
+                 "effective_small_gap_burden", "x1_x2_aperture_disparity"}
+    result = dict(
+        sampling="Within-beam adjacent CP intervals; shortest observed gantry unwrap; never join beams.",
+        active_mask="Raw physical leaf positions for leaf travel; retain positive dz or dtheta as required.",
+        normalization=record.mathematical_definition,
+        aggregation="Pool intervals: ordinary mean, population CV, nearest-rank ceil(.95*N), max or top3 as named.",
+        missing_value="Unavailable inputs or ratios => None; one-value or all-zero CV =>0.",
+        representation="Aurora V5; motion/density proxy keys keep their declared semantics.",
+        source_anchors=("aurora_svmat_lab/metrics.py:calculate_plan_metrics",),
+        evidence_status="research_variant_pending_review",
+        precision="Unrounded Python floating-point values; None remains unavailable.",
+    )
+    if key in mean_keys:
+        result.update(
+            sampling="Finite nondecreasing CMW starting at zero and ending positive; endpoint i+1 of positive intervals.",
+            active_mask=geometry,
+            aggregation=weighted,
+            missing_value="Invalid physical geometry/CMW in any contributing beam => None with warning; no partial plan mean. No open delivered endpoints => None. Closed endpoints excluded from numerator and denominator; exclusion counts and relative-weight fallback disclosed.",
+            representation="Aurora physical aperture and gap-based adapted MCS, not classic bank-based McNiven MCS. CA=P/A, not circularity; complexity=1-MCS.",
+            source_anchors=("aurora_svmat_lab/physical_aperture.py:_build_geometry",
+                            "aurora_svmat_lab/physical_aperture.py:_endpoint_metrics",
+                            "aurora_svmat_lab/physical_aperture.py:summarize_apertures"),
         )
-    result = dict(sampling="Adjacent CPs within each beam only; shortest signed gantry unwrap then absolute dtheta; axial dz=abs(delta z). Plan intervals are pooled, never joined across beams.",
-                  active_mask="No jaw/leaf-width clipping; W=sum_zip max(x2-x1,0) is an opening-WIDTH proxy, not area or a verified physical dual-layer intersection; leaf travel sums raw coordinate changes over the paired available entries.",
-                  normalization="Pitch_i=dz/dtheta for dtheta>0; density_i=abs(deltaCMW)/dz, aperture_change_i=abs(deltaW)/dz, travel_i=sum(abs(delta leaf))/dz for dz>0. CV=population_SD/abs(mean); each retained interval equal weight.",
-                  aggregation="Pool valid within-beam interval observations; ordinary mean, population CV, maximum, nearest-rank ceil(0.95*N), or mean of largest min(3,N), as named in the formula.",
-                  missing_value="Empty valid samples or undefined ratio=>None; one-value or all-zero CV=>0; no artificial zero is substituted for unavailable motion.",
-                  representation="Aurora research proxies; MLCX1/MLCX2 channels are not silently mapped to Halcyon effective geometry.",
-                  source_anchors=("aurora_svmat_lab/metrics.py:calculate_plan_metrics", "aurora_svmat_lab/metrics.py:_iter_interval_motion"),
-                  evidence_status="research_variant_pending_review", precision="Unrounded Python floating-point values; None remains unavailable.")
-    if key.startswith(("head_", "mid_", "tail_")):
-        result["sampling"] += " Assign interval midpoint z to thirds of the global midpoint span: normalized<1/3 head,<2/3 mid,otherwise tail; zero span=>mid."
-    elif key in {"small_opening_fraction", "near_closed_fraction", "effective_small_gap_burden"}:
-        result.update(sampling="Next endpoint of each within-beam CP interval, zipped MLCX1/MLCX2 entries.", active_mask="gap=max(x2-x1,0)>0; no jaws; these are research proxy openings.",
-                      normalization="Weight each eligible pair by abs(deltaCMW); zero increment falls back to1. Fraction uses strict gap<10 or<2 mm; severity=max(0,1-gap/10 mm).",
-                      aggregation="Pool pair samples and weights across all within-beam intervals.", missing_value="No positive-gap samples with positive weight=>0.")
+    elif "aperture_change" in key:
+        result.update(active_mask=geometry,
+                      sampling="All adjacent geometric CPs with positive dz, including CP0 and zero-MU transitions; not a delivered-MU mean.",
+                      aggregation="Area rate abs(delta A_eff)/dz; ordinary interval summaries. aperture_change_per_mm is ratio of total area variation to total positive travel.",
+                      missing_value="Invalid physical geometry in any beam => None, never a partial plan mean.")
     elif key in {"reversal_symmetry_index", "forward_backward_metric_difference", "beam_pair_balance_index"}:
-        result.update(sampling="Group beams by sign(z_last-z_first); abs(net motion)<=1e-9 excluded.",
-                      normalization="Symmetry averages four family comparisons (mean MU-density proxy, aperture change, leaf travel, pitch):1-abs(f-b)/(abs(f)+abs(b)), both zero=>1. Difference compares mean coupled index; balance compares sums of coupled index.",
-                      aggregation="Equal beam means within direction; equal available-family means for symmetry; no MU weights.", missing_value="Either direction absent=>None; missing family excluded; no usable family=>None; zero total coupled load=>balance None.")
-    elif key in {"layer_imbalance_index", "layer_correlation_index", "x1_x2_aperture_disparity", "x1_x2_leaf_travel_ratio"}:
-        result["normalization"] += " Imbalance=abs(mean1-mean2)/(abs(mean1)+abs(mean2)); ratio=mean1/mean2. Correlation uses population Pearson; single/constant sequences return1 if pairwise equal within abs_tol1e-12, else0. Aperture disparity compares sum(abs(position)) of each channel at each CP, skips zero total."
+        result.update(normalization=record.mathematical_definition+"; aperture-change component uses physical area.",
+                      aggregation="Group beams by net z sign; equal beam means within direction. Symmetry averages four available families; difference compares mean coupled index; balance compares sums.",
+                      missing_value="Missing direction or invalid required geometry => None; zero total coupled burden => balance None.")
     elif key == "coupled_modulation_index":
-        result["normalization"] = "For available (aperture_change_per_mm,leaf_travel_per_mm,MU-density CV,pitch CV), apply x/(1+x), then equal-component mean; unavailable components excluded."
-    elif key in {"longitudinal_travel_mm", "axial_travel_mm", "total_rotation_deg", "gantry_rotation_deg", "rotations", "travel_per_rotation_mm", "mm_per_deg", "mm_per_rotation", "mu_per_mm", "aperture_change_per_mm", "leaf_travel_per_mm"}:
-        result["aggregation"] = "Sum within-beam distances first; form plan ratio of sums, not mean of interval ratios. Aperture/leaf change ratios retain only dz>0 intervals."
-        result["normalization"] += " Explicit beam MU is used for MU/mm; absent MU falls back to cumulative-weight span, so proxy values must not be compared as absolute MU/mm."
+        result.update(active_mask=geometry,
+                      normalization="x/(1+x) uses fixed scales 1 mm^2/mm for area rate and 1 mm/mm for leaf-travel rate; CVs dimensionless. Equal-component mean; no fitted coefficients.",
+                      missing_value="Physical area-change term required; invalid geometry => None, never a partial aggregate.")
+    elif key == "mu_per_mm":
+        result.update(normalization="Sum absolute DICOM BeamMeterset / total axial travel.",
+                      missing_value="Any missing/invalid beam MU or zero total travel => None; no cumulative-weight fallback.")
+    if key.startswith(("head_", "mid_", "tail_")):
+        result["sampling"] += " Interval midpoint z: lower third=head, middle=mid, upper=tail, using global z span; zero span=>mid."
     return result
 
 
@@ -373,8 +377,7 @@ def build_metric_formula_contracts() -> list[MetricFormulaContract]:
             formula=record.mathematical_definition, unit=record.unit,
             formula_version=(SCHEMA_VERSION if record.platform == 'VMAT_IMRT' and record.metric_key in EXPORT_KEYS else
                              ETHOS_REPORT_VERSION if record.metric_key in ETHOS_REPORT_KEYS else
-                             (AURORA_FORMULA_VERSION if record.metric_key in V4_METRIC_ORDER else
-                              "aurora-unversioned-research-v2-v3-legacy") if record.platform == "AURORA" else
+                             AURORA_FORMULA_VERSION if record.platform == "AURORA" else
                              formula_version_for_mode(record.platform)),
             **fields,
         ))
@@ -390,7 +393,7 @@ def write_contract_document(path: str | Path) -> None:
     contracts = build_metric_formula_contracts()
     lines = ["# Metric formula contracts", "", "Readable editable Markdown/LaTeX equations for all platforms: [complete equation index](metric_math_index.md). Each key below retains its exact sampling, normalization, representation and missing-value contract.", "", "Generated by `python -m metric_formula_contracts`; edit the catalog and contract builders, then regenerate. This inventory documents current implementation semantics. It does not certify agreement with all source papers or external software.", "",
              "`implementation_contract` means source traced; `analytic_cases_checked` means the named formula family has discriminating synthetic examples, not every machine/layer combination; `research_variant_pending_review` means literature/physical interpretation still needs independent review. No row claims external validation.", "",
-             "Counts include container keys (four MI triplets and the motion-profile container), scalar components, native layers and research variants; they are not counts of independently validated scalar metrics. Formula versions come from `formula_versions.py`. Aurora V4 aperture descriptors use aurora-v4-physical-aperture-open-only; the unchanged V2/V3/legacy research proxies retain their unversioned contract label.", "",
+             "Counts include container keys (four MI triplets and the motion-profile container), scalar components, native layers and research variants; they are not counts of independently validated scalar metrics. Formula versions come from `formula_versions.py`. All Aurora records use aurora-v5-unified-physical-closure1mm. Aperture geometry, SAS, MCS and derived fields share the 1 mm analysis mask; unchanged trajectory and density proxy keys retain their declared meanings.", "",
              "Precision: validation requests full precision; legacy default output rounding remains for compatibility. Floating-point error tolerances are separate from display precision. See each row for missing values and fallback rules.", "",
              "Compatibility in geometry-v4: BJAR, AXJD, AYJD, JA and SPORT dual-layer tuples flatten as `_mlcx1`/`_mlcx2`, replacing incidental `_1`/`_2` names. JA now has a catalog entry. NumPy MI triplets must flatten to `_mis`, `_mia`, `_mit` scalar components, including native-layer names; an array is a container, not a scalar metric.", "",
              "Discriminating examples: disjoint 2x1 slots at [0,2] and [4,6] have geometric union4, AAV bank envelope6 and PM max-slot area2. Bank [0,1,2] yields range-normalized LSV0.5 versus max-adjacent-difference variant0. A20x5 rectangle gives EM0.4/mm versus fullP/(2A)=0.25/mm. Endpoint MCS multiplies the two endpoint means; it differs from both mean endpoint products and midpoint geometry. These cases are executable in `tests/test_metric_formula_contracts.py`.", ""]

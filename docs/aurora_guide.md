@@ -1,124 +1,134 @@
-# Aurora SVMAT：全指标使用与 LaTeX 公式
+# Aurora SVMAT：统一物理孔径与指标公式
 
-GUI 使用 `AUTO` 或 `AURORA`。DeepPlan/慧软导出的 Aurora 计划须具备正确的双层控制点、叶片边界、jaws、累积 meterset 及轴向信息；兼容字段与错误处理见 [DeepPlan 兼容说明](deepplan_aurora_compatibility.md)。当前共 77 项：V2 21、V3 40、legacy 9、V4 7。V4 版本为 `aurora-v4-physical-aperture-open-only`；旧 70 项仍是各自的研究/代理定义。
-
-以下不能套用到 Halcyon 或普通 VMAT。每个输出键的统计类型、单位、来源见[逐项定义](metric_definitions_aurora.md)及[公式契约](metric_formula_contracts.md)。
+当前公式版本为 `aurora-v5-unified-physical-closure1mm`（2026-10-23）。共77个输出键，包含别名和派生量。V2/V3/legacy/V4仍表示输出家族，不再表示混用不同的孔径实现。
 
 ## Motion
 
-只在射束内部形成相邻控制点区间，不跨射束连接。令 $\Delta z_i=|z_{i+1}-z_i|$，$\Delta\theta_i$ 为最短展开后的绝对角差，$\Delta C_i$ 为累积权重差。旧定义的开口宽度代理为：
+每个物理层的位置数组分别拆成前N个A-bank与后N个B-bank。MLCX1和MLCX2是两个完整MLC层。用两层真实叶片边界的并集划分共同Y覆盖，求每条带的双层开口交集并裁剪X/Y jaws。
+
+令原始交集间隙为g；g≤1+10⁻⁸ mm时置零，其余保留原宽度。这是统一的几何分析闭合约定，不代表测得的穿透或半影宽度。面积和周长均在掩膜后的矩形并集上计算。
 
 $$
-W_i=\sum_j\max(x^{(2)}_{ij}-x^{(1)}_{ij},0),\quad
-D_i=\sum_j\left(|\Delta x^{(1)}_{ij}|+|\Delta x^{(2)}_{ij}|\right).
+g_{ij}=[\min(R^{(1)}_{ij},R^{(2)}_{ij},X_{2i})-\max(L^{(1)}_{ij},L^{(2)}_{ij},X_{1i})]_+,\qquad
+A_i=\sum_jh_{ij}\,\widetilde g_{ij}.
 $$
 
-两通道按可配对元素计算，未使用真实叶宽或 jaw 裁剪；W 不是面积，不能按 V4 双层交集解释。
+原来的两通道逐项相减代理已退出当前计算。孔径变化率改为实际交集面积变化/床位移：
 
 $$
-p_i=\Delta z_i/\Delta\theta_i,\quad
-\rho_i=|\Delta C_i|/\Delta z_i,\quad
-a_i=|W_{i+1}-W_i|/\Delta z_i,\quad
-v_i=D_i/\Delta z_i.
+a_i=\frac{|A_{i+1}-A_i|}{|\Delta z_i|},\quad
+\mathrm{aperture\_change\_per\_mm}
+=\frac{\sum_{|\Delta z_i|>0}|A_{i+1}-A_i|}{\sum_{|\Delta z_i|>0}|\Delta z_i|}.
 $$
 
-pitch 仅保留正角差，后三者仅保留正轴向位移。各区间样本等权，按键输出普通均值、总体 CV、最大、最近秩 P95 或最大 min(3,N) 项均值：
+单位为mm²/mm。均值、CV、P95、max、top3及区域指标使用同一面积序列。几何变化率保留所有正床位移区间，包括零MU增量区间；它描述几何轨迹，不是交付MU加权平均。缺少任一参与射束的有效几何时，不计算部分计划均值。
+
+以下轨迹及相对密度定义保持：
 
 $$
-\mathrm{CV}(x)=\sigma_{\mathrm{population}}(x)/|\overline x|,\quad
-P_{95}=x_{(\lceil0.95N\rceil)}.
+p_i=|\Delta z_i|/|\Delta\theta_i|,\quad
+\rho_i=|\Delta C_i|/|\Delta z_i|,\quad
+v_i=\sum_{\ell}|\Delta x_{i\ell}|/|\Delta z_i|.
 $$
 
-一个样本或全零 CV 为零，无有效样本/不可定义比值为 None。轴向总行程、角度总行程先求区间绝对距离和，再形成计划比值：
+角差按观测序列最短展开；不跨射束连接。普通均值、总体CV、最近秩P95及top3均在有效区间上计算：
 
 $$
-Z=\sum_i\Delta z_i,\quad\Theta=\sum_i\Delta\theta_i,\quad
-N_{\mathrm{rot}}=\Theta/360,\quad
-\mathrm{mm/deg}=Z/\Theta,\quad\mathrm{mm/rotation}=360Z/\Theta.
+\mathrm{CV}(x)=\sigma_{\rm population}(x)/|\bar x|,\quad P_{95}=x_{(\lceil0.95N\rceil)}.
 $$
 
-MU/mm 使用显式射束 MU；缺 MU 时回退为累积权重跨度，必须标为代理，不能作为绝对 MU/mm 比较。开口变化/mm 和叶片行程/mm 使用正 Δz 区间的变化总和除以其距离总和，不是区间比值算术均值。legacy 同义键保留兼容，不能按新增独立指标计数。
-
-## Research
-
-正向/反向按每束净 z 位移符号分组，绝对净位移≤$10^{-9}$ 的束排除。对 MU 密度代理、开口变化、叶片行程、pitch 四个家族，先分别求方向内射束等权均值 $f_k,b_k$：
-
-$$
-\mathrm{Symmetry}=\operatorname{mean}_{k\,\mathrm{available}}\left(1-\frac{|f_k-b_k|}{|f_k|+|b_k|}\right).
-$$
-
-双方为零时该家族取 1；缺任一方向为 None。forward/backward difference 比较两方向的平均耦合指标，beam pair balance 比较耦合指标之和，详见逐键定义。
-
-$$
-\mathrm{Difference}=|\overline C_f-\overline C_b|,\quad
-\mathrm{Balance}=1-\frac{|\sum C_f-\sum C_b|}{\sum C_f+\sum C_b}.
-$$
-
-C 为下述耦合指标，零总耦合负荷的 Balance 为 None。
-
-small-opening 指标使用每区间下一端点的正代理间隙 g，样本权重 $w=|\Delta C|$，零增量回退为 1：
-
-$$
-F_{\tau}=\frac{\sum w\mathbf1_{0<g<\tau}}{\sum_{g>0}w},\quad
-B_{10}=\frac{\sum_{g>0}w\max(0,1-g/(10\,\mathrm{mm}))}{\sum_{g>0}w}.
-$$
-
-small opening 阈值 10 mm，near closed 为 2 mm；无正样本取零。它们不同于 V4 SAS：代理配对、权重和几何均不同。
-
-区域指标把区间 z 中点按全计划中点跨度分三段：归一化位置 <1/3 为 head、<2/3 为 mid，其余 tail；零跨度归 mid，未覆盖区域为空，不能补零。区域内用相同区间统计。局部峰值用上述最大/P95/top3 规则。
-
-$$
-\mathrm{Coupled}=\operatorname{mean}_{x\,\mathrm{available}}\frac{x}{1+x},\quad
-x\in\{\text{aperture change/mm},\text{leaf travel/mm},\mathrm{CV}(\rho),\mathrm{CV}(p)\}.
-$$
-
-层协调指标沿用原始通道序列：
-
-$$
-\mathrm{Imbalance}=\frac{|\overline x_1-\overline x_2|}{|\overline x_1|+|\overline x_2|},\quad
-\mathrm{TravelRatio}=\overline x_1/\overline x_2,\quad
-\mathrm{Correlation}=\frac{\operatorname{cov}_{\mathrm{population}}(x_1,x_2)}{\sigma_1\sigma_2}.
-$$
-
-常量或单样本相关性在逐对相等（绝对容差 $10^{-12}$）时取 1，否则 0。aperture disparity 对每个控制点两通道绝对位置和比较，跳过两者总和为零的项；不是两层面积差。
+名字含proxy的剂量密度仍使用相对CMW差。mu_per_mm改为绝对BeamMeterset总MU/总轴向行程；任一射束MU缺失或非法时为空，不能用相对权重跨度代替绝对MU。
 
 ## Aperture
 
-真实 A/B bank、两层 `LeafPositionBoundaries` 的共同 Y 覆盖及边界分割形成子条带。每条带取双层横向交集，再裁剪 X/Y jaws：
+所有孔径均值使用正ΔCMW区间的下一端点i+1。CMW必须有限、从零起、非递减且末值正。相同闭合掩膜用于面积、周长、SAS、LSV、AAV包络、小开度和层面积差。
 
 $$
-g_{ij}=\left[\min(R^{(1)}_{ij},R^{(2)}_{ij},X_{2i})-\max(L^{(1)}_{ij},L^{(2)}_{ij},X_{1i})\right]_+,\quad
-A_i=\sum_jh_{ij}g_{ij}.
+w_{bi}=\frac{\Delta C_{bi}}{C_{b,\mathrm{final}}}M_b,\qquad
+E_{\rm open}[f]=
+\frac{\sum_{bi:A_{b,i+1}>0}w_{bi}f_{b,i+1}}
+{\sum_{bi:A_{b,i+1}>0}w_{bi}}.
 $$
 
-P 是这些矩形并集的真实外边界长度，不是逐矩形周长之和。只采正 ΔCMW 区间的末端 i+1。初始 CMW 必须为零，序列有限非递减，末值正；零 MU 束排除。全部七项的同一开放条件均值为：
+闭合端点不进入均值分母。零MU射束及零增量区间不产生样本。若任一射束缺少MU，全部贡献射束先使用单位归一化相对权重，并输出警告；排除闭合端点后不再重新平衡射束。原始几何/权重非法时输出空值及原因，不静默丢弃该射束。
 
 $$
-w_{b,i}=\frac{\Delta C_{b,i}}{C_{b,\mathrm{final}}}M_b,\quad
-\mathbb E_{\mathrm{open}}[f]=\frac{\sum_{b,i:A_{b,i+1}>0}w_{b,i}f_{b,i+1}}{\sum_{b,i:A_{b,i+1}>0}w_{b,i}}.
+\mathrm{BA}=E_{\rm open}[A],\qquad
+\mathrm{BI}=E_{\rm open}[P^2/(4\pi A)],\qquad
+\mathrm{CA}=E_{\rm open}[P/A].
 $$
 
-若有射束 MU 缺失，全部射束改为先在各束所有正区间上归一化，再排除闭合样本，避免混用 MU 与相对权重。删除闭合样本后不重新平衡每束权重。
+P是矩形并集的完整外露边界，包括不连通区域，公共内边不重复计数。CA单位mm⁻¹，是周长/面积，不是圆度，也不是BI的倒数。
 
 $$
-\mathrm{BA}=\mathbb E_{\mathrm{open}}[A],\quad
-\mathrm{BI}=\mathbb E_{\mathrm{open}}[P^2/(4\pi A)],\quad
-\mathrm{CA}=\mathbb E_{\mathrm{open}}[P/A],
-$$
-$$
-\mathrm{SAS}_{\tau}=\mathbb E_{\mathrm{open}}\left[\frac{\#\{j:0<g_j<\tau\}}{\#\{j:g_j>0\}}\right],\quad\tau\in\{5,10\}\,\mathrm{mm}.
+\mathrm{SAS}_{\tau}=E_{\rm open}\left[
+\frac{\#\{j:1+10^{-8}<g_{ij}<\tau\}}
+{\#\{j:g_{ij}>1+10^{-8}\}}
+\right],\qquad \tau=5,10\ {\rm mm}.
 $$
 
-BA 为 mm²，BI 无量纲，CA 为 mm⁻¹（不是圆度）。SAS 对正间隙条带等计数，不按条带宽度或面积加权。Aurora 改编 MCS 用正间隙压缩序列，与通用 bank LSV 不同：
+同一控制点内有效子条带等计数，然后按开放交付权重汇总。SAS不是“面积/跨度低于阈值”的控制点占比，也不是将全计划叶隙直接混池。等于5或10 mm不计入相应分子。
+
+每束分别建立同一掩膜下的逐条带最大面积包络：
 
 $$
-U_b=\sum_j\max_{i:\Delta C_i>0}(h_{i+1,j}g_{i+1,j}),\quad
+U_b=\sum_j\max_{i:\Delta C_i>0}(h_{i+1,j}\widetilde g_{i+1,j}),\quad
 \mathrm{AAV}_i=A_i/U_b,\quad
-\mathrm{LSV}_i=1-\frac{\sum_{j=1}^{n-1}|g_{j+1}-g_j|}{(n-1)\max_jg_j},
+\mathrm{LSV}_i=1-\frac{\sum_{j=1}^{n-1}|g_{j+1}-g_j|}{(n-1)\max_j g_j}.
 $$
+
+LSV仅使用按Y排列的开放间隙压缩序列；n≤1取1，结果限制在[0,1]。这是Aurora间隙序列改编MCS，不是原始McNiven bank-based MCS；U也不是整束最大总面积或真实多边形并集。
+
 $$
-\mathrm{mean\_mcs\_aurora}=\mathbb E_{\mathrm{open}}[\mathrm{AAV}\,\mathrm{LSV}],\quad
+\mathrm{mean\_mcs\_aurora}=E_{\rm open}[\mathrm{AAV}\,\mathrm{LSV}],\qquad
 \mathrm{mcs\_complexity\_aurora}=1-\mathrm{mean\_mcs\_aurora}.
 $$
 
-正间隙数 n≤1 时 LSV=1；闭合叶片不参与 SAS/LSV。全部闭合、缺失或无效几何/权重时七项为空并警告，不能填零；部分闭合只排除对应样本，并报告数量和权重占比。实例、几何重建和历史差异见[完整七项说明](aurora_aperture_metrics.md)及[迁移说明](aurora_v4_migration.md)。
+## Research
+
+小开度、近闭合和严重度与SAS共用几何、样本、分母及交付权重：
+
+$$
+\mathrm{small\_opening\_fraction}=\mathrm{SAS}_{10},\quad
+\mathrm{near\_closed\_fraction}=\mathrm{SAS}_{2},\quad
+B_{10}=E_{\rm open}[\operatorname{mean}_{g>1+10^{-8}}(1-g/10)_+].
+$$
+
+层孔径差异改为同一Y覆盖和jaws内的两个原生层面积差；不再比较绝对叶片坐标幅值：
+
+$$
+D_{\rm layer}=E_{\rm open}\left[\frac{|A_1-A_2|}{A_1+A_2}\right].
+$$
+
+原生层面积也应用1 mm闭合掩膜；采样端点仍以有效交集开放为条件。整体平移叶片与jaws不会改变该指标。
+
+层行程比、不平衡和相关系数仍根据两个物理层的区间叶片行程计算。区域按区间z中点的全局跨度三等分：低z为head、中间为mid、高z为tail；不保证每区间数量恰好相等，也不能单凭标签解释患者解剖方向。
+
+耦合指标保持等权饱和组合，明确固定单位尺度：
+
+$$
+C=\operatorname{mean}_{x\ {\rm available}}\frac{x}{1+x},\quad
+x\in\left\{\frac{\mathrm{area\ change/mm}}{1\ {\rm mm^2/mm}},
+\frac{\mathrm{leaf\ travel/mm}}{1\ {\rm mm/mm}},
+\mathrm{CV}(\rho),\mathrm{CV}(p)\right\}.
+$$
+
+物理面积项是必要输入；无效几何不允许由其余分量生成一个部分耦合值。没有通过队列数据拟合尺度或系数。
+
+正反向按净z位移符号分组。各方向内先作射束等权平均；对密度、孔径面积变化、叶片行程、pitch四个家族的对称性取均值：
+
+$$
+S=\operatorname{mean}_k\left(1-\frac{|f_k-b_k|}{|f_k|+|b_k|}\right),\quad
+D=|\bar C_f-\bar C_b|,\quad
+B=1-\frac{|\sum C_f-\sum C_b|}{\sum C_f+\sum C_b}.
+$$
+
+双方均零时对应对称性为1；缺任一方向为空。Difference和Balance不是互补量。
+
+## Migration
+
+77个键保持，但孔径变化单位、闭合掩膜、小开度、层孔径差异、耦合与正反向派生量、绝对MU/mm均需按新版重新计算。几何阈值也影响七项物理孔径指标。旧数值只用于历史复现，不与新版直接混合。
+
+逐控制点/区间导出包含effective_aperture_area_mm2或起止面积、aperture_closure_threshold_mm和metric_formula_version，供逐步核验。旧aperture_width_mm代理列已退出当前导出。
+
+运行完整测试和针对性测试后，可用tools/recompute_aurora_migration.py对本地RTPLAN目录生成新版77列、逐指标变化汇总和输入哈希。原始临床文件与逐例结果留在本地。

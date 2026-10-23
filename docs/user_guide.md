@@ -21,7 +21,7 @@ Windows 用户运行 `dist/PyUCoMX.exe`。源码用户安装 `requirements.txt` 
 | VMAT/IMRT | `geometry-v4` | 原生层、有效交集、stacked 及 Halcyon/Ethos 专属定义分别解读。 |
 | TOMO | `tomo-v3` | 螺旋投影及叶片开放分数；当前螺旋读取器不支持固定角度。 |
 | CyberKnife MLC | `geometry-v4` | 六项 MLC 指标；XML 分段路径和标准 MLC 回退定义不同。 |
-| Aurora SVMAT | `aurora-v4-physical-aperture-open-only` | 77 项：V2 21、V3 40、legacy 9、物理孔径 V4 7。 |
+| Aurora SVMAT | `aurora-v5-unified-physical-closure1mm` | 77 项：V2 21、V3 40、legacy 9、物理孔径 V4 7。 |
 
 Aurora 的版本字段标识七项 V4 定义；其余 70 项保留研究/代理定义，不能因此统称为物理孔径指标。
 

@@ -12,8 +12,10 @@ from .notes import get_metric_notes
 from .parser import parse_aurora_rtplan
 from .aperture_metrics import calculate_v4_metrics_with_warnings
 from formula_versions import AURORA_FORMULA_VERSION
+from .physical_aperture import geometry_scope
 
 
+@geometry_scope
 def analyze_dataset(dataset: Dataset, *, source_path: str = "") -> AuroraAnalysisResult:
     base_metadata = _metadata_from_dataset(dataset, source_path=source_path)
     try:

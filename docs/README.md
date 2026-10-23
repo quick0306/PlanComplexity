@@ -1,6 +1,6 @@
 # 项目文档索引
 
-以当前代码为准，核对日期 2026-10-23。入口从[中文使用说明](user_guide.md)开始。当前模式版本是 VMAT/IMRT、CyberKnife 的 `geometry-v4`，TOMO 的 `tomo-v3`，Aurora V4 的 `aurora-v4-physical-aperture-open-only`。Halcyon/Ethos 新增三层字段另使用 `lrt-three-layer-v1`，旧字段及其版本保持原定义。
+以当前代码为准，核对日期 2026-10-23。入口从[中文使用说明](user_guide.md)开始。当前模式版本是 VMAT/IMRT、CyberKnife 的 `geometry-v4`，TOMO 的 `tomo-v3`，Aurora V4 的 `aurora-v5-unified-physical-closure1mm`。Halcyon/Ethos 新增三层字段另使用 `lrt-three-layer-v1`，旧字段及其版本保持原定义。
 
 ## 当前使用与定义
 
@@ -16,7 +16,7 @@
 | TOMO：开放时间、sinogram、调制、床运动 | [公式与使用](tomo_guide.md) |
 | CyberKnife MLC：XML 分段与标准 MLC 两条路径 | [公式与使用](cyberknife_guide.md) |
 | Aurora：V2、V3、legacy 与 V4 全家族 | [公式与使用](aurora_guide.md) |
-| Aurora 七项物理几何及开放条件均值 | [当前定义](aurora_aperture_metrics.md)、[版本迁移](aurora_v4_migration.md)、[DeepPlan 兼容](deepplan_aurora_compatibility.md) |
+| Aurora 七项物理几何及开放条件均值 | [当前定义](aurora_aperture_metrics.md)、[当前迁移](aurora_v5_migration.md)、[历史迁移](aurora_v4_migration.md)、[DeepPlan 兼容](deepplan_aurora_compatibility.md) |
 | TOMO 与 Ethos 专属输入/算法边界 | [TOMO](tomo_input_contract.md)、[Ethos](ethos_report_profile.md) |
 | 精度与基线、发布及回退 | [精度说明](precision_motion_validation.md)、[参考包](reference_pack_v1.md)、[部署回退](deployment_rollback.md)、[临床前提](clinical_implementation_sop.md) |
 | 可下载 PDF | [项目简介](../output/pdf/plancomplexity_app_summary.pdf)、[Aurora 公式](../output/pdf/aurora_metric_formulas.pdf) |

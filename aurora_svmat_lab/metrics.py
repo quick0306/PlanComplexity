@@ -6,6 +6,10 @@ from typing import Any, Iterable, Sequence
 
 from .models import AuroraBeam, AuroraControlPoint
 from .aperture_metrics import V4_METRIC_ORDER, calculate_v4_metrics_with_warnings
+from .physical_aperture import (
+    geometry_scope, try_beam_geometry, aperture_area_values,
+    aperture_change_values, summarize_apertures,
+)
 
 
 SMALL_OPENING_THRESHOLD_MM = 10.0
@@ -168,21 +172,8 @@ def calculate_mu_per_mm(beam: AuroraBeam | Any) -> float | None:
 
 
 def calculate_aperture_change_per_mm(beam: AuroraBeam | Any) -> float | None:
-    # Aperture is approximated as the summed open leaf-pair widths.
-    # We measure how much that open width changes between adjacent control points,
-    # then normalize by axial travel to keep the value tied to couch motion.
-    total_axial_travel_mm = 0.0
-    total_aperture_change_mm = 0.0
-    for current_cp, next_cp in _iter_control_point_pairs(_control_points(beam)):
-        delta_axial_mm = abs(next_cp.axial_position_mm - current_cp.axial_position_mm)
-        if delta_axial_mm <= 0.0:
-            continue
-        total_axial_travel_mm += delta_axial_mm
-        total_aperture_change_mm += abs(_aperture_width_mm(next_cp) - _aperture_width_mm(current_cp))
-
-    if total_axial_travel_mm <= 0.0:
-        return None
-    return total_aperture_change_mm / total_axial_travel_mm
+    """Total absolute effective area change / total positive couch travel."""
+    return _calculate_plan_aperture_change_per_mm([beam])
 
 
 def calculate_leaf_travel_per_mm(beam: AuroraBeam | Any) -> float | None:
@@ -226,6 +217,7 @@ def calculate_coupled_modulation_index(beam: AuroraBeam | Any) -> float | None:
     )
 
 
+@geometry_scope
 def calculate_v2_beam_metrics(beam: AuroraBeam | Any) -> dict[str, float | None]:
     total_rotation_deg = calculate_gantry_rotation_deg(beam)
     longitudinal_travel_mm = calculate_axial_travel_mm(beam)
@@ -269,6 +261,7 @@ def calculate_v2_beam_metrics(beam: AuroraBeam | Any) -> dict[str, float | None]
     }
 
 
+@geometry_scope
 def calculate_v3_beam_metrics(beam: AuroraBeam | Any) -> dict[str, float | None]:
     interval_records = _interval_records_for_beam(beam)
     projection_pitch_values = [record["projection_pitch"] for record in interval_records if record["projection_pitch"] is not None]
@@ -292,7 +285,7 @@ def calculate_v3_beam_metrics(beam: AuroraBeam | Any) -> dict[str, float | None]
         **_peak_metrics_for_series("projection_mu_density_proxy", projection_mu_density_values),
         **_peak_metrics_for_series("projection_aperture_change", projection_aperture_change_values),
         **_peak_metrics_for_series("projection_leaf_travel", projection_leaf_travel_values),
-        **_small_opening_metrics(_effective_gap_samples_for_beam(beam)),
+
         **_regional_interval_metrics(interval_records),
         **_dual_layer_synergy_metrics(
             control_points=_control_points(beam),
@@ -301,9 +294,10 @@ def calculate_v3_beam_metrics(beam: AuroraBeam | Any) -> dict[str, float | None]
         ),
     }
     metrics.update({metric_name: None for metric_name in REVERSAL_METRIC_ORDER})
-    return metrics
+    return {**metrics, **_physical_opening_metrics([beam])}
 
 
+@geometry_scope
 def calculate_beam_metrics(beam: AuroraBeam | Any) -> dict[str, float | None]:
     legacy_metrics = {
         "axial_travel_mm": calculate_axial_travel_mm(beam),
@@ -316,9 +310,10 @@ def calculate_beam_metrics(beam: AuroraBeam | Any) -> dict[str, float | None]:
         "leaf_travel_per_mm": calculate_leaf_travel_per_mm(beam),
         "coupled_modulation_index": calculate_coupled_modulation_index(beam),
     }
-    return {**calculate_v2_beam_metrics(beam), **calculate_v3_beam_metrics(beam), **legacy_metrics, **calculate_v4_metrics_with_warnings([beam])[0]}
+    return _finish_physical_metrics([beam], {**calculate_v2_beam_metrics(beam), **calculate_v3_beam_metrics(beam), **legacy_metrics, **calculate_v4_metrics_with_warnings([beam])[0]})
 
 
+@geometry_scope
 def calculate_plan_metrics(beams: Iterable[AuroraBeam | Any]) -> dict[str, float | None]:
     beam_list = list(beams)
     axial_travel_mm = sum(calculate_axial_travel_mm(beam) for beam in beam_list)
@@ -382,7 +377,7 @@ def calculate_plan_metrics(beams: Iterable[AuroraBeam | Any]) -> dict[str, float
         ),
     }
     v3_metrics = _calculate_plan_v3_metrics(beam_list)
-    return {**v2_metrics, **v3_metrics, **legacy_metrics, **calculate_v4_metrics_with_warnings(beam_list)[0]}
+    return _finish_physical_metrics(beam_list, {**v2_metrics, **v3_metrics, **legacy_metrics, **calculate_v4_metrics_with_warnings(beam_list)[0]})
 
 
 def _calculate_plan_v3_metrics(beams: Sequence[AuroraBeam | Any]) -> dict[str, float | None]:
@@ -408,7 +403,7 @@ def _calculate_plan_v3_metrics(beams: Sequence[AuroraBeam | Any]) -> dict[str, f
     control_points = [control_point for beam in beams for control_point in _control_points(beam)]
     metrics = {
         **_reversal_metrics(beams),
-        **_small_opening_metrics(_effective_gap_samples_for_beams(beams)),
+
         **_peak_metrics_for_series("projection_pitch", projection_pitch_values),
         **_peak_metrics_for_series("projection_mu_density_proxy", projection_mu_density_values),
         **_peak_metrics_for_series("projection_aperture_change", projection_aperture_change_values),
@@ -420,14 +415,15 @@ def _calculate_plan_v3_metrics(beams: Sequence[AuroraBeam | Any]) -> dict[str, f
             x2_leaf_travel_values=x2_leaf_travel_values,
         ),
     }
-    return metrics
+    return {**metrics, **_physical_opening_metrics(beams)}
 
 
 def _interval_records_for_beam(beam: AuroraBeam | Any) -> list[dict[str, float | None]]:
     control_points = _control_points(beam)
     observed_angle_deltas = calculate_observed_angle_deltas(control_points)
+    areas = aperture_area_values(beam)
     records: list[dict[str, float | None]] = []
-    for (current_cp, next_cp), delta_gantry_deg in zip(_iter_control_point_pairs(control_points), observed_angle_deltas):
+    for index, ((current_cp, next_cp), delta_gantry_deg) in enumerate(zip(_iter_control_point_pairs(control_points), observed_angle_deltas)):
         delta_axial_mm = next_cp.axial_position_mm - current_cp.axial_position_mm
         delta_axial_abs = abs(delta_axial_mm)
         leaf_travel_x1 = _leaf_travel_for_interval(current_cp, next_cp, "mlcx1")
@@ -442,8 +438,8 @@ def _interval_records_for_beam(beam: AuroraBeam | Any) -> list[dict[str, float |
                     else None
                 ),
                 "projection_aperture_change": (
-                    abs(_aperture_width_mm(next_cp) - _aperture_width_mm(current_cp)) / delta_axial_abs
-                    if delta_axial_abs > 0.0
+                    abs(areas[index + 1] - areas[index]) / delta_axial_abs
+                    if delta_axial_abs > 0.0 and areas is not None and len(areas) == len(control_points)
                     else None
                 ),
                 "projection_leaf_travel": (
@@ -479,49 +475,13 @@ def _peak_metrics_for_series(metric_prefix: str, values: Sequence[float]) -> dic
     }
 
 
-def _small_opening_metrics(samples: Sequence[tuple[float, float]]) -> dict[str, float]:
-    open_samples = [(gap_mm, weight) for gap_mm, weight in samples if gap_mm > 0.0 and weight > 0.0]
-    denominator = sum(weight for _gap_mm, weight in open_samples)
-    if denominator <= 0.0:
-        return {
-            "small_opening_fraction": 0.0,
-            "near_closed_fraction": 0.0,
-            "effective_small_gap_burden": 0.0,
-        }
-
-    small_opening_weight = sum(
-        weight for gap_mm, weight in open_samples if gap_mm < SMALL_OPENING_THRESHOLD_MM
-    )
-    near_closed_weight = sum(
-        weight for gap_mm, weight in open_samples if gap_mm < NEAR_CLOSED_THRESHOLD_MM
-    )
-    burden = sum(
-        weight * max(0.0, 1.0 - (gap_mm / SMALL_OPENING_THRESHOLD_MM))
-        for gap_mm, weight in open_samples
-    )
-    return {
-        "small_opening_fraction": small_opening_weight / denominator,
-        "near_closed_fraction": near_closed_weight / denominator,
-        "effective_small_gap_burden": burden / denominator,
-    }
 
 
-def _effective_gap_samples_for_beam(beam: AuroraBeam | Any) -> list[tuple[float, float]]:
-    control_points = _control_points(beam)
-    samples: list[tuple[float, float]] = []
-    for current_cp, next_cp in _iter_control_point_pairs(control_points):
-        interval_weight = abs(next_cp.cumulative_meterset_weight - current_cp.cumulative_meterset_weight)
-        sample_weight = interval_weight if interval_weight > 0.0 else 1.0
-        for x1_mm, x2_mm in zip(next_cp.mlc_x1_positions_mm, next_cp.mlc_x2_positions_mm):
-            samples.append((max(0.0, x2_mm - x1_mm), sample_weight))
-    return samples
 
 
-def _effective_gap_samples_for_beams(beams: Sequence[AuroraBeam | Any]) -> list[tuple[float, float]]:
-    samples: list[tuple[float, float]] = []
-    for beam in beams:
-        samples.extend(_effective_gap_samples_for_beam(beam))
-    return samples
+
+
+
 
 
 def _regional_interval_metrics(interval_records: Sequence[dict[str, float | None]]) -> dict[str, float | None]:
@@ -589,19 +549,10 @@ def _dual_layer_synergy_metrics(
     mean_x1 = _mean_or_none(x1_leaf_travel_values)
     mean_x2 = _mean_or_none(x2_leaf_travel_values)
     denominator = (abs(mean_x1) if mean_x1 is not None else 0.0) + (abs(mean_x2) if mean_x2 is not None else 0.0)
-    aperture_disparity_values = []
-    for control_point in control_points:
-        x1_magnitude = sum(abs(position_mm) for position_mm in control_point.mlc_x1_positions_mm)
-        x2_magnitude = sum(abs(position_mm) for position_mm in control_point.mlc_x2_positions_mm)
-        total_magnitude = x1_magnitude + x2_magnitude
-        if total_magnitude <= 0.0:
-            continue
-        aperture_disparity_values.append(abs(x1_magnitude - x2_magnitude) / total_magnitude)
-
     return {
         "layer_imbalance_index": (abs(mean_x1 - mean_x2) / denominator) if denominator > 0.0 and mean_x1 is not None and mean_x2 is not None else None,
         "layer_correlation_index": _correlation_or_none(x1_leaf_travel_values, x2_leaf_travel_values),
-        "x1_x2_aperture_disparity": _mean_or_none(aperture_disparity_values),
+        "x1_x2_aperture_disparity": None,
         "x1_x2_leaf_travel_ratio": (mean_x1 / mean_x2) if mean_x1 is not None and mean_x2 not in (None, 0.0) else None,
     }
 
@@ -715,21 +666,21 @@ def _iter_plan_interval_motion(
 
 
 def _total_mu_for_beam(beam: AuroraBeam | Any) -> float | None:
-    explicit_total_mu = getattr(beam, "total_mu", None)
-    if explicit_total_mu is not None:
-        return float(explicit_total_mu)
-
-    control_points = _control_points(beam)
-    if len(control_points) < 2:
+    # The parser stores DICOM BeamMeterset in beam_meterset_mu.
+    # Never label a relative cumulative-weight span as absolute MU.
+    value = getattr(beam, "beam_meterset_mu", None)
+    if value is None:
+        value = getattr(beam, "total_mu", None)
+    try:
+        value = float(value)
+        return value if math.isfinite(value) and value >= 0 else None
+    except (TypeError, ValueError, OverflowError):
         return None
-    return _cumulative_weight_span(control_points)
 
 
 def _calculate_plan_total_mu(beams: Sequence[AuroraBeam | Any]) -> float | None:
-    beam_totals = [value for value in (_total_mu_for_beam(beam) for beam in beams) if value is not None]
-    if not beam_totals:
-        return None
-    return sum(beam_totals)
+    values = [_total_mu_for_beam(beam) for beam in beams]
+    return sum(values) if values and all(value is not None for value in values) else None
 
 
 def _cumulative_weight_span(control_points: Sequence[AuroraControlPoint]) -> float:
@@ -738,11 +689,7 @@ def _cumulative_weight_span(control_points: Sequence[AuroraControlPoint]) -> flo
     return abs(control_points[-1].cumulative_meterset_weight - control_points[0].cumulative_meterset_weight)
 
 
-def _aperture_width_mm(control_point: AuroraControlPoint) -> float:
-    return sum(
-        max(0.0, x2_mm - x1_mm)
-        for x1_mm, x2_mm in zip(control_point.mlc_x1_positions_mm, control_point.mlc_x2_positions_mm)
-    )
+
 
 
 def _leaf_bank_travel_mm(previous_positions: Sequence[float], next_positions: Sequence[float]) -> float:
@@ -781,12 +728,8 @@ def _plan_interval_weight_density_values(beams: Sequence[AuroraBeam | Any]) -> l
 
 
 def _interval_aperture_change_values(beam: AuroraBeam | Any) -> list[float]:
-    control_points = _control_points(beam)
-    return [
-        abs(_aperture_width_mm(next_cp) - _aperture_width_mm(current_cp)) / abs(next_cp.axial_position_mm - current_cp.axial_position_mm)
-        for current_cp, next_cp in _iter_control_point_pairs(control_points)
-        if abs(next_cp.axial_position_mm - current_cp.axial_position_mm) > 0.0
-    ]
+    values = aperture_change_values(beam)
+    return values if values is not None else []
 
 
 def _plan_interval_aperture_change_values(beams: Sequence[AuroraBeam | Any]) -> list[float]:
@@ -866,18 +809,18 @@ def _calculate_plan_mu_density_variability(beams: Sequence[AuroraBeam | Any]) ->
 
 
 def _calculate_plan_aperture_change_per_mm(beams: Sequence[AuroraBeam | Any]) -> float | None:
-    total_axial_travel_mm = 0.0
-    total_aperture_change_mm = 0.0
+    distance, change = 0.0, 0.0
     for beam in beams:
-        for current_cp, next_cp in _iter_control_point_pairs(_control_points(beam)):
-            delta_axial_mm = abs(next_cp.axial_position_mm - current_cp.axial_position_mm)
-            if delta_axial_mm <= 0.0:
-                continue
-            total_axial_travel_mm += delta_axial_mm
-            total_aperture_change_mm += abs(_aperture_width_mm(next_cp) - _aperture_width_mm(current_cp))
-    if total_axial_travel_mm <= 0.0:
-        return None
-    return total_aperture_change_mm / total_axial_travel_mm
+        geometry = try_beam_geometry(beam)
+        if geometry is None:
+            return None
+        for i, (previous, current) in enumerate(zip(geometry.control_points,
+                                                  geometry.control_points[1:])):
+            dz = abs(current.axial_position_mm - previous.axial_position_mm)
+            if dz > 0:
+                distance += dz
+                change += abs(geometry.areas[i + 1] - geometry.areas[i])
+    return change / distance if distance > 0 else None
 
 
 def _calculate_plan_leaf_travel_per_mm(beams: Sequence[AuroraBeam | Any]) -> float | None:
@@ -909,6 +852,8 @@ def _combine_modulation_components(
     mu_density_variability: float | None,
     pitch_consistency: float | None,
 ) -> float | None:
+    if aperture_change_per_mm is None:
+        return None
     normalized_components = [
         _saturating_normalize(value)
         for value in (
@@ -1010,3 +955,22 @@ def _leaf_travel_for_interval(
     if layer_name == "mlcx2":
         return _leaf_bank_travel_mm(current_cp.mlc_x2_positions_mm, next_cp.mlc_x2_positions_mm)
     raise ValueError(f"Unsupported Aurora MLC layer: {layer_name}")
+
+def _physical_opening_metrics(beams):
+    values, _ = summarize_apertures(beams)
+    return {key: values[key] for key in (
+        "small_opening_fraction", "near_closed_fraction",
+        "effective_small_gap_burden", "x1_x2_aperture_disparity",
+    )}
+
+
+def _finish_physical_metrics(beams, values):
+    # Refuse partial geometry averages when any contributing beam is malformed.
+    if any(try_beam_geometry(beam) is None for beam in beams):
+        for key in values:
+            if ("aperture_change" in key or key in V4_METRIC_ORDER or key in
+                    {"small_opening_fraction", "near_closed_fraction",
+                     "effective_small_gap_burden", "x1_x2_aperture_disparity",
+                     "coupled_modulation_index", *REVERSAL_METRIC_ORDER}):
+                values[key] = None
+    return values

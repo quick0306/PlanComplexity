@@ -18,7 +18,7 @@ Historical designs, comparisons and validation runs are explicitly separated fro
 | VMAT/IMRT and CyberKnife MLC | `geometry-v4` |
 | Halcyon/Ethos canonical Effective/D/P fields | `lrt-three-layer-v1` |
 | TOMO | `tomo-v3` |
-| Aurora SVMAT V4 | `aurora-v4-physical-aperture-open-only` |
+| Aurora SVMAT V4 | `aurora-v5-unified-physical-closure1mm` |
 
 ## Requirements
 
@@ -47,11 +47,12 @@ python main.py --input-file path/to/plan.dcm
 
 The main analyzer auto-detects VMAT/IMRT, TOMO, CyberKnife MLC, and Aurora SVMAT RTPLAN files.
 
-Aurora exposes 77 metric keys, including seven V4 physical-aperture descriptors. Exports record
-`aurora-v4-physical-aperture-open-only`; the prior 70 research/proxy definitions are retained. The
-[V4 migration contract](docs/aurora_v4_migration.md) explains the corrected dual-layer geometry,
-weights, closed-endpoint exclusion and unavailable values, and the [metric surface audit](docs/metric_surface_audit_20261008.md)
-records cross-mode consistency checks and repaired omissions.
+Aurora exposes 77 metric keys under `aurora-v5-unified-physical-closure1mm`.
+All aperture families share real A/B banks, physical layer intersection, jaws and
+a 1 mm closure mask. Aperture-change rates use mm^2/mm; SAS and small-opening
+fields share CP fractions and delivered weights; complexity is 1-MCS and CA is P/A.
+The [V5 migration contract](docs/aurora_v5_migration.md) describes the changed
+definitions and local cohort reproduction tools.
 
 Batch export metrics for standard linac plans:
 

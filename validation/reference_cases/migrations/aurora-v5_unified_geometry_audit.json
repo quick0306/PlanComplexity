@@ -1,0 +1,84 @@
+{
+  "formula_version": "aurora-v5-unified-physical-closure1mm",
+  "cohort_plans": 81,
+  "metric_keys": 77,
+  "unchanged_keys": 49,
+  "changed_keys": 28,
+  "input_hashes_match_original_zip": true,
+  "geometry_oracle": {
+    "plans": 81,
+    "control_points": 1692,
+    "closure_threshold_mm": 1.0,
+    "max_area_error_mm2": 4.3655745685100555e-11,
+    "max_perimeter_error_mm": 1.1368683772161603e-12,
+    "passed": true
+  },
+  "invariants": [
+    "small_opening_fraction == mean_sas10",
+    "mcs_complexity_aurora == 1-mean_mcs_aurora"
+  ],
+  "reference_cases": [
+    {
+      "case_id": "aurora_canonical",
+      "old_metric_count": 70,
+      "current_metric_count": 77,
+      "changed_historical_keys": [
+        "aperture_change_per_mm",
+        "beam_pair_balance_index",
+        "coupled_modulation_index",
+        "effective_small_gap_burden",
+        "forward_backward_metric_difference",
+        "head_aperture_change_cv",
+        "head_aperture_change_mean",
+        "mid_aperture_change_cv",
+        "mid_aperture_change_mean",
+        "mu_per_mm",
+        "near_closed_fraction",
+        "projection_aperture_change_cv",
+        "projection_aperture_change_max",
+        "projection_aperture_change_mean",
+        "projection_aperture_change_p95",
+        "projection_aperture_change_top3_mean",
+        "reversal_symmetry_index",
+        "small_opening_fraction",
+        "tail_aperture_change_cv",
+        "tail_aperture_change_mean",
+        "x1_x2_aperture_disparity"
+      ],
+      "source_checksum": "e64ed0e3b449677a0fca0a22c3912354f3168e975edd09ed75e8aaaa71b96353",
+      "old_baseline_checksum": "4967f2886f07850bb35b741392688c888bdedd7c9adac54feebef9fb4619b8ba",
+      "new_baseline_checksum": "2715af0ef12da8328a304fea10522cffa5f6c332f94ef700ba182639d94c4fd1"
+    },
+    {
+      "case_id": "aurora_research_edge",
+      "old_metric_count": 70,
+      "current_metric_count": 77,
+      "changed_historical_keys": [
+        "aperture_change_per_mm",
+        "beam_pair_balance_index",
+        "coupled_modulation_index",
+        "effective_small_gap_burden",
+        "forward_backward_metric_difference",
+        "head_aperture_change_cv",
+        "head_aperture_change_mean",
+        "mid_aperture_change_cv",
+        "mid_aperture_change_mean",
+        "mu_per_mm",
+        "near_closed_fraction",
+        "projection_aperture_change_cv",
+        "projection_aperture_change_max",
+        "projection_aperture_change_mean",
+        "projection_aperture_change_p95",
+        "projection_aperture_change_top3_mean",
+        "reversal_symmetry_index",
+        "small_opening_fraction",
+        "tail_aperture_change_cv",
+        "tail_aperture_change_mean",
+        "x1_x2_aperture_disparity"
+      ],
+      "source_checksum": "38e8d9f0eb7dfd489616696c59b546ba85be7538d42239b35e8ccd29e1091ab4",
+      "old_baseline_checksum": "292133471c7b1ee822c5c52927853543f83e5174b4fec2a27310f42429120001",
+      "new_baseline_checksum": "5688bf2f40ca3cfbc8457bcd7f93a0a32bf6284d51435cb432356e48d544f677"
+    }
+  ]
+}

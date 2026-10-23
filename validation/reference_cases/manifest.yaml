@@ -95,6 +95,7 @@ cases:
     domain: AURORA
     device_or_tps: Aurora
     expected_mode: AURORA
+    expected_formula_version: aurora-v5-unified-physical-closure1mm
     case_class: canonical
     expected_metrics_source: checked_in_json
     tolerance_overrides: {}
@@ -109,6 +110,7 @@ cases:
     domain: AURORA
     device_or_tps: Aurora
     expected_mode: AURORA
+    expected_formula_version: aurora-v5-unified-physical-closure1mm
     case_class: edge
     expected_metrics_source: checked_in_json
     tolerance_overrides: {}

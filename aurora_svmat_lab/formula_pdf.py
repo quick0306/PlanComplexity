@@ -59,12 +59,12 @@ def export_aurora_formula_pdf(output_path: str | Path) -> Path:
     )
     story.append(PageBreak())
     story.extend(_build_metric_section(
-        "Section 3. V4 Physical Aperture Metrics", _build_v4_entries(), styles,
-        intro=("Version: aurora-v4-physical-aperture-open-only. Real leaf boundaries define a common y-sub-strip grid. "
+        "Section 3. Unified Physical Aperture Metrics", _build_v4_entries(), styles,
+        intro=("Version: aurora-v5-unified-physical-closure1mm. Real leaf boundaries define a common y-sub-strip grid. "
                "Each layer's position vector is split into A/B banks; intervals are intersected across layers and clipped to jaws. "
                "A and P are exact area and union perimeter. These seven descriptors are a physical-geometry extension "
                "with adapted MCS, not exact McNiven MCS or a reproduction of the old unit-width design. "
-               "Only positive cumulative-weight increments contribute, represented by endpoint i+1. Weights are "
+               "Effective gaps <=1+1e-8 mm are closed. Only positive cumulative-weight increments contribute, represented by endpoint i+1. Weights are "
                "delta CMW / beam final CMW times BeamMeterset. If any BeamMeterset is absent, every beam uses unit-normalized "
                "relative weights and a warning. Missing geometry or malformed/decreasing weights makes all seven unavailable. "
                "All seven use open-aperture conditional means: exclude area-zero endpoints and renormalize over retained weights. "
@@ -93,7 +93,7 @@ def _build_cover(styles: dict[str, ParagraphStyle]) -> list[object]:
         Spacer(1, 18 * mm),
         Paragraph("Aurora SVMAT Metric Formula Reference", styles["title"]),
         Spacer(1, 4 * mm),
-        Paragraph("Main body: v2/v3 research proxies and v4 physical aperture metrics. Appendix: legacy engineering metrics.", styles["subtitle"]),
+        Paragraph("Current V5 geometry and formula contract; V2/V3/V4 labels identify output families.", styles["subtitle"]),
         Spacer(1, 8 * mm),
         Paragraph(
             "This document records the explicit mathematical definitions currently implemented in Aurora SVMAT Lab. "
@@ -116,7 +116,7 @@ def _build_notation_section(styles: dict[str, ParagraphStyle]) -> list[object]:
         "theta_i is the gantry angle in degrees at control point i.",
         "z_i is the longitudinal or axial position in millimeters at control point i.",
         "w_i is the cumulative meterset weight at control point i.",
-        "For V2/V3/legacy only, A_i is the scalar aperture width surrogate at control point i, defined as the summed positive opening across both MLC layers.",
+        "For all aperture-change fields, A_i is the physical double-layer intersection area after jaw clipping and the common 1 mm closure mask.",
         "L_i is the total leaf-position vector at control point i across both layers.",
         "delta theta_i = wrapped(theta_(i+1) - theta_i), constrained to [-180, 180] degrees.",
         "delta z_i = z_(i+1) - z_i.",
@@ -152,10 +152,7 @@ def _build_metric_section(
             block.append(Paragraph(escape(formula_line), styles["formula"]))
         block.append(Paragraph(f"Meaning: {entry.physical_meaning}", styles["body"]))
         block.append(Spacer(1, 4 * mm))
-        if entry.metric_key in V4_METRIC_ORDER:
-            story.append(KeepTogether(block))
-        else:
-            story.extend(block)
+        story.append(KeepTogether(block))
     return story
 
 
@@ -382,7 +379,7 @@ def _build_v3_entries() -> list[FormulaEntry]:
         "tail_leaf_travel_cv": "Tail-third leaf-travel variability",
         "layer_imbalance_index": "Dual-layer travel imbalance",
         "layer_correlation_index": "Dual-layer travel correlation",
-        "x1_x2_aperture_disparity": "Dual-layer aperture disparity surrogate",
+        "x1_x2_aperture_disparity": "Physical dual-layer area disparity",
         "x1_x2_leaf_travel_ratio": "Dual-layer leaf-travel ratio",
     }
     entries: list[FormulaEntry] = []
@@ -438,7 +435,7 @@ def _build_legacy_entries() -> list[FormulaEntry]:
         FormulaEntry(
             metric_key="mu_per_mm",
             title="Legacy MU density along the axial axis",
-            formula_lines=("mu_per_mm = total_mu_or_weight_proxy / axial_travel_mm",),
+            formula_lines=("mu_per_mm = sum_absolute_BeamMeterset_MU / axial_travel_mm; missing MU => unavailable",),
             physical_meaning=notes["mu_per_mm"],
         ),
         FormulaEntry(

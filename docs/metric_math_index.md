@@ -422,7 +422,7 @@
 | AURORA | `projection_pitch_cv` | projection_pitch_cv | dimensionless | [V2 paper-style physics](aurora_guide.md#motion) |
 | AURORA | `projection_mu_density_mean_proxy` | projection_mu_density_mean_proxy | weight/mm | [V2 paper-style physics](aurora_guide.md#motion) |
 | AURORA | `projection_mu_density_cv_proxy` | projection_mu_density_cv_proxy | dimensionless | [V2 paper-style physics](aurora_guide.md#motion) |
-| AURORA | `projection_aperture_change_mean` | projection_aperture_change_mean | mm/mm | [V2 paper-style physics](aurora_guide.md#motion) |
+| AURORA | `projection_aperture_change_mean` | projection_aperture_change_mean | mm^2/mm | [V2 paper-style physics](aurora_guide.md#motion) |
 | AURORA | `projection_aperture_change_cv` | projection_aperture_change_cv | dimensionless | [V2 paper-style physics](aurora_guide.md#motion) |
 | AURORA | `projection_leaf_travel_mean` | projection_leaf_travel_mean | mm/mm | [V2 paper-style physics](aurora_guide.md#motion) |
 | AURORA | `projection_leaf_travel_cv` | projection_leaf_travel_cv | dimensionless | [V2 paper-style physics](aurora_guide.md#motion) |
@@ -447,27 +447,27 @@
 | AURORA | `projection_mu_density_p95_proxy` | projection_mu_density_p95_proxy | weight/mm | [V3 local interval peaks](aurora_guide.md#research) |
 | AURORA | `projection_mu_density_max_proxy` | projection_mu_density_max_proxy | weight/mm | [V3 local interval peaks](aurora_guide.md#research) |
 | AURORA | `projection_mu_density_top3_mean_proxy` | projection_mu_density_top3_mean_proxy | weight/mm | [V3 local interval peaks](aurora_guide.md#research) |
-| AURORA | `projection_aperture_change_p95` | projection_aperture_change_p95 | mm/mm | [V3 local interval peaks](aurora_guide.md#research) |
-| AURORA | `projection_aperture_change_max` | projection_aperture_change_max | mm/mm | [V3 local interval peaks](aurora_guide.md#research) |
-| AURORA | `projection_aperture_change_top3_mean` | projection_aperture_change_top3_mean | mm/mm | [V3 local interval peaks](aurora_guide.md#research) |
+| AURORA | `projection_aperture_change_p95` | projection_aperture_change_p95 | mm^2/mm | [V3 local interval peaks](aurora_guide.md#research) |
+| AURORA | `projection_aperture_change_max` | projection_aperture_change_max | mm^2/mm | [V3 local interval peaks](aurora_guide.md#research) |
+| AURORA | `projection_aperture_change_top3_mean` | projection_aperture_change_top3_mean | mm^2/mm | [V3 local interval peaks](aurora_guide.md#research) |
 | AURORA | `projection_leaf_travel_p95` | projection_leaf_travel_p95 | mm/mm | [V3 local interval peaks](aurora_guide.md#research) |
 | AURORA | `projection_leaf_travel_max` | projection_leaf_travel_max | mm/mm | [V3 local interval peaks](aurora_guide.md#research) |
 | AURORA | `projection_leaf_travel_top3_mean` | projection_leaf_travel_top3_mean | mm/mm | [V3 local interval peaks](aurora_guide.md#research) |
 | AURORA | `head_mu_density_mean_proxy` | head_mu_density_mean_proxy | weight/mm | [V3 axial regions](aurora_guide.md#research) |
 | AURORA | `head_mu_density_cv_proxy` | head_mu_density_cv_proxy | dimensionless | [V3 axial regions](aurora_guide.md#research) |
-| AURORA | `head_aperture_change_mean` | head_aperture_change_mean | mm/mm | [V3 axial regions](aurora_guide.md#research) |
+| AURORA | `head_aperture_change_mean` | head_aperture_change_mean | mm^2/mm | [V3 axial regions](aurora_guide.md#research) |
 | AURORA | `head_aperture_change_cv` | head_aperture_change_cv | dimensionless | [V3 axial regions](aurora_guide.md#research) |
 | AURORA | `head_leaf_travel_mean` | head_leaf_travel_mean | mm/mm | [V3 axial regions](aurora_guide.md#research) |
 | AURORA | `head_leaf_travel_cv` | head_leaf_travel_cv | dimensionless | [V3 axial regions](aurora_guide.md#research) |
 | AURORA | `mid_mu_density_mean_proxy` | mid_mu_density_mean_proxy | weight/mm | [V3 axial regions](aurora_guide.md#research) |
 | AURORA | `mid_mu_density_cv_proxy` | mid_mu_density_cv_proxy | dimensionless | [V3 axial regions](aurora_guide.md#research) |
-| AURORA | `mid_aperture_change_mean` | mid_aperture_change_mean | mm/mm | [V3 axial regions](aurora_guide.md#research) |
+| AURORA | `mid_aperture_change_mean` | mid_aperture_change_mean | mm^2/mm | [V3 axial regions](aurora_guide.md#research) |
 | AURORA | `mid_aperture_change_cv` | mid_aperture_change_cv | dimensionless | [V3 axial regions](aurora_guide.md#research) |
 | AURORA | `mid_leaf_travel_mean` | mid_leaf_travel_mean | mm/mm | [V3 axial regions](aurora_guide.md#research) |
 | AURORA | `mid_leaf_travel_cv` | mid_leaf_travel_cv | dimensionless | [V3 axial regions](aurora_guide.md#research) |
 | AURORA | `tail_mu_density_mean_proxy` | tail_mu_density_mean_proxy | weight/mm | [V3 axial regions](aurora_guide.md#research) |
 | AURORA | `tail_mu_density_cv_proxy` | tail_mu_density_cv_proxy | dimensionless | [V3 axial regions](aurora_guide.md#research) |
-| AURORA | `tail_aperture_change_mean` | tail_aperture_change_mean | mm/mm | [V3 axial regions](aurora_guide.md#research) |
+| AURORA | `tail_aperture_change_mean` | tail_aperture_change_mean | mm^2/mm | [V3 axial regions](aurora_guide.md#research) |
 | AURORA | `tail_aperture_change_cv` | tail_aperture_change_cv | dimensionless | [V3 axial regions](aurora_guide.md#research) |
 | AURORA | `tail_leaf_travel_mean` | tail_leaf_travel_mean | mm/mm | [V3 axial regions](aurora_guide.md#research) |
 | AURORA | `tail_leaf_travel_cv` | tail_leaf_travel_cv | dimensionless | [V3 axial regions](aurora_guide.md#research) |
@@ -488,6 +488,6 @@
 | AURORA | `mm_per_rotation` | mm_per_rotation | mm/rotation | [Legacy engineering](aurora_guide.md#motion) |
 | AURORA | `pitch_consistency` | pitch_consistency | dimensionless | [Legacy engineering](aurora_guide.md#motion) |
 | AURORA | `mu_per_mm` | mu_per_mm | MU/mm | [Legacy engineering](aurora_guide.md#motion) |
-| AURORA | `aperture_change_per_mm` | aperture_change_per_mm | mm/mm | [Legacy engineering](aurora_guide.md#motion) |
+| AURORA | `aperture_change_per_mm` | aperture_change_per_mm | mm^2/mm | [Legacy engineering](aurora_guide.md#motion) |
 | AURORA | `leaf_travel_per_mm` | leaf_travel_per_mm | mm/mm | [Legacy engineering](aurora_guide.md#motion) |
 | AURORA | `coupled_modulation_index` | coupled_modulation_index | dimensionless | [Legacy engineering](aurora_guide.md#motion) |

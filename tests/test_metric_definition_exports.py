@@ -18,7 +18,7 @@ class MetricDefinitionExportTests(unittest.TestCase):
             self.assertTrue(records[key].physical_meaning)
             self.assertTrue(records[key].mathematical_definition)
             self.assertEqual(records[key].group, "V4 physical aperture and adapted MCS")
-            self.assertEqual(contracts[key].formula_version, "aurora-v4-physical-aperture-open-only")
+            self.assertEqual(contracts[key].formula_version, "aurora-v5-unified-physical-closure1mm")
             self.assertIn("endpoint i+1", contracts[key].sampling)
             self.assertIn("Closed endpoints excluded from numerator and denominator", contracts[key].missing_value)
             self.assertIn("sum_open(w_i*f_i)/sum_open(w_i)", contracts[key].aggregation)
@@ -26,7 +26,7 @@ class MetricDefinitionExportTests(unittest.TestCase):
         self.assertEqual(records["mean_ca"].unit, "mm^-1")
         self.assertIn("not circularity", records["mean_ca"].mathematical_definition)
         self.assertIn("moving Y-jaw", contracts["mean_mcs_aurora"].normalization)
-        self.assertEqual(contracts["projection_pitch_mean"].formula_version, "aurora-unversioned-research-v2-v3-legacy")
+        self.assertEqual(contracts["projection_pitch_mean"].formula_version, "aurora-v5-unified-physical-closure1mm")
 
 
     def test_hybrid_v2_metrics_are_uniquely_registered_and_documented(self):

@@ -6898,10 +6898,7 @@ metric_specs:
   label: longitudinal_travel_mm
   unit: mm
   aggregation_scope: plan
-  normalization_basis: Pitch_i=dz/dtheta for dtheta>0; density_i=abs(deltaCMW)/dz, aperture_change_i=abs(deltaW)/dz,
-    travel_i=sum(abs(delta leaf))/dz for dz>0. CV=population_SD/abs(mean); each retained interval equal
-    weight. Explicit beam MU is used for MU/mm; absent MU falls back to cumulative-weight span, so proxy
-    values must not be compared as absolute MU/mm.
+  normalization_basis: sum_i abs(delta z_i)
   validation_level: Formula-exact
   comparison_class: not-comparable
   default_tolerance_abs: 1.0e-06
@@ -6914,7 +6911,8 @@ metric_specs:
   known_noncomparability:
   - No external exact comparator is checked in yet for this Aurora metric family.
   comparable_to: []
-  assumptions: []
+  assumptions:
+  - aurora-v5-unified-physical-closure1mm; effective gap <=1+1e-8 mm is closed.
   exclusions: []
 - key: total_rotation_deg
   platform: AURORA
@@ -6924,10 +6922,7 @@ metric_specs:
   label: total_rotation_deg
   unit: deg
   aggregation_scope: plan
-  normalization_basis: Pitch_i=dz/dtheta for dtheta>0; density_i=abs(deltaCMW)/dz, aperture_change_i=abs(deltaW)/dz,
-    travel_i=sum(abs(delta leaf))/dz for dz>0. CV=population_SD/abs(mean); each retained interval equal
-    weight. Explicit beam MU is used for MU/mm; absent MU falls back to cumulative-weight span, so proxy
-    values must not be compared as absolute MU/mm.
+  normalization_basis: sum_i abs(delta theta_i)
   validation_level: Formula-exact
   comparison_class: not-comparable
   default_tolerance_abs: 1.0e-06
@@ -6940,7 +6935,8 @@ metric_specs:
   known_noncomparability:
   - No external exact comparator is checked in yet for this Aurora metric family.
   comparable_to: []
-  assumptions: []
+  assumptions:
+  - aurora-v5-unified-physical-closure1mm; effective gap <=1+1e-8 mm is closed.
   exclusions: []
 - key: rotations
   platform: AURORA
@@ -6950,10 +6946,7 @@ metric_specs:
   label: rotations
   unit: turns
   aggregation_scope: plan
-  normalization_basis: Pitch_i=dz/dtheta for dtheta>0; density_i=abs(deltaCMW)/dz, aperture_change_i=abs(deltaW)/dz,
-    travel_i=sum(abs(delta leaf))/dz for dz>0. CV=population_SD/abs(mean); each retained interval equal
-    weight. Explicit beam MU is used for MU/mm; absent MU falls back to cumulative-weight span, so proxy
-    values must not be compared as absolute MU/mm.
+  normalization_basis: total rotation / 360
   validation_level: Formula-exact
   comparison_class: not-comparable
   default_tolerance_abs: 1.0e-06
@@ -6966,7 +6959,8 @@ metric_specs:
   known_noncomparability:
   - No external exact comparator is checked in yet for this Aurora metric family.
   comparable_to: []
-  assumptions: []
+  assumptions:
+  - aurora-v5-unified-physical-closure1mm; effective gap <=1+1e-8 mm is closed.
   exclusions: []
 - key: travel_per_rotation_mm
   platform: AURORA
@@ -6976,10 +6970,7 @@ metric_specs:
   label: travel_per_rotation_mm
   unit: mm/rotation
   aggregation_scope: plan
-  normalization_basis: Pitch_i=dz/dtheta for dtheta>0; density_i=abs(deltaCMW)/dz, aperture_change_i=abs(deltaW)/dz,
-    travel_i=sum(abs(delta leaf))/dz for dz>0. CV=population_SD/abs(mean); each retained interval equal
-    weight. Explicit beam MU is used for MU/mm; absent MU falls back to cumulative-weight span, so proxy
-    values must not be compared as absolute MU/mm.
+  normalization_basis: longitudinal travel / rotations
   validation_level: Formula-exact
   comparison_class: not-comparable
   default_tolerance_abs: 1.0e-06
@@ -6992,7 +6983,8 @@ metric_specs:
   known_noncomparability:
   - No external exact comparator is checked in yet for this Aurora metric family.
   comparable_to: []
-  assumptions: []
+  assumptions:
+  - aurora-v5-unified-physical-closure1mm; effective gap <=1+1e-8 mm is closed.
   exclusions: []
 - key: projection_pitch_mean
   platform: AURORA
@@ -7002,9 +6994,7 @@ metric_specs:
   label: projection_pitch_mean
   unit: mm/deg
   aggregation_scope: plan
-  normalization_basis: Pitch_i=dz/dtheta for dtheta>0; density_i=abs(deltaCMW)/dz, aperture_change_i=abs(deltaW)/dz,
-    travel_i=sum(abs(delta leaf))/dz for dz>0. CV=population_SD/abs(mean); each retained interval equal
-    weight.
+  normalization_basis: mean_i(abs(delta z_i) / abs(delta theta_i))
   validation_level: Formula-exact
   comparison_class: not-comparable
   default_tolerance_abs: 1.0e-06
@@ -7017,7 +7007,8 @@ metric_specs:
   known_noncomparability:
   - No external exact comparator is checked in yet for this Aurora metric family.
   comparable_to: []
-  assumptions: []
+  assumptions:
+  - aurora-v5-unified-physical-closure1mm; effective gap <=1+1e-8 mm is closed.
   exclusions: []
 - key: projection_pitch_cv
   platform: AURORA
@@ -7027,9 +7018,7 @@ metric_specs:
   label: projection_pitch_cv
   unit: dimensionless
   aggregation_scope: plan
-  normalization_basis: Pitch_i=dz/dtheta for dtheta>0; density_i=abs(deltaCMW)/dz, aperture_change_i=abs(deltaW)/dz,
-    travel_i=sum(abs(delta leaf))/dz for dz>0. CV=population_SD/abs(mean); each retained interval equal
-    weight.
+  normalization_basis: std(projection pitch_i) / mean(projection pitch_i)
   validation_level: Formula-exact
   comparison_class: not-comparable
   default_tolerance_abs: 1.0e-06
@@ -7042,7 +7031,8 @@ metric_specs:
   known_noncomparability:
   - No external exact comparator is checked in yet for this Aurora metric family.
   comparable_to: []
-  assumptions: []
+  assumptions:
+  - aurora-v5-unified-physical-closure1mm; effective gap <=1+1e-8 mm is closed.
   exclusions: []
 - key: projection_mu_density_mean_proxy
   platform: AURORA
@@ -7052,9 +7042,7 @@ metric_specs:
   label: projection_mu_density_mean_proxy
   unit: weight/mm
   aggregation_scope: plan
-  normalization_basis: Pitch_i=dz/dtheta for dtheta>0; density_i=abs(deltaCMW)/dz, aperture_change_i=abs(deltaW)/dz,
-    travel_i=sum(abs(delta leaf))/dz for dz>0. CV=population_SD/abs(mean); each retained interval equal
-    weight.
+  normalization_basis: mean_i(abs(delta w_i) / abs(delta z_i))
   validation_level: Formula-exact
   comparison_class: not-comparable
   default_tolerance_abs: 1.0e-06
@@ -7067,7 +7055,8 @@ metric_specs:
   known_noncomparability:
   - No external exact comparator is checked in yet for this Aurora metric family.
   comparable_to: []
-  assumptions: []
+  assumptions:
+  - aurora-v5-unified-physical-closure1mm; effective gap <=1+1e-8 mm is closed.
   exclusions: []
 - key: projection_mu_density_cv_proxy
   platform: AURORA
@@ -7077,9 +7066,8 @@ metric_specs:
   label: projection_mu_density_cv_proxy
   unit: dimensionless
   aggregation_scope: plan
-  normalization_basis: Pitch_i=dz/dtheta for dtheta>0; density_i=abs(deltaCMW)/dz, aperture_change_i=abs(deltaW)/dz,
-    travel_i=sum(abs(delta leaf))/dz for dz>0. CV=population_SD/abs(mean); each retained interval equal
-    weight.
+  normalization_basis: std(abs(delta w_i) / abs(delta z_i)) / mean(abs(delta w_i)
+    / abs(delta z_i))
   validation_level: Formula-exact
   comparison_class: not-comparable
   default_tolerance_abs: 1.0e-06
@@ -7092,7 +7080,8 @@ metric_specs:
   known_noncomparability:
   - No external exact comparator is checked in yet for this Aurora metric family.
   comparable_to: []
-  assumptions: []
+  assumptions:
+  - aurora-v5-unified-physical-closure1mm; effective gap <=1+1e-8 mm is closed.
   exclusions: []
 - key: projection_aperture_change_mean
   platform: AURORA
@@ -7100,11 +7089,10 @@ metric_specs:
   group_key: aurora_v2_paper_style_physics
   metric_key: projection_aperture_change_mean
   label: projection_aperture_change_mean
-  unit: mm/mm
+  unit: mm^2/mm
   aggregation_scope: plan
-  normalization_basis: Pitch_i=dz/dtheta for dtheta>0; density_i=abs(deltaCMW)/dz, aperture_change_i=abs(deltaW)/dz,
-    travel_i=sum(abs(delta leaf))/dz for dz>0. CV=population_SD/abs(mean); each retained interval equal
-    weight.
+  normalization_basis: mean_i(abs(delta A_eff_i)/abs(delta z_i)); A_eff is the jaw-clipped
+    physical dual-layer intersection with gaps<=1+1e-8 mm closed
   validation_level: Formula-exact
   comparison_class: not-comparable
   default_tolerance_abs: 1.0e-06
@@ -7117,7 +7105,8 @@ metric_specs:
   known_noncomparability:
   - No external exact comparator is checked in yet for this Aurora metric family.
   comparable_to: []
-  assumptions: []
+  assumptions:
+  - aurora-v5-unified-physical-closure1mm; effective gap <=1+1e-8 mm is closed.
   exclusions: []
 - key: projection_aperture_change_cv
   platform: AURORA
@@ -7127,9 +7116,8 @@ metric_specs:
   label: projection_aperture_change_cv
   unit: dimensionless
   aggregation_scope: plan
-  normalization_basis: Pitch_i=dz/dtheta for dtheta>0; density_i=abs(deltaCMW)/dz, aperture_change_i=abs(deltaW)/dz,
-    travel_i=sum(abs(delta leaf))/dz for dz>0. CV=population_SD/abs(mean); each retained interval equal
-    weight.
+  normalization_basis: population_std(abs(delta A_eff_i)/abs(delta z_i))/abs(mean(abs(delta
+    A_eff_i)/abs(delta z_i)))
   validation_level: Formula-exact
   comparison_class: not-comparable
   default_tolerance_abs: 1.0e-06
@@ -7142,7 +7130,8 @@ metric_specs:
   known_noncomparability:
   - No external exact comparator is checked in yet for this Aurora metric family.
   comparable_to: []
-  assumptions: []
+  assumptions:
+  - aurora-v5-unified-physical-closure1mm; effective gap <=1+1e-8 mm is closed.
   exclusions: []
 - key: projection_leaf_travel_mean
   platform: AURORA
@@ -7152,9 +7141,8 @@ metric_specs:
   label: projection_leaf_travel_mean
   unit: mm/mm
   aggregation_scope: plan
-  normalization_basis: Pitch_i=dz/dtheta for dtheta>0; density_i=abs(deltaCMW)/dz, aperture_change_i=abs(deltaW)/dz,
-    travel_i=sum(abs(delta leaf))/dz for dz>0. CV=population_SD/abs(mean); each retained interval equal
-    weight.
+  normalization_basis: mean_i(delta L_i / abs(delta z_i)), with delta L_i summed across
+    both MLC layers
   validation_level: Formula-exact
   comparison_class: not-comparable
   default_tolerance_abs: 1.0e-06
@@ -7167,7 +7155,8 @@ metric_specs:
   known_noncomparability:
   - No external exact comparator is checked in yet for this Aurora metric family.
   comparable_to: []
-  assumptions: []
+  assumptions:
+  - aurora-v5-unified-physical-closure1mm; effective gap <=1+1e-8 mm is closed.
   exclusions: []
 - key: projection_leaf_travel_cv
   platform: AURORA
@@ -7177,9 +7166,8 @@ metric_specs:
   label: projection_leaf_travel_cv
   unit: dimensionless
   aggregation_scope: plan
-  normalization_basis: Pitch_i=dz/dtheta for dtheta>0; density_i=abs(deltaCMW)/dz, aperture_change_i=abs(deltaW)/dz,
-    travel_i=sum(abs(delta leaf))/dz for dz>0. CV=population_SD/abs(mean); each retained interval equal
-    weight.
+  normalization_basis: std(delta L_i / abs(delta z_i)) / mean(delta L_i / abs(delta
+    z_i))
   validation_level: Formula-exact
   comparison_class: not-comparable
   default_tolerance_abs: 1.0e-06
@@ -7192,7 +7180,8 @@ metric_specs:
   known_noncomparability:
   - No external exact comparator is checked in yet for this Aurora metric family.
   comparable_to: []
-  assumptions: []
+  assumptions:
+  - aurora-v5-unified-physical-closure1mm; effective gap <=1+1e-8 mm is closed.
   exclusions: []
 - key: projection_leaf_travel_mean_mlcx1
   platform: AURORA
@@ -7202,9 +7191,7 @@ metric_specs:
   label: projection_leaf_travel_mean_mlcx1
   unit: mm/mm
   aggregation_scope: plan
-  normalization_basis: Pitch_i=dz/dtheta for dtheta>0; density_i=abs(deltaCMW)/dz, aperture_change_i=abs(deltaW)/dz,
-    travel_i=sum(abs(delta leaf))/dz for dz>0. CV=population_SD/abs(mean); each retained interval equal
-    weight.
+  normalization_basis: mean_i(delta L_i_MLCX1 / abs(delta z_i))
   validation_level: Formula-exact
   comparison_class: not-comparable
   default_tolerance_abs: 1.0e-06
@@ -7217,7 +7204,8 @@ metric_specs:
   known_noncomparability:
   - No external exact comparator is checked in yet for this Aurora metric family.
   comparable_to: []
-  assumptions: []
+  assumptions:
+  - aurora-v5-unified-physical-closure1mm; effective gap <=1+1e-8 mm is closed.
   exclusions: []
 - key: projection_leaf_travel_cv_mlcx1
   platform: AURORA
@@ -7227,9 +7215,8 @@ metric_specs:
   label: projection_leaf_travel_cv_mlcx1
   unit: dimensionless
   aggregation_scope: plan
-  normalization_basis: Pitch_i=dz/dtheta for dtheta>0; density_i=abs(deltaCMW)/dz, aperture_change_i=abs(deltaW)/dz,
-    travel_i=sum(abs(delta leaf))/dz for dz>0. CV=population_SD/abs(mean); each retained interval equal
-    weight.
+  normalization_basis: std(delta L_i_MLCX1 / abs(delta z_i)) / mean(delta L_i_MLCX1
+    / abs(delta z_i))
   validation_level: Formula-exact
   comparison_class: not-comparable
   default_tolerance_abs: 1.0e-06
@@ -7242,7 +7229,8 @@ metric_specs:
   known_noncomparability:
   - No external exact comparator is checked in yet for this Aurora metric family.
   comparable_to: []
-  assumptions: []
+  assumptions:
+  - aurora-v5-unified-physical-closure1mm; effective gap <=1+1e-8 mm is closed.
   exclusions: []
 - key: projection_leaf_travel_mean_mlcx2
   platform: AURORA
@@ -7252,9 +7240,7 @@ metric_specs:
   label: projection_leaf_travel_mean_mlcx2
   unit: mm/mm
   aggregation_scope: plan
-  normalization_basis: Pitch_i=dz/dtheta for dtheta>0; density_i=abs(deltaCMW)/dz, aperture_change_i=abs(deltaW)/dz,
-    travel_i=sum(abs(delta leaf))/dz for dz>0. CV=population_SD/abs(mean); each retained interval equal
-    weight.
+  normalization_basis: mean_i(delta L_i_MLCX2 / abs(delta z_i))
   validation_level: Formula-exact
   comparison_class: not-comparable
   default_tolerance_abs: 1.0e-06
@@ -7267,7 +7253,8 @@ metric_specs:
   known_noncomparability:
   - No external exact comparator is checked in yet for this Aurora metric family.
   comparable_to: []
-  assumptions: []
+  assumptions:
+  - aurora-v5-unified-physical-closure1mm; effective gap <=1+1e-8 mm is closed.
   exclusions: []
 - key: projection_leaf_travel_cv_mlcx2
   platform: AURORA
@@ -7277,9 +7264,8 @@ metric_specs:
   label: projection_leaf_travel_cv_mlcx2
   unit: dimensionless
   aggregation_scope: plan
-  normalization_basis: Pitch_i=dz/dtheta for dtheta>0; density_i=abs(deltaCMW)/dz, aperture_change_i=abs(deltaW)/dz,
-    travel_i=sum(abs(delta leaf))/dz for dz>0. CV=population_SD/abs(mean); each retained interval equal
-    weight.
+  normalization_basis: std(delta L_i_MLCX2 / abs(delta z_i)) / mean(delta L_i_MLCX2
+    / abs(delta z_i))
   validation_level: Formula-exact
   comparison_class: not-comparable
   default_tolerance_abs: 1.0e-06
@@ -7292,7 +7278,8 @@ metric_specs:
   known_noncomparability:
   - No external exact comparator is checked in yet for this Aurora metric family.
   comparable_to: []
-  assumptions: []
+  assumptions:
+  - aurora-v5-unified-physical-closure1mm; effective gap <=1+1e-8 mm is closed.
   exclusions: []
 - key: theta_z_coupling_cv
   platform: AURORA
@@ -7302,9 +7289,7 @@ metric_specs:
   label: theta_z_coupling_cv
   unit: dimensionless
   aggregation_scope: plan
-  normalization_basis: Pitch_i=dz/dtheta for dtheta>0; density_i=abs(deltaCMW)/dz, aperture_change_i=abs(deltaW)/dz,
-    travel_i=sum(abs(delta leaf))/dz for dz>0. CV=population_SD/abs(mean); each retained interval equal
-    weight.
+  normalization_basis: projection_pitch_cv
   validation_level: Formula-exact
   comparison_class: not-comparable
   default_tolerance_abs: 1.0e-06
@@ -7317,7 +7302,8 @@ metric_specs:
   known_noncomparability:
   - No external exact comparator is checked in yet for this Aurora metric family.
   comparable_to: []
-  assumptions: []
+  assumptions:
+  - aurora-v5-unified-physical-closure1mm; effective gap <=1+1e-8 mm is closed.
   exclusions: []
 - key: mu_z_coupling_cv_proxy
   platform: AURORA
@@ -7327,9 +7313,7 @@ metric_specs:
   label: mu_z_coupling_cv_proxy
   unit: dimensionless
   aggregation_scope: plan
-  normalization_basis: Pitch_i=dz/dtheta for dtheta>0; density_i=abs(deltaCMW)/dz, aperture_change_i=abs(deltaW)/dz,
-    travel_i=sum(abs(delta leaf))/dz for dz>0. CV=population_SD/abs(mean); each retained interval equal
-    weight.
+  normalization_basis: projection_mu_density_cv_proxy
   validation_level: Formula-exact
   comparison_class: not-comparable
   default_tolerance_abs: 1.0e-06
@@ -7342,7 +7326,8 @@ metric_specs:
   known_noncomparability:
   - No external exact comparator is checked in yet for this Aurora metric family.
   comparable_to: []
-  assumptions: []
+  assumptions:
+  - aurora-v5-unified-physical-closure1mm; effective gap <=1+1e-8 mm is closed.
   exclusions: []
 - key: mlc_z_coupling_cv
   platform: AURORA
@@ -7352,9 +7337,7 @@ metric_specs:
   label: mlc_z_coupling_cv
   unit: dimensionless
   aggregation_scope: plan
-  normalization_basis: Pitch_i=dz/dtheta for dtheta>0; density_i=abs(deltaCMW)/dz, aperture_change_i=abs(deltaW)/dz,
-    travel_i=sum(abs(delta leaf))/dz for dz>0. CV=population_SD/abs(mean); each retained interval equal
-    weight.
+  normalization_basis: projection_leaf_travel_cv
   validation_level: Formula-exact
   comparison_class: not-comparable
   default_tolerance_abs: 1.0e-06
@@ -7367,7 +7350,8 @@ metric_specs:
   known_noncomparability:
   - No external exact comparator is checked in yet for this Aurora metric family.
   comparable_to: []
-  assumptions: []
+  assumptions:
+  - aurora-v5-unified-physical-closure1mm; effective gap <=1+1e-8 mm is closed.
   exclusions: []
 - key: mlcx1_z_coupling_cv
   platform: AURORA
@@ -7377,9 +7361,7 @@ metric_specs:
   label: mlcx1_z_coupling_cv
   unit: dimensionless
   aggregation_scope: plan
-  normalization_basis: Pitch_i=dz/dtheta for dtheta>0; density_i=abs(deltaCMW)/dz, aperture_change_i=abs(deltaW)/dz,
-    travel_i=sum(abs(delta leaf))/dz for dz>0. CV=population_SD/abs(mean); each retained interval equal
-    weight.
+  normalization_basis: projection_leaf_travel_cv_mlcx1
   validation_level: Formula-exact
   comparison_class: not-comparable
   default_tolerance_abs: 1.0e-06
@@ -7392,7 +7374,8 @@ metric_specs:
   known_noncomparability:
   - No external exact comparator is checked in yet for this Aurora metric family.
   comparable_to: []
-  assumptions: []
+  assumptions:
+  - aurora-v5-unified-physical-closure1mm; effective gap <=1+1e-8 mm is closed.
   exclusions: []
 - key: mlcx2_z_coupling_cv
   platform: AURORA
@@ -7402,9 +7385,7 @@ metric_specs:
   label: mlcx2_z_coupling_cv
   unit: dimensionless
   aggregation_scope: plan
-  normalization_basis: Pitch_i=dz/dtheta for dtheta>0; density_i=abs(deltaCMW)/dz, aperture_change_i=abs(deltaW)/dz,
-    travel_i=sum(abs(delta leaf))/dz for dz>0. CV=population_SD/abs(mean); each retained interval equal
-    weight.
+  normalization_basis: projection_leaf_travel_cv_mlcx2
   validation_level: Formula-exact
   comparison_class: not-comparable
   default_tolerance_abs: 1.0e-06
@@ -7417,7 +7398,8 @@ metric_specs:
   known_noncomparability:
   - No external exact comparator is checked in yet for this Aurora metric family.
   comparable_to: []
-  assumptions: []
+  assumptions:
+  - aurora-v5-unified-physical-closure1mm; effective gap <=1+1e-8 mm is closed.
   exclusions: []
 - key: reversal_symmetry_index
   platform: AURORA
@@ -7427,9 +7409,9 @@ metric_specs:
   label: reversal_symmetry_index
   unit: dimensionless
   aggregation_scope: plan
-  normalization_basis: Symmetry averages four family comparisons (mean MU-density proxy, aperture change,
-    leaf travel, pitch):1-abs(f-b)/(abs(f)+abs(b)), both zero=>1. Difference compares mean coupled index;
-    balance compares sums of coupled index.
+  normalization_basis: mean over selected burden families of [1 - abs(forward_mean
+    - backward_mean) / (abs(forward_mean) + abs(backward_mean))]; aperture-change
+    component uses physical area.
   validation_level: Formula-exact
   comparison_class: not-comparable
   default_tolerance_abs: 1.0e-06
@@ -7442,7 +7424,8 @@ metric_specs:
   known_noncomparability:
   - No external exact comparator is checked in yet for this Aurora metric family.
   comparable_to: []
-  assumptions: []
+  assumptions:
+  - aurora-v5-unified-physical-closure1mm; effective gap <=1+1e-8 mm is closed.
   exclusions: []
 - key: forward_backward_metric_difference
   platform: AURORA
@@ -7452,9 +7435,8 @@ metric_specs:
   label: forward_backward_metric_difference
   unit: dimensionless
   aggregation_scope: plan
-  normalization_basis: Symmetry averages four family comparisons (mean MU-density proxy, aperture change,
-    leaf travel, pitch):1-abs(f-b)/(abs(f)+abs(b)), both zero=>1. Difference compares mean coupled index;
-    balance compares sums of coupled index.
+  normalization_basis: abs(mean_forward(coupled_modulation_index) - mean_backward(coupled_modulation_index));
+    aperture-change component uses physical area.
   validation_level: Formula-exact
   comparison_class: not-comparable
   default_tolerance_abs: 1.0e-06
@@ -7467,7 +7449,8 @@ metric_specs:
   known_noncomparability:
   - No external exact comparator is checked in yet for this Aurora metric family.
   comparable_to: []
-  assumptions: []
+  assumptions:
+  - aurora-v5-unified-physical-closure1mm; effective gap <=1+1e-8 mm is closed.
   exclusions: []
 - key: beam_pair_balance_index
   platform: AURORA
@@ -7477,9 +7460,8 @@ metric_specs:
   label: beam_pair_balance_index
   unit: dimensionless
   aggregation_scope: plan
-  normalization_basis: Symmetry averages four family comparisons (mean MU-density proxy, aperture change,
-    leaf travel, pitch):1-abs(f-b)/(abs(f)+abs(b)), both zero=>1. Difference compares mean coupled index;
-    balance compares sums of coupled index.
+  normalization_basis: 1 - abs(sum_forward(coupled_modulation_index) - sum_backward(coupled_modulation_index))
+    / (sum_forward + sum_backward); aperture-change component uses physical area.
   validation_level: Formula-exact
   comparison_class: not-comparable
   default_tolerance_abs: 1.0e-06
@@ -7492,7 +7474,8 @@ metric_specs:
   known_noncomparability:
   - No external exact comparator is checked in yet for this Aurora metric family.
   comparable_to: []
-  assumptions: []
+  assumptions:
+  - aurora-v5-unified-physical-closure1mm; effective gap <=1+1e-8 mm is closed.
   exclusions: []
 - key: small_opening_fraction
   platform: AURORA
@@ -7502,8 +7485,7 @@ metric_specs:
   label: small_opening_fraction
   unit: dimensionless
   aggregation_scope: plan
-  normalization_basis: Weight each eligible pair by abs(deltaCMW); zero increment falls back to1. Fraction
-    uses strict gap<10 or<2 mm; severity=max(0,1-gap/10 mm).
+  normalization_basis: mean_sas10; OpenMUmean(count_s(1+1e-8<g<10 mm)/count_s(g>1+1e-8))
   validation_level: Formula-exact
   comparison_class: not-comparable
   default_tolerance_abs: 1.0e-06
@@ -7516,7 +7498,8 @@ metric_specs:
   known_noncomparability:
   - No external exact comparator is checked in yet for this Aurora metric family.
   comparable_to: []
-  assumptions: []
+  assumptions:
+  - aurora-v5-unified-physical-closure1mm; effective gap <=1+1e-8 mm is closed.
   exclusions: []
 - key: near_closed_fraction
   platform: AURORA
@@ -7526,8 +7509,7 @@ metric_specs:
   label: near_closed_fraction
   unit: dimensionless
   aggregation_scope: plan
-  normalization_basis: Weight each eligible pair by abs(deltaCMW); zero increment falls back to1. Fraction
-    uses strict gap<10 or<2 mm; severity=max(0,1-gap/10 mm).
+  normalization_basis: OpenMUmean(count_s(1+1e-8<g<2 mm)/count_s(g>1+1e-8))
   validation_level: Formula-exact
   comparison_class: not-comparable
   default_tolerance_abs: 1.0e-06
@@ -7540,7 +7522,8 @@ metric_specs:
   known_noncomparability:
   - No external exact comparator is checked in yet for this Aurora metric family.
   comparable_to: []
-  assumptions: []
+  assumptions:
+  - aurora-v5-unified-physical-closure1mm; effective gap <=1+1e-8 mm is closed.
   exclusions: []
 - key: effective_small_gap_burden
   platform: AURORA
@@ -7550,8 +7533,8 @@ metric_specs:
   label: effective_small_gap_burden
   unit: dimensionless
   aggregation_scope: plan
-  normalization_basis: Weight each eligible pair by abs(deltaCMW); zero increment falls back to1. Fraction
-    uses strict gap<10 or<2 mm; severity=max(0,1-gap/10 mm).
+  normalization_basis: OpenMUmean(mean_open_strips(max(0,1-g/10 mm))); same 1 mm closure
+    and delivered-MU weights as SAS
   validation_level: Formula-exact
   comparison_class: not-comparable
   default_tolerance_abs: 1.0e-06
@@ -7564,7 +7547,8 @@ metric_specs:
   known_noncomparability:
   - No external exact comparator is checked in yet for this Aurora metric family.
   comparable_to: []
-  assumptions: []
+  assumptions:
+  - aurora-v5-unified-physical-closure1mm; effective gap <=1+1e-8 mm is closed.
   exclusions: []
 - key: projection_pitch_p95
   platform: AURORA
@@ -7574,9 +7558,7 @@ metric_specs:
   label: projection_pitch_p95
   unit: mm/deg
   aggregation_scope: plan
-  normalization_basis: Pitch_i=dz/dtheta for dtheta>0; density_i=abs(deltaCMW)/dz, aperture_change_i=abs(deltaW)/dz,
-    travel_i=sum(abs(delta leaf))/dz for dz>0. CV=population_SD/abs(mean); each retained interval equal
-    weight.
+  normalization_basis: nearest-rank 95th percentile of projection_pitch_i
   validation_level: Formula-exact
   comparison_class: not-comparable
   default_tolerance_abs: 1.0e-06
@@ -7589,7 +7571,8 @@ metric_specs:
   known_noncomparability:
   - No external exact comparator is checked in yet for this Aurora metric family.
   comparable_to: []
-  assumptions: []
+  assumptions:
+  - aurora-v5-unified-physical-closure1mm; effective gap <=1+1e-8 mm is closed.
   exclusions: []
 - key: projection_pitch_max
   platform: AURORA
@@ -7599,9 +7582,7 @@ metric_specs:
   label: projection_pitch_max
   unit: mm/deg
   aggregation_scope: plan
-  normalization_basis: Pitch_i=dz/dtheta for dtheta>0; density_i=abs(deltaCMW)/dz, aperture_change_i=abs(deltaW)/dz,
-    travel_i=sum(abs(delta leaf))/dz for dz>0. CV=population_SD/abs(mean); each retained interval equal
-    weight.
+  normalization_basis: max(projection_pitch_i)
   validation_level: Formula-exact
   comparison_class: not-comparable
   default_tolerance_abs: 1.0e-06
@@ -7614,7 +7595,8 @@ metric_specs:
   known_noncomparability:
   - No external exact comparator is checked in yet for this Aurora metric family.
   comparable_to: []
-  assumptions: []
+  assumptions:
+  - aurora-v5-unified-physical-closure1mm; effective gap <=1+1e-8 mm is closed.
   exclusions: []
 - key: projection_pitch_top3_mean
   platform: AURORA
@@ -7624,9 +7606,7 @@ metric_specs:
   label: projection_pitch_top3_mean
   unit: mm/deg
   aggregation_scope: plan
-  normalization_basis: Pitch_i=dz/dtheta for dtheta>0; density_i=abs(deltaCMW)/dz, aperture_change_i=abs(deltaW)/dz,
-    travel_i=sum(abs(delta leaf))/dz for dz>0. CV=population_SD/abs(mean); each retained interval equal
-    weight.
+  normalization_basis: mean of the three largest projection_pitch_i values
   validation_level: Formula-exact
   comparison_class: not-comparable
   default_tolerance_abs: 1.0e-06
@@ -7639,7 +7619,8 @@ metric_specs:
   known_noncomparability:
   - No external exact comparator is checked in yet for this Aurora metric family.
   comparable_to: []
-  assumptions: []
+  assumptions:
+  - aurora-v5-unified-physical-closure1mm; effective gap <=1+1e-8 mm is closed.
   exclusions: []
 - key: projection_mu_density_p95_proxy
   platform: AURORA
@@ -7649,9 +7630,7 @@ metric_specs:
   label: projection_mu_density_p95_proxy
   unit: weight/mm
   aggregation_scope: plan
-  normalization_basis: Pitch_i=dz/dtheta for dtheta>0; density_i=abs(deltaCMW)/dz, aperture_change_i=abs(deltaW)/dz,
-    travel_i=sum(abs(delta leaf))/dz for dz>0. CV=population_SD/abs(mean); each retained interval equal
-    weight.
+  normalization_basis: nearest-rank 95th percentile of projection_mu_density_proxy_i
   validation_level: Formula-exact
   comparison_class: not-comparable
   default_tolerance_abs: 1.0e-06
@@ -7664,7 +7643,8 @@ metric_specs:
   known_noncomparability:
   - No external exact comparator is checked in yet for this Aurora metric family.
   comparable_to: []
-  assumptions: []
+  assumptions:
+  - aurora-v5-unified-physical-closure1mm; effective gap <=1+1e-8 mm is closed.
   exclusions: []
 - key: projection_mu_density_max_proxy
   platform: AURORA
@@ -7674,9 +7654,7 @@ metric_specs:
   label: projection_mu_density_max_proxy
   unit: weight/mm
   aggregation_scope: plan
-  normalization_basis: Pitch_i=dz/dtheta for dtheta>0; density_i=abs(deltaCMW)/dz, aperture_change_i=abs(deltaW)/dz,
-    travel_i=sum(abs(delta leaf))/dz for dz>0. CV=population_SD/abs(mean); each retained interval equal
-    weight.
+  normalization_basis: max(projection_mu_density_proxy_i)
   validation_level: Formula-exact
   comparison_class: not-comparable
   default_tolerance_abs: 1.0e-06
@@ -7689,7 +7667,8 @@ metric_specs:
   known_noncomparability:
   - No external exact comparator is checked in yet for this Aurora metric family.
   comparable_to: []
-  assumptions: []
+  assumptions:
+  - aurora-v5-unified-physical-closure1mm; effective gap <=1+1e-8 mm is closed.
   exclusions: []
 - key: projection_mu_density_top3_mean_proxy
   platform: AURORA
@@ -7699,9 +7678,7 @@ metric_specs:
   label: projection_mu_density_top3_mean_proxy
   unit: weight/mm
   aggregation_scope: plan
-  normalization_basis: Pitch_i=dz/dtheta for dtheta>0; density_i=abs(deltaCMW)/dz, aperture_change_i=abs(deltaW)/dz,
-    travel_i=sum(abs(delta leaf))/dz for dz>0. CV=population_SD/abs(mean); each retained interval equal
-    weight.
+  normalization_basis: mean of the three largest projection_mu_density_proxy_i values
   validation_level: Formula-exact
   comparison_class: not-comparable
   default_tolerance_abs: 1.0e-06
@@ -7714,7 +7691,8 @@ metric_specs:
   known_noncomparability:
   - No external exact comparator is checked in yet for this Aurora metric family.
   comparable_to: []
-  assumptions: []
+  assumptions:
+  - aurora-v5-unified-physical-closure1mm; effective gap <=1+1e-8 mm is closed.
   exclusions: []
 - key: projection_aperture_change_p95
   platform: AURORA
@@ -7722,11 +7700,9 @@ metric_specs:
   group_key: aurora_v3_local_interval_peaks
   metric_key: projection_aperture_change_p95
   label: projection_aperture_change_p95
-  unit: mm/mm
+  unit: mm^2/mm
   aggregation_scope: plan
-  normalization_basis: Pitch_i=dz/dtheta for dtheta>0; density_i=abs(deltaCMW)/dz, aperture_change_i=abs(deltaW)/dz,
-    travel_i=sum(abs(delta leaf))/dz for dz>0. CV=population_SD/abs(mean); each retained interval equal
-    weight.
+  normalization_basis: nearest-rank 95th percentile of projection_aperture_change_i
   validation_level: Formula-exact
   comparison_class: not-comparable
   default_tolerance_abs: 1.0e-06
@@ -7739,7 +7715,8 @@ metric_specs:
   known_noncomparability:
   - No external exact comparator is checked in yet for this Aurora metric family.
   comparable_to: []
-  assumptions: []
+  assumptions:
+  - aurora-v5-unified-physical-closure1mm; effective gap <=1+1e-8 mm is closed.
   exclusions: []
 - key: projection_aperture_change_max
   platform: AURORA
@@ -7747,11 +7724,9 @@ metric_specs:
   group_key: aurora_v3_local_interval_peaks
   metric_key: projection_aperture_change_max
   label: projection_aperture_change_max
-  unit: mm/mm
+  unit: mm^2/mm
   aggregation_scope: plan
-  normalization_basis: Pitch_i=dz/dtheta for dtheta>0; density_i=abs(deltaCMW)/dz, aperture_change_i=abs(deltaW)/dz,
-    travel_i=sum(abs(delta leaf))/dz for dz>0. CV=population_SD/abs(mean); each retained interval equal
-    weight.
+  normalization_basis: max(projection_aperture_change_i)
   validation_level: Formula-exact
   comparison_class: not-comparable
   default_tolerance_abs: 1.0e-06
@@ -7764,7 +7739,8 @@ metric_specs:
   known_noncomparability:
   - No external exact comparator is checked in yet for this Aurora metric family.
   comparable_to: []
-  assumptions: []
+  assumptions:
+  - aurora-v5-unified-physical-closure1mm; effective gap <=1+1e-8 mm is closed.
   exclusions: []
 - key: projection_aperture_change_top3_mean
   platform: AURORA
@@ -7772,11 +7748,9 @@ metric_specs:
   group_key: aurora_v3_local_interval_peaks
   metric_key: projection_aperture_change_top3_mean
   label: projection_aperture_change_top3_mean
-  unit: mm/mm
+  unit: mm^2/mm
   aggregation_scope: plan
-  normalization_basis: Pitch_i=dz/dtheta for dtheta>0; density_i=abs(deltaCMW)/dz, aperture_change_i=abs(deltaW)/dz,
-    travel_i=sum(abs(delta leaf))/dz for dz>0. CV=population_SD/abs(mean); each retained interval equal
-    weight.
+  normalization_basis: mean of the three largest projection_aperture_change_i values
   validation_level: Formula-exact
   comparison_class: not-comparable
   default_tolerance_abs: 1.0e-06
@@ -7789,7 +7763,8 @@ metric_specs:
   known_noncomparability:
   - No external exact comparator is checked in yet for this Aurora metric family.
   comparable_to: []
-  assumptions: []
+  assumptions:
+  - aurora-v5-unified-physical-closure1mm; effective gap <=1+1e-8 mm is closed.
   exclusions: []
 - key: projection_leaf_travel_p95
   platform: AURORA
@@ -7799,9 +7774,7 @@ metric_specs:
   label: projection_leaf_travel_p95
   unit: mm/mm
   aggregation_scope: plan
-  normalization_basis: Pitch_i=dz/dtheta for dtheta>0; density_i=abs(deltaCMW)/dz, aperture_change_i=abs(deltaW)/dz,
-    travel_i=sum(abs(delta leaf))/dz for dz>0. CV=population_SD/abs(mean); each retained interval equal
-    weight.
+  normalization_basis: nearest-rank 95th percentile of projection_leaf_travel_i
   validation_level: Formula-exact
   comparison_class: not-comparable
   default_tolerance_abs: 1.0e-06
@@ -7814,7 +7787,8 @@ metric_specs:
   known_noncomparability:
   - No external exact comparator is checked in yet for this Aurora metric family.
   comparable_to: []
-  assumptions: []
+  assumptions:
+  - aurora-v5-unified-physical-closure1mm; effective gap <=1+1e-8 mm is closed.
   exclusions: []
 - key: projection_leaf_travel_max
   platform: AURORA
@@ -7824,9 +7798,7 @@ metric_specs:
   label: projection_leaf_travel_max
   unit: mm/mm
   aggregation_scope: plan
-  normalization_basis: Pitch_i=dz/dtheta for dtheta>0; density_i=abs(deltaCMW)/dz, aperture_change_i=abs(deltaW)/dz,
-    travel_i=sum(abs(delta leaf))/dz for dz>0. CV=population_SD/abs(mean); each retained interval equal
-    weight.
+  normalization_basis: max(projection_leaf_travel_i)
   validation_level: Formula-exact
   comparison_class: not-comparable
   default_tolerance_abs: 1.0e-06
@@ -7839,7 +7811,8 @@ metric_specs:
   known_noncomparability:
   - No external exact comparator is checked in yet for this Aurora metric family.
   comparable_to: []
-  assumptions: []
+  assumptions:
+  - aurora-v5-unified-physical-closure1mm; effective gap <=1+1e-8 mm is closed.
   exclusions: []
 - key: projection_leaf_travel_top3_mean
   platform: AURORA
@@ -7849,9 +7822,7 @@ metric_specs:
   label: projection_leaf_travel_top3_mean
   unit: mm/mm
   aggregation_scope: plan
-  normalization_basis: Pitch_i=dz/dtheta for dtheta>0; density_i=abs(deltaCMW)/dz, aperture_change_i=abs(deltaW)/dz,
-    travel_i=sum(abs(delta leaf))/dz for dz>0. CV=population_SD/abs(mean); each retained interval equal
-    weight.
+  normalization_basis: mean of the three largest projection_leaf_travel_i values
   validation_level: Formula-exact
   comparison_class: not-comparable
   default_tolerance_abs: 1.0e-06
@@ -7864,7 +7835,8 @@ metric_specs:
   known_noncomparability:
   - No external exact comparator is checked in yet for this Aurora metric family.
   comparable_to: []
-  assumptions: []
+  assumptions:
+  - aurora-v5-unified-physical-closure1mm; effective gap <=1+1e-8 mm is closed.
   exclusions: []
 - key: head_mu_density_mean_proxy
   platform: AURORA
@@ -7874,9 +7846,7 @@ metric_specs:
   label: head_mu_density_mean_proxy
   unit: weight/mm
   aggregation_scope: plan
-  normalization_basis: Pitch_i=dz/dtheta for dtheta>0; density_i=abs(deltaCMW)/dz, aperture_change_i=abs(deltaW)/dz,
-    travel_i=sum(abs(delta leaf))/dz for dz>0. CV=population_SD/abs(mean); each retained interval equal
-    weight.
+  normalization_basis: mean(projection_mu_density_proxy_i) over head-third intervals
   validation_level: Formula-exact
   comparison_class: not-comparable
   default_tolerance_abs: 1.0e-06
@@ -7889,7 +7859,8 @@ metric_specs:
   known_noncomparability:
   - No external exact comparator is checked in yet for this Aurora metric family.
   comparable_to: []
-  assumptions: []
+  assumptions:
+  - aurora-v5-unified-physical-closure1mm; effective gap <=1+1e-8 mm is closed.
   exclusions: []
 - key: head_mu_density_cv_proxy
   platform: AURORA
@@ -7899,9 +7870,7 @@ metric_specs:
   label: head_mu_density_cv_proxy
   unit: dimensionless
   aggregation_scope: plan
-  normalization_basis: Pitch_i=dz/dtheta for dtheta>0; density_i=abs(deltaCMW)/dz, aperture_change_i=abs(deltaW)/dz,
-    travel_i=sum(abs(delta leaf))/dz for dz>0. CV=population_SD/abs(mean); each retained interval equal
-    weight.
+  normalization_basis: CV(projection_mu_density_proxy_i) over head-third intervals
   validation_level: Formula-exact
   comparison_class: not-comparable
   default_tolerance_abs: 1.0e-06
@@ -7914,7 +7883,8 @@ metric_specs:
   known_noncomparability:
   - No external exact comparator is checked in yet for this Aurora metric family.
   comparable_to: []
-  assumptions: []
+  assumptions:
+  - aurora-v5-unified-physical-closure1mm; effective gap <=1+1e-8 mm is closed.
   exclusions: []
 - key: head_aperture_change_mean
   platform: AURORA
@@ -7922,11 +7892,9 @@ metric_specs:
   group_key: aurora_v3_axial_regions
   metric_key: head_aperture_change_mean
   label: head_aperture_change_mean
-  unit: mm/mm
+  unit: mm^2/mm
   aggregation_scope: plan
-  normalization_basis: Pitch_i=dz/dtheta for dtheta>0; density_i=abs(deltaCMW)/dz, aperture_change_i=abs(deltaW)/dz,
-    travel_i=sum(abs(delta leaf))/dz for dz>0. CV=population_SD/abs(mean); each retained interval equal
-    weight.
+  normalization_basis: mean(projection_aperture_change_i) over head-third intervals
   validation_level: Formula-exact
   comparison_class: not-comparable
   default_tolerance_abs: 1.0e-06
@@ -7939,7 +7907,8 @@ metric_specs:
   known_noncomparability:
   - No external exact comparator is checked in yet for this Aurora metric family.
   comparable_to: []
-  assumptions: []
+  assumptions:
+  - aurora-v5-unified-physical-closure1mm; effective gap <=1+1e-8 mm is closed.
   exclusions: []
 - key: head_aperture_change_cv
   platform: AURORA
@@ -7949,9 +7918,7 @@ metric_specs:
   label: head_aperture_change_cv
   unit: dimensionless
   aggregation_scope: plan
-  normalization_basis: Pitch_i=dz/dtheta for dtheta>0; density_i=abs(deltaCMW)/dz, aperture_change_i=abs(deltaW)/dz,
-    travel_i=sum(abs(delta leaf))/dz for dz>0. CV=population_SD/abs(mean); each retained interval equal
-    weight.
+  normalization_basis: CV(projection_aperture_change_i) over head-third intervals
   validation_level: Formula-exact
   comparison_class: not-comparable
   default_tolerance_abs: 1.0e-06
@@ -7964,7 +7931,8 @@ metric_specs:
   known_noncomparability:
   - No external exact comparator is checked in yet for this Aurora metric family.
   comparable_to: []
-  assumptions: []
+  assumptions:
+  - aurora-v5-unified-physical-closure1mm; effective gap <=1+1e-8 mm is closed.
   exclusions: []
 - key: head_leaf_travel_mean
   platform: AURORA
@@ -7974,9 +7942,7 @@ metric_specs:
   label: head_leaf_travel_mean
   unit: mm/mm
   aggregation_scope: plan
-  normalization_basis: Pitch_i=dz/dtheta for dtheta>0; density_i=abs(deltaCMW)/dz, aperture_change_i=abs(deltaW)/dz,
-    travel_i=sum(abs(delta leaf))/dz for dz>0. CV=population_SD/abs(mean); each retained interval equal
-    weight.
+  normalization_basis: mean(projection_leaf_travel_i) over head-third intervals
   validation_level: Formula-exact
   comparison_class: not-comparable
   default_tolerance_abs: 1.0e-06
@@ -7989,7 +7955,8 @@ metric_specs:
   known_noncomparability:
   - No external exact comparator is checked in yet for this Aurora metric family.
   comparable_to: []
-  assumptions: []
+  assumptions:
+  - aurora-v5-unified-physical-closure1mm; effective gap <=1+1e-8 mm is closed.
   exclusions: []
 - key: head_leaf_travel_cv
   platform: AURORA
@@ -7999,9 +7966,7 @@ metric_specs:
   label: head_leaf_travel_cv
   unit: dimensionless
   aggregation_scope: plan
-  normalization_basis: Pitch_i=dz/dtheta for dtheta>0; density_i=abs(deltaCMW)/dz, aperture_change_i=abs(deltaW)/dz,
-    travel_i=sum(abs(delta leaf))/dz for dz>0. CV=population_SD/abs(mean); each retained interval equal
-    weight.
+  normalization_basis: CV(projection_leaf_travel_i) over head-third intervals
   validation_level: Formula-exact
   comparison_class: not-comparable
   default_tolerance_abs: 1.0e-06
@@ -8014,7 +7979,8 @@ metric_specs:
   known_noncomparability:
   - No external exact comparator is checked in yet for this Aurora metric family.
   comparable_to: []
-  assumptions: []
+  assumptions:
+  - aurora-v5-unified-physical-closure1mm; effective gap <=1+1e-8 mm is closed.
   exclusions: []
 - key: mid_mu_density_mean_proxy
   platform: AURORA
@@ -8024,9 +7990,7 @@ metric_specs:
   label: mid_mu_density_mean_proxy
   unit: weight/mm
   aggregation_scope: plan
-  normalization_basis: Pitch_i=dz/dtheta for dtheta>0; density_i=abs(deltaCMW)/dz, aperture_change_i=abs(deltaW)/dz,
-    travel_i=sum(abs(delta leaf))/dz for dz>0. CV=population_SD/abs(mean); each retained interval equal
-    weight.
+  normalization_basis: mean(projection_mu_density_proxy_i) over mid-third intervals
   validation_level: Formula-exact
   comparison_class: not-comparable
   default_tolerance_abs: 1.0e-06
@@ -8039,7 +8003,8 @@ metric_specs:
   known_noncomparability:
   - No external exact comparator is checked in yet for this Aurora metric family.
   comparable_to: []
-  assumptions: []
+  assumptions:
+  - aurora-v5-unified-physical-closure1mm; effective gap <=1+1e-8 mm is closed.
   exclusions: []
 - key: mid_mu_density_cv_proxy
   platform: AURORA
@@ -8049,9 +8014,7 @@ metric_specs:
   label: mid_mu_density_cv_proxy
   unit: dimensionless
   aggregation_scope: plan
-  normalization_basis: Pitch_i=dz/dtheta for dtheta>0; density_i=abs(deltaCMW)/dz, aperture_change_i=abs(deltaW)/dz,
-    travel_i=sum(abs(delta leaf))/dz for dz>0. CV=population_SD/abs(mean); each retained interval equal
-    weight.
+  normalization_basis: CV(projection_mu_density_proxy_i) over mid-third intervals
   validation_level: Formula-exact
   comparison_class: not-comparable
   default_tolerance_abs: 1.0e-06
@@ -8064,7 +8027,8 @@ metric_specs:
   known_noncomparability:
   - No external exact comparator is checked in yet for this Aurora metric family.
   comparable_to: []
-  assumptions: []
+  assumptions:
+  - aurora-v5-unified-physical-closure1mm; effective gap <=1+1e-8 mm is closed.
   exclusions: []
 - key: mid_aperture_change_mean
   platform: AURORA
@@ -8072,11 +8036,9 @@ metric_specs:
   group_key: aurora_v3_axial_regions
   metric_key: mid_aperture_change_mean
   label: mid_aperture_change_mean
-  unit: mm/mm
+  unit: mm^2/mm
   aggregation_scope: plan
-  normalization_basis: Pitch_i=dz/dtheta for dtheta>0; density_i=abs(deltaCMW)/dz, aperture_change_i=abs(deltaW)/dz,
-    travel_i=sum(abs(delta leaf))/dz for dz>0. CV=population_SD/abs(mean); each retained interval equal
-    weight.
+  normalization_basis: mean(projection_aperture_change_i) over mid-third intervals
   validation_level: Formula-exact
   comparison_class: not-comparable
   default_tolerance_abs: 1.0e-06
@@ -8089,7 +8051,8 @@ metric_specs:
   known_noncomparability:
   - No external exact comparator is checked in yet for this Aurora metric family.
   comparable_to: []
-  assumptions: []
+  assumptions:
+  - aurora-v5-unified-physical-closure1mm; effective gap <=1+1e-8 mm is closed.
   exclusions: []
 - key: mid_aperture_change_cv
   platform: AURORA
@@ -8099,9 +8062,7 @@ metric_specs:
   label: mid_aperture_change_cv
   unit: dimensionless
   aggregation_scope: plan
-  normalization_basis: Pitch_i=dz/dtheta for dtheta>0; density_i=abs(deltaCMW)/dz, aperture_change_i=abs(deltaW)/dz,
-    travel_i=sum(abs(delta leaf))/dz for dz>0. CV=population_SD/abs(mean); each retained interval equal
-    weight.
+  normalization_basis: CV(projection_aperture_change_i) over mid-third intervals
   validation_level: Formula-exact
   comparison_class: not-comparable
   default_tolerance_abs: 1.0e-06
@@ -8114,7 +8075,8 @@ metric_specs:
   known_noncomparability:
   - No external exact comparator is checked in yet for this Aurora metric family.
   comparable_to: []
-  assumptions: []
+  assumptions:
+  - aurora-v5-unified-physical-closure1mm; effective gap <=1+1e-8 mm is closed.
   exclusions: []
 - key: mid_leaf_travel_mean
   platform: AURORA
@@ -8124,9 +8086,7 @@ metric_specs:
   label: mid_leaf_travel_mean
   unit: mm/mm
   aggregation_scope: plan
-  normalization_basis: Pitch_i=dz/dtheta for dtheta>0; density_i=abs(deltaCMW)/dz, aperture_change_i=abs(deltaW)/dz,
-    travel_i=sum(abs(delta leaf))/dz for dz>0. CV=population_SD/abs(mean); each retained interval equal
-    weight.
+  normalization_basis: mean(projection_leaf_travel_i) over mid-third intervals
   validation_level: Formula-exact
   comparison_class: not-comparable
   default_tolerance_abs: 1.0e-06
@@ -8139,7 +8099,8 @@ metric_specs:
   known_noncomparability:
   - No external exact comparator is checked in yet for this Aurora metric family.
   comparable_to: []
-  assumptions: []
+  assumptions:
+  - aurora-v5-unified-physical-closure1mm; effective gap <=1+1e-8 mm is closed.
   exclusions: []
 - key: mid_leaf_travel_cv
   platform: AURORA
@@ -8149,9 +8110,7 @@ metric_specs:
   label: mid_leaf_travel_cv
   unit: dimensionless
   aggregation_scope: plan
-  normalization_basis: Pitch_i=dz/dtheta for dtheta>0; density_i=abs(deltaCMW)/dz, aperture_change_i=abs(deltaW)/dz,
-    travel_i=sum(abs(delta leaf))/dz for dz>0. CV=population_SD/abs(mean); each retained interval equal
-    weight.
+  normalization_basis: CV(projection_leaf_travel_i) over mid-third intervals
   validation_level: Formula-exact
   comparison_class: not-comparable
   default_tolerance_abs: 1.0e-06
@@ -8164,7 +8123,8 @@ metric_specs:
   known_noncomparability:
   - No external exact comparator is checked in yet for this Aurora metric family.
   comparable_to: []
-  assumptions: []
+  assumptions:
+  - aurora-v5-unified-physical-closure1mm; effective gap <=1+1e-8 mm is closed.
   exclusions: []
 - key: tail_mu_density_mean_proxy
   platform: AURORA
@@ -8174,9 +8134,7 @@ metric_specs:
   label: tail_mu_density_mean_proxy
   unit: weight/mm
   aggregation_scope: plan
-  normalization_basis: Pitch_i=dz/dtheta for dtheta>0; density_i=abs(deltaCMW)/dz, aperture_change_i=abs(deltaW)/dz,
-    travel_i=sum(abs(delta leaf))/dz for dz>0. CV=population_SD/abs(mean); each retained interval equal
-    weight.
+  normalization_basis: mean(projection_mu_density_proxy_i) over tail-third intervals
   validation_level: Formula-exact
   comparison_class: not-comparable
   default_tolerance_abs: 1.0e-06
@@ -8189,7 +8147,8 @@ metric_specs:
   known_noncomparability:
   - No external exact comparator is checked in yet for this Aurora metric family.
   comparable_to: []
-  assumptions: []
+  assumptions:
+  - aurora-v5-unified-physical-closure1mm; effective gap <=1+1e-8 mm is closed.
   exclusions: []
 - key: tail_mu_density_cv_proxy
   platform: AURORA
@@ -8199,9 +8158,7 @@ metric_specs:
   label: tail_mu_density_cv_proxy
   unit: dimensionless
   aggregation_scope: plan
-  normalization_basis: Pitch_i=dz/dtheta for dtheta>0; density_i=abs(deltaCMW)/dz, aperture_change_i=abs(deltaW)/dz,
-    travel_i=sum(abs(delta leaf))/dz for dz>0. CV=population_SD/abs(mean); each retained interval equal
-    weight.
+  normalization_basis: CV(projection_mu_density_proxy_i) over tail-third intervals
   validation_level: Formula-exact
   comparison_class: not-comparable
   default_tolerance_abs: 1.0e-06
@@ -8214,7 +8171,8 @@ metric_specs:
   known_noncomparability:
   - No external exact comparator is checked in yet for this Aurora metric family.
   comparable_to: []
-  assumptions: []
+  assumptions:
+  - aurora-v5-unified-physical-closure1mm; effective gap <=1+1e-8 mm is closed.
   exclusions: []
 - key: tail_aperture_change_mean
   platform: AURORA
@@ -8222,11 +8180,9 @@ metric_specs:
   group_key: aurora_v3_axial_regions
   metric_key: tail_aperture_change_mean
   label: tail_aperture_change_mean
-  unit: mm/mm
+  unit: mm^2/mm
   aggregation_scope: plan
-  normalization_basis: Pitch_i=dz/dtheta for dtheta>0; density_i=abs(deltaCMW)/dz, aperture_change_i=abs(deltaW)/dz,
-    travel_i=sum(abs(delta leaf))/dz for dz>0. CV=population_SD/abs(mean); each retained interval equal
-    weight.
+  normalization_basis: mean(projection_aperture_change_i) over tail-third intervals
   validation_level: Formula-exact
   comparison_class: not-comparable
   default_tolerance_abs: 1.0e-06
@@ -8239,7 +8195,8 @@ metric_specs:
   known_noncomparability:
   - No external exact comparator is checked in yet for this Aurora metric family.
   comparable_to: []
-  assumptions: []
+  assumptions:
+  - aurora-v5-unified-physical-closure1mm; effective gap <=1+1e-8 mm is closed.
   exclusions: []
 - key: tail_aperture_change_cv
   platform: AURORA
@@ -8249,9 +8206,7 @@ metric_specs:
   label: tail_aperture_change_cv
   unit: dimensionless
   aggregation_scope: plan
-  normalization_basis: Pitch_i=dz/dtheta for dtheta>0; density_i=abs(deltaCMW)/dz, aperture_change_i=abs(deltaW)/dz,
-    travel_i=sum(abs(delta leaf))/dz for dz>0. CV=population_SD/abs(mean); each retained interval equal
-    weight.
+  normalization_basis: CV(projection_aperture_change_i) over tail-third intervals
   validation_level: Formula-exact
   comparison_class: not-comparable
   default_tolerance_abs: 1.0e-06
@@ -8264,7 +8219,8 @@ metric_specs:
   known_noncomparability:
   - No external exact comparator is checked in yet for this Aurora metric family.
   comparable_to: []
-  assumptions: []
+  assumptions:
+  - aurora-v5-unified-physical-closure1mm; effective gap <=1+1e-8 mm is closed.
   exclusions: []
 - key: tail_leaf_travel_mean
   platform: AURORA
@@ -8274,9 +8230,7 @@ metric_specs:
   label: tail_leaf_travel_mean
   unit: mm/mm
   aggregation_scope: plan
-  normalization_basis: Pitch_i=dz/dtheta for dtheta>0; density_i=abs(deltaCMW)/dz, aperture_change_i=abs(deltaW)/dz,
-    travel_i=sum(abs(delta leaf))/dz for dz>0. CV=population_SD/abs(mean); each retained interval equal
-    weight.
+  normalization_basis: mean(projection_leaf_travel_i) over tail-third intervals
   validation_level: Formula-exact
   comparison_class: not-comparable
   default_tolerance_abs: 1.0e-06
@@ -8289,7 +8243,8 @@ metric_specs:
   known_noncomparability:
   - No external exact comparator is checked in yet for this Aurora metric family.
   comparable_to: []
-  assumptions: []
+  assumptions:
+  - aurora-v5-unified-physical-closure1mm; effective gap <=1+1e-8 mm is closed.
   exclusions: []
 - key: tail_leaf_travel_cv
   platform: AURORA
@@ -8299,9 +8254,7 @@ metric_specs:
   label: tail_leaf_travel_cv
   unit: dimensionless
   aggregation_scope: plan
-  normalization_basis: Pitch_i=dz/dtheta for dtheta>0; density_i=abs(deltaCMW)/dz, aperture_change_i=abs(deltaW)/dz,
-    travel_i=sum(abs(delta leaf))/dz for dz>0. CV=population_SD/abs(mean); each retained interval equal
-    weight.
+  normalization_basis: CV(projection_leaf_travel_i) over tail-third intervals
   validation_level: Formula-exact
   comparison_class: not-comparable
   default_tolerance_abs: 1.0e-06
@@ -8314,7 +8267,8 @@ metric_specs:
   known_noncomparability:
   - No external exact comparator is checked in yet for this Aurora metric family.
   comparable_to: []
-  assumptions: []
+  assumptions:
+  - aurora-v5-unified-physical-closure1mm; effective gap <=1+1e-8 mm is closed.
   exclusions: []
 - key: layer_imbalance_index
   platform: AURORA
@@ -8324,11 +8278,8 @@ metric_specs:
   label: layer_imbalance_index
   unit: dimensionless
   aggregation_scope: plan
-  normalization_basis: Pitch_i=dz/dtheta for dtheta>0; density_i=abs(deltaCMW)/dz, aperture_change_i=abs(deltaW)/dz,
-    travel_i=sum(abs(delta leaf))/dz for dz>0. CV=population_SD/abs(mean); each retained interval equal
-    weight. Imbalance=abs(mean1-mean2)/(abs(mean1)+abs(mean2)); ratio=mean1/mean2. Correlation uses population
-    Pearson; single/constant sequences return1 if pairwise equal within abs_tol1e-12, else0. Aperture
-    disparity compares sum(abs(position)) of each channel at each CP, skips zero total.
+  normalization_basis: abs(mean(leaf_travel_i_MLCX1) - mean(leaf_travel_i_MLCX2))
+    / (abs(mean_MLCX1) + abs(mean_MLCX2))
   validation_level: Formula-exact
   comparison_class: not-comparable
   default_tolerance_abs: 1.0e-06
@@ -8341,7 +8292,8 @@ metric_specs:
   known_noncomparability:
   - No external exact comparator is checked in yet for this Aurora metric family.
   comparable_to: []
-  assumptions: []
+  assumptions:
+  - aurora-v5-unified-physical-closure1mm; effective gap <=1+1e-8 mm is closed.
   exclusions: []
 - key: layer_correlation_index
   platform: AURORA
@@ -8351,11 +8303,7 @@ metric_specs:
   label: layer_correlation_index
   unit: dimensionless
   aggregation_scope: plan
-  normalization_basis: Pitch_i=dz/dtheta for dtheta>0; density_i=abs(deltaCMW)/dz, aperture_change_i=abs(deltaW)/dz,
-    travel_i=sum(abs(delta leaf))/dz for dz>0. CV=population_SD/abs(mean); each retained interval equal
-    weight. Imbalance=abs(mean1-mean2)/(abs(mean1)+abs(mean2)); ratio=mean1/mean2. Correlation uses population
-    Pearson; single/constant sequences return1 if pairwise equal within abs_tol1e-12, else0. Aperture
-    disparity compares sum(abs(position)) of each channel at each CP, skips zero total.
+  normalization_basis: correlation(projection_leaf_travel_i_MLCX1, projection_leaf_travel_i_MLCX2)
   validation_level: Formula-exact
   comparison_class: not-comparable
   default_tolerance_abs: 1.0e-06
@@ -8368,7 +8316,8 @@ metric_specs:
   known_noncomparability:
   - No external exact comparator is checked in yet for this Aurora metric family.
   comparable_to: []
-  assumptions: []
+  assumptions:
+  - aurora-v5-unified-physical-closure1mm; effective gap <=1+1e-8 mm is closed.
   exclusions: []
 - key: x1_x2_aperture_disparity
   platform: AURORA
@@ -8378,11 +8327,8 @@ metric_specs:
   label: x1_x2_aperture_disparity
   unit: dimensionless
   aggregation_scope: plan
-  normalization_basis: Pitch_i=dz/dtheta for dtheta>0; density_i=abs(deltaCMW)/dz, aperture_change_i=abs(deltaW)/dz,
-    travel_i=sum(abs(delta leaf))/dz for dz>0. CV=population_SD/abs(mean); each retained interval equal
-    weight. Imbalance=abs(mean1-mean2)/(abs(mean1)+abs(mean2)); ratio=mean1/mean2. Correlation uses population
-    Pearson; single/constant sequences return1 if pairwise equal within abs_tol1e-12, else0. Aperture
-    disparity compares sum(abs(position)) of each channel at each CP, skips zero total.
+  normalization_basis: OpenMUmean(abs(A_MLCX1-A_MLCX2)/(A_MLCX1+A_MLCX2)); native
+    jaw-clipped areas on common Y coverage with 1 mm closure
   validation_level: Formula-exact
   comparison_class: not-comparable
   default_tolerance_abs: 1.0e-06
@@ -8395,7 +8341,8 @@ metric_specs:
   known_noncomparability:
   - No external exact comparator is checked in yet for this Aurora metric family.
   comparable_to: []
-  assumptions: []
+  assumptions:
+  - aurora-v5-unified-physical-closure1mm; effective gap <=1+1e-8 mm is closed.
   exclusions: []
 - key: x1_x2_leaf_travel_ratio
   platform: AURORA
@@ -8405,11 +8352,7 @@ metric_specs:
   label: x1_x2_leaf_travel_ratio
   unit: dimensionless
   aggregation_scope: plan
-  normalization_basis: Pitch_i=dz/dtheta for dtheta>0; density_i=abs(deltaCMW)/dz, aperture_change_i=abs(deltaW)/dz,
-    travel_i=sum(abs(delta leaf))/dz for dz>0. CV=population_SD/abs(mean); each retained interval equal
-    weight. Imbalance=abs(mean1-mean2)/(abs(mean1)+abs(mean2)); ratio=mean1/mean2. Correlation uses population
-    Pearson; single/constant sequences return1 if pairwise equal within abs_tol1e-12, else0. Aperture
-    disparity compares sum(abs(position)) of each channel at each CP, skips zero total.
+  normalization_basis: mean(projection_leaf_travel_i_MLCX1) / mean(projection_leaf_travel_i_MLCX2)
   validation_level: Formula-exact
   comparison_class: not-comparable
   default_tolerance_abs: 1.0e-06
@@ -8422,7 +8365,8 @@ metric_specs:
   known_noncomparability:
   - No external exact comparator is checked in yet for this Aurora metric family.
   comparable_to: []
-  assumptions: []
+  assumptions:
+  - aurora-v5-unified-physical-closure1mm; effective gap <=1+1e-8 mm is closed.
   exclusions: []
 - key: axial_travel_mm
   platform: AURORA
@@ -8432,10 +8376,7 @@ metric_specs:
   label: axial_travel_mm
   unit: mm
   aggregation_scope: plan
-  normalization_basis: Pitch_i=dz/dtheta for dtheta>0; density_i=abs(deltaCMW)/dz, aperture_change_i=abs(deltaW)/dz,
-    travel_i=sum(abs(delta leaf))/dz for dz>0. CV=population_SD/abs(mean); each retained interval equal
-    weight. Explicit beam MU is used for MU/mm; absent MU falls back to cumulative-weight span, so proxy
-    values must not be compared as absolute MU/mm.
+  normalization_basis: sum_i abs(delta z_i)
   validation_level: Formula-exact
   comparison_class: not-comparable
   default_tolerance_abs: 1.0e-06
@@ -8448,7 +8389,8 @@ metric_specs:
   known_noncomparability:
   - No external exact comparator is checked in yet for this Aurora metric family.
   comparable_to: []
-  assumptions: []
+  assumptions:
+  - aurora-v5-unified-physical-closure1mm; effective gap <=1+1e-8 mm is closed.
   exclusions: []
 - key: gantry_rotation_deg
   platform: AURORA
@@ -8458,10 +8400,7 @@ metric_specs:
   label: gantry_rotation_deg
   unit: deg
   aggregation_scope: plan
-  normalization_basis: Pitch_i=dz/dtheta for dtheta>0; density_i=abs(deltaCMW)/dz, aperture_change_i=abs(deltaW)/dz,
-    travel_i=sum(abs(delta leaf))/dz for dz>0. CV=population_SD/abs(mean); each retained interval equal
-    weight. Explicit beam MU is used for MU/mm; absent MU falls back to cumulative-weight span, so proxy
-    values must not be compared as absolute MU/mm.
+  normalization_basis: sum_i abs(delta theta_i)
   validation_level: Formula-exact
   comparison_class: not-comparable
   default_tolerance_abs: 1.0e-06
@@ -8474,7 +8413,8 @@ metric_specs:
   known_noncomparability:
   - No external exact comparator is checked in yet for this Aurora metric family.
   comparable_to: []
-  assumptions: []
+  assumptions:
+  - aurora-v5-unified-physical-closure1mm; effective gap <=1+1e-8 mm is closed.
   exclusions: []
 - key: mm_per_deg
   platform: AURORA
@@ -8484,10 +8424,7 @@ metric_specs:
   label: mm_per_deg
   unit: mm/deg
   aggregation_scope: plan
-  normalization_basis: Pitch_i=dz/dtheta for dtheta>0; density_i=abs(deltaCMW)/dz, aperture_change_i=abs(deltaW)/dz,
-    travel_i=sum(abs(delta leaf))/dz for dz>0. CV=population_SD/abs(mean); each retained interval equal
-    weight. Explicit beam MU is used for MU/mm; absent MU falls back to cumulative-weight span, so proxy
-    values must not be compared as absolute MU/mm.
+  normalization_basis: axial travel / total rotation
   validation_level: Formula-exact
   comparison_class: not-comparable
   default_tolerance_abs: 1.0e-06
@@ -8500,7 +8437,8 @@ metric_specs:
   known_noncomparability:
   - No external exact comparator is checked in yet for this Aurora metric family.
   comparable_to: []
-  assumptions: []
+  assumptions:
+  - aurora-v5-unified-physical-closure1mm; effective gap <=1+1e-8 mm is closed.
   exclusions: []
 - key: mm_per_rotation
   platform: AURORA
@@ -8510,10 +8448,7 @@ metric_specs:
   label: mm_per_rotation
   unit: mm/rotation
   aggregation_scope: plan
-  normalization_basis: Pitch_i=dz/dtheta for dtheta>0; density_i=abs(deltaCMW)/dz, aperture_change_i=abs(deltaW)/dz,
-    travel_i=sum(abs(delta leaf))/dz for dz>0. CV=population_SD/abs(mean); each retained interval equal
-    weight. Explicit beam MU is used for MU/mm; absent MU falls back to cumulative-weight span, so proxy
-    values must not be compared as absolute MU/mm.
+  normalization_basis: axial travel / (total rotation / 360)
   validation_level: Formula-exact
   comparison_class: not-comparable
   default_tolerance_abs: 1.0e-06
@@ -8526,7 +8461,8 @@ metric_specs:
   known_noncomparability:
   - No external exact comparator is checked in yet for this Aurora metric family.
   comparable_to: []
-  assumptions: []
+  assumptions:
+  - aurora-v5-unified-physical-closure1mm; effective gap <=1+1e-8 mm is closed.
   exclusions: []
 - key: pitch_consistency
   platform: AURORA
@@ -8536,9 +8472,8 @@ metric_specs:
   label: pitch_consistency
   unit: dimensionless
   aggregation_scope: plan
-  normalization_basis: Pitch_i=dz/dtheta for dtheta>0; density_i=abs(deltaCMW)/dz, aperture_change_i=abs(deltaW)/dz,
-    travel_i=sum(abs(delta leaf))/dz for dz>0. CV=population_SD/abs(mean); each retained interval equal
-    weight.
+  normalization_basis: std(abs(delta z_i) / abs(delta theta_i)) / mean(abs(delta z_i)
+    / abs(delta theta_i))
   validation_level: Formula-exact
   comparison_class: not-comparable
   default_tolerance_abs: 1.0e-06
@@ -8551,7 +8486,8 @@ metric_specs:
   known_noncomparability:
   - No external exact comparator is checked in yet for this Aurora metric family.
   comparable_to: []
-  assumptions: []
+  assumptions:
+  - aurora-v5-unified-physical-closure1mm; effective gap <=1+1e-8 mm is closed.
   exclusions: []
 - key: mu_per_mm
   platform: AURORA
@@ -8561,10 +8497,7 @@ metric_specs:
   label: mu_per_mm
   unit: MU/mm
   aggregation_scope: plan
-  normalization_basis: Pitch_i=dz/dtheta for dtheta>0; density_i=abs(deltaCMW)/dz, aperture_change_i=abs(deltaW)/dz,
-    travel_i=sum(abs(delta leaf))/dz for dz>0. CV=population_SD/abs(mean); each retained interval equal
-    weight. Explicit beam MU is used for MU/mm; absent MU falls back to cumulative-weight span, so proxy
-    values must not be compared as absolute MU/mm.
+  normalization_basis: Sum absolute DICOM BeamMeterset / total axial travel.
   validation_level: Formula-exact
   comparison_class: not-comparable
   default_tolerance_abs: 1.0e-06
@@ -8577,7 +8510,8 @@ metric_specs:
   known_noncomparability:
   - No external exact comparator is checked in yet for this Aurora metric family.
   comparable_to: []
-  assumptions: []
+  assumptions:
+  - aurora-v5-unified-physical-closure1mm; effective gap <=1+1e-8 mm is closed.
   exclusions: []
 - key: aperture_change_per_mm
   platform: AURORA
@@ -8585,12 +8519,10 @@ metric_specs:
   group_key: aurora_legacy_engineering
   metric_key: aperture_change_per_mm
   label: aperture_change_per_mm
-  unit: mm/mm
+  unit: mm^2/mm
   aggregation_scope: plan
-  normalization_basis: Pitch_i=dz/dtheta for dtheta>0; density_i=abs(deltaCMW)/dz, aperture_change_i=abs(deltaW)/dz,
-    travel_i=sum(abs(delta leaf))/dz for dz>0. CV=population_SD/abs(mean); each retained interval equal
-    weight. Explicit beam MU is used for MU/mm; absent MU falls back to cumulative-weight span, so proxy
-    values must not be compared as absolute MU/mm.
+  normalization_basis: sum_i abs(delta A_eff_i)/sum_i abs(delta z_i), retaining dz>0;
+    physical area with the common 1 mm closure mask
   validation_level: Formula-exact
   comparison_class: not-comparable
   default_tolerance_abs: 1.0e-06
@@ -8603,7 +8535,8 @@ metric_specs:
   known_noncomparability:
   - No external exact comparator is checked in yet for this Aurora metric family.
   comparable_to: []
-  assumptions: []
+  assumptions:
+  - aurora-v5-unified-physical-closure1mm; effective gap <=1+1e-8 mm is closed.
   exclusions: []
 - key: leaf_travel_per_mm
   platform: AURORA
@@ -8613,10 +8546,7 @@ metric_specs:
   label: leaf_travel_per_mm
   unit: mm/mm
   aggregation_scope: plan
-  normalization_basis: Pitch_i=dz/dtheta for dtheta>0; density_i=abs(deltaCMW)/dz, aperture_change_i=abs(deltaW)/dz,
-    travel_i=sum(abs(delta leaf))/dz for dz>0. CV=population_SD/abs(mean); each retained interval equal
-    weight. Explicit beam MU is used for MU/mm; absent MU falls back to cumulative-weight span, so proxy
-    values must not be compared as absolute MU/mm.
+  normalization_basis: sum_i delta L_i / sum_i abs(delta z_i)
   validation_level: Formula-exact
   comparison_class: not-comparable
   default_tolerance_abs: 1.0e-06
@@ -8629,7 +8559,8 @@ metric_specs:
   known_noncomparability:
   - No external exact comparator is checked in yet for this Aurora metric family.
   comparable_to: []
-  assumptions: []
+  assumptions:
+  - aurora-v5-unified-physical-closure1mm; effective gap <=1+1e-8 mm is closed.
   exclusions: []
 - key: coupled_modulation_index
   platform: AURORA
@@ -8639,8 +8570,8 @@ metric_specs:
   label: coupled_modulation_index
   unit: dimensionless
   aggregation_scope: plan
-  normalization_basis: For available (aperture_change_per_mm,leaf_travel_per_mm,MU-density CV,pitch CV),
-    apply x/(1+x), then equal-component mean; unavailable components excluded.
+  normalization_basis: x/(1+x) uses fixed scales 1 mm^2/mm for area rate and 1 mm/mm
+    for leaf-travel rate; CVs dimensionless. Equal-component mean; no fitted coefficients.
   validation_level: Formula-exact
   comparison_class: not-comparable
   default_tolerance_abs: 1.0e-06
@@ -8653,7 +8584,8 @@ metric_specs:
   known_noncomparability:
   - No external exact comparator is checked in yet for this Aurora metric family.
   comparable_to: []
-  assumptions: []
+  assumptions:
+  - aurora-v5-unified-physical-closure1mm; effective gap <=1+1e-8 mm is closed.
   exclusions: []
 - key: mcs5
   platform: VMAT_IMRT
@@ -10523,7 +10455,8 @@ metric_specs:
   label: mean_ba
   unit: mm^2
   aggregation_scope: plan
-  normalization_basis: A=sum_s h_i,s*g_i,s in mm^2; no dimensionless normalization.
+  normalization_basis: OpenMUmean(A_i); A_i=sum_s h_i,s*g_i,s, exact physical dual-layer
+    intersection area
   validation_level: Association-only
   comparison_class: association-only
   default_tolerance_abs: 1.0e-06
@@ -10541,9 +10474,11 @@ metric_specs:
   assumptions:
   - Formula contract is implementation evidence; synthetic cases do not establish
     clinical or vendor equivalence.
+  - aurora-v5-unified-physical-closure1mm; effective gap <=1+1e-8 mm is closed.
   exclusions:
   - Missing physical boundaries or invalid meterset weights produce unavailable outputs.
-  - Area-zero endpoints and closed leaf gaps are excluded; weights are renormalized over open apertures only.
+  - Area-zero endpoints and closed leaf gaps are excluded; weights are renormalized
+    over open apertures only.
 - key: mean_bi
   platform: AURORA
   mode: AURORA
@@ -10552,8 +10487,8 @@ metric_specs:
   label: mean_bi
   unit: dimensionless
   aggregation_scope: plan
-  normalization_basis: P^2/(4*pi*A); exact union-boundary perimeter, not sum of individual
-    rectangle perimeters.
+  normalization_basis: OpenMUmean(P_i^2/(4*pi*A_i)); P_i is the exact aperture-union
+    perimeter; A_i=0 => excluded
   validation_level: Association-only
   comparison_class: association-only
   default_tolerance_abs: 1.0e-06
@@ -10571,9 +10506,11 @@ metric_specs:
   assumptions:
   - Formula contract is implementation evidence; synthetic cases do not establish
     clinical or vendor equivalence.
+  - aurora-v5-unified-physical-closure1mm; effective gap <=1+1e-8 mm is closed.
   exclusions:
   - Missing physical boundaries or invalid meterset weights produce unavailable outputs.
-  - Area-zero endpoints and closed leaf gaps are excluded; weights are renormalized over open apertures only.
+  - Area-zero endpoints and closed leaf gaps are excluded; weights are renormalized
+    over open apertures only.
 - key: mean_ca
   platform: AURORA
   mode: AURORA
@@ -10582,7 +10519,8 @@ metric_specs:
   label: mean_ca
   unit: mm^-1
   aggregation_scope: plan
-  normalization_basis: P/A in mm^-1; perimeter-to-area ratio, not circularity.
+  normalization_basis: OpenMUmean(P_i/A_i); units mm^-1; A_i=0 => excluded; this is
+    not circularity
   validation_level: Association-only
   comparison_class: association-only
   default_tolerance_abs: 1.0e-06
@@ -10600,9 +10538,11 @@ metric_specs:
   assumptions:
   - Formula contract is implementation evidence; synthetic cases do not establish
     clinical or vendor equivalence.
+  - aurora-v5-unified-physical-closure1mm; effective gap <=1+1e-8 mm is closed.
   exclusions:
   - Missing physical boundaries or invalid meterset weights produce unavailable outputs.
-  - Area-zero endpoints and closed leaf gaps are excluded; weights are renormalized over open apertures only.
+  - Area-zero endpoints and closed leaf gaps are excluded; weights are renormalized
+    over open apertures only.
 - key: mean_sas5
   platform: AURORA
   mode: AURORA
@@ -10611,8 +10551,8 @@ metric_specs:
   label: mean_sas5
   unit: dimensionless
   aggregation_scope: plan
-  normalization_basis: Count positive open sub-strips with gap strictly <5 mm / count
-    positive open sub-strips; equal counts, no width/area weighting.
+  normalization_basis: OpenMUmean(count_s(1+1e-8<g_i,s<5 mm)/count_s(g_i,s>1+1e-8));
+    positive-height sub-strips only; closed => excluded
   validation_level: Association-only
   comparison_class: association-only
   default_tolerance_abs: 1.0e-06
@@ -10630,9 +10570,11 @@ metric_specs:
   assumptions:
   - Formula contract is implementation evidence; synthetic cases do not establish
     clinical or vendor equivalence.
+  - aurora-v5-unified-physical-closure1mm; effective gap <=1+1e-8 mm is closed.
   exclusions:
   - Missing physical boundaries or invalid meterset weights produce unavailable outputs.
-  - Area-zero endpoints and closed leaf gaps are excluded; weights are renormalized over open apertures only.
+  - Area-zero endpoints and closed leaf gaps are excluded; weights are renormalized
+    over open apertures only.
 - key: mean_sas10
   platform: AURORA
   mode: AURORA
@@ -10641,8 +10583,8 @@ metric_specs:
   label: mean_sas10
   unit: dimensionless
   aggregation_scope: plan
-  normalization_basis: Count positive open sub-strips with gap strictly <10 mm / count
-    positive open sub-strips; equal counts, no width/area weighting.
+  normalization_basis: OpenMUmean(count_s(1+1e-8<g_i,s<10 mm)/count_s(g_i,s>1+1e-8));
+    positive-height sub-strips only; closed => excluded
   validation_level: Association-only
   comparison_class: association-only
   default_tolerance_abs: 1.0e-06
@@ -10660,9 +10602,11 @@ metric_specs:
   assumptions:
   - Formula contract is implementation evidence; synthetic cases do not establish
     clinical or vendor equivalence.
+  - aurora-v5-unified-physical-closure1mm; effective gap <=1+1e-8 mm is closed.
   exclusions:
   - Missing physical boundaries or invalid meterset weights produce unavailable outputs.
-  - Area-zero endpoints and closed leaf gaps are excluded; weights are renormalized over open apertures only.
+  - Area-zero endpoints and closed leaf gaps are excluded; weights are renormalized
+    over open apertures only.
 - key: mean_mcs_aurora
   platform: AURORA
   mode: AURORA
@@ -10671,9 +10615,9 @@ metric_specs:
   label: mean_mcs_aurora
   unit: dimensionless
   aggregation_scope: plan
-  normalization_basis: AAV=A_i/U_beam, U_beam=sum_s max_positive_endpoint(h_i,s*g_i,s),
-    including moving Y-jaw clipping; LSV=1-sum(abs(diff(open_gaps)))/((n_open-1)*max(open_gaps)),
-    with compressed positive-gap sequence; n_open<=1 =>1; MCS=AAV*LSV; zero U=>0.
+  normalization_basis: OpenMUmean(AAV_i*LSV_i); AAV_i=A_i/sum_s max_positive_endpoint(h_i,s*g_i,s);
+    LSV_i=1-sum_adj_open abs(delta g)/((n_open-1)*max_open(g)); n_open<=1 => LSV 1;
+    zero envelope => MCS 0; including moving Y-jaw clipping
   validation_level: Association-only
   comparison_class: association-only
   default_tolerance_abs: 1.0e-06
@@ -10691,9 +10635,11 @@ metric_specs:
   assumptions:
   - Formula contract is implementation evidence; synthetic cases do not establish
     clinical or vendor equivalence.
+  - aurora-v5-unified-physical-closure1mm; effective gap <=1+1e-8 mm is closed.
   exclusions:
   - Missing physical boundaries or invalid meterset weights produce unavailable outputs.
-  - Area-zero endpoints and closed leaf gaps are excluded; weights are renormalized over open apertures only.
+  - Area-zero endpoints and closed leaf gaps are excluded; weights are renormalized
+    over open apertures only.
 - key: mcs_complexity_aurora
   platform: AURORA
   mode: AURORA
@@ -10702,8 +10648,8 @@ metric_specs:
   label: mcs_complexity_aurora
   unit: dimensionless
   aggregation_scope: plan
-  normalization_basis: 1-mean_mcs_aurora; complement of the same delivered-weight
-    adapted MCS.
+  normalization_basis: 1-mean_mcs_aurora; complement of the physical-aperture adapted
+    MCS
   validation_level: Association-only
   comparison_class: association-only
   default_tolerance_abs: 1.0e-06
@@ -10721,9 +10667,11 @@ metric_specs:
   assumptions:
   - Formula contract is implementation evidence; synthetic cases do not establish
     clinical or vendor equivalence.
+  - aurora-v5-unified-physical-closure1mm; effective gap <=1+1e-8 mm is closed.
   exclusions:
   - Missing physical boundaries or invalid meterset weights produce unavailable outputs.
-  - Area-zero endpoints and closed leaf gaps are excluded; weights are renormalized over open apertures only.
+  - Area-zero endpoints and closed leaf gaps are excluded; weights are renormalized
+    over open apertures only.
 - key: MCSv_Eff
   platform: VMAT_IMRT
   mode: VMAT_IMRT

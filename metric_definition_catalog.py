@@ -383,8 +383,8 @@ def _build_aurora_metric_records() -> list[MetricDefinitionRecord]:
             physical_meaning=aurora_notes[metric_key], unit=_aurora_unit(metric_key),
             inputs_required="Physical LeafPositionBoundaries for both MLC layers; A/B bank positions; X/Y jaws; cumulative meterset weights; BeamMeterset MU when available",
             implementation_status="implemented",
-            notes=("aurora-v4-physical-aperture-open-only: physical dual-layer intersection; adapted gap-based MCS, "
-                   "not exact McNiven MCS or the old unit-width design. Positive delivered intervals use endpoint i+1. All seven exclude area-zero endpoints and renormalize retained weights; closed leaves excluded from SAS/LSV. "
+            notes=("aurora-v5-unified-physical-closure1mm: physical dual-layer intersection; adapted gap-based MCS, "
+                   "not exact McNiven MCS or the old unit-width design. Positive delivered intervals use endpoint i+1; gaps <=1+1e-8 mm are closed. All seven exclude area-zero endpoints and renormalize retained weights; closed leaves excluded from SAS/LSV. "
                    "Missing geometry or invalid weights makes all seven unavailable with a warning; missing any BeamMeterset "
                    "uses unit-normalized per-beam relative weights for every contributing beam with a warning."),
         ))
@@ -909,9 +909,9 @@ def _aurora_formula(metric_key: str) -> str:
         "mean_ba": "OpenMUmean(A_i); A_i=sum_s h_i,s*g_i,s, exact physical dual-layer intersection area",
         "mean_bi": "OpenMUmean(P_i^2/(4*pi*A_i)); P_i is the exact aperture-union perimeter; A_i=0 => excluded",
         "mean_ca": "OpenMUmean(P_i/A_i); units mm^-1; A_i=0 => excluded; this is not circularity",
-        "mean_sas5": "OpenMUmean(count_s(0<g_i,s<5 mm)/count_s(g_i,s>0)); positive-height sub-strips only; closed => excluded",
-        "mean_sas10": "OpenMUmean(count_s(0<g_i,s<10 mm)/count_s(g_i,s>0)); positive-height sub-strips only; closed => excluded",
-        "mean_mcs_aurora": "OpenMUmean(AAV_i*LSV_i); AAV_i=A_i/sum_s max_positive_endpoint(h_i,s*g_i,s); LSV_i=1-sum_adj_open abs(delta g)/((n_open-1)*max_open(g)); n_open<=1 => LSV 1; zero envelope => MCS 0",
+        "mean_sas5": "OpenMUmean(count_s(1+1e-8<g_i,s<5 mm)/count_s(g_i,s>1+1e-8)); positive-height sub-strips only; closed => excluded",
+        "mean_sas10": "OpenMUmean(count_s(1+1e-8<g_i,s<10 mm)/count_s(g_i,s>1+1e-8)); positive-height sub-strips only; closed => excluded",
+        "mean_mcs_aurora": "OpenMUmean(AAV_i*LSV_i); AAV_i=A_i/sum_s max_positive_endpoint(h_i,s*g_i,s); LSV_i=1-sum_adj_open abs(delta g)/((n_open-1)*max_open(g)); n_open<=1 => LSV 1; zero envelope => MCS 0; including moving Y-jaw clipping",
         "mcs_complexity_aurora": "1-mean_mcs_aurora; complement of the physical-aperture adapted MCS",
 
         "longitudinal_travel_mm": "sum_i abs(delta z_i)",
@@ -922,8 +922,8 @@ def _aurora_formula(metric_key: str) -> str:
         "projection_pitch_cv": "std(projection pitch_i) / mean(projection pitch_i)",
         "projection_mu_density_mean_proxy": "mean_i(abs(delta w_i) / abs(delta z_i))",
         "projection_mu_density_cv_proxy": "std(abs(delta w_i) / abs(delta z_i)) / mean(abs(delta w_i) / abs(delta z_i))",
-        "projection_aperture_change_mean": "mean_i(abs(delta W_i) / abs(delta z_i)); W=sum_zip max(MLCX2-MLCX1,0) is an opening-width proxy, not area",
-        "projection_aperture_change_cv": "population_std(abs(delta W_i)/abs(delta z_i))/abs(mean(abs(delta W_i)/abs(delta z_i))); W is opening-width proxy",
+        "projection_aperture_change_mean": "mean_i(abs(delta A_eff_i)/abs(delta z_i)); A_eff is the jaw-clipped physical dual-layer intersection with gaps<=1+1e-8 mm closed",
+        "projection_aperture_change_cv": "population_std(abs(delta A_eff_i)/abs(delta z_i))/abs(mean(abs(delta A_eff_i)/abs(delta z_i)))",
         "projection_leaf_travel_mean": "mean_i(delta L_i / abs(delta z_i)), with delta L_i summed across both MLC layers",
         "projection_leaf_travel_cv": "std(delta L_i / abs(delta z_i)) / mean(delta L_i / abs(delta z_i))",
         "projection_leaf_travel_mean_mlcx1": "mean_i(delta L_i_MLCX1 / abs(delta z_i))",
@@ -938,9 +938,9 @@ def _aurora_formula(metric_key: str) -> str:
         "reversal_symmetry_index": "mean over selected burden families of [1 - abs(forward_mean - backward_mean) / (abs(forward_mean) + abs(backward_mean))]",
         "forward_backward_metric_difference": "abs(mean_forward(coupled_modulation_index) - mean_backward(coupled_modulation_index))",
         "beam_pair_balance_index": "1 - abs(sum_forward(coupled_modulation_index) - sum_backward(coupled_modulation_index)) / (sum_forward + sum_backward)",
-        "small_opening_fraction": "weighted count(gap < 10 mm and gap > 0) / weighted count(gap > 0)",
-        "near_closed_fraction": "weighted count(gap < 2 mm and gap > 0) / weighted count(gap > 0)",
-        "effective_small_gap_burden": "weighted mean of max(0,1-gap/10 mm) over positive zipped-channel gap proxies; abs(delta CMW) weights, zero increment falls back to 1",
+        "small_opening_fraction": "mean_sas10; OpenMUmean(count_s(1+1e-8<g<10 mm)/count_s(g>1+1e-8))",
+        "near_closed_fraction": "OpenMUmean(count_s(1+1e-8<g<2 mm)/count_s(g>1+1e-8))",
+        "effective_small_gap_burden": "OpenMUmean(mean_open_strips(max(0,1-g/10 mm))); same 1 mm closure and delivered-MU weights as SAS",
         "projection_pitch_p95": "nearest-rank 95th percentile of projection_pitch_i",
         "projection_pitch_max": "max(projection_pitch_i)",
         "projection_pitch_top3_mean": "mean of the three largest projection_pitch_i values",
@@ -973,7 +973,7 @@ def _aurora_formula(metric_key: str) -> str:
         "tail_leaf_travel_cv": "CV(projection_leaf_travel_i) over tail-third intervals",
         "layer_imbalance_index": "abs(mean(leaf_travel_i_MLCX1) - mean(leaf_travel_i_MLCX2)) / (abs(mean_MLCX1) + abs(mean_MLCX2))",
         "layer_correlation_index": "correlation(projection_leaf_travel_i_MLCX1, projection_leaf_travel_i_MLCX2)",
-        "x1_x2_aperture_disparity": "mean over control points of abs(sum|MLCX1| - sum|MLCX2|) / (sum|MLCX1| + sum|MLCX2|)",
+        "x1_x2_aperture_disparity": "OpenMUmean(abs(A_MLCX1-A_MLCX2)/(A_MLCX1+A_MLCX2)); native jaw-clipped areas on common Y coverage with 1 mm closure",
         "x1_x2_leaf_travel_ratio": "mean(projection_leaf_travel_i_MLCX1) / mean(projection_leaf_travel_i_MLCX2)",
         "axial_travel_mm": "sum_i abs(delta z_i)",
         "gantry_rotation_deg": "sum_i abs(delta theta_i)",
@@ -981,9 +981,9 @@ def _aurora_formula(metric_key: str) -> str:
         "mm_per_rotation": "axial travel / (total rotation / 360)",
         "pitch_consistency": "std(abs(delta z_i) / abs(delta theta_i)) / mean(abs(delta z_i) / abs(delta theta_i))",
         "mu_per_mm": "MU_total / axial travel",
-        "aperture_change_per_mm": "sum_i abs(delta W_i)/sum_i abs(delta z_i), retaining dz>0; W is summed positive opening width, not area",
+        "aperture_change_per_mm": "sum_i abs(delta A_eff_i)/sum_i abs(delta z_i), retaining dz>0; physical area with the common 1 mm closure mask",
         "leaf_travel_per_mm": "sum_i delta L_i / sum_i abs(delta z_i)",
-        "coupled_modulation_index": "mean(x/(1+x)) over available aperture-change/mm, leaf-travel/mm, MU-density CV and pitch CV; equal component weights",
+        "coupled_modulation_index": "mean(x/(1+x)); x=(area-change rate/(1 mm^2/mm), leaf-travel rate/(1 mm/mm), MU-density CV, pitch CV); area geometry required",
     }
     return formulas.get(metric_key, f"{metric_key} follows the current Aurora implementation.")
 
@@ -1004,10 +1004,10 @@ def _aurora_unit(metric_key: str) -> str:
         "projection_mu_density_p95_proxy": "weight/mm",
         "projection_mu_density_max_proxy": "weight/mm",
         "projection_mu_density_top3_mean_proxy": "weight/mm",
-        "projection_aperture_change_mean": "mm/mm",
-        "projection_aperture_change_p95": "mm/mm",
-        "projection_aperture_change_max": "mm/mm",
-        "projection_aperture_change_top3_mean": "mm/mm",
+        "projection_aperture_change_mean": "mm^2/mm",
+        "projection_aperture_change_p95": "mm^2/mm",
+        "projection_aperture_change_max": "mm^2/mm",
+        "projection_aperture_change_top3_mean": "mm^2/mm",
         "projection_leaf_travel_mean": "mm/mm",
         "projection_leaf_travel_p95": "mm/mm",
         "projection_leaf_travel_max": "mm/mm",
@@ -1017,9 +1017,9 @@ def _aurora_unit(metric_key: str) -> str:
         "head_mu_density_mean_proxy": "weight/mm",
         "mid_mu_density_mean_proxy": "weight/mm",
         "tail_mu_density_mean_proxy": "weight/mm",
-        "head_aperture_change_mean": "mm/mm",
-        "mid_aperture_change_mean": "mm/mm",
-        "tail_aperture_change_mean": "mm/mm",
+        "head_aperture_change_mean": "mm^2/mm",
+        "mid_aperture_change_mean": "mm^2/mm",
+        "tail_aperture_change_mean": "mm^2/mm",
         "head_leaf_travel_mean": "mm/mm",
         "mid_leaf_travel_mean": "mm/mm",
         "tail_leaf_travel_mean": "mm/mm",
@@ -1028,7 +1028,7 @@ def _aurora_unit(metric_key: str) -> str:
         "mm_per_deg": "mm/deg",
         "mm_per_rotation": "mm/rotation",
         "mu_per_mm": "MU/mm",
-        "aperture_change_per_mm": "mm/mm",
+        "aperture_change_per_mm": "mm^2/mm",
         "leaf_travel_per_mm": "mm/mm",
     }
     return units.get(metric_key, "dimensionless")
